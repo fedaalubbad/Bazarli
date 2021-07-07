@@ -1,15 +1,18 @@
 {
   "AppName": "Bazarli",
   "Slider1Title1": "ابحث عن العناصر المفضلة",
-  "Slider1Title2": " ﺔﻟﻮﻬﺴﺑ ﺎﻬﺋاﺮﺸﻟ ﺖﺒﻫذ ﻲﺘﻟا ﻚﺘﻠﻀﻔﻣ ﻦﻋ ﺚﺤﺑا",
+  "Slider1Title2": " ابحث عن مفضلتك التي ذهبت لشرائها\n بسهولة",
   "Slider2Title1": "دفع سهل و آمن",
-  "Slider2Title2": " ﺔﻟﻮﻬﺳو نﺎﻣﺄﺑ ﺎﻬﻳﺮﺘﺸﺗ ﻲﺘﻟا تﺎﺠﺘﻨﻤﻟا ﻞﺑﺎﻘﻣ ﻊﻓدا",
+  "Slider2Title2": " ادفع مقابل المنتجات التي تشتريها\n بأمان وسهولة",
   "Slider3Title1": "ايصال المنتج",
-  "Slider3Title2": " نﺎﻣأو نﺎﻣﺄﺑ ﻚﻟﺰﻨﻣ ﻰﻟإ ﻚﺠﺘﻨﻣ ﻞﻴﺻﻮﺗ ﻢﺘﻳ",
+  "Slider3Title2": " يتم توصيل منتجك لبيتك بأمان وسهولة",
   "Next": "التالي",
   "Skip": "تخطي",
-  "Welcome_to_Bagisto": "!Bagisto ﻲﻓ ﻢﻜﺑ ﺎﺒﺣﺮﻣ",
-  "small_description": "Bagisto ﻦﻋ ﺮﻴﻐﺻ ﻒﻳﺮﻌﺗ"
+  "Welcome_to_Bagisto": "!Bagisto مرحبا بكم في",
+  "small_description": "Bagisto تعريف صغير عن",
+  "SignIn": "تسجيل الدخول",
+  "Sign up": "اشتراك",
+  "on_continue": "على تواصل مع"
 
 
 }

@@ -7,7 +7,10 @@
   "Slider3Title1": "Product delivery",
   "Slider3Title2": "Your product is delivered to your\n home safely and securely",
   "Next": "Next",
-  "Welcome_to_Bagisto": "Welcome to Bagisto!\n",
-  "small_description": "A small description about Bagisto"
+  "Welcome_to_Bagisto": "Welcome to Bagisto!",
+  "small_description": "A small description about Bagisto",
+  "SignIn": "Sign In",
+  "Sign up": "Sign up",
+  "on_continue": "On continue with"
 
 }

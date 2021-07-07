@@ -27,6 +27,7 @@ dependencies:
   google_fonts: ^2.1.0
   localize_and_translate: ^4.0.1
   flutter_screenutil: ^5.0.0+2
+  provider: ^5.0.0
 
 
 

@@ -10,8 +10,10 @@ const Color GrayLiteColor=Color.fromRGBO(237, 237, 237, 1.0);
 const Color BackgroundColor=Color.fromRGBO(229, 229, 229, 1.0);
 const Color BorderColor=Color.fromRGBO(79, 79, 79, 0.1);
 const Color ContinueColor=Color.fromRGBO(42, 45, 53, 1);
+const Color TextFormFieldColor=Color.fromRGBO(242, 242, 242, 1);
+const Color TextLabelColor=Color.fromRGBO(6, 30, 51, 1);
 
 
-const kTextColor = Color(0xFF535353);
-const kTextLightColor = Color(0xFFACACAC);
+// const kTextColor = Color(0xFF535353);
+// const kTextLightColor = Color(0xFFACACAC);
 

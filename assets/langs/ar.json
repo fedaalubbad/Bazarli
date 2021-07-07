@@ -12,7 +12,19 @@
   "small_description": "Bagisto تعريف صغير عن",
   "SignIn": "تسجيل الدخول",
   "SignUp": "اشتراك",
-  "on_continue": "على تواصل مع"
+  "on_continue": "على تواصل مع",
+  "Get_started": "البدء",
+  "have_account": "لديك حساب بالفعل؟",
+  "Don't_have_account": "ليس لديك حساب بعد؟",
+  "Name": "الاسم",
+  "Email": "البريد الالكتروني",
+  "Password": "كلمة السر",
+  "By_processing": "من خلال المعالجة لانشاء حسابك \n فانك توافق على",
+  "Forgot_Password": "Forgot Password?",
+  "Privacy_Policy": "شروط الخدمة",
+  "And": "و",
+  "Terms_of_service": "سياسة الخصوصية الخاصة بنا",
+  "Create_New_Account": "انشاء حساب جديد"
 
 
 }

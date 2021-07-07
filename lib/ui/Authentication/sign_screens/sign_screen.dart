@@ -9,12 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../loginAndRegister.dart';
+
 class SignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: WhiteColor,
         height: double.infinity,
         width:  double.infinity,
         child: SingleChildScrollView(
@@ -41,7 +44,10 @@ class SignScreen extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().radius(5))),
                       ),
                       child: DropdownButton<String>(
-                        icon: SvgPicture.asset("assets/svg/arrow_down.svg"),
+                        icon: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 5.w),
+                          child: SvgPicture.asset("assets/svg/arrow_down.svg"),
+                        ),
                         underline: SizedBox(),
                         items: <String>['en', 'ar',].map((String value) {
                           return DropdownMenuItem<String>(
@@ -99,7 +105,7 @@ class SignScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 99.h,
+                height: 50.h,
               ),
               SvgPicture.asset(
                 'assets/svg/SignImage.svg',
@@ -109,7 +115,11 @@ class SignScreen extends StatelessWidget {
                 height: 20.h,
               ),
               InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,MaterialPageRoute(builder: (context){
+                      return LoginPage();
+                    }));
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 50.h),
                     alignment: Alignment.center,
@@ -126,7 +136,11 @@ class SignScreen extends StatelessWidget {
                     ),
                   )),
                  InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,MaterialPageRoute(builder: (context){
+                      return LoginPage();
+                    }));
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 5.h),
                     alignment: Alignment.center,
@@ -134,7 +148,7 @@ class SignScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: PrimaryColor,
-                        borderRadius: BorderRadius.circular(5.h)),
+                        borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
                     child: Text(
                       translator.translate('SignUp'),
                       style: translator.currentLanguage == 'ar'
@@ -153,23 +167,29 @@ class SignScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              InkWell(
-               onTap: (){},
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(top: 10.h,bottom: 50.h),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                    SvgPicture.asset('assets/svg/facebook.svg'),
-                    SizedBox(width: 20.w,),
-                    SvgPicture.asset('assets/svg/google.svg'),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 10.h,bottom: 50.h),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                        onTap: (){
 
-                    ],
-                  ),
+                        },
+                        child: SvgPicture.asset('assets/svg/facebook.svg')),
+                    SizedBox(width: 20.w,),
+
+                    InkWell(
+                        onTap: (){},
+                        child: SvgPicture.asset('assets/svg/google.svg')),
+
+                  ],
+
                 ),
               )
+
             ],
           ),
         ),

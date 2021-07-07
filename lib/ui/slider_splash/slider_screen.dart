@@ -1,9 +1,10 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
-import 'package:bazarli/ui/Authentication/signup_Signin_screens/sign_screen.dart';
-import 'package:bazarli/ui/slider_splash/slider_widget.dart';
+import 'package:bazarli/ui/Authentication/sign_screens/sign_screen.dart';
+import 'package:bazarli/ui/slider_splash/widgets/slider_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -46,7 +47,7 @@ class _SliderScreenState extends State<SliderScreen> {
     return Scaffold(
       body: Stack(
         children:[
-
+          
             PageView.builder(
             scrollDirection: Axis.horizontal,
             onPageChanged: _onchanged,
@@ -78,9 +79,7 @@ class _SliderScreenState extends State<SliderScreen> {
               ),
             ),
 
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: <Widget>[
+        
               Positioned(
                 left: kDefaultPaddin ,
                 bottom:kDefaultPaddin ,
@@ -90,7 +89,6 @@ class _SliderScreenState extends State<SliderScreen> {
                       return Container(
                             height: 5.5,
                             width: 5.5,
-                            // width: (index == _currentPage) ? 30 : 10,
                             margin:
                             EdgeInsets.symmetric(horizontal: 8, vertical: 30),
                             decoration: BoxDecoration(
@@ -98,35 +96,37 @@ class _SliderScreenState extends State<SliderScreen> {
                                 color: (index == _currentPage)
                                     ? PrimaryColor
                                     : PrimaryColorWithOpacity));
-
+                     
                     })
                 ),
               ),
               Positioned(
                 right: kDefaultPaddin,
-                bottom: 30,
+                bottom: 76.h,
                 child: InkWell(
                   onTap: () {
                     _controller.nextPage(
                         duration: Duration(milliseconds: 800),
                         curve: Curves.easeInOutQuint);
-
+                    if(_currentPage==_pages.length-1)
+                      Navigator.push(context,MaterialPageRoute(builder: (context){
+                        return SignScreen();
+                      }));
                   },
                   child: Container(
                       alignment: Alignment.center,
-                      height: 45,
-                      width: 157,
+                      height: 45.h,
+                      width: 157.w,
                       decoration: BoxDecoration(
                           color: PrimaryColor,
-                          borderRadius: BorderRadius.circular(5)),
+                          borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
                       child:  Text(
                         translator.translate('Next'),
                         style: translator.currentLanguage=='ar'?GoogleFonts.tajawal(textStyle: SliderNextStyle):GoogleFonts.poppins(textStyle: SliderNextStyle),
 
                       ),
-                      )
-
-
+                  )
+                    
                 ),
               ),
 

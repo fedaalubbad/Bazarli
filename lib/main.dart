@@ -1,8 +1,10 @@
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +29,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+        providers: [
+    ChangeNotifierProvider<AuthenticationProvider>(
+    create: (context) => AuthenticationProvider(),
+    ),
+    ],
+    child: MaterialApp(
       title: 'Bazarli',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: translator.delegates, // Android + iOS Delegates
@@ -38,6 +46,7 @@ class MyApp extends StatelessWidget {
 
       ),
       home: MyHomePage(title: 'home'),
+    )
     );
   }
 }

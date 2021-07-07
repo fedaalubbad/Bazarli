@@ -11,6 +11,19 @@
   "small_description": "A small description about Bagisto",
   "SignIn": "Sign In",
   "Sign up": "Sign up",
-  "on_continue": "On continue with"
+  "on_continue": "On continue with",
+  "Get_started": "Get’s started",
+  "have_account": "Already have on account?",
+  "Don't_have_account": "Don't have on account yet?",
+  "Name": "Name",
+  "Email": "Email",
+  "Password": "Password",
+  "By_processing": "By processing to create your account you are agreeing to our",
+  "Forgot_Password": "Forgot Password?",
+  "Privacy_Policy": "Privacy Policy",
+  "And": "And",
+  "Terms_of_service": "Terms of service",
+  "Create_New_Account": "Create New Account"
+
 
 }

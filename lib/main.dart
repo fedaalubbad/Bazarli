@@ -1,5 +1,6 @@
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      home: SplashScreen(),
+      home: MyHomePage(title: 'home'),
     );
   }
 }
@@ -55,14 +56,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery
+                .of(context)
+                .size
+                .width,
+            maxHeight: MediaQuery
+                .of(context)
+                .size
+                .height),
+        designSize: Size(360, 690),
+        orientation: Orientation.portrait);
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Container(), // This trailing comma makes auto-formatting nicer for build methods.
+      // appBar: AppBar(
+      //   // Here we take the value from the MyHomePage object that was created by
+      //   // the App.build method, and use it to set our appbar title.
+      //   title: Text(widget.title),
+      // ),
+      body: SplashScreen(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -47,7 +47,6 @@ class _SliderScreenState extends State<SliderScreen> {
       body: Stack(
         children:[
 
-
             PageView.builder(
             scrollDirection: Axis.horizontal,
             onPageChanged: _onchanged,
@@ -99,17 +98,7 @@ class _SliderScreenState extends State<SliderScreen> {
                                 color: (index == _currentPage)
                                     ? PrimaryColor
                                     : PrimaryColorWithOpacity));
-                        // AnimatedContainer(
-                        //   duration: Duration(milliseconds: 300),
-                        //   height: 10,
-                        //   width: (index == _currentPage) ? 30 : 10,
-                        //   margin:
-                        //   EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(5),
-                        //       color: (index == _currentPage)
-                        //           ? PrimaryColor
-                        //           : PrimaryColor.withOpacity(0.5)));
+
                     })
                 ),
               ),
@@ -138,29 +127,6 @@ class _SliderScreenState extends State<SliderScreen> {
                       )
 
 
-
-                  // child: AnimatedContainer(
-                  //   alignment: Alignment.center,
-                  //   duration: Duration(milliseconds: 300),
-                  //   height: 70,
-                  //   width: (_currentPage == (_pages.length - 1)) ? 200 : 75,
-                  //   decoration: BoxDecoration(
-                  //       color: PrimaryColor,
-                  //       borderRadius: BorderRadius.circular(35)),
-                  //   child: (_currentPage == (_pages.length - 1))
-                  //       ? Text(
-                  //     "Get Started",
-                  //     style: TextStyle(
-                  //       color: Colors.white,
-                  //       fontSize: 20,
-                  //     ),
-                  //   )
-                  //       : Icon(
-                  //     Icons.navigate_next,
-                  //     size: 50,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
                 ),
               ),
 

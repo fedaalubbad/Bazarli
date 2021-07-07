@@ -1,5 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const SliderSkipTextStyle=TextStyle(color:GrayColor,fontWeight: FontWeight.w700,fontSize: 15,fontStyle: FontStyle.normal);
 const SliderNextStyle=TextStyle(color:WhiteColor,fontWeight: FontWeight.w700,fontSize: 16,fontStyle: FontStyle.normal);

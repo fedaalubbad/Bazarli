@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignScreen extends StatelessWidget {
 
@@ -23,20 +24,24 @@ class SignScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin:EdgeInsets.only(top: 35,left: 20,right: 20) ,
-                height:50,
+                margin:EdgeInsets.only(top: 36.h,left: 20.w,right: 20.w) ,
+                height:50.h,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(width:130,
-                        height:36,
+                    Container(width:130.w,
+                        height:36.h,
                         child:Image.asset("assets/images/app_logo.png")),
 
                     Container(
-                      width:100,
-                      height: 45,
-                      decoration: BoxDecoration(),
+                      // width:80.w,
+                      height: 45.h,
+                      decoration: BoxDecoration(
+                        border: Border.all(color:BorderColor, width: 1.w),
+                        borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().radius(5))),
+                      ),
                       child: DropdownButton<String>(
+                        icon: SvgPicture.asset("assets/svg/arrow_down.svg"),
                         underline: SizedBox(),
                         items: <String>['en', 'ar',].map((String value) {
                           return DropdownMenuItem<String>(
@@ -46,11 +51,15 @@ class SignScreen extends StatelessWidget {
                                 Container(
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset(value=='ar'?"assets/svg/ar.svg":"assets/svg/en.svg"),
-                                        SizedBox(width: 4,),
-                                        Text(value)
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 5.w),
+                                          child: SvgPicture.asset(value=='ar'?"assets/svg/ar.svg":"assets/svg/en.svg"),
+                                        ),
+                                        // SizedBox(width: 4.w,),
+                                        // Text(value)
                                       ],
-                                    )),
+                                    )
+                                ),
                               ],
                             ),
                           );
@@ -72,7 +81,7 @@ class SignScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 37),
+                margin: EdgeInsets.only(top: 37.h),
                 child: Text(
                   translator.translate('Welcome_to_Bagisto'),
                   style: translator.currentLanguage == 'ar'
@@ -81,7 +90,7 @@ class SignScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: EdgeInsets.only(top: 10.h),
                 child: Text(
                   translator.translate('small_description'),
                   style: translator.currentLanguage == 'ar'
@@ -89,26 +98,28 @@ class SignScreen extends StatelessWidget {
                       : GoogleFonts.poppins(textStyle: SliderTitle2Style),
                 ),
               ),
-
+              SizedBox(
+                height: 99.h,
+              ),
               SvgPicture.asset(
                 'assets/svg/SignImage.svg',
                 // width: width * 0.6,
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               InkWell(
                   onTap: () {},
                   child: Container(
-                    margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 50),
+                    margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 50.h),
                     alignment: Alignment.center,
-                    height: 45,
+                    height: 45.h,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: PrimaryColor,
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
                     child: Text(
-                      translator.translate('Next'),
+                      translator.translate('SignIn'),
                       style: translator.currentLanguage == 'ar'
                           ? GoogleFonts.tajawal(textStyle: SliderNextStyle)
                           : GoogleFonts.poppins(textStyle: SliderNextStyle),
@@ -117,40 +128,42 @@ class SignScreen extends StatelessWidget {
                  InkWell(
                   onTap: () {},
                   child: Container(
-                    margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 5),
+                    margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 5.h),
                     alignment: Alignment.center,
-                    height: 45,
+                    height: 45.h,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         color: PrimaryColor,
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5.h)),
                     child: Text(
-                      translator.translate('Sign up'),
+                      translator.translate('SignUp'),
                       style: translator.currentLanguage == 'ar'
                           ? GoogleFonts.tajawal(textStyle: SliderNextStyle)
                           : GoogleFonts.poppins(textStyle: SliderNextStyle),
                     ),
                   )),
               SizedBox(
-                height: 5,
+                height: 20.h,
               ),
               Text(
                   translator.translate('on_continue'),
                   style: translator.currentLanguage == 'ar'
                       ? GoogleFonts.tajawal(textStyle: OnContinueStyle):GoogleFonts.poppins(textStyle: OnContinueStyle)),
 
-
+              SizedBox(
+                height: 20.h,
+              ),
               InkWell(
                onTap: (){},
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(top: 10,bottom: 50),
+                  margin: EdgeInsets.only(top: 10.h,bottom: 50.h),
                   alignment: Alignment.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                     SvgPicture.asset('assets/svg/facebook.svg'),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 20.w,),
                     SvgPicture.asset('assets/svg/google.svg'),
 
                     ],

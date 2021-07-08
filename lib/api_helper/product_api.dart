@@ -1,15 +1,12 @@
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:dio/dio.dart';
 
-class Api{
-  Api._();
-  static Api api=Api._();
+import 'constants.dart';
+
+class ProductApi{
+  ProductApi._();
+  static ProductApi api=ProductApi._();
   Dio dio=Dio();
-  final String baseUrl='https://test.bazarli.com/api/';
-  // Options options=Options(headers : { "app-id":"60bdbd22159b332fec7c83e6"} );
-  final String products="products/";
-
-
   Future<List<Product>> getAllProducts() async{
     Response response = await dio.get(baseUrl + products,);
     // options : options);
@@ -17,7 +14,7 @@ class Api{
     print('userListJson${responseBody}');
     List<dynamic> mapList = responseBody["data"];
     List<Product> productsList = mapList.map((e) =>Product.fromJson(e)).toList();
-    print('productsList${productsList}');
+    print('productsList${productsList[0].images[0]}');
     return productsList;
   }
 

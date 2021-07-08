@@ -3,6 +3,7 @@ import 'package:bazarli/ui/Authentication/views_widgets/bottomWidget.dart';
 import 'package:bazarli/ui/Authentication/views_widgets/midWidget.dart';
 import 'package:bazarli/ui/Authentication/views_widgets/topWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        margin: EdgeInsets.only(top: 30.h),
         color: WhiteColor,
         child: SingleChildScrollView(
           child: Column(

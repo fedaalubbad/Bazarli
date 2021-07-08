@@ -40,7 +40,7 @@ class LoginMidWidget extends StatelessWidget {
                     child:
                     CustomTextfieldWidget(
                       contraller: Provider.of<AuthenticationProvider>(context, listen: false).nameContraller,
-                      hint: 'Name',
+                      hint: 'Name'.tr(),
                    textInputType:TextInputType.text,
                    save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
                    validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
@@ -62,7 +62,7 @@ class LoginMidWidget extends StatelessWidget {
                     ),
                     child: CustomTextfieldWidget(
                       contraller: Provider.of<AuthenticationProvider>(context, listen: false).emailContraller,
-                      hint: 'Email',
+                      hint: 'Email'.tr(),
                    textInputType:TextInputType.emailAddress,
                    save:Provider.of<AuthenticationProvider>(context, listen: false).saveEmail,
                    validator:Provider.of<AuthenticationProvider>(context, listen: false).validateName,
@@ -99,7 +99,7 @@ class LoginMidWidget extends StatelessWidget {
                 ),
                 child:
                 CustomTextfieldWidget(
-                   hint: 'Password',
+                   hint: 'Password'.tr(),
                    textInputType:TextInputType.visiblePassword,
                    save: Provider.of<AuthenticationProvider>(context, listen: false).savePassword,
                    validator: Provider.of<AuthenticationProvider>(context, listen: false).validatePassword,

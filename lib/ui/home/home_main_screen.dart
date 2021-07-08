@@ -1,11 +1,13 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/providers/Product_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 import 'Home/component/dotted_slider.dart';
 
@@ -27,9 +29,18 @@ class HomeScreenState extends State<HomeMainScreen>{
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-           Container(
-             child: dottedSlider(),
-             color: HomeBackgroundColor,),
+           Column(
+             children: [
+               Container(
+                 child: dottedSlider(),
+                 color: HomeBackgroundColor,
+
+               ),
+               FlatButton(onPressed: (){
+                 Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+               }, child:Text('print'))
+             ],
+           ),
 
 
 

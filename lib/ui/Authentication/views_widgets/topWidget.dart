@@ -65,7 +65,7 @@ class LoginTopWigget extends StatelessWidget {
                 }).toList(),
                 value: 'en',
                 onChanged: (lang) {
-                context.locale==lang;
+                  context.locale = Locale(lang);
                 },
               ),
             )

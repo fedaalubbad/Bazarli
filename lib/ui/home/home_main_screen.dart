@@ -133,6 +133,8 @@ class HomeScreenState extends State<HomeMainScreen>{
 
 
   getBrands(){
+
+
    return Selector<BrandProvider,List<Brands>>(builder:(context,response,widget){
     if(response==null){
     return CircularProgressIndicator();

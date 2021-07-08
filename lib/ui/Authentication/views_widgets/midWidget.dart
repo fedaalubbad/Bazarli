@@ -14,7 +14,6 @@ class LoginMidWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Form(
           key: homeKey,
                 child: Column(

@@ -1,7 +1,9 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/ui/Authentication/sign_screens/sign_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -19,11 +21,11 @@ class SplashState extends State<SplashScreen>{
     //   MaterialPageRoute(builder: (context) =>SignScreen()),
     // );
   }
-  // @override
-  // void initState() {
-  //   navigationTohome(context);
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    Provider.of<BrandProvider>(context, listen: false). getAllBrandss();
+    super.initState();
+  }
   @override
   void didChangeDependencies() {
     navigationTohome(context);

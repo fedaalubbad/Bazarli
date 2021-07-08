@@ -1,6 +1,9 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,16 +11,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'Home/component/dotted_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeMainScreen extends StatefulWidget{
-
   @override
   State<StatefulWidget> createState() {
    return HomeScreenState();
   }
-
 }
-
 class HomeScreenState extends State<HomeMainScreen>{
   int _selectedPageIndex=0;
   void _viewPage(int index) {
@@ -29,17 +30,19 @@ class HomeScreenState extends State<HomeMainScreen>{
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-           Column(
-             children: [
-               Container(
-                 child: dottedSlider(),
-                 color: HomeBackgroundColor,
+           Container(
+             padding: EdgeInsets.only(top: 50.h,left: 20.w,right: 20.h),
+             color: HomeBackgroundColor,
+             child: Column(
+               children: [
+               getBrands(),
+               dottedSlider(),
 
-               ),
-               FlatButton(onPressed: (){
-                 Provider.of<ProductProvider>(context, listen: false).getAllProducts();
-               }, child:Text('print'))
-             ],
+                 // FlatButton(onPressed: (){
+                 //   Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+                 // }, child:Text('print'))
+               ],
+             ),
            ),
 
 
@@ -126,6 +129,33 @@ class HomeScreenState extends State<HomeMainScreen>{
    );
 
 
+  }
+
+
+  getBrands(){
+   return Selector<BrandProvider,List<Brands>>(builder:(context,response,widget){
+    if(response==null){
+    return CircularProgressIndicator();
+    }else if(response.isEmpty){
+    return Container();
+    }else{
+    return  Container(
+      height: 40.h,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+          // physics: NeverScrollableScrollPhysics(),
+          itemCount: response.length,
+          itemBuilder: (context, index) =>BrandItem(
+            icon: response[index].smallBrandLogo,
+            press:(){}
+          ),
+      ),
+
+    );
+    }
+    }, selector: (context,provider){
+      return provider.brandList;
+    });
   }
   dottedSlider() {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);

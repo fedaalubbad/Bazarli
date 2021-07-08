@@ -15,7 +15,7 @@ class BrandApi {
     // options : options);
     Map<String, dynamic> responseBody = response.data;
     print('brandListJson${responseBody}');
-    List<dynamic> mapList = responseBody["data"];
+    List<dynamic> mapList = responseBody["brands"];
     List<Brands> brandList = mapList.map((e) => Brands.fromJson(e)).toList();
     print('brandsList${brandList[0]}');
     return brandList;

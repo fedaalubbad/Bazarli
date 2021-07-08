@@ -8,3 +8,4 @@ const SliderTitle2Style=TextStyle(color:GrayColor,fontWeight: FontWeight.w400,fo
 const OnContinueStyle=TextStyle(color:ContinueColor,fontWeight: FontWeight.w500,fontSize: 15,fontStyle: FontStyle.normal);
 const SignInTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fontSize: 15,fontStyle: FontStyle.normal);
 const TextLabelStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w500,fontSize: 16,fontStyle: FontStyle.normal);
+const BottomBarTextStyle=TextStyle(fontWeight: FontWeight.w400,fontSize: 10,fontStyle: FontStyle.normal);

@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
+import 'package:bazarli/ui/Authentication/widgets/custom_login_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,23 +16,6 @@ class LoginBottomWidget extends StatelessWidget{
      margin: EdgeInsets.only(top:15),
      child: Column(
        children: [
-         InkWell(
-             onTap: () {},
-             child: Container(
-               margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 5.h),
-               alignment: Alignment.center,
-               height: 45.h,
-               width: MediaQuery.of(context).size.width,
-               decoration: BoxDecoration(
-                   color: PrimaryColor,
-                   borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
-               child: Text(
-                 translator.translate('SignUp'),
-                 style: translator.currentLanguage == 'ar'
-                     ? GoogleFonts.tajawal(textStyle: SliderNextStyle)
-                     : GoogleFonts.poppins(textStyle: SliderNextStyle),
-               ),
-             )),
          SizedBox(
            height: 20.h,
          ),
@@ -40,7 +24,7 @@ class LoginBottomWidget extends StatelessWidget{
              style: translator.currentLanguage == 'ar'
                  ? GoogleFonts.tajawal(textStyle: OnContinueStyle)
                  : GoogleFonts.poppins(textStyle: OnContinueStyle)),
-
+        CustomLoginButton(),
          SizedBox(
            height: 20.h,
          ),

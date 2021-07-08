@@ -2,9 +2,9 @@ import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
+import 'navigation_service/navigation_service.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
+   providers: [
     ChangeNotifierProvider<AuthenticationProvider>(
     create: (context) => AuthenticationProvider(),
     ),
@@ -45,17 +45,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
 
       ),
-      home: MyHomePage(title: 'home'),
+      // home: MyHomePage(),
+      navigatorKey: NavigationService.navigationService.navigatorKey,
+      routes: { '/': (context) => MyHomePage(), },
+
     )
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, @required this.title}) : super(key: key);
-
-
-  final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();

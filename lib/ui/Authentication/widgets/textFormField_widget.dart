@@ -1,8 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -14,43 +12,51 @@ class CustomTextfieldWidget extends StatelessWidget{
   Icon icon;
   String hint;
   String label;
-  TextEditingController contraller =TextEditingController();
-  TextEditingController passwordContraller ;
+  TextEditingController contraller;
+  // TextEditingController passwordContraller ;
 
   CustomTextfieldWidget(
-      {this.isPassword = false, this.label, this.save, this.validator,this.icon,this.hint,
-        this.textInputType,this.passwordContraller});
+      {this.isPassword , this.label, this.save, this.validator,this.icon,this.hint,
+        this.textInputType,this.contraller});
 
   @override
   Widget build(BuildContext context) {
-  return Container(
-      height: 50.h,
-      decoration: BoxDecoration(
-      color:TextFormFieldColor ,
-      borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
-    ),
-      child: TextFormField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 15.h),
+  return TextFormField(
+         // controller: contraller,
+         decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
           border: InputBorder.none,
           hintText: hint,
-           hintStyle: translator.currentLanguage == 'ar'
+           hintStyle:
+           translator.currentLanguage == 'ar'
                 ? GoogleFonts.tajawal(textStyle: SliderTitle2Style)
-                : GoogleFonts.poppins(textStyle: SliderTitle2Style),
+                :
+           GoogleFonts.poppins(textStyle: SliderTitle2Style),
 
           focusedBorder:OutlineInputBorder(
-            borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
               color:PrimaryColor,
               width: 1.0,
             ),
           ),
 
+          // suffixIcon: IconButton(
+          //     icon:  Provider.of<AuthenticationProvider>(context).vaidate
+          //         ?SvgPicture.asset(
+          //        ' assets/svg/error.svg'): Image.asset('assets/icons/true.png'),
+          //     onPressed: () {
+          //       Provider.of<AuthenticationProvider>(context, listen: false)
+          //           .switchObscure();
+          //     }),
+          //
+
         ),
+
         keyboardType:textInputType,
         validator: validator,
         onSaved: save,
-      ),
+
     );
   }
 

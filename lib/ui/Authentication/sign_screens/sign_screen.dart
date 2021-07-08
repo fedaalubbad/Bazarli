@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -124,7 +125,7 @@ class SignScreen extends StatelessWidget {
                     margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 50.h),
                     alignment: Alignment.center,
                     height: 45.h,
-                    width: MediaQuery.of(context).size.width,
+                    width:ScreenUtil.defaultSize.width,
                     decoration: BoxDecoration(
                         color: PrimaryColor,
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
@@ -137,15 +138,17 @@ class SignScreen extends StatelessWidget {
                   )),
                  InkWell(
                   onTap: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>LoginPage()),
+                    );
+                  // NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
                       return LoginPage();
-                    }));
+
                   },
                   child: Container(
                     margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 5.h),
                     alignment: Alignment.center,
                     height: 45.h,
-                    width: MediaQuery.of(context).size.width,
+                    width: ScreenUtil.defaultSize.width,
                     decoration: BoxDecoration(
                         color: PrimaryColor,
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
@@ -168,7 +171,7 @@ class SignScreen extends StatelessWidget {
                 height: 20.h,
               ),
               Container(
-                width: MediaQuery.of(context).size.width,
+                width: ScreenUtil.defaultSize.width,
                 margin: EdgeInsets.only(top: 10.h,bottom: 50.h),
                 alignment: Alignment.center,
                 child: Row(

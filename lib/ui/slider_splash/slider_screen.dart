@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/Authentication/sign_screens/sign_screen.dart';
 import 'package:bazarli/ui/slider_splash/widgets/slider_widget.dart';
 import 'package:flutter/material.dart';
@@ -64,9 +65,7 @@ class _SliderScreenState extends State<SliderScreen> {
               right: kDefaultPaddin,
               child: InkWell(
                 onTap: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context){
-                    return SignScreen();
-                  }));
+                  NavigationService.navigationService.navigateToWidget(SignScreen());
 
                 },
                 child: Container(

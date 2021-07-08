@@ -12,6 +12,7 @@ const Color BorderColor=Color.fromRGBO(79, 79, 79, 0.1);
 const Color ContinueColor=Color.fromRGBO(42, 45, 53, 1);
 const Color TextFormFieldColor=Color.fromRGBO(242, 242, 242, 1);
 const Color TextLabelColor=Color.fromRGBO(6, 30, 51, 1);
+const Color HomeBackgroundColor=Color.fromRGBO(251, 251, 251, 0.5);
 
 
 // const kTextColor = Color(0xFF535353);

@@ -25,7 +25,7 @@ class HomeScreenState extends State<HomeScreen>{
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-                  Container(),
+                  Container(color: HomeBackgroundColor,),
            Positioned(
              left: 0,
              right: 0,

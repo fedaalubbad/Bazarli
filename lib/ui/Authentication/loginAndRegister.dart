@@ -21,7 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SafeArea(
+       child: Container(
         margin: EdgeInsets.only(top: 30.h),
         color: WhiteColor,
         child: SingleChildScrollView(
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-
+      )
     );
   }
 }

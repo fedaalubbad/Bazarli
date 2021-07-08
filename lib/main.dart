@@ -7,9 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'navigation_service/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,16 +18,18 @@ void main() async {
           supportedLocales: [Locale('en'), Locale('ar')],
           path: 'assets/translations', // <-- change the path of the translation files
           fallbackLocale: Locale('en'),
-          useOnlyLangCode: true,
+          // useOnlyLangCode: true,
           child:MyApp()
       )
+
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return
+      MultiProvider(
    providers: [
     ChangeNotifierProvider<AuthenticationProvider>(
     create: (context) => AuthenticationProvider(),
@@ -38,22 +38,25 @@ class MyApp extends StatelessWidget {
     create: (context) => ProductProvider(),
     ),
     ],
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
+    child:
+    MaterialApp(
+     debugShowCheckedModeBanner: false,
+
      localizationsDelegates: context.localizationDelegates,
      supportedLocales: context.supportedLocales,
      locale: context.locale,
+
      title: 'Bazarli',
      theme: ThemeData(
         primarySwatch: Colors.blue,
-           textTheme:context.locale == 'ar'
+           textTheme: context.locale == 'ar'
                ? GoogleFonts.tajawalTextTheme(Theme.of(context).textTheme)
                : GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
       ),
       navigatorKey: NavigationService.navigationService.navigatorKey,
-     // home: MyHomePage(),
-     routes: { '/': (context) => MyHomePage(),
-      },
+     home: MyHomePage(),
+     // routes: { '/': (context) => MyHomePage(),
+     //  },
 
     )
     );

@@ -10,10 +10,11 @@ class CustomTextfieldWidget extends StatelessWidget{
   Icon icon;
   String hint;
   String label;
+   bool required;
   TextEditingController contraller;
 
   CustomTextfieldWidget({this.isPassword , this.label, this.save, this.validator,this.icon,this.hint,
-        this.textInputType,this.contraller});
+        this.textInputType,this.contraller,this.required});
 
   @override
   Widget build(BuildContext context) {

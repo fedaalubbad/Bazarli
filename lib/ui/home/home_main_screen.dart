@@ -5,19 +5,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
-
 import 'Home/component/dotted_slider.dart';
 
 class HomeMainScreen extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() {
    return HomeScreenState();
   }
 
 }
+
 class HomeScreenState extends State<HomeMainScreen>{
   int _selectedPageIndex=0;
   void _viewPage(int index) {

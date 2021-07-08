@@ -7,16 +7,19 @@ class ProductApi{
   ProductApi._();
   static ProductApi api=ProductApi._();
   Dio dio=Dio();
+
+
   Future<List<Product>> getAllProducts() async{
     Response response = await dio.get(baseUrl + products,);
     // options : options);
     Map<String,dynamic> responseBody=response.data;
-    print('userListJson${responseBody}');
+    print('productListJson${responseBody}');
     List<dynamic> mapList = responseBody["data"];
     List<Product> productsList = mapList.map((e) =>Product.fromJson(e)).toList();
     print('productsList${productsList[0].images[0]}');
     return productsList;
   }
+
 
 
  //  Future<UserModel> getUSerById(String userId)async{

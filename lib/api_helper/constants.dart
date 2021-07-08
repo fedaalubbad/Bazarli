@@ -4,3 +4,4 @@ const String products="products/";
 const String categories="getCategories/";
 const String brands="suppliers/products/brands/";
 const String attributes="attributes/";
+const String families="families/";

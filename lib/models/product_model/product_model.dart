@@ -1,6 +1,6 @@
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
-import 'links.dart';
-import 'meta.dart';
+import 'product_classes/links.dart';
+import 'product_classes/meta.dart';
 
 class ProductRespone {
   List<Product> data;

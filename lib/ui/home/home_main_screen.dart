@@ -2,7 +2,6 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
-import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'Home/component/dotted_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'Home/component/home_toolbar.dart';
 
 class HomeMainScreen extends StatefulWidget{
   @override
@@ -31,12 +32,14 @@ class HomeScreenState extends State<HomeMainScreen>{
    return Scaffold(
      body: Stack(children:[
            Container(
-             padding: EdgeInsets.only(top: 50.h,left: 20.w,right: 20.h),
              color: HomeBackgroundColor,
              child: Column(
                children: [
-               getBrands(),
-               dottedSlider(),
+                 HomeToolBar(),
+                 SizedBox(height: 30.h,),
+                 getBrands(),
+                 SizedBox(height: 15.h,),
+                 dottedSlider(),
 
                  // FlatButton(onPressed: (){
                  //   Provider.of<ProductProvider>(context, listen: false).getAllProducts();
@@ -134,7 +137,6 @@ class HomeScreenState extends State<HomeMainScreen>{
 
   getBrands(){
 
-
    return Selector<BrandProvider,List<Brands>>(builder:(context,response,widget){
     if(response==null){
     return CircularProgressIndicator();
@@ -162,8 +164,9 @@ class HomeScreenState extends State<HomeMainScreen>{
   dottedSlider() {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);
     return DottedSlider(
-        maxHeight: ScreenUtil.defaultSize.height / 3,
+        maxHeight:140.h,
         children: [
+        _productSlideImage('assets/images/promotion_one.png'),
         _productSlideImage('assets/images/promotion_one.png'),
         // _productSlideImage('https://www.google.ps/url?sa=i&url=https%3A%2F%2Fteamfusionlifestyle.com%2F2020%2F10%2F07%2Fcycle-of-fashion-trend%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAI'),
         // _productSlideImage('https://www.google.ps/url?sa=i&url=http%3A%2F%2Fthepreppursuit.com%2Findian-fashion-industry%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAO'),
@@ -173,11 +176,11 @@ class HomeScreenState extends State<HomeMainScreen>{
   }
   _productSlideImage(String imageUrl) {
     return Container(
-        margin: EdgeInsets.all(8),
-        height: ScreenUtil.defaultSize.width / 3,
+        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        height: 140.h,
         width: ScreenUtil.defaultSize.width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(ScreenUtil().radius(15)),
+          borderRadius: BorderRadius.circular(ScreenUtil().radius(2)),
           image:
           DecorationImage(
               image: AssetImage(imageUrl), fit: BoxFit.cover),

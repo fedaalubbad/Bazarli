@@ -1,10 +1,9 @@
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
-
 import 'links.dart';
 import 'meta.dart';
 
 class ProductRespone {
-  List<Data> data;
+  List<Product> data;
   Links links;
   Meta meta;
 
@@ -12,9 +11,9 @@ class ProductRespone {
 
   ProductRespone.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = new List<Product>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new Product.fromJson(v));
       });
     }
     links = json['links'] != null ? new Links.fromJson(json['links']) : null;

@@ -10,13 +10,13 @@ class Api{
   final String products="products/";
 
 
-  Future<List<Data>> getAllProducts() async{
+  Future<List<Product>> getAllProducts() async{
     Response response = await dio.get(baseUrl + products,);
     // options : options);
     Map<String,dynamic> responseBody=response.data;
     print('userListJson${responseBody}');
     List<dynamic> mapList = responseBody["data"];
-    List<Data> productsList = mapList.map((e) =>Data.fromJson(e)).toList();
+    List<Product> productsList = mapList.map((e) =>Product.fromJson(e)).toList();
     print('productsList${productsList}');
     return productsList;
   }

@@ -23,11 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^5.0.0
   flutter_svg: ^0.22.0
   google_fonts: ^2.1.0
-  localize_and_translate: ^4.0.1
+  easy_localization: ^3.0.0
   flutter_screenutil: ^5.0.0
-  provider: ^5.0.0
+  dio: ^4.0.0
+
 
 
 
@@ -58,7 +60,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/svg/
-    - assets/langs/
+    - assets/translations/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

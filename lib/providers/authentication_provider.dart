@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
+  // final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
   bool isObscure = true;
   bool vaidate = true;
   final passwordContraller =TextEditingController();
@@ -11,24 +12,23 @@ class AuthenticationProvider extends ChangeNotifier {
     'pass': '',
     'name': '',
   };
-  GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
 
   switchObscure() {
     isObscure = !isObscure;
     notifyListeners();
   }
 
-  bool onValidate() {
-    if(!formStateKey.currentState.validate()){
-      vaidate=false;
-      notifyListeners();
-      return false;
-    }
-    formStateKey.currentState.save();
-    vaidate=true;
-    notifyListeners();
-    return true;
-  }
+  // bool onValidate() {
+  //   if(!formStateKey.currentState.validate()){
+  //     vaidate=false;
+  //     notifyListeners();
+  //     return false;
+  //   }
+  //   formStateKey.currentState.save();
+  //   vaidate=true;
+  //   notifyListeners();
+  //   return true;
+  // }
 
   saveEmail(val) {
     authData['email'] = val;
@@ -69,10 +69,10 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   void Sign() {
- if(onValidate()) {
+ // if(onValidate()) {
 
 
- }
+ // }
   }
 }
 

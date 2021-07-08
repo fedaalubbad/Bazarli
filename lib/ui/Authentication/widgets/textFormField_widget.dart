@@ -1,8 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
 
 class CustomTextfieldWidget extends StatelessWidget{
   Function validator;
@@ -13,26 +11,19 @@ class CustomTextfieldWidget extends StatelessWidget{
   String hint;
   String label;
   TextEditingController contraller;
-  // TextEditingController passwordContraller ;
 
-  CustomTextfieldWidget(
-      {this.isPassword , this.label, this.save, this.validator,this.icon,this.hint,
+  CustomTextfieldWidget({this.isPassword , this.label, this.save, this.validator,this.icon,this.hint,
         this.textInputType,this.contraller});
 
   @override
   Widget build(BuildContext context) {
   return TextFormField(
-         // controller: contraller,
+         controller: contraller,
          decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
           border: InputBorder.none,
           hintText: hint,
-           hintStyle:
-           translator.currentLanguage == 'ar'
-                ? GoogleFonts.tajawal(textStyle: SliderTitle2Style)
-                :
-           GoogleFonts.poppins(textStyle: SliderTitle2Style),
-
+           hintStyle:SliderTitle2Style,
           focusedBorder:OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
@@ -53,7 +44,7 @@ class CustomTextfieldWidget extends StatelessWidget{
 
         ),
 
-        keyboardType:textInputType,
+        // keyboardType:textInputType,
         validator: validator,
         onSaved: save,
 

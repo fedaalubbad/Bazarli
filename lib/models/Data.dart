@@ -1,11 +1,11 @@
 class Data {
    int id;
-  String name;
-  String email;
+   String name;
+   String email;
    int status;
    int roleId;
-  String createdAt;
-  String updatedAt;
+   String createdAt;
+   String updatedAt;
 
   Data({this.id,
         this.name,

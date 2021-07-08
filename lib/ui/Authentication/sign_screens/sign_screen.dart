@@ -6,10 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../loginAndRegister.dart';
 
 class SignScreen extends StatelessWidget {
@@ -73,12 +71,8 @@ class SignScreen extends StatelessWidget {
                         }).toList(),
                         value: 'en',
                         onChanged: (lang) {
-                          translator.setNewLanguage(
-                            context,
-                            newLanguage:lang,
-                            remember: true,
+                          context.locale = Locale(lang);
                             // restart: true,
-                          );
 
                         },
                       ),
@@ -89,21 +83,15 @@ class SignScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 37.h),
-                child: Text(
-                  translator.translate('Welcome_to_Bagisto'),
-                  style: translator.currentLanguage == 'ar'
-                      ? GoogleFonts.tajawal(textStyle: SliderTitle1Style)
-                      : GoogleFonts.poppins(textStyle: SliderTitle1Style),
-                ),
+                child: Text('Welcome_to_Bagisto',
+                  style: SliderTitle1Style,
+                ).tr(),
               ),
               Container(
                 margin: EdgeInsets.only(top: 10.h),
-                child: Text(
-                  translator.translate('small_description'),
-                  style: translator.currentLanguage == 'ar'
-                      ? GoogleFonts.tajawal(textStyle: SliderTitle2Style)
-                      : GoogleFonts.poppins(textStyle: SliderTitle2Style),
-                ),
+                child: Text('small_description',
+                  style:SliderTitle2Style,
+                ).tr(),
               ),
               SizedBox(
                 height: 50.h,
@@ -129,16 +117,13 @@ class SignScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: PrimaryColor,
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
-                    child: Text(
-                      translator.translate('SignIn'),
-                      style: translator.currentLanguage == 'ar'
-                          ? GoogleFonts.tajawal(textStyle: SliderNextStyle)
-                          : GoogleFonts.poppins(textStyle: SliderNextStyle),
-                    ),
+                    child: Text('SignIn',
+                      style:  SliderNextStyle,
+                    ).tr(),
                   )),
                  InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>LoginPage()),
+                    MaterialPageRoute(builder: (context) =>LoginPage(),
                     );
                   // NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
                       return LoginPage();
@@ -152,20 +137,16 @@ class SignScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: PrimaryColor,
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
-                    child: Text(
-                      translator.translate('SignUp'),
-                      style: translator.currentLanguage == 'ar'
-                          ? GoogleFonts.tajawal(textStyle: SliderNextStyle)
-                          : GoogleFonts.poppins(textStyle: SliderNextStyle),
-                    ),
+                    child: Text('SignUp',
+                      style: SliderNextStyle,
+                    ).tr(),
                   )),
               SizedBox(
                 height: 20.h,
               ),
-              Text(
-                  translator.translate('on_continue'),
-                  style: translator.currentLanguage == 'ar'
-                      ? GoogleFonts.tajawal(textStyle: OnContinueStyle):GoogleFonts.poppins(textStyle: OnContinueStyle)),
+              Text('on_continue',
+                  style: OnContinueStyle
+              ).tr(),
 
               SizedBox(
                 height: 20.h,

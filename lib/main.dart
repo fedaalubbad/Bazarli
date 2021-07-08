@@ -2,31 +2,30 @@ import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'navigation_service/navigation_service.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
-  await translator.init(
-    localeDefault: LocalizationDefaultType.device,
-    languagesList: <String>['ar', 'en'],
-    assetsDirectory: 'assets/langs/',
-    apiKeyGoogle: '<Key>', // NOT YET TESTED
-  );
   runApp(
-      LocalizedApp(
+      EasyLocalization(
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path: 'assets/translations', // <-- change the path of the translation files
+          fallbackLocale: Locale('en'),
+          useOnlyLangCode: true,
           child:MyApp()
-      ));
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final locales = [
-    Locale('en', 'EN'),
-    Locale('ar', 'AR'),
-  ];
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,18 +35,21 @@ class MyApp extends StatelessWidget {
     ),
     ],
     child: MaterialApp(
-      title: 'Bazarli',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: translator.delegates, // Android + iOS Delegates
-      locale: translator.locale, // Active locale
-      supportedLocales: translator.locals(), // Locals list
-      theme: ThemeData(
+     localizationsDelegates: context.localizationDelegates,
+     supportedLocales: context.supportedLocales,
+     locale: context.locale,
+     title: 'Bazarli',
+     theme: ThemeData(
         primarySwatch: Colors.blue,
-
+           textTheme:context.locale == 'ar'
+               ? GoogleFonts.tajawalTextTheme(Theme.of(context).textTheme)
+               : GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
       ),
-      // home: MyHomePage(),
       navigatorKey: NavigationService.navigationService.navigatorKey,
-      routes: { '/': (context) => MyHomePage(), },
+     // home: MyHomePage(),
+     routes: { '/': (context) => MyHomePage(),
+      },
 
     )
     );
@@ -76,13 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 .height),
         designSize: Size(360, 690),
         orientation: Orientation.portrait);
-    return Scaffold(
+    return   Scaffold(
       // appBar: AppBar(
       //   // Here we take the value from the MyHomePage object that was created by
       //   // the App.build method, and use it to set our appbar title.
       //   title: Text(widget.title),
       // ),
-      body: SplashScreen(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: SplashScreen(),
+        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

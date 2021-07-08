@@ -2,19 +2,19 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginTopWigget extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
       Container(
-        margin: EdgeInsets.only(top: 36.h, left: 20.w, right: 20.w),
+        // margin: EdgeInsets.only(top: 36.h, left: 20.w, right: 20.w),
         height: 50.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,12 +65,7 @@ class LoginTopWigget extends StatelessWidget {
                 }).toList(),
                 value: 'en',
                 onChanged: (lang) {
-                  translator.setNewLanguage(
-                    context,
-                    newLanguage: lang,
-                    remember: true,
-                    // restart: true,
-                  );
+                context.locale==lang;
                 },
               ),
             )
@@ -79,32 +74,23 @@ class LoginTopWigget extends StatelessWidget {
       ),
       Container(
         margin: EdgeInsets.only(top: 37.h,left: 20.w,right:20.w ),
-        child: Text(
-          translator.translate('Get_started'),
-          style: translator.currentLanguage == 'ar'
-              ? GoogleFonts.tajawal(textStyle: SliderTitle1Style)
-              : GoogleFonts.poppins(textStyle: SliderTitle1Style),
-        ),
+        child: Text('Get_started',
+          style: SliderTitle1Style,
+        ).tr(),
       ),
       Container(
         margin: EdgeInsets.only(top: 10.h,left: 20.w,right:20.w),
         child: Row(
           children: [
-            Text(
-              translator.translate('have_account'),
-              style: translator.currentLanguage == 'ar'
-                  ? GoogleFonts.tajawal(textStyle: SliderTitle2Style)
-                  : GoogleFonts.poppins(textStyle: SliderTitle2Style),
-            ),
+            Text('have_account',
+              style: SliderTitle2Style,
+            ).tr(),
             SizedBox(
               width: 10.w,
             ),
-            Text(
-              translator.translate('SignIn'),
-              style: translator.currentLanguage == 'ar'
-                  ? GoogleFonts.tajawal(textStyle: SignInTextStyle)
-                  : GoogleFonts.poppins(textStyle: SignInTextStyle),
-            ),
+            Text('SignIn',
+              style: SignInTextStyle,
+            ).tr(),
           ],
         ),
       )

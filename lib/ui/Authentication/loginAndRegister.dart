@@ -9,10 +9,13 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 class _LoginPageState extends State<LoginPage> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  GlobalKey<FormState> _homeKey ;
+
+  @override
+  void initState() {
+    super.initState();
+    _homeKey = GlobalKey<FormState>(debugLabel: '_homeScreenkey');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +23,12 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         color: WhiteColor,
         child: SingleChildScrollView(
-          child:
-          Column(
-            mainAxisSize: MainAxisSize.max,
+          child: Column(
+            // mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
                   LoginTopWigget(),
-                  LoginMidWidget(),
+                  LoginMidWidget(_homeKey),
                   LoginBottomWidget(),
             ],
           ),

@@ -7,7 +7,7 @@ import 'package:bazarli/ui/slider_splash/widgets/slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SliderScreen extends StatefulWidget{
   @override
@@ -21,19 +21,16 @@ class _SliderScreenState extends State<SliderScreen> {
 
   List<Widget> _pages = [
     SliderPage(
-        title: translator.translate('Slider1Title1'),
-        description:
-        translator.translate('Slider1Title2'),
+        title: 'Slider1Title1',
+        description:('Slider1Title2'),
         image: "assets/svg/page1.svg"),
     SliderPage(
-        title:translator.translate('Slider2Title1'),
-        description:
-        translator.translate('Slider2Title2'),
+        title:'Slider2Title1',
+        description:'Slider2Title2',
         image: "assets/svg/page2.svg"),
     SliderPage(
-        title: translator.translate('Slider3Title1'),
-        description:
-        translator.translate('Slider3Title2'),
+        title: 'Slider3Title1',
+        description:'Slider3Title2',
         image: "assets/svg/page3.svg"),
   ];
 
@@ -69,14 +66,13 @@ class _SliderScreenState extends State<SliderScreen> {
 
                 },
                 child: Container(
-                  child:  Text(
-                    translator.translate('Skip'),
-                    style: translator.currentLanguage=='ar'?GoogleFonts.tajawal(textStyle: SliderSkipTextStyle):GoogleFonts.poppins(textStyle: SliderSkipTextStyle),
+                  child:  Text('Skip',
+                    style:SliderSkipTextStyle
+                  ).tr(),
 
                   ),
                 ),
               ),
-            ),
 
         
               Positioned(
@@ -119,11 +115,10 @@ class _SliderScreenState extends State<SliderScreen> {
                       decoration: BoxDecoration(
                           color: PrimaryColor,
                           borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
-                      child:  Text(
-                        translator.translate('Next'),
-                        style: translator.currentLanguage=='ar'?GoogleFonts.tajawal(textStyle: SliderNextStyle):GoogleFonts.poppins(textStyle: SliderNextStyle),
+                      child:  Text('Next',
+                        style:SliderNextStyle).tr(),
 
-                      ),
+
                   )
                     
                 ),

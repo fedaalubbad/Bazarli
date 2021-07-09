@@ -22,7 +22,6 @@ class BrandItem extends StatelessWidget {
               width: 40.w,
               decoration: BoxDecoration(
                 color: WhiteColor,
-                // borderRadius: BorderRadius.circular(10),
               ),
               child: Image.network(icon,fit: BoxFit.cover,),
               )

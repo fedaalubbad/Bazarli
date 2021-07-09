@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'navigation_service/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -92,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 .size
                 .height),
         designSize: Size(360, 690),
-        orientation: Orientation.portrait);
+        orientation: Orientation.portrait
+        );
     return   Scaffold(
       // appBar: AppBar(
       //   // Here we take the value from the MyHomePage object that was created by

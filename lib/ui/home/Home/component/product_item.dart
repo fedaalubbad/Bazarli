@@ -38,7 +38,7 @@ class ProductItem extends StatelessWidget{
         padding: EdgeInsets.all(ScreenUtil().radius(10)),
         decoration: BoxDecoration(
           // color: WhiteColor.withOpacity(0.3),
-          // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+          borderRadius: BorderRadius.only(bottomRight: Radius.circular(ScreenUtil().radius(10)),bottomLeft:Radius.circular(ScreenUtil().radius(10))),
     gradient: LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,

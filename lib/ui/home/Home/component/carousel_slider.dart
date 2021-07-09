@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'cordinator_widget.dart';
 
@@ -91,6 +92,20 @@ class BuildCarouselSlider extends StatelessWidget{
 
                 ),
 
+
+                    Container(
+                      margin: EdgeInsets.only(left: 30.w,top: 30.h,bottom: 15.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset('assets/svg/fav.svg'),
+                        SizedBox(width: 20.w,),
+                        SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
+                      ],
+                    ),
+
+                    )
+
               ]
               ),
             ),
@@ -112,7 +127,7 @@ class BuildCarouselSlider extends StatelessWidget{
         );
       },
       options: CarouselOptions(
-          height: 400.h,
+          height: 460.h,
           initialPage: 0,
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 3000),

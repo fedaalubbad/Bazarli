@@ -78,7 +78,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
   getGridProducts(BuildContext context){
     return Container(
-
+         margin: EdgeInsets.symmetric(horizontal: 20.w),
         child: StaggeredGridView.countBuilder(
           physics: ScrollPhysics(),
           shrinkWrap: true,

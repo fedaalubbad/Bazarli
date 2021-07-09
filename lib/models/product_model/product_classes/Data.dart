@@ -3,7 +3,7 @@ import 'package:bazarli/models/product_model/product_classes/reviews.dart';
 import 'base_images.dart';
 import 'images.dart';
 
-class Product {
+class Data {
   int id;
   String sku;
   String type;
@@ -25,7 +25,7 @@ class Product {
   bool isItemInCart;
   bool showQuantityChanger;
 
-  Product(
+ Data(
       {this.id,
         this.sku,
         this.type,
@@ -47,7 +47,7 @@ class Product {
         this.isItemInCart,
         this.showQuantityChanger});
 
- Product.fromJson(Map<String, dynamic> json) {
+ Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     sku = json['sku'];
     type = json['type'];

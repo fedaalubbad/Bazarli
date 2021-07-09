@@ -104,9 +104,8 @@ class _SliderScreenState extends State<SliderScreen> {
                         duration: Duration(milliseconds: 800),
                         curve: Curves.easeInOutQuint);
                     if(_currentPage==_pages.length-1)
-                      Navigator.push(context,MaterialPageRoute(builder: (context){
-                        return SignScreen();
-                      }));
+                     NavigationService.navigationService.navigateToWidget(SignScreen());
+
                   },
                   child: Container(
                       alignment: Alignment.center,

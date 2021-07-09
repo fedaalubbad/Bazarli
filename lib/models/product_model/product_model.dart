@@ -3,7 +3,7 @@ import 'product_classes/links.dart';
 import 'product_classes/meta.dart';
 
 class ProductRespone {
-  List<Product> data;
+  List<Data> data;
   Links links;
   Meta meta;
 
@@ -11,9 +11,9 @@ class ProductRespone {
 
   ProductRespone.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Product>();
+      data = new List<Data>();
       json['data'].forEach((v) {
-        data.add(new Product.fromJson(v));
+        data.add(new Data.fromJson(v));
       });
     }
     links = json['links'] != null ? new Links.fromJson(json['links']) : null;

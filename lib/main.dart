@@ -1,4 +1,5 @@
 import 'package:bazarli/providers/BrandProvider.dart';
+import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
     ),
      ChangeNotifierProvider<BrandProvider>(
     create: (context) => BrandProvider(),
+    ),
+     ChangeNotifierProvider<CategoriesProvider>(
+    create: (context) => CategoriesProvider(),
     ),
     ],
     child:

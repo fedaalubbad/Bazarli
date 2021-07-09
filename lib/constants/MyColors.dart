@@ -13,8 +13,10 @@ const Color ContinueColor=Color.fromRGBO(42, 45, 53, 1);
 const Color TextFormFieldColor=Color.fromRGBO(242, 242, 242, 1);
 const Color TextLabelColor=Color.fromRGBO(6, 30, 51, 1);
 const Color HomeBackgroundColor=Color.fromRGBO(251, 251, 251, 0.5);
+const Color DividerColor=Color.fromRGBO(6, 30, 51, 0.1);
+const Color ShadowColor=Color.fromRGBO(0, 0, 0, 0.08);
 
-
+const GradientColors = [Color.fromRGBO(226, 226, 226, 1),Color.fromRGBO(255, 255, 255, 0)];
 // const kTextColor = Color(0xFF535353);
 // const kTextLightColor = Color(0xFFACACAC);
 

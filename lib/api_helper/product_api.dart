@@ -9,14 +9,14 @@ class ProductApi{
   Dio dio=Dio();
 
 
-  Future<List<Product>> getAllProducts() async{
+  Future<List<Data>> getAllProducts() async{
     Response response = await dio.get(baseUrl + products,);
     // options : options);
     Map<String,dynamic> responseBody=response.data;
     print('productListJson${responseBody}');
     List<dynamic> mapList = responseBody["data"];
-    List<Product> productsList = mapList.map((e) =>Product.fromJson(e)).toList();
-    print('productsList${productsList[0].images[0]}');
+    List<Data> productsList = mapList.map((e) =>Data.fromJson(e)).toList();
+    print('productsList${productsList}');
     return productsList;
   }
 

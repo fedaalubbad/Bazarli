@@ -13,8 +13,8 @@ class CustomLoginButton extends StatelessWidget {
     return Container(
       child: InkWell(
           onTap: () {
-NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
-},
+          NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
+          },
           child: Container(
             margin: EdgeInsets.only(
                 left: kDefaultPaddin, right: kDefaultPaddin, top: 5.h),

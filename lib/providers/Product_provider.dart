@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import '../api_helper/product_api.dart';
 
 class ProductProvider extends ChangeNotifier{
-    List<Product> productList;
+    List<Data> productList=List<Data>();
 
-  Future<List<Product>> getAllProducts() async {
-    List<Product> users = await ProductApi.api.getAllProducts();
-    this.productList = users;
+  Future<List<Data>> getAllProducts() async {
+    List<Data> products = await ProductApi.api.getAllProducts();
+    this.productList = products;
     notifyListeners();
   }
 

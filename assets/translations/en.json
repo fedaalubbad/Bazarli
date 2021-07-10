@@ -29,7 +29,17 @@
   "Profile": "Profile",
   "Cart": "Cart",
   "Colors": "Color",
-  "Measures": "Size"
+  "Measures": "Size",
+  "Quantity": "Quantity",
+  "Overview": "Overview",
+  "CustomerReview": "Customer Review",
+  "CM": "CM",
+  "INCH": "INCH",
+  "modelNo": "model Number",
+  "was": "was",
+  "Now": "Now",
+  "AddToCart": "Add To Cart",
+  "Saving": "Saving"
 
 
 }

@@ -6,9 +6,7 @@ import 'package:bazarli/ui/home/Home/component/home_title_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-
 import 'component/category_item.dart';
 import 'component/product_shop_item.dart';
 

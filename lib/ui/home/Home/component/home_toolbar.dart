@@ -31,11 +31,18 @@ class HomeToolBar extends StatelessWidget {
                     height: 20.h,
                     width: 65.w,
                     child: Image.asset("assets/images/app_logo.png"))
-                : InkWell(
+                : context.locale.toString()=='en'?
+                          InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: SvgPicture.asset('assets/svg/back.svg')),
+                    child: SvgPicture.asset('assets/svg/back.svg'))
+                :InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: SvgPicture.asset('assets/svg/ar_back.svg'))
+            ,
             Row(
               children: [
                 Container(

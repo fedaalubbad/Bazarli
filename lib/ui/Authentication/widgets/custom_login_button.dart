@@ -1,6 +1,5 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/constants/heights.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/home/home_main_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +16,10 @@ class CustomLoginButton extends StatelessWidget {
           },
           child: Container(
             margin: EdgeInsets.only(
-                left: kDefaultPaddin, right: kDefaultPaddin, top: 5.h),
+                left:20.w, right: 20.h, top: 5.h),
             alignment: Alignment.center,
             height: 45.h,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: ScreenUtil.defaultSize.width,
             decoration: BoxDecoration(
                 color: PrimaryColor,
                 borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),

@@ -30,7 +30,18 @@
   "Profile": "الملف الشخصي",
   "Cart": "عربة التسوق",
   "Colors": "اللون",
-  "Measures": "القياس"
+  "Measures": "القياس",
+  "Quantity": "الكمية",
+  "Overview": "نظرة عامة",
+  "CustomerReview": "مراجعة العميل",
+  "CM": "سم",
+  "INCH": "INCH",
+  "modelNo": "رقم الموديل",
+  "was": "قبل",
+  "Now": "بعد",
+  "AddToCart": "اضافة الى السلة",
+  "Saving": "توفير"
+
 
 
 }

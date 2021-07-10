@@ -22,6 +22,7 @@ final DiscountStyle=TextStyle(color:GrayColor,fontWeight: FontWeight.w500,fontSi
 final DiscountOffStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w500,fontSize: 16.sp,
       fontStyle: FontStyle.normal,);
 
+final WhiteButtonStyle=TextStyle(color:WhiteColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);
 
 
 final PriceNowTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fontSize: 20.sp,fontStyle: FontStyle.normal);

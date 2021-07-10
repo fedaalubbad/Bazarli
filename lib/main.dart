@@ -1,3 +1,4 @@
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
 
      title: 'Bazarli',
      theme: ThemeData(
-        primarySwatch: Colors.blue,
+       primaryColor: PrimaryColor,
+        // primarySwatch: Colors.blue,
            textTheme: context.locale == 'ar'
                ? GoogleFonts.tajawalTextTheme(Theme.of(context).textTheme)
                : GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)

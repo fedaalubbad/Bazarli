@@ -68,7 +68,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   getTopProducts(BuildContext context){
     return Container(
       // height:400.h,
-        width: ScreenUtil.defaultSize.width,
+      //   width: ScreenUtil.defaultSize.width,
         child:  BuildCarouselSlider(
           product:Provider.of<ProductProvider>(context,listen: false).productList
           ,currentIndex: 0,)
@@ -107,7 +107,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         indicator: MD2Indicator(
           indicatorSize: MD2IndicatorSize.full,
           indicatorHeight: 4.h,
-          indicatorColor: Colors.green,
+          indicatorColor: PrimaryColor,
         ),
         indicatorColor: PrimaryColor,
         key: PageStorageKey<Type>(TabBar),
@@ -144,12 +144,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     });
 
                 },
-                child: Container(width:0.1.sw,
-                    child: CircleAvatar(backgroundColor: WhiteColor,radius: ScreenUtil().radius(12),
-                      child:Icon(Icons.arrow_back_ios,color: BlueDarkColor,size: ScreenUtil().radius(12),) ,))),
+                child: Container(width:0.15.sw,
+                    child: CircleAvatar(backgroundColor: WhiteColor,radius: ScreenUtil().radius(15),
+                      child:Icon(Icons.arrow_back_ios,color: BlueDarkColor,size: ScreenUtil().radius(15),) ,))),
 
             Container(
-              width: 0.8.sw,
+              width: 0.7.sw,
               // margin: EdgeInsets.symmetric(horizontal: 33.5.w),
               height: 40.h,
               child: ListView.builder(
@@ -175,9 +175,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
 
                 },
-                child: Container(width:0.1.sw,
-                    child: CircleAvatar(backgroundColor: WhiteColor,radius: ScreenUtil().radius(12),
-                      child:Icon(Icons.arrow_forward_ios,color: BlueDarkColor,size: ScreenUtil().radius(12),) ,))),
+                child: Container(width:0.15.sw,
+                    child: CircleAvatar(backgroundColor: WhiteColor,radius: ScreenUtil().radius(15),
+                      child:Icon(Icons.arrow_forward_ios,color: BlueDarkColor,size: ScreenUtil().radius(15),) ,))),
 
           ],
         );

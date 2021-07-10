@@ -1,14 +1,13 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:provider/provider.dart';
 import 'Home/home_screen.dart';
 import 'Home/component/home_toolbar.dart';
+import 'categories/CategoryScreen.dart';
 
 class HomeMainScreen extends StatefulWidget{
   @override
@@ -28,7 +27,9 @@ class HomeScreenState extends State<HomeMainScreen> {
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-           Container(
+       HomeToolBar(isHome: true,),
+       Container(
+           margin: EdgeInsets.only(top:117.h),
              height: double.infinity,
              width: double.infinity,
              color: HomeBackgroundColor,
@@ -36,10 +37,10 @@ class HomeScreenState extends State<HomeMainScreen> {
                child: Expanded(
                  child: Column(
                    children: [
-                     HomeToolBar(),
 
                    ///////////////////////////// body
-                     _selectedPageIndex==0?HomeScreen():HomeScreen(),
+                     _selectedPageIndex==0?HomeScreen():CategoriesScreen(),
+                  ////////////////////////////
                      SizedBox(height: 83.h,),
                      // FlatButton(onPressed: (){
                      //   Provider.of<ProductProvider>(context, listen: false).getAllProducts();

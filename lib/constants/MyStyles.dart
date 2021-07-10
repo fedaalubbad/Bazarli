@@ -12,6 +12,16 @@ final PriceTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fo
 final TextLabelStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w500,fontSize: 16.sp,fontStyle: FontStyle.normal);
 final BottomBarTextStyle=TextStyle(fontWeight: FontWeight.w400,fontSize: ScreenUtil().setSp(10),fontStyle: FontStyle.normal);
 final TabsTextStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w400,fontSize: ScreenUtil().setSp(14),fontStyle: FontStyle.normal);
+final ProducttoolbarTitleStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w400,fontSize: ScreenUtil().setSp(18),fontStyle: FontStyle.normal);
+final ProductTitleStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w700,fontSize: ScreenUtil().setSp(18),fontStyle: FontStyle.normal);
 // final double textSize = ScreenUtil().setSp(15);
 final TitlesInHome=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w700,fontSize: ScreenUtil().setSp(15),fontStyle: FontStyle.normal);
+final DescriptionStyle=TextStyle(color:GrayColor,fontWeight: FontWeight.w500,fontSize: 16.sp,fontStyle: FontStyle.normal);
+final DiscountStyle=TextStyle(color:GrayColor,fontWeight: FontWeight.w500,fontSize: 16.sp,
+      fontStyle: FontStyle.normal,decoration: TextDecoration.lineThrough,);
+final DiscountOffStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w500,fontSize: 16.sp,
+      fontStyle: FontStyle.normal,);
 
+
+
+final PriceNowTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fontSize: 20.sp,fontStyle: FontStyle.normal);

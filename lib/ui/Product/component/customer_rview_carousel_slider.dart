@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'overView_list_item.dart';
+import 'customer_review_list_item.dart';
 
-class BuildOverViewCarouselSlider extends StatelessWidget{
+class BuildCustomerReviewCarouselSlider extends StatelessWidget{
   int currentIndex;
   List<Data> product;
-  BuildOverViewCarouselSlider({this.product, this.currentIndex});
+  BuildCustomerReviewCarouselSlider({this.product, this.currentIndex});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,7 +24,7 @@ class BuildOverViewCarouselSlider extends StatelessWidget{
         itemBuilder: (_, index, realIdx) {
           return Column(
             children: [
-              OverViewListItem(),
+              CustomerReviewListItem(),
               Container(
                 height: 20,
                 child: SingleChildScrollView(

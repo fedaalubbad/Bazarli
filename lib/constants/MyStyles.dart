@@ -24,5 +24,6 @@ final DiscountOffStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w500,
 
 final WhiteButtonStyle=TextStyle(color:WhiteColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);
 
-
 final PriceNowTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fontSize: 20.sp,fontStyle: FontStyle.normal);
+
+final TableTextlStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);

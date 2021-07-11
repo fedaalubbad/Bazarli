@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class OverViewListItem extends StatelessWidget{
+class CustomerReviewListItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
    return Container(

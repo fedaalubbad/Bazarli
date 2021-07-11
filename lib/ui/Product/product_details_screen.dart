@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'component/add_to_cart_widget.dart';
 import 'component/basic_detais_widget.dart';
 import 'component/measurements_widgets.dart';
-import 'component/customer_overview_widget.dart';
+import 'component/toggle_view.dart';
 import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -22,6 +22,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
@@ -54,7 +55,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   SizedBox(
                     height: 40.h,
                   ),
-                  CustomerReviewWidget(),
+                  OverViewAndCustomerReviewToggleView(),
                   SizedBox(
                     height: 20.h,
                   ),

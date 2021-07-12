@@ -137,8 +137,10 @@ getProductsGrid(BuildContext context){
 getProductsInList(BuildContext context){
 return Container(
   // margin: EdgeInsets.only(bottom: 20.h),
-  height: 450.h,
+  // height: 450.h,
     child: ListView.builder(
+      physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+      shrinkWrap: true,
       itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
         itemBuilder: (context,index){
          return

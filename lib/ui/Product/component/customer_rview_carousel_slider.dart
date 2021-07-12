@@ -26,7 +26,7 @@ class BuildCustomerReviewCarouselSlider extends StatelessWidget{
             children: [
               CustomerReviewListItem(),
               Container(
-                height: 20,
+                height: 20.h,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -47,7 +47,7 @@ class BuildCustomerReviewCarouselSlider extends StatelessWidget{
           );
         },
         options: CarouselOptions(
-            height:320.h,
+            height:0.5.sh,
             initialPage: 0,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 3000),

@@ -1,6 +1,8 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ui/home/cart/cart_screen.dart';
+import 'package:bazarli/ui/home/profile/component/profile_toolbar.dart';
+import 'package:bazarli/ui/home/profile/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,20 +19,22 @@ class HomeMainScreen extends StatefulWidget{
   }
 }
 class HomeScreenState extends State<HomeMainScreen> {
-
+  // bool isProfile=false;
   int _selectedPageIndex=0;
   void _viewPage(int index) {
     setState(() {
       _selectedPageIndex = index;
+      // _selectedPageIndex==2?
+      // isProfile==true:isProfile==false;
     });
   }
   @override
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-       HomeToolBar(isHome: true,),
+      _selectedPageIndex==2?ProfileToolBar(): HomeToolBar(isHome: true,),
        Container(
-           margin: EdgeInsets.only(top:120.h),
+           margin: EdgeInsets.only(top:_selectedPageIndex==2?ScreenUtil.defaultSize.height/4.h:120.h),
              height: double.infinity,
              width: double.infinity,
              color: HomeBackgroundColor,
@@ -40,9 +44,11 @@ class HomeScreenState extends State<HomeMainScreen> {
                    children: [
 
                    ///////////////////////////// body
-                     _selectedPageIndex==0?HomeScreen()
+
+                      _selectedPageIndex==0?HomeScreen()
                      :_selectedPageIndex==1?CategoriesScreen()
-                    : _selectedPageIndex==3?CartScreen():CartScreen(),
+                     :_selectedPageIndex==2? ProfileScreen()
+                    : CartScreen(),
                   ////////////////////////////
                      SizedBox(height:85.h,),
                      // FlatButton(onPressed: (){

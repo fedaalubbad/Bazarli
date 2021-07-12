@@ -25,122 +25,124 @@ class BuildCarouselSlider extends StatelessWidget{
       child: CarouselSlider.builder(
         itemCount: product.length,
         itemBuilder: (_, index, realIdx) {
-          return Column(
-            children: [
+          return Container(
+            child: Column(
+              children: [
 
-              Container(
-                // color: Colors.white,
-                decoration: BoxDecoration(
-                    color: WhiteColor,
-                  borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ShadowColor,
-                      // spreadRadius: 5,
-                        blurRadius: 7.0,
-                        offset: Offset(0.0, 8)
-                    ),
-                  ],
-
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 6.w,vertical: 5),
-                child: Column(
-                    children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-                      image: DecorationImage(
-                        // colorFilter: ColorFilter.mode(
-                        //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
-                        fit: BoxFit.cover,
-                        image: NetworkImage(product[index].baseImage.originalImageUrl),
+                Container(
+                  height:(0.75.sh)-50.h,
+                  decoration: BoxDecoration(
+                      color: WhiteColor,
+                    borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ShadowColor,
+                        // spreadRadius: 5,
+                          blurRadius: 7.0,
+                          offset: Offset(0.0, 8)
                       ),
+                    ],
 
-                    ),
-                    // margin: EdgeInsets.symmetric(horizontal: 5),
-                    width: double.infinity,
-                    height:250.h,
                   ),
-                ),
+                  margin: EdgeInsets.symmetric(horizontal: 6.w,vertical: 5.h),
+                  child: Column(
+                      children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
 
-                 Container(
-                  // height:200.h,
-                  // width: ScreenUtil.defaultSize.width/2,
-                  margin:
-                  context.locale.toString()=='en'?
-                  EdgeInsets.only(top: 10.h,left: 10)
-                   : EdgeInsets.only(top: 10.h,right: 10)
-                   ,
-                   child: Row(
-                     children: [
-                       Container(
-                       height: 80.h,
-                       width: 0.2.sw,
-                       child: Image.network(product[index].baseImage.smallImageUrl)
-                       ),
-                       SizedBox(width: 5.w,),
-                       Container(
-                         width: 0.5.sw,
-                         child: Column(
-                           mainAxisAlignment: MainAxisAlignment.start,
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                              Text(product[index].name,style:TabsTextStyle,),
-                              SizedBox(width: 10.h,),
-                              Text(product[index].formatedPrice,style:PriceTextStyle,),
-                              SizedBox(height: 6.h,),
-                              StarRating(rating: 4,size: ScreenUtil().radius(20),),
-                           ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+                        image: DecorationImage(
+                          // colorFilter: ColorFilter.mode(
+                          //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
+                          fit: BoxFit.cover,
+                          image: NetworkImage(product[index].baseImage.originalImageUrl),
+                        ),
+
+                      ),
+                      // margin: EdgeInsets.symmetric(horizontal: 5),
+                      width: double.infinity,
+                      height:280.h,
+                    ),
+                  ),
+
+                   Container(
+                    // height:200.h,
+                    // width: ScreenUtil.defaultSize.width/2,
+                    margin:
+                    context.locale.toString()=='en'?
+                    EdgeInsets.only(top: 10.h,left: 10.w)
+                     : EdgeInsets.only(top: 10.h,right: 10.w)
+                     ,
+                     child: Row(
+                       children: [
+                         Container(
+                         height: 80.h,
+                         width: 0.2.sw,
+                         child: Image.network(product[index].baseImage.smallImageUrl)
                          ),
-                       ),
-                     ],
-                   ),
+                         SizedBox(width: 5.w,),
+                         Container(
+                           width: 0.5.sw,
+                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                                Text(product[index].name,style:TabsTextStyle,),
+                                SizedBox(width: 10.h,),
+                                Text(product[index].formatedPrice,style:PriceTextStyle,),
+                                SizedBox(height: 6.h,),
+                                StarRating(rating: 4,size: ScreenUtil().radius(20),),
+                             ],
+                           ),
+                         ),
+                       ],
+                     ),
 
+                    ),
+
+
+                        Container(
+                          margin:
+                          context.locale.toString()=='en'?
+                          EdgeInsets.only(left: 30.w,top: 30.h,bottom: 15.h)
+                          : EdgeInsets.only(right: 30.w,top: 30.h,bottom: 15.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+
+                          children: [
+                            SvgPicture.asset('assets/svg/fav.svg'),
+                            SizedBox(width: 20.w,),
+                            SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
+                          ],
+                        ),
+
+                        )
+
+                  ]
+                  ),
+                ),
+                // ),
+                Container(
+                  height: 20.h,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children:product
+                            .map((e) => BuildCordinator(
+                            currentIndex, product.indexOf(e)))
+                            .toList()),
                   ),
 
-
-                      Container(
-                        margin:
-                        context.locale.toString()=='en'?
-                        EdgeInsets.only(left: 30.w,top: 30.h,bottom: 15.h)
-                        : EdgeInsets.only(right: 30.w,top: 30.h,bottom: 15.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-
-                        children: [
-                          SvgPicture.asset('assets/svg/fav.svg'),
-                          SizedBox(width: 20.w,),
-                          SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
-                        ],
-                      ),
-
-                      )
-
-                ]
                 ),
-              ),
-              // ),
-              Container(
-                height: 20,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children:product
-                          .map((e) => BuildCordinator(
-                          currentIndex, product.indexOf(e)))
-                          .toList()),
-                ),
-
-              ),
-            ],
+              ],
+            ),
           );
         },
         options: CarouselOptions(
-            height: 460.h,
+            height:0.75.sh,
             initialPage: 0,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 3000),

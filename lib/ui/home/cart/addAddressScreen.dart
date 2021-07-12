@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,13 +14,15 @@ class AddAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HomeBackgroundColor,
+
       body: Stack(
         children: [
           ToolBar(
             name: 'ShippingAddress',
           ),
           Container(
-            margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 117),
+           padding: EdgeInsets.only( left:20.w,right:20.w,top: 117),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,16 +79,16 @@ class AddAddressScreen extends StatelessWidget {
           height: 10.h,
         ),
         Container(
-            height: 115.h,
+            margin: EdgeInsets.symmetric(horizontal:2.w),
             width: ScreenUtil.defaultSize.width,
-            padding: EdgeInsets.all(ScreenUtil().radius(20)),
+            padding: EdgeInsets.all(ScreenUtil().radius(25)),
             decoration: BoxDecoration(
               color: WhiteColor,
               borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
               boxShadow: [
                 BoxShadow(
                     color: ShadowColor,
-                    // spreadRadius: 5,
+                    spreadRadius: 5,
                     blurRadius: 7.0,
                     offset: Offset(0.0, 8)),
               ],

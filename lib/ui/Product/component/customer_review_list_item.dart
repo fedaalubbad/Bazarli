@@ -27,8 +27,8 @@ class CustomerReviewListItem extends StatelessWidget{
               // height:200.h,
               // width: ScreenUtil.defaultSize.width/2,
               margin: context.locale.toString()=='en'?
-              EdgeInsets.only(top: 10.h,left: 10)
-                  : EdgeInsets.only(top: 10.h,right: 10)
+              EdgeInsets.only(top: 10.h,left: 10.w)
+                  : EdgeInsets.only(top: 10.h,right: 10.w)
               ,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

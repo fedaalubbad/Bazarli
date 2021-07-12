@@ -72,7 +72,7 @@ class PaymentScreen extends StatelessWidget {
         Text(text,style: TitlesInHome,).tr(),
         SizedBox(height:10.h ,),
         Container(
-            height:220.h,
+            // height:220.h,
             width: ScreenUtil.defaultSize.width,
             padding: EdgeInsets.all(ScreenUtil().radius(15)),
             decoration: BoxDecoration(
@@ -407,207 +407,208 @@ class PaymentScreen extends StatelessWidget {
               ),
               child: Material(
                 color: WhiteColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          'CustomerReceipt',
-                          style:DialogTitle1Style,
-                        ).tr(),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                     SvgPicture.asset('assets/svg/printer.svg'),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                     GestureDetector(
-                       onTap: (){
-                         Navigator.of(context).pop();
-                       },
-                         child: SvgPicture.asset('assets/svg/cross.svg')),
-                        ],),
-                      )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      'Name',
-                      style:DescriptionStyle,
-                    ).tr(),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Text(
-                      'Mohammed alhajri',
-                      style:TitlesInHome,
-                    ).tr(),
-
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      'Address',
-                      style:DescriptionStyle,
-                    ).tr(),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Text(
-                      'at230,44000kuwait,kw',
-                      style:TitlesInHome,
-                    ).tr(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-///////////////////////////////////////////////////////////////////////////////////////
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
                         children: [
                           Text(
-                            'OrderID',
-                            style:DescriptionStyle,
-                          ).tr(),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Text(
-                            '16 NOV 2021',
-                            style:TitlesInHome,
-                          ).tr(),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-                          Text(
-                            'TransactionNumber',
-                            style:DescriptionStyle,
-                          ).tr(),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Text(
-                            '26 NOV 2021',
-                            style:TitlesInHome,
-                          ).tr(),
-                        ],
-                      ),
-
-                    ],),
-                     SizedBox(height: 20.h,),
-                    Text(
-                      'TransactionStatus',
-                      style:DescriptionStyle,
-                    ).tr(),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Text(
-                      '26 NOV 2021',
-                      style:TitlesInHome,
-                    ).tr(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-//////////////////////////////////////////////////////////////////////////////////////
-                    Row(
-                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                      children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'SubTotal',
-                            style:DescriptionStyle,
-                          ).tr(),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Text(
-                            'EGP 129,99',
-                            style:TitlesInHome,
-                          ).tr(),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'DeliveryChange',
-                            style:DescriptionStyle,
-                          ).tr(),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Text(
-                            'EGP 299,99',
-                            style:TitlesInHome,
-                          ).tr(),
-                        ],
-                      ),
-
-                    ],),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      'Tax',
-                      style:DescriptionStyle,
-                    ).tr(),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Text(
-                      'EGP 0,00',
-                      style:TitlesInHome,
-                    ).tr(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height:20.h,
-                    ),
-///////////////////////////////////////////////////////////////////////////////////
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
-                          Text(
-                            'GrandTotal',
+                            'CustomerReceipt',
                             style:DialogTitle1Style,
                           ).tr(),
-                          SizedBox(
-                            width: 3.h,
-                          ),
-                          Text(
-                            'EGP 3000.00',
-                            style:GrandTotalStyle,
-                          ).tr(),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                       SvgPicture.asset('assets/svg/printer.svg'),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                       GestureDetector(
+                         onTap: (){
+                           Navigator.of(context).pop();
+                         },
+                           child: SvgPicture.asset('assets/svg/cross.svg')),
+                          ],),
+                        )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        'Name',
+                        style:DescriptionStyle,
+                      ).tr(),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Text(
+                        'Mohammed alhajri',
+                        style:TitlesInHome,
+                      ).tr(),
+
+                      SizedBox(
+                        height:10.h,
+                      ),
+                      Text(
+                        'Address',
+                        style:DescriptionStyle,
+                      ).tr(),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Text(
+                        'at230,44000kuwait,kw',
+                        style:TitlesInHome,
+                      ).tr(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+///////////////////////////////////////////////////////////////////////////////////////
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'OrderID',
+                              style:DescriptionStyle,
+                            ).tr(),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Text(
+                              '16 NOV 2021',
+                              style:TitlesInHome,
+                            ).tr(),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Text(
+                              'TransactionNumber',
+                              style:DescriptionStyle,
+                            ).tr(),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Text(
+                              '26 NOV 2021',
+                              style:TitlesInHome,
+                            ).tr(),
+                          ],
+                        ),
+
+                      ],),
+                       SizedBox(height:10.h,),
+                      Text(
+                        'TransactionStatus',
+                        style:DescriptionStyle,
+                      ).tr(),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Text(
+                        '26 NOV 2021',
+                        style:TitlesInHome,
+                      ).tr(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+//////////////////////////////////////////////////////////////////////////////////////
+                      Row(
+                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                        children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'SubTotal',
+                              style:DescriptionStyle,
+                            ).tr(),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Text(
+                              'EGP 129,99',
+                              style:TitlesInHome,
+                            ).tr(),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'DeliveryChange',
+                              style:DescriptionStyle,
+                            ).tr(),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Text(
+                              'EGP 299,99',
+                              style:TitlesInHome,
+                            ).tr(),
+                          ],
+                        ),
+
+                      ],),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        'Tax',
+                        style:DescriptionStyle,
+                      ).tr(),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Text(
+                        'EGP 0,00',
+                        style:TitlesInHome,
+                      ).tr(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height:10.h,
+                      ),
+///////////////////////////////////////////////////////////////////////////////////
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Text(
+                              'GrandTotal',
+                              style:DialogTitle1Style,
+                            ).tr(),
+                            SizedBox(
+                              width: 3.h,
+                            ),
+                            Text(
+                              'EGP 3000.00',
+                              style:GrandTotalStyle,
+                            ).tr(),
 
 
-                    ],),
-                  ],
+                      ],),
+                    ],
+                  ),
                 ),
               ),
             ),

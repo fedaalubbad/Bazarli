@@ -14,6 +14,7 @@ class HomeToolBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       height: 117.h,
      decoration: BoxDecoration(

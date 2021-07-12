@@ -14,6 +14,7 @@ class ShippingAdressScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+     backgroundColor: HomeBackgroundColor,
      body: Stack(
 
        children: [
@@ -49,7 +50,7 @@ class ShippingAdressScreen extends StatelessWidget{
         Text(text,style: TitlesInHome,).tr(),
         SizedBox(height:10.h ,),
         Container(
-            height:220.h,
+            // height:220.h,
             width: ScreenUtil.defaultSize.width,
             padding: EdgeInsets.all(ScreenUtil().radius(15)),
             decoration: BoxDecoration(

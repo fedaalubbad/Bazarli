@@ -69,7 +69,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   getTopProducts(BuildContext context){
     return Container(
-      // height:400.h,
       //   width: ScreenUtil.defaultSize.width,
         child:  BuildCarouselSlider(
           product:Provider.of<ProductProvider>(context,listen: false).productList

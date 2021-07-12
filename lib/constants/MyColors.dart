@@ -16,6 +16,7 @@ const Color HomeBackgroundColor=Color.fromRGBO(251, 251, 251, 1);
 const Color DividerColor=Color.fromRGBO(6, 30, 51, 0.1);
 const Color ShadowColor=Color.fromRGBO(0, 0, 0, 0.08);
 const Color StarColor=Color.fromRGBO(255, 204, 0, 1);
+const Color RedColor=Color.fromRGBO(188, 8, 8, 1);
 
 const GradientColors = [Color.fromRGBO(226, 226, 226, 1),Color.fromRGBO(255, 255, 255, 0)];
 // const kTextColor = Color(0xFF535353);

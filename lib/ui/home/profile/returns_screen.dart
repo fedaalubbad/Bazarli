@@ -1,5 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/ui/home/profile/returns_edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -48,6 +50,7 @@ class ReturnsScreen extends StatelessWidget{
       right: 20,
       child: InkWell(
         onTap: (){
+          NavigationService.navigationService.navigateToWidget(ReturnsEditScreen());
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),

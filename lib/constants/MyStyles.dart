@@ -29,3 +29,4 @@ final WhiteButtonStyle=TextStyle(color:WhiteColor,fontWeight: FontWeight.w400,fo
 final PriceNowTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700,fontSize: 20.sp,fontStyle: FontStyle.normal);
 
 final TableTextlStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);
+final ErrorRedTextlStyle=TextStyle(color:RedColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);

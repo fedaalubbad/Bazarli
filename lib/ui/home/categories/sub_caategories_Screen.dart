@@ -23,29 +23,33 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-     body: Container(
-       width: double.infinity,
-       height: double.infinity,
-       child: SingleChildScrollView(
-           child: Expanded(
-             child: Column(
-               children: [
-                 HomeToolBar(isHome: false,),
-                 SizedBox(height: 1.h,),
-                 filterBar(),
-                 SizedBox(height: 1.h,),
-                 getTopBarCircles(),
-                 SizedBox(height: 10.h,),
-                 SizedBox(height: 10.h,),
-                 !isMenue?
-                  getProductsInList(context): getProductsGrid(context),
+     body: Stack(
+       children: [
+         HomeToolBar(isHome: false,),
+         Container(
+           margin: EdgeInsets.only(top: 120.h),
+           width: double.infinity,
+           height: double.infinity,
+           child: SingleChildScrollView(
 
-       ],
-             ),
+                 child: Column(
+                   children: [
+                     SizedBox(height: 1.h,),
+                     filterBar(),
+                     SizedBox(height: 1.h,),
+                     getTopBarCircles(),
+                     !isMenue?
+                      getProductsInList(context)
+                      : getProductsGrid(context),
+
+           ],
+
+               ),
+
            ),
 
-       ),
-
+         ),
+       ],
      ),
    );
   }
@@ -132,13 +136,14 @@ getProductsGrid(BuildContext context){
 }
 getProductsInList(BuildContext context){
 return Container(
-  height: 500,
+  // margin: EdgeInsets.only(bottom: 20.h),
+  height: 450.h,
     child: ListView.builder(
       itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
         itemBuilder: (context,index){
          return
         ProductListMenuItem(product:Provider.of<ProductProvider>(context,listen: false).productList[index],);
-          
+
         },
 
   ),

@@ -82,7 +82,7 @@ buildMeasurementButton(BuildContext context){
    : Container(
       alignment: Alignment.center,
       width: 0.4.sw,
-      child: Text('CM',style: WhiteButtonStyle,).tr(),
+      child: Text(text,style: WhiteButtonStyle,).tr(),
     );
   }
 

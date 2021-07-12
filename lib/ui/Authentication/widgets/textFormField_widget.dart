@@ -19,12 +19,16 @@ class CustomTextfieldWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
   return TextFormField(
-         controller: contraller,
+    maxLines: 2,
+    controller: contraller,
          decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+           isDense: true,
+           contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
           border: InputBorder.none,
           hintText: hint,
-           hintStyle:SliderTitle2Style,
+          labelText: label,
+         hintStyle:SliderTitle2Style,
+          labelStyle: TextLabelStyle,
           focusedBorder:OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(

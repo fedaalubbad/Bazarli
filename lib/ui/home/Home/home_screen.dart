@@ -1,12 +1,14 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:bazarli/ui/home/Home/component/dotted_slider.dart';
 import 'package:bazarli/ui/home/Home/component/product_item.dart';
+import 'package:bazarli/ui/search/categorySearchScreen.dart';
 import 'package:bazarli/ui/home/utils/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,7 +117,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         isScrollable: true,
         tabs:  List<Tab>.generate( Provider.of<CategoriesProvider>(context,listen: false).categoriesList.length, (int tabIndex) {
           return Tab(
-            child:Center(child: Text(Provider.of<CategoriesProvider>(context,listen: false).categoriesList[tabIndex].name,style: TabsTextStyle,),) ,
+            child:InkWell(
+              onTap: (){
+                NavigationService.navigationService.
+                navigateToWidget(CategorySearchScreen(category:Provider.of<CategoriesProvider>(context,listen: false).categoriesList[tabIndex] ,));
+              },
+              child: Center(
+                child: Text(Provider.of<CategoriesProvider>(context,listen: false).categoriesList[tabIndex].name,style: TabsTextStyle,),),
+            ) ,
             // text: 'Tab ${tabIndex}',
           );
         }),

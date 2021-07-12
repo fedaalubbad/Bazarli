@@ -37,7 +37,7 @@ class ProductToolBar extends StatelessWidget {
 
                 Container(
                   width: 0.7.sw,
-                  height: 45.h,
+                  // height: 45.h,
                   alignment:context.fallbackLocale.toString()=='en'? Alignment.centerLeft:Alignment.centerRight,
                   child: Text(productName,style: ProducttoolbarTitleStyle,maxLines: 2,)
                 ),

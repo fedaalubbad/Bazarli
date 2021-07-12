@@ -18,6 +18,7 @@
   "Don't_have_account": "ليس لديك حساب بعد؟",
   "Name": "الاسم",
   "Email": "البريد الالكتروني",
+  "PhoneNumber": "رقم الهاتف",
   "Password": "كلمة السر",
   "By_processing": "من خلال المعالجة لانشاء حسابك \n فانك توافق على",
   "Forgot_Password": "نسيت كلمة المرور",
@@ -35,7 +36,7 @@
   "Overview": "نظرة عامة",
   "CustomerReview": "مراجعة العميل",
   "CM": "سم",
-  "INCH": "INCH",
+  "INCH": "انش",
   "modelNo": "رقم الموديل",
   "was": "قبل",
   "Now": "بعد",
@@ -43,6 +44,42 @@
   "ItemMeasurements": "قياس العنصر",
   "WriteAReview": "اكتب مراجعة",
   "Details": "التفاصيل",
-  "Saving": "توفير"
+  "Checkout": "الدفع",
+  "Saving": "توفير",
+  "ShippingAddress": "عنوان الشحن",
+  "PrimaryAddress": "العنوان الافتراضي",
+  "AddNewAddress": "اضافة عنوان جديد",
+  "Address": "العنوان",
+  "Continue": "استمر",
+  "DeliveryAddress": "عنوان التسليم",
+  "EditAddress": "تعديل العنوان",
+  "AddDescription": "اضافة تفاصيل",
+  "Optional": "(اختياري)",
+  "AddressLabel": "أضف وصفا",
+  "home": "منزل",
+  "Work": "عمل",
+  "SaveAddress": "حفظ العنوان",
+  "PersonalInformation": "معلومات شخصية",
+  "MobileNumber": "رقم الهاتف",
+  "FirstName": "الاسم الأول",
+  "LastName": "الاسم الاخير",
+  "Payment": "دفع",
+  "SelectShippingMethod": "اختر طريقة شحن",
+  "SelectPaymentMethod": "اختر طريقة دفع",
+  "Knet": "كنيت",
+  "Visa": "فيزا",
+  "Subtotal": "المجموع الفرعي",
+  "DeliveryChange": "تغيير التسليم",
+  "Tax": "الضريبة %",
+  "GrandTotal": "المجموع الاجمالي",
+  "PayNow": "ادفع الآن",
+  "OrderPlaced": "تم الطلب!",
+  "OrderPlacedSuccessfully": "تم وضع طلبك بنجاح",
+  "Done": "منتهي"
+
+
+
+
+
 
 }

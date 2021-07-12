@@ -15,9 +15,18 @@ class HomeToolBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      color: WhiteColor,
       height: 117.h,
-      // child: Center(
+     decoration: BoxDecoration(
+       color: WhiteColor,
+       boxShadow: [
+         BoxShadow(
+             color: ShadowColor,
+             // spreadRadius: 5 ,
+             blurRadius: 7.0,
+             offset: Offset(0.0, 8)
+         ),
+       ],
+     ),
       child: Container(
         margin: EdgeInsets.only(top: 57.h),
         height: 20.h,

@@ -1,5 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/ui/home/cart/cart_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +30,7 @@ class HomeScreenState extends State<HomeMainScreen> {
      body: Stack(children:[
        HomeToolBar(isHome: true,),
        Container(
-           margin: EdgeInsets.only(top:117.h),
+           margin: EdgeInsets.only(top:120.h),
              height: double.infinity,
              width: double.infinity,
              color: HomeBackgroundColor,
@@ -39,9 +40,11 @@ class HomeScreenState extends State<HomeMainScreen> {
                    children: [
 
                    ///////////////////////////// body
-                     _selectedPageIndex==0?HomeScreen():CategoriesScreen(),
+                     _selectedPageIndex==0?HomeScreen()
+                     :_selectedPageIndex==1?CategoriesScreen()
+                    : _selectedPageIndex==3?CartScreen():CartScreen(),
                   ////////////////////////////
-                     SizedBox(height: 83.h,),
+                     SizedBox(height:85.h,),
                      // FlatButton(onPressed: (){
                      //   Provider.of<ProductProvider>(context, listen: false).getAllProducts();
                      // }, child:Text('print'))
@@ -60,10 +63,15 @@ class HomeScreenState extends State<HomeMainScreen> {
                height:83.h ,
                decoration: BoxDecoration(
                  borderRadius: BorderRadius.only(
-                     topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                 // boxShadow: [
-                 //   BoxShadow(color: MyColors.greyColor.withOpacity(0.7), spreadRadius: 0, blurRadius: 0,),
-                 // ],
+                  topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+                 boxShadow: [
+                   BoxShadow(
+                       color: ShadowColor,
+                       spreadRadius: 5 ,
+                       blurRadius: 7.0,
+                       offset: Offset(0.0, 8)
+                   ),
+                 ],
                ),
                child: ClipRRect(
                  borderRadius: BorderRadius.only(

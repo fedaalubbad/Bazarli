@@ -32,14 +32,14 @@ class HomeScreenState extends State<HomeMainScreen> {
   Widget build(BuildContext context) {
    return Scaffold(
      body: Stack(children:[
-      _selectedPageIndex==2?ProfileToolBar(): HomeToolBar(isHome: true,),
+      _selectedPageIndex==2?ProfileToolBar(isProfile: true,): HomeToolBar(isHome: true,),
        Container(
            margin: EdgeInsets.only(top:_selectedPageIndex==2?ScreenUtil.defaultSize.height/4.h:120.h),
              height: double.infinity,
              width: double.infinity,
              color: HomeBackgroundColor,
              child: SingleChildScrollView(
-               child: Expanded(
+
                  child: Column(
                    children: [
 
@@ -57,7 +57,7 @@ class HomeScreenState extends State<HomeMainScreen> {
                    ],
                  ),
                ),
-             ),
+
            ),
 
  ////////////////////////////////bottom navigation bar

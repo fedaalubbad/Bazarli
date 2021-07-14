@@ -43,7 +43,6 @@ class CustomerReviewListItem extends StatelessWidget{
                   SizedBox(width: 5.w,),
                   Container(
                     width: 0.55.sw,
-                    child: Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +59,6 @@ class CustomerReviewListItem extends StatelessWidget{
                           SizedBox(height: 10.h,),
 
                         ],
-                      ),
                     ),
                   ),
                 ],

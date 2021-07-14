@@ -56,7 +56,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         SizedBox(height: 15.h,),
         dottedSlider(),
         SizedBox(height: 30.h,),
-        BuildHomeTitle(titleText:'Flash Sale\nUP TO 80% OFF',buttonText: 'Shop Now',),
+        BuildHomeTitle(titleText:'Flash Sale\nUP TO 80% OFF',buttonText: 'ShopNow',),
         SizedBox(height: 30.h,),
         getTopProducts(context),
         SizedBox(height: 10.h,),

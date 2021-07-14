@@ -1,17 +1,17 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/ui/home/cart/addAddressScreen.dart';
 import 'package:bazarli/ui/home/cart/shipping_addresses_screen.dart';
 import 'package:bazarli/ui/home/profile/profile_details_screen.dart';
 import 'package:bazarli/ui/home/profile/returns_screen.dart';
 import 'package:bazarli/ui/home/profile/wishlist_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'clims_screen.dart';
+import 'component/extra_widget.dart';
 import 'languages_screen.dart';
 import 'orders_screen.dart';
 
@@ -32,10 +32,10 @@ class ProfileScreen extends StatelessWidget {
                   ProfileListItemWidget(context,'Returns',5,'assets/svg/fi_refresh.svg'),
                   ProfileListItemWidget(context,'Wishlist',6,'assets/svg/fav.svg'),
                   ProfileListItemWidget(context,'Language',7,'assets/svg/language_icon.svg'),
-                  ProfileListItemWidget(context,'Sign out',8,'assets/svg/fi_logout.svg'),
+                  ProfileListItemWidget(context,'SignOut',8,'assets/svg/fi_logout.svg'),
 
                   SizedBox(height:15.h,),
-
+                  ExtraWidget(),
                   SizedBox(height:30.h,),
 
                 ])));
@@ -91,4 +91,6 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }

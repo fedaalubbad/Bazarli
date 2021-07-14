@@ -6,6 +6,7 @@ import 'package:bazarli/ui/home/Home/component/home_toolbar.dart';
 import 'package:bazarli/ui/search/new_arrivals_screen.dart';
 import 'package:bazarli/ui/search/price_search_screen.dart';
 import 'package:bazarli/ui/search/product_rating_screen.dart';
+import 'package:bazarli/ui/search/sizes_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'brand_screen.dart';
+import 'color_seach_screen.dart';
 
 class CategorySearchScreen extends StatelessWidget {
   Categories category;
@@ -90,8 +92,14 @@ class CategorySearchScreen extends StatelessWidget {
           NavigationService.navigationService.navigateToWidget(PriceSearchScreen())
           :index==3?
           NavigationService.navigationService.navigateToWidget(ProductRatingSearchScreen())
-          :index==5?
+          :index==4?
+          NavigationService.navigationService.navigateToWidget(SizesSearchScreen())
+          : index==5?
           NavigationService.navigationService.navigateToWidget(NewArrivalScreen())
+          : index==6?
+          NavigationService.navigationService.navigateToWidget(NewArrivalScreen())
+          : index==7?
+          NavigationService.navigationService.navigateToWidget(ColorsSearchScreen())
          :NavigationService.navigationService.navigateToWidget(NewArrivalScreen());
 
       },

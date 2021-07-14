@@ -30,3 +30,4 @@ final PriceNowTextStyle=TextStyle(color:PrimaryColor,fontWeight: FontWeight.w700
 
 final TableTextlStyle=TextStyle(color:TextLabelColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);
 final ErrorRedTextlStyle=TextStyle(color:RedColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);
+final AboutStyle=TextStyle(color:AboutColor,fontWeight: FontWeight.w400,fontSize: 14.sp,fontStyle: FontStyle.normal);

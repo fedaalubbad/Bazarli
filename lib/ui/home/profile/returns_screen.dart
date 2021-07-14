@@ -26,12 +26,12 @@ class ReturnsScreen extends StatelessWidget{
                    SizedBox(height: 10.h,),
                    SvgPicture.asset('assets/svg/returns.svg'),
                    SizedBox(height: 20.h,),
-                   Text("We don't see any returns requested",style:TitlesInHome ,),
+                   Text("NoReturns",style:TitlesInHome ,).tr(),
                    SizedBox(height: 10.h,),
                    Container(alignment: Alignment.center,
                        width: ScreenUtil.defaultSize.width/1.2,
-                       child: Text("Need to submit a request? Just click on the button below!",
-                         style:SliderTitle2Style ,textAlign: TextAlign.center,)
+                       child: Text("SubmitReturns",
+                         style:SliderTitle2Style ,textAlign: TextAlign.center,).tr()
                    ),
                    SizedBox(height: 10.h,),
                    requestBtnWidget(),
@@ -44,11 +44,7 @@ class ReturnsScreen extends StatelessWidget{
     );
   }
   requestBtnWidget(){
-    return Positioned(
-      bottom:10,
-      left: 20,
-      right: 20,
-      child: InkWell(
+    return InkWell(
         onTap: (){
           NavigationService.navigationService.navigateToWidget(ReturnsEditScreen());
         },
@@ -62,11 +58,11 @@ class ReturnsScreen extends StatelessWidget{
               borderRadius:
               BorderRadius.circular(ScreenUtil().radius(5))),
           child: Text(
-            'File a new return request',
+            'FileAnewReturn',
             style: SliderNextStyle,
           ).tr(),
         ),
-      ),
+
     );
   }
 }

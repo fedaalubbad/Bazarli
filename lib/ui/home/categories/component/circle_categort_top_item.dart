@@ -13,7 +13,7 @@ class CircleTopCategoryItem extends StatelessWidget{
        mainAxisAlignment: MainAxisAlignment.center,
        children: [
          CircleAvatar(backgroundColor: GrayColor,
-           radius: ScreenUtil().radius(18),
+           radius: ScreenUtil().radius(20),
             backgroundImage:NetworkImage('https://silkwayshop.com/wp-content/uploads/2020/01/Fashion-Accessories.jpg'),),
             Container(width: 90.w,
             child: Text('accessories',style:TabsTextStyle,)),

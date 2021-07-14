@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../tool_bar_widget.dart';
 
 class OrdersScreen extends StatelessWidget{
@@ -27,7 +27,7 @@ class OrdersScreen extends StatelessWidget{
                   children: [
                     Container(
                         margin: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Text('See your orders and check the status of your order',style: SliderTitle2Style,)),
+                        child: Text('SeeManagedCheckOrder',style: SliderTitle2Style,).tr()),
                     Container(
                         margin: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Text('Ordered on Oct 10, 2021',style: SliderTitle2Style,)),

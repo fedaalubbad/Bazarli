@@ -1,10 +1,12 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/home/home_main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 class CustomLoginButton extends StatelessWidget {
 
   @override
@@ -12,6 +14,9 @@ class CustomLoginButton extends StatelessWidget {
     return Container(
       child: InkWell(
           onTap: () {
+            // Provider.of<AuthenticationProvider>(context, listen: false).
+            // customerSign(Provider.of<AuthenticationProvider>(context, listen: false).authData['email'],
+            //     Provider.of<AuthenticationProvider>(context, listen: false).authData['password']);
           NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
           },
           child: Container(
@@ -24,7 +29,7 @@ class CustomLoginButton extends StatelessWidget {
                 color: PrimaryColor,
                 borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
 
-            child: Text('SignUp',
+            child: Text(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp?'SignUp':'SignIn',
               style:SliderNextStyle,
             ).tr(),
           )

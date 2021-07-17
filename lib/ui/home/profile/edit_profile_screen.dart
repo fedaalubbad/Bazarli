@@ -16,7 +16,7 @@ class EditProfileScreen extends StatelessWidget{
             children: [
              ProfileToolBar(),
               Container(
-                margin: EdgeInsets.only(top:ScreenUtil.defaultSize.height/4),
+                margin: EdgeInsets.only(top:ScreenUtil.defaultSize.height.h/4.h),
                 child:  SingleChildScrollView(
                   child: Column(
                     children: [

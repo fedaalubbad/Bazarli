@@ -3,7 +3,7 @@ import 'Data.dart';
 class LoginStatus {
   String message;
   Data data;
-  String token;
+  bool token;
 
   LoginStatus({this.message, this.data, this.token});
 

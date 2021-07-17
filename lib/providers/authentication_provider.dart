@@ -1,9 +1,13 @@
+import 'package:bazarli/api_helper/authentication_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
-  // final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
   bool isObscure = true;
   bool vaidate = true;
+  AuthMode authMode;
+  Language language;
   final passwordContraller =TextEditingController();
   final nameContraller =TextEditingController();
   final emailContraller =TextEditingController();
@@ -13,22 +17,40 @@ class AuthenticationProvider extends ChangeNotifier {
     'name': '',
   };
 
-  switchObscure() {
-    isObscure = !isObscure;
-    notifyListeners();
+  switchLanguage(BuildContext context){
+    if(language==Language.English){
+      language=Language.Arabic;
+      context.locale=Locale('ar');
+      notifyListeners();
+    }else{
+      language=Language.English;
+      context.locale=Locale('en');
+      notifyListeners();
+    }
   }
 
-  // bool onValidate() {
-  //   if(!formStateKey.currentState.validate()){
-  //     vaidate=false;
-  //     notifyListeners();
-  //     return false;
-  //   }
-  //   formStateKey.currentState.save();
-  //   vaidate=true;
-  //   notifyListeners();
-  //   return true;
-  // }
+  switchMode(){
+    if(authMode==AuthMode.login){
+      authMode=AuthMode.signUp;
+      notifyListeners();
+    }else{
+      authMode=AuthMode.login;
+      notifyListeners();
+    }
+  }
+
+  bool onValidate() {
+    if(!formStateKey.currentState.validate()){
+      vaidate=false;
+      notifyListeners();
+      return false;
+    }
+
+    formStateKey.currentState.save();
+    vaidate=true;
+    notifyListeners();
+    return true;
+  }
 
   saveEmail(val) {
     authData['email'] = val;
@@ -36,7 +58,7 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   savePassword(val) {
-    authData['pass'] = val;
+    authData['password'] = val;
     notifyListeners();
   }
 
@@ -68,12 +90,19 @@ class AuthenticationProvider extends ChangeNotifier {
     return null;
   }
 
-  void Sign() {
- // if(onValidate()) {
+  void customerSign(String email,String password) {
+    if(!formStateKey.currentState.validate()){
+      // vaidate=false;
+      // notifyListeners();
+      return;
+    }
 
+    formStateKey.currentState.save();
+    // vaidate=true;
+    AuthenticationApi.api.customerSign(email,password);
 
- // }
   }
 }
 
 enum AuthMode { signUp, login }
+enum Language {English,Arabic}

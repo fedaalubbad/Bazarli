@@ -1,10 +1,12 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class LoginTopWigget extends StatelessWidget {
 
@@ -82,18 +84,23 @@ class LoginTopWigget extends StatelessWidget {
         margin: EdgeInsets.only(top: 10.h,left: 20.w,right:20.w),
         child: Row(
           children: [
-            Text('have_account',
+            Text(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp?'have_account':"Don't_have_account",
               style: SliderTitle2Style,
             ).tr(),
             SizedBox(
               width: 10.w,
             ),
-            Text('SignIn',
-              style: SignInTextStyle,
-            ).tr(),
+           InkWell(
+              onTap: (){
+                Provider.of<AuthenticationProvider>(context, listen: false).switchMode();
+              },
+              child: Text(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp?'SignIn':'SignUp',
+                style: SignInTextStyle,
+              ).tr(),
+            ),
           ],
         ),
-      )
+      ),
     ]);
   }
 }

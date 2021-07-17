@@ -52,18 +52,18 @@ class _CustomDialogBoxState extends State<OrderPlacedDialogBox> {
             style: TitlesInHome,
           ).tr(),
           SizedBox(
-            height: 5,
+            height: 5.h,
           ),
           Text(
             'OrderPlacedSuccessfully',
             style: DescriptionStyle,
           ).tr(),
           SizedBox(
-            height: 45,
+            height: 45.h,
           ),
           // SvgPicture.asset('assets/svg/jumping.svg'),
           SizedBox(
-            height: 40,
+            height: 40.h,
           ),
           Container(
             child: GestureDetector(

@@ -9,13 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class LoginMidWidget extends StatelessWidget {
-  GlobalKey<FormState> homeKey ;
-  LoginMidWidget(this.homeKey);
+  LoginMidWidget();
   @override
   Widget build(BuildContext context) {
     return  Container(
         child: Form(
-          key: homeKey,
+          key:Provider.of<AuthenticationProvider>(context, listen: false).formStateKey,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisSize: MainAxisSize.min,
@@ -24,13 +23,15 @@ class LoginMidWidget extends StatelessWidget {
                     height: 33.h,
                   ),
 
+          if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
                  Text('Name',
                    style: TextLabelStyle,
                  ).tr(),
                       SizedBox(
                         height: 10.h,
                       ),
-                Container(
+             if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                        Container(
                     height: 50.h,
                     decoration: BoxDecoration(
                       color:TextFormFieldColor ,
@@ -42,9 +43,10 @@ class LoginMidWidget extends StatelessWidget {
                       hint: 'Name'.tr(),
                    textInputType:TextInputType.text,
                    save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
-                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
+                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateName,
                  ),),
-                      SizedBox(
+                      if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.signUp)
+                        SizedBox(
                         height: 15.h,
                       ),
                       Text('Email',
@@ -64,7 +66,7 @@ class LoginMidWidget extends StatelessWidget {
                       hint: 'Email'.tr(),
                    textInputType:TextInputType.emailAddress,
                    save:Provider.of<AuthenticationProvider>(context, listen: false).saveEmail,
-                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateName,
+                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
                  ),
                 ),
                       SizedBox(

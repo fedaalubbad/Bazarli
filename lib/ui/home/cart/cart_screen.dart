@@ -38,9 +38,9 @@ class CartScreen extends StatelessWidget{
 
   checkOutBtnWidget(){
     return Positioned(
-      bottom:20,
-      left: 20,
-      right: 20,
+      bottom:20.h,
+      left: 20.w,
+      right: 20.w,
       child: InkWell(
         onTap: (){
           NavigationService.navigationService.navigateToWidget(ShippingAdressScreen());

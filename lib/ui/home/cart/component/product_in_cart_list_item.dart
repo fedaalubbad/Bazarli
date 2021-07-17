@@ -17,6 +17,7 @@ class ProductInCartListItem extends StatelessWidget{
       child: Stack(
         children: [
           Container(
+            height: ScreenUtil.defaultSize.height/3.2.h,
             margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
             decoration: BoxDecoration(
               boxShadow: [
@@ -37,7 +38,7 @@ class ProductInCartListItem extends StatelessWidget{
                     ClipRRect(
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
                         child: Container(
-                          height:118.h,
+                          height: ScreenUtil.defaultSize.height/3.2.h,
                           width: 70.w,
                           decoration: BoxDecoration(
                             // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
@@ -56,19 +57,21 @@ class ProductInCartListItem extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(width: 40.w,height: 40.h,
-                            margin: EdgeInsets.only(left:2.w,),
+                            margin: EdgeInsets.symmetric(horizontal: 2.w),
                             child: Image.network('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg')),
 
 
                         Container(
-                          margin: EdgeInsets.only(left:5.w,),
+                          margin: context.locale.toString()=='en'?EdgeInsets.only(left:5.w,):EdgeInsets.only(right:5.w,),
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(width:200.w,
-                                  child: Text(product.shortDescription,style:TabsTextStyle,maxLines:2,)),
-                              SizedBox(width: 10.h,),
+                              Container(
+                              width:0.4.sw,
+                              child: Text(product.shortDescription,style:TabsTextStyle,maxLines:2,)
+                              ),
+                              SizedBox(height: 5.h,),
                               Text(product.formatedPrice,style:PriceTextStyle,),
                               SizedBox(height: 6.h,),
 
@@ -83,7 +86,7 @@ class ProductInCartListItem extends StatelessWidget{
                                       // crossAxisAlignment: CrossAxisAlignment.end,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        SizedBox(width: 30.w,),
+                                        SizedBox(width: 20.w,),
                                         SvgPicture.asset('assets/svg/delete.svg'),
                                         SizedBox(width: 15.w,),
                                         Text('QTY',style: QTYStyle,),

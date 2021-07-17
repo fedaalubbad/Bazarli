@@ -5,3 +5,4 @@ const String categories="getCategories/";
 const String brands="suppliers/products/brands/";
 const String attributes="attributes/";
 const String families="families/";
+const String customerLogin="customer/login";

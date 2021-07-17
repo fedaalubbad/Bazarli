@@ -30,7 +30,7 @@ class BuildCarouselSlider extends StatelessWidget{
               children: [
 
                 Container(
-                  height:(0.75.sh)-50.h,
+                  // height:(0.70.sh)-50.h,
                   decoration: BoxDecoration(
                       color: WhiteColor,
                     borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
@@ -51,6 +51,8 @@ class BuildCarouselSlider extends StatelessWidget{
                     borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
 
                     child: Container(
+                      width: double.infinity,
+                      height:(0.40.sh),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
                         image: DecorationImage(
@@ -62,8 +64,7 @@ class BuildCarouselSlider extends StatelessWidget{
 
                       ),
                       // margin: EdgeInsets.symmetric(horizontal: 5),
-                      width: double.infinity,
-                      height:280.h,
+
                     ),
                   ),
 
@@ -89,7 +90,7 @@ class BuildCarouselSlider extends StatelessWidget{
                              mainAxisAlignment: MainAxisAlignment.start,
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                                Text(product[index].name,style:TabsTextStyle,),
+                                Text(product[index].name,style:TabsTextStyle,maxLines: 2,),
                                 SizedBox(width: 10.h,),
                                 Text(product[index].formatedPrice,style:PriceTextStyle,),
                                 SizedBox(height: 6.h,),
@@ -142,7 +143,7 @@ class BuildCarouselSlider extends StatelessWidget{
           );
         },
         options: CarouselOptions(
-            height:0.75.sh,
+            height:0.70.sh,
             initialPage: 0,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 3000),

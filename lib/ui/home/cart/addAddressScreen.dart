@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'PaymentScreen.dart';
 
 class AddAddressScreen extends StatelessWidget {
@@ -22,7 +21,7 @@ class AddAddressScreen extends StatelessWidget {
             name: 'ShippingAddress',
           ),
           Container(
-           padding: EdgeInsets.only( left:20.w,right:20.w,top: 117),
+           padding: EdgeInsets.only( left:20.w,right:20.w,top: 117.h),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

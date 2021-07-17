@@ -19,7 +19,7 @@ class PaymentScreen extends StatelessWidget {
             name: 'Payment',
           ),
           Container(
-            margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 117),
+            margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

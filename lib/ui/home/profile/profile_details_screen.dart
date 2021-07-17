@@ -18,7 +18,7 @@ class ProfileDetailsScreen extends StatelessWidget{
               children: [
                 ProfileToolBar(),
                 Container(
-                  margin: EdgeInsets.only(top:ScreenUtil.defaultSize.height.h/4.h),
+                  margin: EdgeInsets.only(top:ScreenUtil.defaultSize.height.h/4.h+20.h),
                    child:  Column(
                    children: [
                      buildProfileDetailsWidget(),

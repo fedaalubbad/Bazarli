@@ -21,7 +21,7 @@ class ShippingAdressScreen extends StatelessWidget{
          ToolBar(name:'ShippingAddress',),
 
          Container(
-           margin: EdgeInsets.only(left:20.w,right: 20.w,top: 117),
+           margin: EdgeInsets.only(left:20.w,right: 20.w,top: 117.h),
            child: SingleChildScrollView(
              child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,

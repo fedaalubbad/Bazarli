@@ -132,7 +132,7 @@ class HomeScreenState extends State<HomeMainScreen> {
                      BottomNavigationBarItem(
                        title: Text('Cart',
                          style: BottomBarTextStyle
-                       ),
+                       ).tr(),
                        icon: SvgPicture.asset('assets/svg/fi_shopping-cart.svg',
                            color:GrayColor),
                        activeIcon:SvgPicture.asset('assets/svg/fi_shopping-cart.svg',

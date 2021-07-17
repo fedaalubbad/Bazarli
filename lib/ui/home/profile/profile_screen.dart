@@ -24,15 +24,22 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height:5.h,),
                   ProfileListItemWidget(context,'Profile',1,'assets/svg/user_icon.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Orders',2,'assets/svg/orders_icon.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Addresses',3,'assets/svg/addresses_icon.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Claims',4,'assets/svg/fi_codesandbox.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Returns',5,'assets/svg/fi_refresh.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Wishlist',6,'assets/svg/fav.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'Language',7,'assets/svg/language_icon.svg'),
+                  Divider(),
                   ProfileListItemWidget(context,'SignOut',8,'assets/svg/fi_logout.svg'),
+                  Divider(),
 
                   SizedBox(height:15.h,),
                   ExtraWidget(),
@@ -63,15 +70,19 @@ class ProfileScreen extends StatelessWidget {
       },
       child: Container(
         // width: ScreenUtil.defaultSize.width,
-        height: 64.h,
+        height: 50.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+
                   children: [
                     SvgPicture.asset(asset,color: BlueDarkColor,),
                     SizedBox(width: 16.w,),
@@ -84,7 +95,6 @@ class ProfileScreen extends StatelessWidget {
 
               ],
             ),
-            Divider(),
 
           ],
         ),

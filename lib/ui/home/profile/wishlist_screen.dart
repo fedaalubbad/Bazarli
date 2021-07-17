@@ -43,9 +43,9 @@ class WishListScreen extends StatelessWidget{
 
   checkOutBtnWidget(){
     return Positioned(
-      bottom:10,
-      left: 20,
-      right: 20,
+      bottom:10.h,
+      left: 20.w,
+      right: 20.w,
       child: InkWell(
         onTap: (){
         },

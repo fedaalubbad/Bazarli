@@ -59,6 +59,8 @@ class MyApp extends StatelessWidget {
      title: 'Bazarli',
      theme: ThemeData(
        primaryColor: PrimaryColor,
+        accentColor: CurveColor,
+        indicatorColor: PrimaryColor,
         // primarySwatch: Colors.blue,
 
            textTheme: context.locale == 'ar'

@@ -47,6 +47,9 @@ class PriceSearchScreen extends StatelessWidget {
               borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
             ),
             child: CustomTextfieldWidget(
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
               hint: '00',
               textInputType:TextInputType.text,
               // save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
@@ -63,6 +66,9 @@ class PriceSearchScreen extends StatelessWidget {
               borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
             ),
             child: CustomTextfieldWidget(
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
               hint: '00',
               textInputType:TextInputType.text,
               // save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,

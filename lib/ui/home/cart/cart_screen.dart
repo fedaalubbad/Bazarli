@@ -9,29 +9,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'component/product_in_cart_list_item.dart';
-
-class CartScreen extends StatelessWidget{
+class CartScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return CartScreenState();
+  }
+}
+class CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMixin {
+@override
+bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 500.h,
-          child: Container(
-            padding: EdgeInsets.only(bottom:60.h),
-            // height: 480.h,
-              child: ListView.builder(
-                          itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
-                          itemBuilder: (context,index){
-                            return
-                              ProductInCartListItem(product:Provider.of<ProductProvider>(context,listen: false).productList[index],);
-                          },
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            height: 500.h,
+            child: Container(
+              padding: EdgeInsets.only(bottom:60.h),
+              // height: 480.h,
+                child: ListView.builder(
+                            itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
+                            itemBuilder: (context,index){
+                              return
+                                ProductInCartListItem(product:Provider.of<ProductProvider>(context,listen: false).productList[index],);
+                            },
 
+              ),
             ),
           ),
-        ),
-        checkOutBtnWidget()
-      ],
+          checkOutBtnWidget()
+        ],
+      ),
     );
 
   }

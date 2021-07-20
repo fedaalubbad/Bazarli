@@ -17,7 +17,7 @@ class ProductInCartListItem extends StatelessWidget{
       child: Stack(
         children: [
           Container(
-            height: ScreenUtil.defaultSize.height/3.2.h,
+            height: ScreenUtil.defaultSize.height.h/5.h,
             margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
             decoration: BoxDecoration(
               boxShadow: [
@@ -38,7 +38,7 @@ class ProductInCartListItem extends StatelessWidget{
                     ClipRRect(
                         borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
                         child: Container(
-                          height: ScreenUtil.defaultSize.height/3.2.h,
+                          height: ScreenUtil.defaultSize.height.h/5.h,
                           width: 70.w,
                           decoration: BoxDecoration(
                             // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
@@ -57,12 +57,12 @@ class ProductInCartListItem extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(width: 40.w,height: 40.h,
-                            margin: EdgeInsets.symmetric(horizontal: 2.w),
+                            margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
                             child: Image.network('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg')),
 
 
                         Container(
-                          margin: context.locale.toString()=='en'?EdgeInsets.only(left:5.w,):EdgeInsets.only(right:5.w,),
+                          margin: context.locale.toString()=='en'?EdgeInsets.only(top:10.h,left:5.w,):EdgeInsets.only(top:10.h,right:5.w,),
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,

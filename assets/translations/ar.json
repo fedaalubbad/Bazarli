@@ -19,7 +19,8 @@
   "Name": "الاسم",
   "Email": "البريد الالكتروني",
   "PhoneNumber": "رقم الهاتف",
-  "Password": "كلمة السر",
+  "Password": "كلمة المرور",
+  "ConfirmPassword": "تأكيد كلمة المرور",
   "By_processing": "من خلال المعالجة لانشاء حسابك \n فانك توافق على",
   "Forgot_Password": "نسيت كلمة المرور",
   "Privacy_Policy": "شروط الخدمة",
@@ -133,7 +134,21 @@
   "AllRightsReserved": "باجستو كل الحقوق محفوظة2021 ",
   "CategorySelection": "اختيار الفئة",
   "Tops": "قمة",
-  "ShopNow": "تسوق الان"
+  "ShopNow": "تسوق الان",
+  "Category": "فئة",
+  "Brand": "علامة تجارية",
+  "Price": "سعر",
+  "ProductRating": "تصنيف النتج",
+  "Size": "مقاس",
+  "NewArrivals": "وصل حديثا",
+  "Department": "قسم",
+  "Color": "اللون",
+  "Seller": "البائع",
+  "MoreFilters": "المزيد من المرشحات",
+  "Reset": "اعادة",
+  "Apply": "تطبيق",
+  "Items": "عناصر",
+  "Hello": "مرحبا"
 
 
 

@@ -14,10 +14,13 @@ class CustomLoginButton extends StatelessWidget {
     return Container(
       child: InkWell(
           onTap: () {
-            // Provider.of<AuthenticationProvider>(context, listen: false).
-            // customerSign(Provider.of<AuthenticationProvider>(context, listen: false).authData['email'],
-            //     Provider.of<AuthenticationProvider>(context, listen: false).authData['password']);
-          NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
+            if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.login) {
+              Provider.of<AuthenticationProvider>(context, listen: false)
+                  .customerSign(context);
+            }else {
+              Provider.of<AuthenticationProvider>(context, listen: false)
+                  .customerRegister(context);
+            }
           },
           child: Container(
             margin: EdgeInsets.only(

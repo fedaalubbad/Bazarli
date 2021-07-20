@@ -143,6 +143,9 @@ class AddAddressScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
           ),
           child: CustomTextfieldWidget(
+            isObscure: false,
+            isPassword: false,
+            linesNo: 1,
             // contraller: ,
             hint: 'Apartment / Flat number/ Tower Number/ Building Number',
             textInputType: TextInputType.multiline,
@@ -211,6 +214,9 @@ class AddAddressScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
             ),
             child: CustomTextfieldWidget(
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
               // hint: '20',
               label: '+20',
               textInputType: TextInputType.multiline,
@@ -226,6 +232,9 @@ class AddAddressScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
               ),
               child: CustomTextfieldWidget(
+                isObscure: false,
+                isPassword: false,
+                linesNo: 1,
                 hint: 'MobileNumber'.tr(),
                 // label: '+20',
                 textInputType: TextInputType.multiline,
@@ -242,6 +251,9 @@ class AddAddressScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
           ),
           child: CustomTextfieldWidget(
+            isObscure: false,
+            isPassword: false,
+            linesNo: 1,
             hint: 'FirstName'.tr(),
             // label: '+20',
             textInputType: TextInputType.multiline,
@@ -256,6 +268,9 @@ class AddAddressScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
           ),
           child: CustomTextfieldWidget(
+            isObscure: false,
+            isPassword: false,
+            linesNo: 1,
             hint: 'LastName'.tr(),
             // label: '+20',
             textInputType: TextInputType.multiline,

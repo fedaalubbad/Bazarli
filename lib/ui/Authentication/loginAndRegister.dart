@@ -1,12 +1,12 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/ui/Authentication/utils/BottomWaveClipper.dart';
 import 'package:bazarli/ui/Authentication/views_widgets/bottomWidget.dart';
 import 'package:bazarli/ui/Authentication/views_widgets/midWidget.dart';
 import 'package:bazarli/ui/Authentication/views_widgets/topWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,12 +23,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HomeBackgroundColor,
+      backgroundColor: CurveColor,
       body: SafeArea(
        child: Stack(
          children: [
            ClipPath(
-             clipper: WaveClipperTwo(),
+             clipper: BottomWaveClipper(value: 5),
              child: Container(
                color: WhiteColor,
                height: ScreenUtil.defaultSize.height/1.2,
@@ -50,9 +50,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
       ),
+           if(Provider.of<AuthenticationProvider>(context).isLoading)
+               Positioned(top: 0,bottom: 0,left: 0,right: 0,
+                   child: Center(child: CircularProgressIndicator(color: PrimaryColor,)))
          ],
        ),
       )
     );
   }
+
 }
+

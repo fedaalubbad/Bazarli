@@ -21,17 +21,19 @@ class ChangePasswordScreen extends StatelessWidget {
               Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 127.h),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height:20.h,),
-                        buildchangePasswordWidget(),
-                        SizedBox(height: 20.h,),
-                        doneBtnWidget(),
-                        SizedBox(height: 10.h,),
-                        cancelBtnWidget(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height:20.h,),
+                          buildchangePasswordWidget(),
+                          SizedBox(height: 20.h,),
+                          doneBtnWidget(),
+                          SizedBox(height: 10.h,),
+                          cancelBtnWidget(),
 
-                      ]
+                        ]
+                    ),
                   )
               )
             ]
@@ -78,6 +80,9 @@ class ChangePasswordScreen extends StatelessWidget {
               ),
               child:
               CustomTextfieldWidget(
+                isObscure: false,
+                isPassword: false,
+                linesNo: 1,
                 hint: 'CurrentPassword'.tr(),
                 textInputType:TextInputType.text,
               ),),
@@ -97,6 +102,9 @@ class ChangePasswordScreen extends StatelessWidget {
                 borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
               ),
               child: CustomTextfieldWidget(
+                isObscure: false,
+                isPassword: false,
+                linesNo: 1,
                 hint: 'RepeatNewPassword'.tr(),
                 textInputType:TextInputType.text,
               ),

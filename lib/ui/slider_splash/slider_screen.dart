@@ -62,7 +62,7 @@ class _SliderScreenState extends State<SliderScreen> {
               right: kDefaultPaddin,
               child: InkWell(
                 onTap: (){
-                  NavigationService.navigationService.navigateToWidget(SignScreen());
+                  NavigationService.navigationService.navigateAndReplaceWidget(SignScreen());
 
                 },
                 child: Container(
@@ -104,7 +104,7 @@ class _SliderScreenState extends State<SliderScreen> {
                         duration: Duration(milliseconds: 800),
                         curve: Curves.easeInOutQuint);
                     if(_currentPage==_pages.length-1)
-                     NavigationService.navigationService.navigateToWidget(SignScreen());
+                     NavigationService.navigationService.navigateAndReplaceWidget(SignScreen());
 
                   },
                   child: Container(

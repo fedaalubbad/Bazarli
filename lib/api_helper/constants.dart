@@ -6,3 +6,4 @@ const String brands="suppliers/products/brands/";
 const String attributes="attributes/";
 const String families="families/";
 const String customerLogin="customer/login";
+const String customerRegister="customer/register";

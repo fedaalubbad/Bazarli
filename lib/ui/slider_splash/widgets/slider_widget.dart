@@ -1,3 +1,4 @@
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +16,7 @@ class SliderPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      color: Colors.white,
+      color: HomeBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

@@ -19,6 +19,7 @@
   "Email": "Email",
   "PhoneNumber": "Phone Number",
   "Password": "Password",
+  "ConfirmPassword": "Confirm Password",
   "By_processing": "By processing to create your account you are agreeing to our",
   "Forgot_Password": "Forgot Password?",
   "Privacy_Policy": "Privacy Policy",
@@ -132,6 +133,22 @@
   "AllRightsReserved": "2021 Bagisto. All Rights Reserved",
   "CategorySelection": "Category Selection",
   "Tops": "Tops",
-  "ShopNow": "Shop Now"
+  "ShopNow": "Shop Now",
+  "Category": "Category",
+  "Brand": "Brand",
+  "Price": "Price",
+  "ProductRating": "Product Rating",
+  "Size": "Size",
+  "NewArrivals": "New Arrivals",
+  "Department": "Department",
+  "Color": "Color",
+  "Seller": "Seller",
+  "MoreFilters": "More filters",
+  "Reset": "Reset",
+  "Apply": "Apply",
+  "Items": "Items",
+  "Hello": "Hello"
+
+
 
 }

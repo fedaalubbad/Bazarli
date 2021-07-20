@@ -33,41 +33,39 @@ class LoginTopWigget extends StatelessWidget {
                 borderRadius:
                     BorderRadius.all(Radius.circular(ScreenUtil().radius(5))),
               ),
-              child: DropdownButton<String>(
+              child: DropdownButton<Language>(
                 icon: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                  padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 5.w),
                   child: SvgPicture.asset("assets/svg/arrow_down.svg"),
                 ),
                 underline: SizedBox(),
-                items: <String>[
-                  'en',
-                  'ar',
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
+                items: <Language>[Language.English, Language.Arabic].map((Language value) {
+                  return DropdownMenuItem<Language>(
+                    value:value,
                     child: Row(
                       children: [
                         Container(
                             child: Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8.h, horizontal: 5.w),
-                              child: SvgPicture.asset(value == 'ar'
-                                  ? "assets/svg/ar.svg"
-                                  : "assets/svg/en.svg"),
-                            ),
-                            // SizedBox(width: 4.w,),
-                            // Text(value)
-                          ],
-                        )),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 5.w),
+                                  child: SvgPicture.asset(value == Language.English?"assets/svg/en.svg":"assets/svg/ar.svg"),
+                                ),
+                                // SizedBox(width: 4.w,),
+                                // Text(value)
+                              ],
+                            )
+                        ),
                       ],
                     ),
                   );
                 }).toList(),
-                value: 'en',
+                value: Provider.of<AuthenticationProvider>(context).language==Language.English?Language.English:Language.Arabic,
                 onChanged: (lang) {
-                  context.locale = Locale(lang);
+                  Provider.of<AuthenticationProvider>(context, listen: false).switchLanguage(context);
+
+                  // restart: true,
+
                 },
               ),
             )

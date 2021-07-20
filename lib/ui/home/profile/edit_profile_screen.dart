@@ -99,6 +99,9 @@ class EditProfileScreen extends StatelessWidget{
               ),
               child:
               CustomTextfieldWidget(
+                isObscure: false,
+                isPassword: false,
+                linesNo: 1,
                 hint: 'FirstName'.tr(),
                 textInputType:TextInputType.text,
               ),),
@@ -118,6 +121,9 @@ class EditProfileScreen extends StatelessWidget{
                 borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
               ),
               child: CustomTextfieldWidget(
+                isObscure: false,
+                isPassword: false,
+                linesNo: 1,
                 hint: 'LastName'.tr(),
                 textInputType:TextInputType.text,
               ),

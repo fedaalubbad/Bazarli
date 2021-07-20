@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'brand_screen.dart';
 import 'color_seach_screen.dart';
 
@@ -36,34 +35,43 @@ class CategorySearchScreen extends StatelessWidget {
                     Container(
                  // width: ScreenUtil.defaultSize.width,
                  height: 60.h,
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Row(
+                       child: Row(
+                       crossAxisAlignment: CrossAxisAlignment.center,
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
-                         Text('Category',style: TextLabelStyle,).tr(),
+                         Column(
+                           children: [
+                             Text('Category',style: TextLabelStyle,).tr(),
+                             SizedBox(height: 5.h,),
+                             Text(category.name,style: DescriptionStyle,),
+                           ],
+                         ),
                          context.locale.toString()=='ar'?
                          SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
-                        :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,)                       ],
-                     ),
-                     SizedBox(height: 5.h,),
-                     Text(category.name,style: DescriptionStyle,),
-                   ],
-                 ),
-               ),
+                        :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,)  ,
+                       ],
+                       ),
+                    ),
                     Divider(),
-                  categoryWidget(context,'Brand',1),
-                  categoryWidget(context,'Price',2),
-                  categoryWidget(context,'ProductRating',3),
-                  categoryWidget(context,'Size',4,),
-                  categoryWidget(context,'NewArrivals',5),
-                  categoryWidget(context,'Department',6),
-                  categoryWidget(context,'Color',7),
-                  categoryWidget(context,'Seller',8),
+                   categoryWidget(context,'Brand',1),
+                    Divider(),
+                    categoryWidget(context,'Price',2),
+                    Divider(),
+                    categoryWidget(context,'ProductRating',3),
+                    Divider(),
+                    categoryWidget(context,'Size',4,),
+                    Divider(),
+                    categoryWidget(context,'NewArrivals',5),
+                    Divider(),
+                    categoryWidget(context,'Department',6),
+                    Divider(),
+                    categoryWidget(context,'Color',7),
+                    Divider(),
+                    categoryWidget(context,'Seller',8),
+                    Divider(),
+                    SizedBox(height:15.h,),
 
-                  buildMoreFiltersWidget(),
+                    buildMoreFiltersWidget(),
 
                   SizedBox(height:15.h,),
                   Row(
@@ -105,7 +113,7 @@ class CategorySearchScreen extends StatelessWidget {
       },
       child: Container(
         // width: ScreenUtil.defaultSize.width,
-        height: 60.h,
+        height: 50.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +128,6 @@ class CategorySearchScreen extends StatelessWidget {
 
               ],
             ),
-            Divider(),
 
           ],
         ),
@@ -211,8 +218,16 @@ buildFilterWidget(String text){
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('1864 Items',
-                  style:SliderNextStyle,
+                Row(
+                  children: [
+                    Text('1864',
+                      style:SliderNextStyle,
+                    ),
+                    SizedBox(width: 5.w,),
+                    Text('Items',
+                      style:SliderNextStyle,
+                    ).tr(),
+                  ],
                 ),
                 Text(
                   'Apply',

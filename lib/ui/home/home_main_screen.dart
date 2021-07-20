@@ -21,13 +21,33 @@ class HomeMainScreen extends StatefulWidget{
 class HomeScreenState extends State<HomeMainScreen> {
   // bool isProfile=false;
   int _selectedPageIndex=0;
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
   void _viewPage(int index) {
     setState(() {
       _selectedPageIndex = index;
+      pageController.animateToPage(index, duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+
       // _selectedPageIndex==2?
       // isProfile==true:isProfile==false;
     });
   }
+  List<Map<String,Object>> _pages=[
+    {
+      'page':HomeScreen()
+    },
+    {
+      'page':CategoriesScreen()
+    },
+    {
+      'page':ProfileScreen()
+    },
+    {
+      'page':CartScreen()
+    }
+  ];
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -38,27 +58,49 @@ class HomeScreenState extends State<HomeMainScreen> {
              height: double.infinity,
              width: double.infinity,
              color: HomeBackgroundColor,
-             child: SingleChildScrollView(
+             child:
+             PageView.builder(
 
-                 child: Column(
-                   children: [
-
-                   ///////////////////////////// body
-
-                      _selectedPageIndex==0?HomeScreen()
-                     :_selectedPageIndex==1?CategoriesScreen()
-                     :_selectedPageIndex==2? ProfileScreen()
-                    : CartScreen(),
-                  ////////////////////////////
-                     SizedBox(height:85.h,),
-                     // FlatButton(onPressed: (){
-                     //   Provider.of<ProductProvider>(context, listen: false).getAllProducts();
-                     // }, child:Text('print'))
-                   ],
-                 ),
+                 controller: pageController,
+             itemCount: 4,
+               itemBuilder: (context, position) {
+                 return
+                   position == 0? HomeScreen()
+                 :position==1?CategoriesScreen()
+                 :position==2?  ProfileScreen()
+                 :CartScreen();
+               },
+                 onPageChanged: (page) {
+                   setState(() {
+                     _selectedPageIndex = page;
+                   });
+                 }
+             )
+            // PageView(
+            //   controller: pageController,
+            //   children: <Widget>[
+            //     HomeScreen(),
+            //     CategoriesScreen(),
+            //     ProfileScreen(),
+            //     CartScreen()
+            //   ],
+            //   onPageChanged: (page) {
+            //     setState(() {
+            //      _selectedPageIndex = page;
+            //     });
+            //   },
+            // )
+               //   Column(
+               //     children: [
+               // _pages[_selectedPageIndex]['page'],
+               //
+               //   SizedBox(height:85.h,),
+               //
+               //     ],
+               //   ),
                ),
 
-           ),
+           // ),
 
  ////////////////////////////////bottom navigation bar
            Positioned(

@@ -1,5 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -51,9 +52,20 @@ class ProfileToolBar extends StatelessWidget {
                 child: SvgPicture.asset('assets/svg/ar_back.svg')),
 
              SizedBox(height: 7.h,),
-            Text('Hello!',style: SliderTitle1Style,).tr(),
+            Row(
+              children: [
+                Text('Hello',style: SliderTitle1Style,).tr(),
+                if(SPHelper.spHelper.getUSer()!=null)
+                  SizedBox(width: 5.w,),
+                if(SPHelper.spHelper.getUSer()!=null)
+                Text(SPHelper.spHelper.getUSer().firstName,style: SliderTitle1Style,),
+
+                Text('!',style: SliderTitle1Style,),
+              ],
+            ),
             SizedBox(height: 5.h,),
-            Text('The region’s favourite online marketplace',style: SliderTitle2Style,).tr(),
+
+            Text(SPHelper.spHelper.getUSer()!=null?SPHelper.spHelper.getUSer().email:'The region’s favourite online marketplace',style: SliderTitle2Style,).tr(),
 
           ],
         ),

@@ -24,51 +24,73 @@ class LoginMidWidget extends StatelessWidget {
                   ),
 
           if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
-                 Text('Name',
+                 Text('FirstName',
                    style: TextLabelStyle,
                  ).tr(),
-                      SizedBox(
+           if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                        SizedBox(
                         height: 10.h,
                       ),
-             if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
-                        Container(
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      color:TextFormFieldColor ,
-                      borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
-                    ),
-                    child:
+           if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+
                     CustomTextfieldWidget(
-                      contraller: Provider.of<AuthenticationProvider>(context, listen: false).nameContraller,
-                      hint: 'Name'.tr(),
+                      linesNo: 1,
+                      isObscure: false,
+                      isPassword: false,
+                      contraller: Provider.of<AuthenticationProvider>(context, listen: false).fNameContraller,
+                      hint: 'FirstName'.tr(),
                    textInputType:TextInputType.text,
-                   save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
-                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateName,
-                 ),),
-                      if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.signUp)
+                   save:Provider.of<AuthenticationProvider>(context, listen: false).saveFName,
+                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateFName,
+                 ),
+
+           if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.signUp)
+                        SizedBox(
+                        height: 15.h,
+                      ), if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                 Text('LastName',
+                   style: TextLabelStyle,
+                 ).tr(),
+          if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                        SizedBox(
+                        height: 10.h,
+                      ),
+           if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                    CustomTextfieldWidget(
+                      linesNo: 1,
+                      isObscure: false,
+                      isPassword: false,
+                      contraller: Provider.of<AuthenticationProvider>(context, listen: false).lNameContraller,
+                      hint: 'LastName'.tr(),
+                   textInputType:TextInputType.text,
+                   save:Provider.of<AuthenticationProvider>(context, listen: false).saveLName,
+                   validator:Provider.of<AuthenticationProvider>(context, listen: false).validateLName,
+                 ),
+
+            if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.signUp)
                         SizedBox(
                         height: 15.h,
                       ),
+
+
                       Text('Email',
                         style: TextLabelStyle,
                       ).tr(),
                       SizedBox(
                         height: 10.h,
                       ),
-                Container(
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                    color:TextFormFieldColor ,
-                      borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
-                    ),
-                    child: CustomTextfieldWidget(
+
+                  CustomTextfieldWidget(
+                    linesNo: 1,
+                    isObscure: false,
+                      isPassword: false,
                       contraller: Provider.of<AuthenticationProvider>(context, listen: false).emailContraller,
                       hint: 'Email'.tr(),
                    textInputType:TextInputType.emailAddress,
                    save:Provider.of<AuthenticationProvider>(context, listen: false).saveEmail,
                    validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
                  ),
-                ),
+
                       SizedBox(
                         height: 15.h,
                       ),
@@ -92,21 +114,43 @@ class LoginMidWidget extends StatelessWidget {
                         height: 10.h,
                       ),
 
-                Container(
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color:TextFormFieldColor ,
-                  borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
-                ),
-                child:
+
                 CustomTextfieldWidget(
-                   hint: 'Password'.tr(),
+                  linesNo: 1,
+                  isObscure: Provider.of<AuthenticationProvider>(context, listen: false).isObscure,
+                  isPassword: true,
+                  hint: 'Password'.tr(),
                    textInputType:TextInputType.visiblePassword,
                    save: Provider.of<AuthenticationProvider>(context, listen: false).savePassword,
                    validator: Provider.of<AuthenticationProvider>(context, listen: false).validatePassword,
                    contraller: Provider.of<AuthenticationProvider>(context, listen: false).passwordContraller,
                    // isPassword: Provider.of<AuthenticationProvider>(context).isObscure,
-                 ),),
+                 ),
+
+
+                   SizedBox(
+                        height: 10.h,
+                      ),
+          if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                        Text('ConfirmPassword',
+                        style: TextLabelStyle,
+                      ).tr(),
+          if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                        SizedBox(
+                        height: 10.h,
+                      ),
+         if(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp)
+                CustomTextfieldWidget(
+                  linesNo: 1,
+                  isObscure: Provider.of<AuthenticationProvider>(context, listen: false).isObscure,
+                  isPassword:true,
+                  hint: 'ConfirmPassword'.tr(),
+                   textInputType:TextInputType.visiblePassword,
+                   save: Provider.of<AuthenticationProvider>(context, listen: false).saveConfirmPassword,
+                   validator: Provider.of<AuthenticationProvider>(context, listen: false).validateConfirmPassword,
+                   contraller: Provider.of<AuthenticationProvider>(context, listen: false).confirmPasswordContraller,
+                   // isPassword: Provider.of<AuthenticationProvider>(context).isObscure,
+                 ),
 
                 ]),
               )

@@ -3,12 +3,13 @@ import 'package:bazarli/models/Categories_model/categories_classes/category.dart
 import 'package:flutter/cupertino.dart';
 
 class CategoriesProvider extends ChangeNotifier{
-  List<Categories> categoriesList=List<Categories>();
+  List<Categories> categoriesList=[];
 
   Future<List<Categories>> getAllCategories() async {
     List<Categories> categories = await CategoryApi.api.getAllCategories();
     this.categoriesList = categories;
     notifyListeners();
+    return categoriesList;
   }
 
 }

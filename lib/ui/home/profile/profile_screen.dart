@@ -1,6 +1,10 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
+import 'package:bazarli/ui/Authentication/loginAndRegister.dart';
 import 'package:bazarli/ui/home/cart/shipping_addresses_screen.dart';
 import 'package:bazarli/ui/home/profile/profile_details_screen.dart';
 import 'package:bazarli/ui/home/profile/returns_screen.dart';
@@ -10,12 +14,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'clims_screen.dart';
 import 'component/extra_widget.dart';
 import 'languages_screen.dart';
 import 'orders_screen.dart';
-
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+  return ProfileScreenState();
+  }
+}
+class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
 
                   SizedBox(height:15.h,),
                   ExtraWidget(),
-                  SizedBox(height:30.h,),
+                  SizedBox(height:85.h,),
 
                 ])));
   }
@@ -65,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
         NavigationService.navigationService.navigateToWidget(WishListScreen())
             :index==7?
         NavigationService.navigationService.navigateToWidget(LanguagesScreen())
-       :print('logout');
+       :Provider.of<AuthenticationProvider>(context, listen: false).logout();
 
       },
       child: Container(

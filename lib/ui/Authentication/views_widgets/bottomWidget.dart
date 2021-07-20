@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ui/Authentication/widgets/custom_login_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,12 +27,15 @@ class LoginBottomWidget extends StatelessWidget{
             }),
             // SizedBox(width:10.w,),
             Container(
-              width: ScreenUtil.defaultSize.width/1.25.w,
+              margin: EdgeInsets.only(top: 10.h),
+              width: ScreenUtil.defaultSize.width.w-90.w,
+
               child: RichText(
+                 textAlign:context.locale.toString()=='ar'?TextAlign.right:TextAlign.left,
                 text:TextSpan(text: 'By_processing'.tr(),
                   style:DescriptionStyle,
-                  children: [
-                    TextSpan(text: ' '),
+                  children:<TextSpan> [
+                    TextSpan(text: ' ',),
                     TextSpan(text:'Terms_of_service'.tr(),
                         style:SignInTextStyle,
                         // recognizer: TapGestureRecognizer()
@@ -50,7 +54,6 @@ class LoginBottomWidget extends StatelessWidget{
 
 
                   ],),
-                textAlign: TextAlign.center,
               ),
             ),
           ],),

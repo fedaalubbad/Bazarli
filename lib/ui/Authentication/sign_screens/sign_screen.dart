@@ -3,7 +3,7 @@ import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
-import 'package:bazarli/ui/Authentication/compnnent/background_image_clipper.dart';
+import 'package:bazarli/ui/Authentication/utils/BottomWaveClipper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,16 +13,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import '../loginAndRegister.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+
 class SignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HomeBackgroundColor,
+      backgroundColor: BackgroundColor,
       body: Stack(
         children: [
           ClipPath(
-          clipper: WaveClipperTwo(),
+            clipper: BottomWaveClipper(value:5),
            child: Container(
              color: WhiteColor,
            height: ScreenUtil.defaultSize.height/1.2,
@@ -120,9 +121,7 @@ class SignScreen extends StatelessWidget {
                   ),
                   InkWell(
                       onTap: () {
-                        Navigator.push(context,MaterialPageRoute(builder: (context){
-                          return LoginPage();
-                        }));
+                       NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
                       },
                       child: Container(
                         margin: EdgeInsets.only(left:kDefaultPaddin,right: kDefaultPaddin,top: 50.h),

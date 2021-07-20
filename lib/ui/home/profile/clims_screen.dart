@@ -78,6 +78,9 @@ class ClimesScreen extends StatelessWidget{
                   bottomRight: Radius.circular(ScreenUtil().radius(5))),
             ),
             child: CustomTextfieldWidget(
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
               // contraller: Provider.of<AuthenticationProvider>(context, listen: false).nameContraller,
               hint: 'Search'.tr(),
               textInputType: TextInputType.text,

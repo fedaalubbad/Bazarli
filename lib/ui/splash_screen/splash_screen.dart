@@ -4,7 +4,9 @@ import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/ui/Authentication/sign_screens/sign_screen.dart';
+import 'package:bazarli/ui/home/home_main_screen.dart';
 import 'package:bazarli/ui/slider_splash/slider_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +23,11 @@ class SplashState extends State<SplashScreen>{
   navigationTohome(context) async{
 
     await Future.delayed(Duration(seconds:4));
-    NavigationService.navigationService.navigateToWidget(SliderScreen());
+    if(SPHelper.spHelper.isLoged())
+    NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen());
+    else
+      NavigationService.navigationService.navigateAndReplaceWidget(SliderScreen());
+
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(builder: (context) =>SignScreen()),
@@ -29,9 +35,9 @@ class SplashState extends State<SplashScreen>{
   }
   @override
   void initState() {
-    Provider.of<ProductProvider>(context, listen: false). getAllProducts();
-    Provider.of<BrandProvider>(context, listen: false). getAllBrandss();
-    Provider.of<CategoriesProvider>(context, listen: false). getAllCategories();
+    // Provider.of<ProductProvider>(context, listen: false). getAllProducts();
+    // Provider.of<BrandProvider>(context, listen: false). getAllBrandss();
+    // Provider.of<CategoriesProvider>(context, listen: false). getAllCategories();
 
     super.initState();
   }
@@ -47,7 +53,7 @@ class SplashState extends State<SplashScreen>{
       body: Container(
         height: double.infinity,
         width: double.infinity,
-          color:BackgroundColor,
+          color:HomeBackgroundColor,
             child: Center(
                 child: Image.asset("assets/images/app_logo.png")
             ),

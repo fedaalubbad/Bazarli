@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:bazarli/models/user_model/Data.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/ui/Authentication/loginAndRegister.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SPHelper {
@@ -16,6 +18,7 @@ class SPHelper {
   }
   setLoged(bool loged){
     sharedPreferences.setBool('isLoged', loged);
+
   }
   bool isLoged(){
     bool isLog=sharedPreferences.getBool("isLoged") ?? false;

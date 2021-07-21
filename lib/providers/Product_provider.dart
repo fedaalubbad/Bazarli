@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import '../api_helper/product_api.dart';
 
 class ProductProvider extends ChangeNotifier{
-    List<Data> productList=[];
+    List<Product> productList=[];
 
-  Future<List<Data>> getAllProducts() async {
-    List<Data> products = await ProductApi.api.getAllProducts();
+  Future<List<Product>> getAllProducts() async {
+    List<Product> products = await ProductApi.api.getAllProducts();
     this.productList = products;
     notifyListeners();
     return productList;

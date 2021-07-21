@@ -18,6 +18,7 @@ class CartScreen extends StatefulWidget{
 class CartScreenState extends State<CartScreen> with AutomaticKeepAliveClientMixin {
 @override
 bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,9 +27,12 @@ bool get wantKeepAlive => true;
           Container(
             height: 500.h,
             child: Container(
-              padding: EdgeInsets.only(bottom:60.h),
-              // height: 480.h,
+              // padding: EdgeInsets.only(bottom:60.h),
+              height: 500.h,
                 child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  // shrinkWrap:true ,
+                  // physics: ScrollPhysics(),
                             itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
                             itemBuilder: (context,index){
                               return

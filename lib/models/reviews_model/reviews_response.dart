@@ -1,19 +1,20 @@
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
-import 'product_classes/links.dart';
-import 'product_classes/meta.dart';
+import 'package:bazarli/models/reviews_model/review_classes/review_data.dart';
 
-class ProductRespone {
-  List<Product> data;
+import 'review_classes/links.dart';
+import 'review_classes/meta.dart';
+
+class ReviewsResponse {
+  List<ReviewData> data;
   Links links;
   Meta meta;
 
-  ProductRespone({this.data, this.links, this.meta});
+  ReviewsResponse({this.data, this.links, this.meta});
 
-  ProductRespone.fromJson(Map<String, dynamic> json) {
+  ReviewsResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Product>();
+      data = new List<ReviewData>();
       json['data'].forEach((v) {
-        data.add(new Product.fromJson(v));
+        data.add(new ReviewData.fromJson(v));
       });
     }
     links = json['links'] != null ? new Links.fromJson(json['links']) : null;
@@ -34,10 +35,3 @@ class ProductRespone {
     return data;
   }
 }
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/providers/wishlist_provider.dart';
 import 'package:bazarli/ui/home/cart/component/product_in_cart_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../tool_bar_widget.dart';
 class WishListScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    Provider.of<WishListProvider>(context,listen: false).getCustomerWishList();
     return Scaffold(
       backgroundColor: HomeBackgroundColor,
       body: Stack(

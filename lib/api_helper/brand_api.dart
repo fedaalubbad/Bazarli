@@ -11,7 +11,7 @@ class BrandApi {
 
 
   Future<List<Brands>> getAllBrands() async {
-    Response response = await dio.get(baseUrl + brands,);
+    Response response = await dio.get(baseUrl +GET_BRANDS_URL,);
     // options : options);
     Map<String, dynamic> responseBody = response.data;
     print('brandListJson${responseBody}');

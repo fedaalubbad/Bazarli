@@ -16,7 +16,7 @@ import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  Data product;
+  Product product;
 
   ProductDetailsScreen({this.product});
 

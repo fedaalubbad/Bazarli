@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductListMenuItem extends StatelessWidget{
-  Data product;
+  Product product;
   ProductListMenuItem({this.product,});
   @override
   Widget build(BuildContext context) {

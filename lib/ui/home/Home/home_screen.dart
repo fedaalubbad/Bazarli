@@ -64,23 +64,29 @@ bool get wantKeepAlive => true;
   RefreshController(initialRefresh: false);
   void _onRefresh() async{
     // monitor network fetch
+
+
     await Future.delayed(Duration(milliseconds: 1000));
+
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async{
     // monitor network fetch
+
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    Provider.of<ProductProvider>(context, listen: false).getAllProducts();
-    Provider.of<CategoriesProvider>(context, listen: false).getAllCategories();
-    Provider.of<BrandProvider>(context, listen: false).getAllBrandss();
+    // Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    // Provider.of<CategoriesProvider>(context, listen: false).getAllCategories();
+    // Provider.of<BrandProvider>(context, listen: false).getAllBrandss();
+
+
     // items.add((items.length+1).toString());
-    // if(mounted)
-    //   setState(() {
-    //
-    //   });
+    if(mounted)
+    setState(() {
+
+    });
     _refreshController.loadComplete();
   }
 
@@ -161,7 +167,7 @@ bool get wantKeepAlive => true;
   }
 
   getTopProducts(BuildContext context) {
-    return FutureBuilder<List<Data>>(
+    return FutureBuilder<List<Product>>(
       future: Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -185,7 +191,7 @@ bool get wantKeepAlive => true;
     return
     Provider.of<ProductProvider>(context,listen: false).productList.length==0?
 
-        FutureBuilder<List<Data>>(
+        FutureBuilder<List<Product>>(
           future:
           Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
           builder: (context, snapshot) {
@@ -360,6 +366,9 @@ bool get wantKeepAlive => true;
 
           },
         ));
+
+
+
   }
 
   getBrands(){

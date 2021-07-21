@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ProductInCartListItem extends StatelessWidget{
-  Data product;
+  Product product;
   ProductInCartListItem({this.product,});
   @override
   Widget build(BuildContext context) {

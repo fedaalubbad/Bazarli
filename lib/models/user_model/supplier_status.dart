@@ -1,15 +1,16 @@
-import 'Data.dart';
 
-class LoginStatus {
+import 'package:bazarli/models/user_model/supplier_data.dart';
+
+class SupplierLoginStatus {
   String message;
-  Data data;
+  SupplierData data;
   String token;
 
-  LoginStatus({this.message, this.data, this.token});
+  SupplierLoginStatus({this.message, this.data, this.token});
 
-  LoginStatus.fromJson(Map<String, dynamic> json) {
+  SupplierLoginStatus.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new SupplierData.fromJson(json['data']) : null;
     token = json['token'];
   }
 

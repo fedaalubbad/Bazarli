@@ -1,7 +1,7 @@
+import 'package:bazarli/models/product_model/product_classes/base_images.dart';
 import 'package:bazarli/models/product_model/product_classes/reviews.dart';
 
-import 'base_images.dart';
-import 'images.dart';
+import 'category.dart';
 
 class Product {
   int id;
@@ -13,8 +13,9 @@ class Product {
   String formatedPrice;
   String shortDescription;
   String description;
-  List<Images> images;
-  // List<Null> videos;
+  List<Category> category;
+  List<Null> images;
+  List<Null> videos;
   BaseImage baseImage;
   String createdAt;
   String updatedAt;
@@ -35,8 +36,9 @@ class Product {
         this.formatedPrice,
         this.shortDescription,
         this.description,
+        this.category,
         this.images,
-        // this.videos,
+        this.videos,
         this.baseImage,
         this.createdAt,
         this.updatedAt,
@@ -57,12 +59,18 @@ class Product {
     formatedPrice = json['formated_price'];
     shortDescription = json['short_description'];
     description = json['description'];
-    if (json['images'] != null) {
-      images = new List<Images>();
-      json['images'].forEach((v) {
-        images.add(new Images.fromJson(v));
+    if (json['category'] != null) {
+      category = new List<Category>();
+      json['category'].forEach((v) {
+        category.add(new Category.fromJson(v));
       });
     }
+    // if (json['images'] != null) {
+    //   images = new List<Null>();
+    //   json['images'].forEach((v) {
+    //     images.add(new Null.fromJson(v));
+    //   });
+    // }
     // if (json['videos'] != null) {
     //   videos = new List<Null>();
     //   json['videos'].forEach((v) {
@@ -94,9 +102,12 @@ class Product {
     data['formated_price'] = this.formatedPrice;
     data['short_description'] = this.shortDescription;
     data['description'] = this.description;
-    if (this.images != null) {
-      data['images'] = this.images.map((v) => v.toJson()).toList();
+    if (this.category != null) {
+      data['category'] = this.category.map((v) => v.toJson()).toList();
     }
+    // if (this.images != null) {
+    //   data['images'] = this.images.map((v) => v.toJson()).toList();
+    // }
     // if (this.videos != null) {
     //   data['videos'] = this.videos.map((v) => v.toJson()).toList();
     // }

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 class BasicDetailsWidget extends StatelessWidget{
-  Data product;
+  Product product;
   BasicDetailsWidget({this.product});
   @override
   Widget build(BuildContext context) {

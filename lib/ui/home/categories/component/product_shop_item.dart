@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductShopItem extends StatelessWidget{
-  Data product;
+  Product product;
   ProductShopItem({this.product});
   @override
   Widget build(BuildContext context) {

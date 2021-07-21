@@ -14,7 +14,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 class BuildCarouselSlider extends StatelessWidget{
   int currentIndex;
-  List<Data> product;
+  List<Product> product;
   BuildCarouselSlider({this.product, this.currentIndex});
   @override
   Widget build(BuildContext context) {

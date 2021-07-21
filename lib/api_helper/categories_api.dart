@@ -10,7 +10,7 @@ class CategoryApi {
 
 
   Future<List<Categories>> getAllCategories() async {
-    Response response = await dio.get(baseUrl + categories,);
+    Response response = await dio.get(baseUrl + GET_CATEGORIES_URL,);
     // options : options);
     Map<String, dynamic> responseBody = response.data;
     print('categoriesListJson${responseBody}');

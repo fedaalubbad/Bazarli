@@ -11,7 +11,7 @@ import 'customer_review_list_item.dart';
 
 class BuildCustomerReviewCarouselSlider extends StatelessWidget{
   int currentIndex;
-  List<Data> product;
+  List<Product> product;
   BuildCustomerReviewCarouselSlider({this.product, this.currentIndex});
   @override
   Widget build(BuildContext context) {

@@ -11,5 +11,9 @@ class CategoriesProvider extends ChangeNotifier{
     notifyListeners();
     return categoriesList;
   }
+  Future<void> addData() async {
 
+    this.categoriesList.add(new Categories(id:55,slug: '5',name: 'fedaa',subCategories: []));
+      notifyListeners();
+    }
 }

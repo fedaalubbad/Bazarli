@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bazarli/models/user_model/Data.dart';
+import 'package:bazarli/models/user_model/customer_data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/Authentication/loginAndRegister.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,9 +30,9 @@ class SPHelper {
     sharedPreferences.setString('user', json.encode(user));
 
   }
-  Data getUSer(){
+  CustomerData getUSer(){
     Map userMap = jsonDecode(sharedPreferences.getString('user'));
-    Data user = Data.fromJson(userMap);
+    CustomerData user = CustomerData.fromJson(userMap);
     return user;
   }
 

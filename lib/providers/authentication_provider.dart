@@ -1,5 +1,5 @@
 import 'package:bazarli/api_helper/authentication_helper.dart';
-import 'package:bazarli/models/user_model/LoginStatus.dart';
+import 'package:bazarli/models/user_model/customer_status.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/ui/Authentication/loginAndRegister.dart';

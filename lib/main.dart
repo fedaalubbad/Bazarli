@@ -3,12 +3,15 @@ import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/providers/reviews_provider.dart';
+import 'package:bazarli/providers/wishlist_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/ui/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'navigation_service/navigation_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -47,9 +50,27 @@ class MyApp extends StatelessWidget {
      ChangeNotifierProvider<CategoriesProvider>(
     create: (context) => CategoriesProvider(),
     ),
+     ChangeNotifierProvider<WishListProvider>(
+    create: (context) => WishListProvider(),
+    ),
+     ChangeNotifierProvider<ReviewsProvider>(
+    create: (context) => ReviewsProvider(),
+    ),
     ],
-    child:
-    MaterialApp(
+    child: RefreshConfiguration(
+          footerTriggerDistance: 15,
+          dragSpeedRatio: 0.91,
+          headerBuilder: () => MaterialClassicHeader(),
+          footerBuilder: () => ClassicFooter(),
+          enableLoadingWhenNoData: false,
+          enableRefreshVibrate: false,
+          enableLoadMoreVibrate: false,
+          shouldFooterFollowWhenNotFull: (state) {
+            // If you want load more with noMoreData state ,may be you should return false
+            return false;
+          },
+          child:MaterialApp(
+
      debugShowCheckedModeBanner: false,
 
      localizationsDelegates: context.localizationDelegates,
@@ -79,7 +100,7 @@ class MyApp extends StatelessWidget {
      // routes: { '/': (context) => MyHomePage(),
      //  },
 
-    )
+    ))
     );
   }
 }

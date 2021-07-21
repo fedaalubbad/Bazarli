@@ -1,6 +1,6 @@
 import 'group.dart';
 
-class Data {
+class CustomerData {
   int id;
   String email;
   String firstName;
@@ -14,7 +14,7 @@ class Data {
   String createdAt;
   String updatedAt;
 
-  Data(
+  CustomerData(
       {this.id,
         this.email,
         this.firstName,
@@ -28,7 +28,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CustomerData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     email = json['email'];
     firstName = json['first_name'];

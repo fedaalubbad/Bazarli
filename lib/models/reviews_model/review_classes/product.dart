@@ -14,8 +14,8 @@ class Product {
   String shortDescription;
   String description;
   List<Category> category;
-  List<Null> images;
-  List<Null> videos;
+  // List<Null> images;
+  // List<Null> videos;
   BaseImage baseImage;
   String createdAt;
   String updatedAt;
@@ -37,8 +37,8 @@ class Product {
         this.shortDescription,
         this.description,
         this.category,
-        this.images,
-        this.videos,
+        // this.images,
+        // this.videos,
         this.baseImage,
         this.createdAt,
         this.updatedAt,

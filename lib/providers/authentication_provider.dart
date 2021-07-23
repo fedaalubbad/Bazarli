@@ -33,6 +33,16 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
 
   }
+
+  setLanguage(String lang){
+    if(lang=='en'){
+      language=Language.English;
+      notifyListeners();
+    }else{
+      language=Language.Arabic;
+      notifyListeners();
+    }
+  }
   switchLanguage(BuildContext context){
     if(language==Language.English){
       language=Language.Arabic;

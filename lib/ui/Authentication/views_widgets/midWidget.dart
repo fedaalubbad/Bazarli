@@ -1,7 +1,9 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
+import 'package:bazarli/ui/forget_password/forget_password.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -104,9 +106,14 @@ class LoginMidWidget extends StatelessWidget {
                               style: TextLabelStyle,
                             ).tr(),
 
-                            Text('Forgot_Password',
-                              style: SignInTextStyle,
-                            ).tr(),
+                            InkWell(
+                              onTap: (){
+                                NavigationService.navigationService.navigateToWidget(ForgetPasswordScreen());
+                              },
+                              child: Text('Forgot_Password',
+                                style: SignInTextStyle,
+                              ).tr(),
+                            ),
                           ],
                         ),
                       ),

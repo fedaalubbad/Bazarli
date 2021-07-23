@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/ui/home/Home/component/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 class ProductInCartListItem extends StatelessWidget{
   Product product;
-  ProductInCartListItem({this.product,});
+  WishList wishList;
+  ProductInCartListItem({this.product,this.wishList});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,10 +71,10 @@ class ProductInCartListItem extends StatelessWidget{
                             children: [
                               Container(
                               width:0.4.sw,
-                              child: Text(product.shortDescription,style:TabsTextStyle,maxLines:2,)
+                              child: Text(wishList!=null?"wishList.product.description":product.shortDescription,style:TabsTextStyle,maxLines:2,)
                               ),
                               SizedBox(height: 5.h,),
-                              Text(product.formatedPrice,style:PriceTextStyle,),
+                              Text(wishList!=null?"wishList.product.name":product.formatedPrice,style:PriceTextStyle,),
                               SizedBox(height: 6.h,),
 
                               Row(

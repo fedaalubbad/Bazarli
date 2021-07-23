@@ -20,13 +20,17 @@ class SplashScreen extends StatefulWidget {
   }
 }
 class SplashState extends State<SplashScreen>{
-  navigationTohome(context) async{
+  navigationTohome(BuildContext context) async{
+
+    Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
 
     await Future.delayed(Duration(seconds:4));
     if(SPHelper.spHelper.isLoged())
     NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen());
     else
       NavigationService.navigationService.navigateAndReplaceWidget(SliderScreen());
+
+
 
     // Navigator.push(
     //   context,
@@ -35,7 +39,6 @@ class SplashState extends State<SplashScreen>{
   }
   @override
   void initState() {
-    // Provider.of<ProductProvider>(context, listen: false). getAllProducts();
     // Provider.of<BrandProvider>(context, listen: false). getAllBrandss();
     // Provider.of<CategoriesProvider>(context, listen: false). getAllCategories();
 

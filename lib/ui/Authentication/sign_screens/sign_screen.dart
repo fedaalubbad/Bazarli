@@ -12,7 +12,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import '../loginAndRegister.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class SignScreen extends StatelessWidget {
 

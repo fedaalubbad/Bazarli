@@ -73,13 +73,13 @@ class LoginTopWigget extends StatelessWidget {
         ),
       ),
       Container(
-        margin: EdgeInsets.only(top: 37.h,left: 20.w,right:20.w ),
-        child: Text('Get_started',
+        margin: EdgeInsets.only(top: 37.h ),
+        child: Text(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp?'Get_started':'SignIn',
           style: SliderTitle1Style,
         ).tr(),
       ),
       Container(
-        margin: EdgeInsets.only(top: 10.h,left: 20.w,right:20.w),
+        margin: EdgeInsets.only(top: 10.h),
         child: Row(
           children: [
             Text(Provider.of<AuthenticationProvider>(context).authMode==AuthMode.signUp?'have_account':"Don't_have_account",

@@ -1,18 +1,19 @@
 import 'package:bazarli/api_helper/wishlist_helper.dart';
+import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:flutter/material.dart';
 
 class WishListProvider extends ChangeNotifier{
-  // List<Data> productList=[];
+  List<WishList> wishList=[];
+  bool isFav;
 
-  Future getCustomerWishList() async {
-     await WishListApi.api.getCustomerWishList();
-    // this.productList = products;
-    // notifyListeners();
-    // return productList;
+  Future<List<WishList>> getCustomerWishList() async {
+    this.wishList= await WishListApi.api.getCustomerWishList();
+    notifyListeners();
+    return wishList;
   }
 
-  Future addToWishList(String productId)async{
-    await WishListApi.api.addToWishList(productId);
+  Future addToWishList(int productId)async{
+    await WishListApi.api.addToWishList(productId.toString());
   }
 
   Future moveWishListToCart(String productId)async{

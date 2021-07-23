@@ -2,7 +2,7 @@ const  String baseUrl='https://test.bazarli.com/api/';
 // Options options=Options(headers : { "app-id":"60bdbd22159b332fec7c83e6"} );
 
 //PRODUCTS
-const String GET_PRODUCTS_URL="products/";   // ID FOR ONE PRODUCT
+const String GET_PRODUCTS_URL="products/search";   // ID FOR ONE PRODUCT
 const String SEARCH_PRODUCTS_URL="products/search";
 const String PRODUCT_ADDITIONAL_INFO_URL="product-additional-information/"; //ID
 
@@ -51,7 +51,7 @@ const String SAVE_ORDER_URL="checkout/save-order"; //cart
 const String UPDATE_CART_URL="checkout/cart/update?_method=PUT";
 
 //CUSTOMER WISHLIST
-const String GET_WISHLIST_URL="wishlist";  //USED TO DELETE TAKE ID
+const String GET_WISHLIST_URL="wishlist?token=true";  //USED TO DELETE TAKE ID
 const String ADD_TO_WISHLIST="wishlist/add";//ID
 const String MOVE_TO_CART="move-to-cart";//ID
 

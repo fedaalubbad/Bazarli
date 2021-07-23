@@ -10,7 +10,7 @@ class ProductApi{
 
 
   Future<List<Product>> getAllProducts() async{
-    Response response = await dio.get(baseUrl + GET_PRODUCTS_URL,);
+    Response response = await dio.post(baseUrl + GET_PRODUCTS_URL,);
     // options : options);
     Map<String,dynamic> responseBody=response.data;
     print('productListJson${responseBody}');

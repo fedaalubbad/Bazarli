@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/wishlist_provider.dart';
 import 'package:bazarli/ui/Product/product_details_screen.dart';
 import 'package:bazarli/ui/home/Home/component/star_rating.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'cordinator_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -113,7 +115,11 @@ class BuildCarouselSlider extends StatelessWidget{
                             mainAxisAlignment: MainAxisAlignment.start,
 
                           children: [
-                            SvgPicture.asset('assets/svg/fav.svg'),
+                            InkWell(
+                              onTap:(){
+                                Provider.of<WishListProvider>(context, listen: false).addToWishList(product[index].id);
+                               },
+                                child: SvgPicture.asset('assets/svg/fav.svg')),
                             SizedBox(width: 20.w,),
                             SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
                           ],

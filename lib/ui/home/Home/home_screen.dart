@@ -65,6 +65,7 @@ bool get wantKeepAlive => true;
   void _onRefresh() async{
     // monitor network fetch
 
+    Provider.of<ProductProvider>(context, listen: false).getAllProducts();
 
     await Future.delayed(Duration(milliseconds: 1000));
 
@@ -160,6 +161,9 @@ bool get wantKeepAlive => true;
             height: 30.h,
           ),
           getGridProducts(context),
+          SizedBox(
+            height: 30.h,
+          ),
         ],
       ),
     )
@@ -188,82 +192,82 @@ bool get wantKeepAlive => true;
   }
 
   getGridProducts(BuildContext context) {
-    return
-    Provider.of<ProductProvider>(context,listen: false).productList.length==0?
+   if( Provider.of<ProductProvider>(context,).productList.length==0) {
+     return
+       FutureBuilder<List<Product>>(
+         future:
+         Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
+         builder: (context, snapshot) {
+           if (snapshot.hasData) {
+             return Container(
+                 margin: EdgeInsets.symmetric(horizontal: 20.w),
+                 child: StaggeredGridView.countBuilder(
+                   physics: ScrollPhysics(),
+                   shrinkWrap: true,
+                   crossAxisCount: 4,
+                   itemCount: snapshot.data.length,
+                   itemBuilder: (BuildContext context, int index) =>
+                       ProductItem(
+                         product: snapshot.data[index],
+                       ),
+                   staggeredTileBuilder: (int index) =>
+                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                   mainAxisSpacing: 10.w,
+                   crossAxisSpacing: 10.h,
+                 ));
+           } else if (snapshot.hasError) {
+             return Container(
+                 margin: EdgeInsets.symmetric(horizontal: 20.w),
+                 child: StaggeredGridView.countBuilder(
+                   physics: ScrollPhysics(),
+                   shrinkWrap: true,
+                   crossAxisCount: 4,
+                   itemCount: 5,
+                   itemBuilder: (BuildContext context, int index) =>
+                       _buildGridItem(),
+                   staggeredTileBuilder: (int index) =>
+                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                   mainAxisSpacing: 10.w,
+                   crossAxisSpacing: 10.h,
+                 ));
+           }
 
-        FutureBuilder<List<Product>>(
-          future:
-          Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: StaggeredGridView.countBuilder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    crossAxisCount: 4,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        ProductItem(
-                          product: snapshot.data[index],
-                        ),
-                    staggeredTileBuilder: (int index) =>
-                        StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                    mainAxisSpacing: 10.w,
-                    crossAxisSpacing: 10.h,
-                  ));
-            } else if (snapshot.hasError) {
-              return Container();
-            }
-            //   return Container(
-            //       margin: EdgeInsets.symmetric(horizontal: 20.w),
-            //       child: StaggeredGridView.countBuilder(
-            //         physics: ScrollPhysics(),
-            //         shrinkWrap: true,
-            //         crossAxisCount: 4,
-            //         itemCount: 5,
-            //         itemBuilder: (BuildContext context, int index) =>
-            //             _buildGridItem(),
-            //         staggeredTileBuilder: (int index) =>
-            //             StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-            //         mainAxisSpacing: 10.w,
-            //         crossAxisSpacing: 10.h,
-            //       ));
-            // }
-
-            // By default, show a loading spinner. placeholder view
-            return Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                child: StaggeredGridView.countBuilder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) =>
-                      _buildGridItem(),
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                  mainAxisSpacing: 10.w,
-                  crossAxisSpacing: 10.h,
-                ));
-          },
-        )
-    : Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w),
-          child: StaggeredGridView.countBuilder(
-            physics: ScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 4,
-            itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ProductItem(
-                  product: Provider.of<ProductProvider>(context,listen: false).productList[index],
-                ),
-            staggeredTileBuilder: (int index) =>
-                StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-            mainAxisSpacing: 10.w,
-            crossAxisSpacing: 10.h,
-          ));
+           // By default, show a loading spinner. placeholder view
+           return Container(
+               margin: EdgeInsets.symmetric(horizontal: 20.w),
+               child: StaggeredGridView.countBuilder(
+                 physics: ScrollPhysics(),
+                 shrinkWrap: true,
+                 crossAxisCount: 4,
+                 itemCount: 5,
+                 itemBuilder: (BuildContext context, int index) =>
+                     _buildGridItem(),
+                 staggeredTileBuilder: (int index) =>
+                     StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                 mainAxisSpacing: 10.w,
+                 crossAxisSpacing: 10.h,
+               ));
+         },
+       );
+   }else{
+     return Container(
+         margin: EdgeInsets.symmetric(horizontal: 20.w),
+         child: StaggeredGridView.countBuilder(
+           physics: ScrollPhysics(),
+           shrinkWrap: true,
+           crossAxisCount: 4,
+           itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
+           itemBuilder: (BuildContext context, int index) =>
+               ProductItem(
+                 product: Provider.of<ProductProvider>(context,listen: false).productList[index],
+               ),
+           staggeredTileBuilder: (int index) =>
+               StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+           mainAxisSpacing: 10.w,
+           crossAxisSpacing: 10.h,
+         )
+     );
+   }
 
   }
 
@@ -580,40 +584,7 @@ bool get wantKeepAlive => true;
     );
   }
 
-  _buildCardExample() {
-    return Material(
-      borderRadius: BorderRadius.circular(10),
-      elevation: 9,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        width: 300,
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 16),
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(.6),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.photo_size_select_actual,
-                  color: Colors.white,
-                  size: 38,
-                ),
-              ),
-            ),
-            Expanded(
-              child: PlaceholderLines(
-                count: 3,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
  _buildGridItem (){
      return Container(
        color: Colors.white,

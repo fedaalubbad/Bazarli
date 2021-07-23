@@ -8,18 +8,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 class CustomLoginButton extends StatelessWidget {
+ bool isResetPassword;
+ CustomLoginButton({this.isResetPassword=false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: InkWell(
           onTap: () {
-            if(Provider.of<AuthenticationProvider>(context, listen: false).authMode==AuthMode.login) {
-              Provider.of<AuthenticationProvider>(context, listen: false)
-                  .customerSign(context);
+            if(isResetPassword){
+
             }else {
-              Provider.of<AuthenticationProvider>(context, listen: false)
-                  .customerRegister(context);
+              if (Provider
+                  .of<AuthenticationProvider>(context, listen: false)
+                  .authMode == AuthMode.login) {
+                Provider.of<AuthenticationProvider>(context, listen: false)
+                    .customerSign(context);
+              } else {
+                Provider.of<AuthenticationProvider>(context, listen: false)
+                    .customerRegister(context);
+              }
             }
           },
           child: Container(

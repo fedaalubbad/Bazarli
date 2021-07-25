@@ -10,21 +10,21 @@ import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:bazarli/ui/home/Home/component/dotted_slider.dart';
 import 'package:bazarli/ui/home/Home/component/product_item.dart';
-import 'package:bazarli/ui/search/categorySearchScreen.dart';
 import 'package:bazarli/ui/home/utils/indicator.dart';
+import 'package:bazarli/ui/search/categorySearchScreen.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+
 import 'component/carousel_slider.dart';
 import 'component/home_title_widget.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,21 +37,21 @@ class HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
   TabController _tabController;
+
   @override
   void initState() {
     _tabController = new TabController(
-      length: Provider.of<CategoriesProvider>(context, listen: false)
-          .categoriesList
-          .length,
+      length: Provider.of<CategoriesProvider>(
+        context,
+        listen: false,
+      ).categoriesList.length,
       vsync: this,
       initialIndex: _getInitialIndex(),
     )..addListener(() {
         print("New Index ${_tabController.index}");
         PageStorage.of(context).writeState(context, _tabController.index);
       });
-
     super.initState();
   }
 
@@ -175,8 +175,10 @@ class HomeScreenState extends State<HomeScreen>
 
   getTop() {
     return StreamBuilder<Response>(
-        stream: Provider.of<ProductProvider>(context, listen: false)
-            .getTopProducts(),
+        stream: Provider.of<ProductProvider>(
+          context,
+          listen: false,
+        ).getTopProducts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return buildProductItemPlaceholder();
@@ -188,11 +190,12 @@ class HomeScreenState extends State<HomeScreen>
             Response responseBody = snapshot.data;
             List<dynamic> mapList = responseBody.data['data'];
             return Container(
-                //   width: ScreenUtil.defaultSize.width,
-                child: BuildCarouselSlider(
-              product: mapList.map((e) => Product.fromJson(e)).toList(),
-              currentIndex: 0,
-            ));
+              //   width: ScreenUtil.defaultSize.width,
+              child: BuildCarouselSlider(
+                product: mapList.map((e) => Product.fromJson(e)).toList(),
+                currentIndex: 0,
+              ),
+            );
           } else {
             return buildProductItemPlaceholder();
           }
@@ -231,27 +234,29 @@ class HomeScreenState extends State<HomeScreen>
   // }
   getGrid() {
     return StreamBuilder<Response>(
-        stream: Provider.of<ProductProvider>(context, listen: false)
-            .getTopProducts(),
+        stream: Provider.of<ProductProvider>(
+          context,
+          listen: false,
+        ).getTopProducts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                child: StaggeredGridView.countBuilder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) =>
-                      _buildGridItem(),
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                  mainAxisSpacing: 10.w,
-                  crossAxisSpacing: 10.h,
-                ));
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: StaggeredGridView.countBuilder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 4,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) =>
+                    _buildGridItem(),
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 10.h,
+              ),
+            );
           }
           // var products = snapshot.data.body;
-
           if (snapshot.hasData) {
             print('dataResponse${snapshot.data}');
             Response responseBody = snapshot.data;
@@ -259,35 +264,37 @@ class HomeScreenState extends State<HomeScreen>
             List<Product> products =
                 mapList.map((e) => Product.fromJson(e)).toList();
             return Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                child: StaggeredGridView.countBuilder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  itemCount: products.length,
-                  itemBuilder: (BuildContext context, int index) => ProductItem(
-                    product: products[index],
-                  ),
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                  mainAxisSpacing: 10.w,
-                  crossAxisSpacing: 10.h,
-                ));
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: StaggeredGridView.countBuilder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 4,
+                itemCount: products.length,
+                itemBuilder: (BuildContext context, int index) => ProductItem(
+                  product: products[index],
+                ),
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 10.h,
+              ),
+            );
           } else {
             return Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                child: StaggeredGridView.countBuilder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) =>
-                      _buildGridItem(),
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                  mainAxisSpacing: 10.w,
-                  crossAxisSpacing: 10.h,
-                ));
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: StaggeredGridView.countBuilder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 4,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) =>
+                    _buildGridItem(),
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 10.h,
+              ),
+            );
           }
         });
   }
@@ -373,81 +380,64 @@ class HomeScreenState extends State<HomeScreen>
 
   getCategories(BuildContext context) {
     return Container(
-        width: ScreenUtil.defaultSize.width,
-        height: 50.h,
-        // color: WhiteColor,
-        child: FutureBuilder<List<Categories>>(
-          future: Provider.of<CategoriesProvider>(context, listen: false)
-              .getAllCategories(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              _tabController = new TabController(
-                length: snapshot.data.length,
-                vsync: this,
-                initialIndex: _getInitialIndex(),
-              )..addListener(() {
-                  print("New Index ${_tabController.index}");
-                  PageStorage.of(context)
-                      .writeState(context, _tabController.index);
-                });
-              return TabBar(
-                indicatorSize: TabBarIndicatorSize.label,
-                indicator: MD2Indicator(
-                  indicatorSize: MD2IndicatorSize.full,
-                  indicatorHeight: 4.h,
-                  indicatorColor: PrimaryColor,
-                ),
+      width: ScreenUtil.defaultSize.width,
+      height: 50.h,
+      // color: WhiteColor,
+      child: FutureBuilder<List<Categories>>(
+        future: Provider.of<CategoriesProvider>(
+          context,
+          listen: false,
+        ).getAllCategories(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            _tabController = new TabController(
+              length: snapshot.data.length,
+              vsync: this,
+              initialIndex: _getInitialIndex(),
+            )..addListener(() {
+                print("New Index ${_tabController.index}");
+                PageStorage.of(context).writeState(
+                  context,
+                  _tabController.index,
+                );
+              });
+            return TabBar(
+              indicatorSize: TabBarIndicatorSize.label,
+              indicator: MD2Indicator(
+                indicatorSize: MD2IndicatorSize.full,
+                indicatorHeight: 4.h,
                 indicatorColor: PrimaryColor,
-                key: PageStorageKey<Type>(TabBar),
-                controller: _tabController,
-                isScrollable: true,
-                tabs: List<Tab>.generate(snapshot.data.length, (int tabIndex) {
-                  return Tab(
-                    child: InkWell(
-                      onTap: () {
-                        NavigationService.navigationService
-                            .navigateToWidget(CategorySearchScreen(
+              ),
+              indicatorColor: PrimaryColor,
+              key: PageStorageKey<Type>(TabBar),
+              controller: _tabController,
+              isScrollable: true,
+              tabs: List<Tab>.generate(snapshot.data.length, (int tabIndex) {
+                return Tab(
+                  child: InkWell(
+                    onTap: () {
+                      NavigationService.navigationService.navigateToWidget(
+                        CategorySearchScreen(
                           category: snapshot.data[tabIndex],
-                        ));
-                      },
-                      child: Center(
-                        child: Shimmer.fromColors(
-                            baseColor: BlueDarkColor,
-                            highlightColor: PrimaryColor.withOpacity(0.3),
-                            child: Text(
-                              snapshot.data[tabIndex].name,
-                              style: TabsTextStyle,
-                            )),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: Shimmer.fromColors(
+                        baseColor: BlueDarkColor,
+                        highlightColor: PrimaryColor.withOpacity(0.3),
+                        child: Text(
+                          snapshot.data[tabIndex].name,
+                          style: TabsTextStyle,
+                        ),
                       ),
                     ),
-                    // text: 'Tab ${tabIndex}',
-                  );
-                }),
-              );
-            } else if (snapshot.hasError) {
-              return Container(
-                height: 50.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5.w),
-                        width: 50,
-                        child: Center(
-                          child: PlaceholderLines(
-                            count: 1,
-                            animate: true,
-                            color: PrimaryColor.withOpacity(0.3),
-                          ),
-                        ),
-                        // text: 'Tab ${tabIndex}',
-                      );
-                    }),
-              );
-            }
-
-            // By default, show a loading spinner. placeholder view
+                  ),
+                  // text: 'Tab ${tabIndex}',
+                );
+              }),
+            );
+          } else if (snapshot.hasError) {
             return Container(
               height: 50.h,
               child: ListView.builder(
@@ -468,37 +458,67 @@ class HomeScreenState extends State<HomeScreen>
                     );
                   }),
             );
-          },
-        ));
+          }
+
+          // By default, show a loading spinner. placeholder view
+          return Container(
+            height: 50.h,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5.w),
+                    width: 50,
+                    child: Center(
+                      child: PlaceholderLines(
+                        count: 1,
+                        animate: true,
+                        color: PrimaryColor.withOpacity(0.3),
+                      ),
+                    ),
+                    // text: 'Tab ${tabIndex}',
+                  );
+                }),
+          );
+        },
+      ),
+    );
   }
 
   getBrands() {
     return FutureBuilder<List<Brands>>(
-        future:
-            Provider.of<BrandProvider>(context, listen: false).getAllBrandss(),
+        future: Provider.of<BrandProvider>(
+          context,
+          listen: false,
+        ).getAllBrandss(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Row(
               children: [
                 InkWell(
-                    onTap: () {
-                      setState(() {
-                        _scrollController.animateTo(0,
-                            duration: Duration(milliseconds: 5000),
-                            curve: Curves.fastOutSlowIn);
-                      });
-                    },
-                    child: Container(
-                        width: 0.15.sw,
-                        child: CircleAvatar(
-                          backgroundColor: WhiteColor,
-                          radius: ScreenUtil().radius(15),
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: BlueDarkColor,
-                            size: ScreenUtil().radius(15),
-                          ),
-                        ))),
+                  onTap: () {
+                    setState(() {
+                      _scrollController.animateTo(
+                        0,
+                        duration: Duration(milliseconds: 5000),
+                        curve: Curves.fastOutSlowIn,
+                      );
+                    });
+                  },
+                  child: Container(
+                    width: 0.15.sw,
+                    child: CircleAvatar(
+                      backgroundColor: WhiteColor,
+                      radius: ScreenUtil().radius(15),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: BlueDarkColor,
+                        size: ScreenUtil().radius(15),
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   width: 0.7.sw,
                   // margin: EdgeInsets.symmetric(horizontal: 33.5.w),
@@ -514,71 +534,81 @@ class HomeScreenState extends State<HomeScreen>
                   ),
                 ),
                 InkWell(
-                    onTap: () {
-                      setState(() {
-                        _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent,
-                            duration: Duration(milliseconds: 6000),
-                            curve: Curves.fastOutSlowIn);
-                      });
-                    },
-                    child: Container(
-                        width: 0.15.sw,
-                        child: CircleAvatar(
-                          backgroundColor: WhiteColor,
-                          radius: ScreenUtil().radius(15),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: BlueDarkColor,
-                            size: ScreenUtil().radius(15),
-                          ),
-                        ))),
+                  onTap: () {
+                    setState(() {
+                      _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent,
+                        duration: Duration(milliseconds: 6000),
+                        curve: Curves.fastOutSlowIn,
+                      );
+                    });
+                  },
+                  child: Container(
+                    width: 0.15.sw,
+                    child: CircleAvatar(
+                      backgroundColor: WhiteColor,
+                      radius: ScreenUtil().radius(15),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: BlueDarkColor,
+                        size: ScreenUtil().radius(15),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             );
           } else if (snapshot.hasError) {
             return Container(
-                height: 40.h,
-                child: ListView.builder(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    // physics: NeverScrollableScrollPhysics(),
-                    itemCount: 10,
-                    itemBuilder: (context, index) => Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 30.h,
-                          width: 30.w,
-                          decoration: BoxDecoration(
-                            color: WhiteColor,
-                          ),
-                          child: Shimmer.fromColors(
-                              baseColor: CurveColor,
-                              highlightColor: PrimaryColor.withOpacity(0.3),
-                              child: SvgPicture.asset(
-                                  'assets/svg/image_placeholder.svg')),
-                        )));
-          }
-
-          return Container(
               height: 40.h,
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
               child: ListView.builder(
-                  controller: _scrollController,
-                  scrollDirection: Axis.horizontal,
-                  // physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        height: 30.h,
-                        width: 30.w,
-                        decoration: BoxDecoration(
-                          color: WhiteColor,
-                        ),
-                        child: Shimmer.fromColors(
-                            baseColor: CurveColor,
-                            highlightColor: PrimaryColor.withOpacity(0.3),
-                            child: SvgPicture.asset(
-                                'assets/svg/image_placeholder.svg')),
-                      )));
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                // physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  height: 30.h,
+                  width: 30.w,
+                  decoration: BoxDecoration(
+                    color: WhiteColor,
+                  ),
+                  child: Shimmer.fromColors(
+                    baseColor: CurveColor,
+                    highlightColor: PrimaryColor.withOpacity(0.3),
+                    child: SvgPicture.asset(
+                      'assets/svg/image_placeholder.svg',
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          return Container(
+            height: 40.h,
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            child: ListView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              // physics: NeverScrollableScrollPhysics(),
+              itemCount: 10,
+              itemBuilder: (context, index) => Container(
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                height: 30.h,
+                width: 30.w,
+                decoration: BoxDecoration(
+                  color: WhiteColor,
+                ),
+                child: Shimmer.fromColors(
+                  baseColor: CurveColor,
+                  highlightColor: PrimaryColor.withOpacity(0.3),
+                  child: SvgPicture.asset(
+                    'assets/svg/image_placeholder.svg',
+                  ),
+                ),
+              ),
+            ),
+          );
         });
   }
   // getBrands() {
@@ -667,8 +697,13 @@ class HomeScreenState extends State<HomeScreen>
       height: 140.h,
       width: ScreenUtil.defaultSize.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(ScreenUtil().radius(2)),
-        image: DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover),
+        borderRadius: BorderRadius.circular(
+          ScreenUtil().radius(2),
+        ),
+        image: DecorationImage(
+          image: AssetImage(imageUrl),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -683,7 +718,9 @@ class HomeScreenState extends State<HomeScreen>
           Expanded(
             flex: 80,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+              borderRadius: BorderRadius.circular(
+                ScreenUtil().radius(10),
+              ),
               child: Container(
                 // height: 140.h,
                 decoration: BoxDecoration(
@@ -696,7 +733,6 @@ class HomeScreenState extends State<HomeScreen>
                   'assets/svg/image_placeholder.svg',
                   color: CurveColor,
                 ),
-
                 // margin: EdgeInsets.symmetric(horizontal: 5),
               ),
             ),
@@ -706,7 +742,9 @@ class HomeScreenState extends State<HomeScreen>
           Expanded(
             flex: 20,
             child: Container(
-              padding: EdgeInsets.all(ScreenUtil().radius(10)),
+              padding: EdgeInsets.all(
+                ScreenUtil().radius(10),
+              ),
               child: PlaceholderLines(
                 count: 1,
                 animate: true,
@@ -721,29 +759,40 @@ class HomeScreenState extends State<HomeScreen>
 
   buildProductItemPlaceholder() {
     return Container(
-        // height:(0.70.sh)-50.h,
-        decoration: BoxDecoration(
-          color: WhiteColor,
-          borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-          boxShadow: [
-            BoxShadow(
-                color: ShadowColor,
-                // spreadRadius: 5,
-                blurRadius: 7.0,
-                offset: Offset(0.0, 8)),
-          ],
+      // height:(0.70.sh)-50.h,
+      decoration: BoxDecoration(
+        color: WhiteColor,
+        borderRadius: BorderRadius.circular(
+          ScreenUtil().radius(10),
         ),
-        margin: EdgeInsets.symmetric(horizontal: 6.w, vertical: 5.h),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        boxShadow: [
+          BoxShadow(
+            color: ShadowColor,
+            // spreadRadius: 5,
+            blurRadius: 7.0,
+            offset: Offset(0.0, 8),
+          ),
+        ],
+      ),
+      margin: EdgeInsets.symmetric(
+        horizontal: 6.w,
+        vertical: 5.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+            borderRadius: BorderRadius.circular(
+              ScreenUtil().radius(10),
+            ),
             child: Container(
-                width: double.infinity,
-                height: (0.40.sh),
-                child: SvgPicture.asset(
-                  'assets/svg/image_placeholder.svg',
-                  color: CurveColor,
-                )),
+              width: double.infinity,
+              height: (0.40.sh),
+              child: SvgPicture.asset(
+                'assets/svg/image_placeholder.svg',
+                color: CurveColor,
+              ),
+            ),
           ),
           Container(
             // height:200.h,
@@ -779,7 +828,9 @@ class HomeScreenState extends State<HomeScreen>
                 ),
               ],
             ),
-          )
-        ]));
+          ),
+        ],
+      ),
+    );
   }
 }

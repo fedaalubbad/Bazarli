@@ -32,7 +32,7 @@ const String UPDATE_CUSTOMER_PROFILE_URL="customer/profile?_method=PUT";
 const String GET_CUSTOMER_PROFILE_URL="customers/"; //ID
 //CUSTOMER ADDRESSES
 const String CREATE_ADDRESSES_URL="addresses/create";
-const String GET_ADDRESSES_URL="addresses/addresses/";  //USED FOR DELETE ALSO
+const String GET_ADDRESSES_URL="addresses/addresses?token=true";  //USED FOR DELETE ALSO
 const String UPDATE_ADDRESS_URL="addresses/24?_method=PUT";
 
 //CUSTOMER ORDERS CHECKOUT

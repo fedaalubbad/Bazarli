@@ -21,6 +21,13 @@ class ProductApi{
   }
 
 
+  Stream<Response> getTopProducts() async* {
+    yield* Stream.periodic(Duration(seconds: 5), (_) {
+      return dio.post(baseUrl + GET_PRODUCTS_URL,);
+    }).asyncMap((event) async => await event);
+  }
+
+
 
  //  Future<UserModel> getUSerById(String userId)async{
  //    Response response = await dio.get(baseUrl + users+userId,

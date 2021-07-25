@@ -1,9 +1,6 @@
 import 'package:bazarli/models/user_model/customer_data.dart';
 import 'package:bazarli/models/user_model/customer_status.dart';
 import 'package:bazarli/models/user_model/supplier_status.dart';
-import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/shared_preference/sp_helper.dart';
-import 'package:bazarli/ui/home/home_main_screen.dart';
 import 'package:dio/dio.dart';
 import 'constants.dart';
 

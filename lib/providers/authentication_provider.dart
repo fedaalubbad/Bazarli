@@ -11,16 +11,16 @@ import 'package:flutter/material.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
-  bool isLoading=false;
+  bool isLoading = false;
   bool isObscure = true;
   bool vaidate = true;
   AuthMode authMode;
   Language language;
-  final passwordContraller =TextEditingController();
-  final confirmPasswordContraller =TextEditingController();
-  final fNameContraller =TextEditingController();
-  final lNameContraller =TextEditingController();
-  final emailContraller =TextEditingController();
+  final passwordContraller = TextEditingController();
+  final confirmPasswordContraller = TextEditingController();
+  final fNameContraller = TextEditingController();
+  final lNameContraller = TextEditingController();
+  final emailContraller = TextEditingController();
   Map<String, dynamic> authData = {
     'fName': '',
     'lName': '',
@@ -28,52 +28,52 @@ class AuthenticationProvider extends ChangeNotifier {
     'password': '',
     'confirmPassword': '',
   };
-  switchObscure(){
-    isObscure= !isObscure;
+  switchObscure() {
+    isObscure = !isObscure;
     notifyListeners();
-
   }
 
-  setLanguage(String lang){
-    if(lang=='en'){
-      language=Language.English;
+  setLanguage(String lang) {
+    if (lang == 'en') {
+      language = Language.English;
       notifyListeners();
-    }else{
-      language=Language.Arabic;
-      notifyListeners();
-    }
-  }
-  switchLanguage(BuildContext context){
-    if(language==Language.English){
-      language=Language.Arabic;
-      context.locale=Locale('ar');
-      notifyListeners();
-    }else{
-      language=Language.English;
-      context.locale=Locale('en');
+    } else {
+      language = Language.Arabic;
       notifyListeners();
     }
   }
 
-  switchMode(){
-    if(authMode==AuthMode.login){
-      authMode=AuthMode.signUp;
+  switchLanguage(BuildContext context) {
+    if (language == Language.English) {
+      language = Language.Arabic;
+      context.locale = Locale('ar');
       notifyListeners();
-    }else{
-      authMode=AuthMode.login;
+    } else {
+      language = Language.English;
+      context.locale = Locale('en');
+      notifyListeners();
+    }
+  }
+
+  switchMode() {
+    if (authMode == AuthMode.login) {
+      authMode = AuthMode.signUp;
+      notifyListeners();
+    } else {
+      authMode = AuthMode.login;
       notifyListeners();
     }
   }
 
   bool onValidate() {
-    if(!formStateKey.currentState.validate()){
-      vaidate=false;
+    if (!formStateKey.currentState.validate()) {
+      vaidate = false;
       notifyListeners();
       return false;
     }
 
     formStateKey.currentState.save();
-    vaidate=true;
+    vaidate = true;
     notifyListeners();
     return true;
   }
@@ -87,6 +87,7 @@ class AuthenticationProvider extends ChangeNotifier {
     authData['password'] = val;
     notifyListeners();
   }
+
   saveConfirmPassword(val) {
     authData['confirmPassword'] = val;
     notifyListeners();
@@ -96,6 +97,7 @@ class AuthenticationProvider extends ChangeNotifier {
     authData['fName'] = val;
     notifyListeners();
   }
+
   saveLName(val) {
     authData['lName'] = val;
     notifyListeners();
@@ -109,7 +111,8 @@ class AuthenticationProvider extends ChangeNotifier {
     }
     return null;
   }
-String validateLName(val) {
+
+  String validateLName(val) {
     if (val.isEmpty) {
       return 'enter your last name';
     } else if (val.length < 4) {
@@ -124,10 +127,11 @@ String validateLName(val) {
     }
     return null;
   }
- String validateConfirmPassword(val) {
+
+  String validateConfirmPassword(val) {
     if (val.isEmpty || val.length <= 5) {
       return 'repeat password';
-    }else if(val!=passwordContraller.text){
+    } else if (val != passwordContraller.text) {
       return "password don't match";
     }
     return null;
@@ -140,11 +144,11 @@ String validateLName(val) {
     return null;
   }
 
-  void customerSign(BuildContext context)async {
-    this.isLoading=true;
+  void customerSign(BuildContext context) async {
+    this.isLoading = true;
     notifyListeners();
-    if(!formStateKey.currentState.validate()){
-      this.isLoading=false;
+    if (!formStateKey.currentState.validate()) {
+      this.isLoading = false;
       notifyListeners();
       // vaidate=false;
       // notifyListeners();
@@ -153,31 +157,32 @@ String validateLName(val) {
 
     formStateKey.currentState.save();
     // vaidate=true;
-    Map<String,dynamic> response =await AuthenticationApi.api.customerSign(authData['email'],authData['password']);
-     if(response['status']==true){
-       LoginStatus loginStatus=response['loginResponse'];
-       SPHelper.spHelper.setUSer(loginStatus.data.toJson());
-       SPHelper.spHelper.setToken(loginStatus.token);
-       _showToast(context,'login successfully');
+    Map<String, dynamic> response = await AuthenticationApi.api
+        .customerSign(authData['email'], authData['password']);
+    if (response['status'] == true) {
+      LoginStatus loginStatus = response['loginResponse'];
+      SPHelper.spHelper.setUSer(loginStatus.data.toJson());
+      SPHelper.spHelper.setToken(loginStatus.token);
+      _showToast(context, 'login successfully');
 
-       this.isLoading=false;
-       notifyListeners();
-        SPHelper.spHelper.setLoged(true);
-        NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen());
-     }else{
-       this.isLoading=false;
-       notifyListeners();
-       print(response['errorMessage']);
-       showErrorDialog(context,response['errorMessage']);
-
-     }
-
+      this.isLoading = false;
+      notifyListeners();
+      SPHelper.spHelper.setLoged(true);
+      NavigationService.navigationService
+          .navigateAndReplaceWidget(HomeMainScreen());
+    } else {
+      this.isLoading = false;
+      notifyListeners();
+      print(response['errorMessage']);
+      showErrorDialog(context, response['errorMessage']);
+    }
   }
-  void customerRegister(BuildContext context)async {
-    this.isLoading=true;
+
+  void customerRegister(BuildContext context) async {
+    this.isLoading = true;
     notifyListeners();
-    if(!formStateKey.currentState.validate()){
-      this.isLoading=false;
+    if (!formStateKey.currentState.validate()) {
+      this.isLoading = false;
       notifyListeners();
       // vaidate=false;
       // notifyListeners();
@@ -186,58 +191,65 @@ String validateLName(val) {
 
     formStateKey.currentState.save();
     // vaidate=true;
-    Map<String,dynamic> response =await AuthenticationApi.api.customerRedister(authData['fName'],authData['lName'],authData['email'],authData['password'],authData['confirmPassword']);
-          if(response['status']==true){
-                   print(response['response']);
-                   _showToast(context,response['response']);
-                   this.isLoading=false;
-                   notifyListeners();
-                   authMode=AuthMode.login;
-
-          }else if(response['errorResponse']!=null){
-            showErrorDialog(context,response['errorResponse'].toString());
-             print(response['errorResponse'].toString());
-             this.isLoading=false;
-             notifyListeners();
-          }else{
-            showErrorDialog(context,response['catchResponse'].toString());
-            print(response['catchResponse'].toString());
-            this.isLoading=false;
-            notifyListeners();
-
-          }
+    Map<String, dynamic> response = await AuthenticationApi.api
+        .customerRedister(
+            authData['fName'],
+            authData['lName'],
+            authData['email'],
+            authData['password'],
+            authData['confirmPassword']);
+    if (response['status'] == true) {
+      print(response['response']);
+      _showToast(context, response['response']);
+      this.isLoading = false;
+      notifyListeners();
+      authMode = AuthMode.login;
+    } else if (response['errorResponse'] != null) {
+      showErrorDialog(context, response['errorResponse'].toString());
+      print(response['errorResponse'].toString());
+      this.isLoading = false;
+      notifyListeners();
+    } else {
+      showErrorDialog(context, response['catchResponse'].toString());
+      print(response['catchResponse'].toString());
+      this.isLoading = false;
+      notifyListeners();
+    }
   }
-void logout(){
-  SPHelper.spHelper.setLoged(false);
-  NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
-}
+
+  void logout() {
+    SPHelper.spHelper.setLoged(false);
+    NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
+  }
+
 // user defined function
-void showErrorDialog(BuildContext context,errorMsg) {
-  // set up the buttons
-  Widget cancelButton = FlatButton(
-    child: Text("Continue"),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
+  void showErrorDialog(BuildContext context, errorMsg) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
 
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Error"),
+      content: FormError(
+        errors: [errorMsg],
+      ),
+      actions: [
+        cancelButton,
+      ],
+    );
+    showDialog(builder: (context) => alert, context: context);
+  }
 
-    title: Text("Error"),
-    content: FormError(errors: [errorMsg],),
-    actions: [
-      cancelButton,
-    ],
-  );
-  showDialog(builder: (context) => alert, context: context);
-
-}
-  void _showToast(BuildContext context,String message) {
+  void _showToast(BuildContext context, String message) {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         // action: SnackBarAction(label: 'Done', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
@@ -245,4 +257,4 @@ void showErrorDialog(BuildContext context,errorMsg) {
 }
 
 enum AuthMode { signUp, login }
-enum Language {English,Arabic}
+enum Language { English, Arabic }

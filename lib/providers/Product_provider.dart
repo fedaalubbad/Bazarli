@@ -1,4 +1,5 @@
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,11 @@ class ProductProvider extends ChangeNotifier{
     this.productList = products;
     notifyListeners();
     return productList;
+  }
+
+    Stream<Response> getTopProducts(){
+    Stream<Response> stream= ProductApi.api.getTopProducts();
+    return stream;
   }
 
 }

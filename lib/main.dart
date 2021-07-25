@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/providers/addresses_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/providers/reviews_provider.dart';
 import 'package:bazarli/providers/wishlist_provider.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
     ),
      ChangeNotifierProvider<ReviewsProvider>(
     create: (context) => ReviewsProvider(),
+    ),
+     ChangeNotifierProvider<AddressesProvider>(
+    create: (context) => AddressesProvider(),
     ),
     ],
     child: RefreshConfiguration(

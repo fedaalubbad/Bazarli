@@ -117,11 +117,14 @@ class BuildCarouselSlider extends StatelessWidget{
                           children: [
                             InkWell(
                               onTap:(){
-                                Provider.of<WishListProvider>(context, listen: false).addToWishList(product[index].id);
+                                Provider.of<WishListProvider>(context, listen: false).addToWishList(context,product[index].id);
                                },
                                 child: SvgPicture.asset('assets/svg/fav.svg')),
+
                             SizedBox(width: 20.w,),
+
                             SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
+
                           ],
                         ),
 

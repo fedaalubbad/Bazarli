@@ -15,18 +15,18 @@ class Address {
 
   Address(
       {this.id,
-        this.firstName,
-        this.lastName,
-        this.companyName,
-        this.address1,
-        this.country,
-        this.countryName,
-        this.state,
-        this.city,
-        this.postcode,
-        this.phone,
-        this.createdAt,
-        this.updatedAt});
+      this.firstName,
+      this.lastName,
+      this.companyName,
+      this.address1,
+      this.country,
+      this.countryName,
+      this.state,
+      this.city,
+      this.postcode,
+      this.phone,
+      this.createdAt,
+      this.updatedAt});
 
   Address.fromJson(Map<String, dynamic> json) {
     id = json['id'];

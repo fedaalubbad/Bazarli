@@ -18,7 +18,8 @@ class HomeMainScreen extends StatefulWidget{
    return HomeScreenState();
   }
 }
-class HomeScreenState extends State<HomeMainScreen> {
+
+class HomeScreenState extends State<HomeMainScreen>{
   // bool isProfile=false;
   int _selectedPageIndex=0;
   PageController pageController = PageController(
@@ -71,9 +72,9 @@ class HomeScreenState extends State<HomeMainScreen> {
                  :CartScreen();
                },
                  onPageChanged: (page) {
-                   setState(() {
+                   // setState(() {
                      _selectedPageIndex = page;
-                   });
+                   // });
                  }
              )
             // PageView(

@@ -26,7 +26,7 @@ class SplashState extends State<SplashScreen>{
 
     await Future.delayed(Duration(seconds:4));
     if(SPHelper.spHelper.isLoged())
-    NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen());
+    NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen(selectedPageIndex: 0,));
     else
       NavigationService.navigationService.navigateAndReplaceWidget(SliderScreen());
 

@@ -1,7 +1,6 @@
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
-
 import 'constants.dart';
 
 class WishListApi {
@@ -36,12 +35,9 @@ class WishListApi {
   }
 
   Future<Map<String, dynamic>> addToWishList(String productId) async {
-    dio.options.headers["authorization"] =
-    "Bearer ${SPHelper.spHelper.getToken()}";
+    dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
 
-    final formData = {
-      'token': null,
-    };
+
     Map<String, dynamic> status = Map<String, dynamic>();
     Response response = await dio.get(
         baseUrl + ADD_TO_WISHLIST + '/$productId' + '?token=true');

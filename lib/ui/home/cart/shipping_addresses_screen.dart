@@ -1,6 +1,5 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/address_model/data.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/addresses_provider.dart';
@@ -11,44 +10,211 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'addAddressScreen.dart';
+class ShippingAdressScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+   return ShippingAdressScreenState();
+  }
 
-class ShippingAdressScreen extends StatelessWidget {
+}
+class ShippingAdressScreenState extends State<ShippingAdressScreen> {
+  @override
+  void initState() {
+    Provider.of<AddressesProvider>(context, listen: false)
+        .getCustomerAddresses();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HomeBackgroundColor,
-      body: Stack(
-        children: [
-          ToolBar(
-            name: 'ShippingAddress',
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              left: 20.w,
-              right: 20.w,
-              top: 117.h,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            ToolBar(
+              name: 'ShippingAddress',
             ),
-            child: SingleChildScrollView(
+            Container(
+              margin: EdgeInsets.only(
+                left: 20.w,
+                right: 20.w,
+                top: 117.h,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    getAddresses(context),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildAddAddressWidget(context),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildContinueButton(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Widget getAddresses(BuildContext context) {
+  //   return FutureBuilder<List<Datum>>(
+  //     future: Provider.of<AddressesProvider>(context, listen: false)
+  //         .getCustomerAddresses(),
+  //         builder: (context, snapshot) {
+  //           if (snapshot.hasData) {
+  //             return ListView.builder(
+  //               shrinkWrap: true,
+  //               physics: NeverScrollableScrollPhysics(),
+  //               itemCount: snapshot.data.length,
+  //               itemBuilder: (context, index) {
+  //               Datum address = snapshot.data[index];
+  //               return buildAddressWidget(context,
+  //                 index==0?'PrimaryAddress':'SecondaryAddress',
+  //                 address,
+  //               );
+  //             },
+  //         );
+  //       } else if (snapshot.hasError) {
+  //         return Padding(
+  //           padding: const EdgeInsets.all(10.0),
+  //           child: Container(
+  //             child: Text('no addresses yet'),
+  //           ),
+  //         );
+  //       }
+  //       // By default, show a loading spinner. placeholder view
+  //       return Padding(
+  //         padding: const EdgeInsets.all(10.0),
+  //         child: Container(
+  //           child: Text('load'),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+ Widget getAddresses(BuildContext context) {
+
+            if (Provider.of<AddressesProvider>(context).addressList.length!=0) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: Provider.of<AddressesProvider>(context, listen: false).addressList.length,
+                itemBuilder: (context, index) {
+                Datum address = Provider.of<AddressesProvider>(context, listen: false).addressList[index];
+                return buildAddressWidget(context,
+                  index==0?'PrimaryAddress':'SecondaryAddress',
+                  address,
+                );
+              },
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: Text('no addresses yet'),
+            ),
+          );
+        }
+        // By default, show a loading spinner. placeholder view
+
+  }
+
+Widget  buildAddressWidget(BuildContext context,text,Datum address) {
+    return Container(
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Text(
+            text,
+            style: TitlesInHome,
+          ).tr(),
+          SizedBox(
+            height: 10.h,
+          ),
+          GestureDetector(
+            onLongPress:(){
+              Provider.of<AddressesProvider>(context, listen: false)
+              .submitDeleteAddressDialog(context,'are you sure you want delete this address?',address.id);
+            },
+            child: Container(
+              width: ScreenUtil.defaultSize.width,
+              padding: EdgeInsets.all(
+                ScreenUtil().radius(15),
+              ),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: ShadowColor,
+                    // spreadRadius: 5 ,
+                    blurRadius: 7.0,
+                    offset: Offset(0.0, 8),
+                  ),
+                ],
+                color: WhiteColor,
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().radius(5),
+                ),
+                border: Border.all(
+                  color: PrimaryColor,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Name',
+                    style: TextLabelStyle,
+                  ).tr(),
                   SizedBox(
-                    height: 25.h,
+                    height: 3.h,
                   ),
-                  // buildAddressWidget('PrimaryAddress'),
-                  getAddresses(context),
-                  SizedBox(
-                    height: 20.h,
+                  Text(
+                    address.firstName + ' ' + address.lastName,
+                    style: SliderTitle2Style,
                   ),
-                  buildAddAddressWidget(),
                   SizedBox(
-                    height: 20.h,
+                    height: 15.h,
                   ),
-                  buildContinueButton(),
+                  Text(
+                    'Address',
+                    style: TextLabelStyle,
+                  ).tr(),
                   SizedBox(
-                    height: 20.h,
+                    height: 3.h,
+                  ),
+                  Text(
+                    address.address1[0],
+                    style: SliderTitle2Style,
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Text(
+                    'PhoneNumber',
+                    style: TextLabelStyle,
+                  ).tr(),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Text(
+                    address.phone,
+                    style: SliderTitle2Style,
                   ),
                 ],
               ),
@@ -59,128 +225,7 @@ class ShippingAdressScreen extends StatelessWidget {
     );
   }
 
-  getAddresses(BuildContext context) {
-    return FutureBuilder<GetAddress>(
-      future: Provider.of<AddressesProvider>(context, listen: false)
-          .getCustomerAddresses(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data.data.length,
-            itemBuilder: (context, index) {
-              Datum address = snapshot.data.data[index];
-              return buildAddressWidget(
-                'PrimaryAddress',
-                address.firstName,
-                address.lastName,
-                address.address1[0] + '/' + address.city,
-                address.phone,
-              );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Container(
-            child: Text('error'),
-          );
-        }
-        // By default, show a loading spinner. placeholder view
-        return Container(
-          child: Text('load'),
-        );
-      },
-    );
-  }
-
-  buildAddressWidget(
-    String text,
-    String firstName,
-    String lastName,
-    String address,
-    String phone,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          text,
-          style: TitlesInHome,
-        ).tr(),
-        SizedBox(
-          height: 10.h,
-        ),
-        Container(
-          // height:220.h,
-          width: ScreenUtil.defaultSize.width,
-          padding: EdgeInsets.all(
-            ScreenUtil().radius(15),
-          ),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: ShadowColor,
-                // spreadRadius: 5 ,
-                blurRadius: 7.0,
-                offset: Offset(0.0, 8),
-              ),
-            ],
-            color: WhiteColor,
-            borderRadius: BorderRadius.circular(
-              ScreenUtil().radius(5),
-            ),
-            border: Border.all(
-              color: PrimaryColor,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Name',
-                style: TextLabelStyle,
-              ).tr(),
-              SizedBox(
-                height: 3.h,
-              ),
-              Text(
-                firstName + ' ' + lastName,
-                style: SliderTitle2Style,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                'Address',
-                style: TextLabelStyle,
-              ).tr(),
-              SizedBox(
-                height: 3.h,
-              ),
-              Text(
-                address,
-                style: SliderTitle2Style,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                'PhoneNumber',
-                style: TextLabelStyle,
-              ).tr(),
-              SizedBox(
-                height: 3.h,
-              ),
-              Text(
-                phone,
-                style: SliderTitle2Style,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  buildAddAddressWidget() {
+  buildAddAddressWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -191,31 +236,38 @@ class ShippingAdressScreen extends StatelessWidget {
         SizedBox(
           height: 10.h,
         ),
-        Container(
-          height: 220.h,
-          width: ScreenUtil.defaultSize.width,
-          padding: EdgeInsets.all(
-            ScreenUtil().radius(15),
-          ),
-          decoration: BoxDecoration(
-            color: WhiteColor,
-            borderRadius: BorderRadius.circular(
-              ScreenUtil().radius(5),
+        InkWell(
+          onTap: ()async{
+          await  Provider.of<AddressesProvider>(context, listen: false).createNewAddress(context);
+          Provider.of<AddressesProvider>(context, listen: false).getCustomerAddresses();
+
+          },
+          child: Container(
+            height: 220.h,
+            width: ScreenUtil.defaultSize.width,
+            padding: EdgeInsets.all(
+              ScreenUtil().radius(15),
             ),
-            border: Border.all(
-              color: PrimaryColor,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: ShadowColor,
-                // spreadRadius: 5,
-                blurRadius: 7.0,
-                offset: Offset(0.0, 8),
+            decoration: BoxDecoration(
+              color: WhiteColor,
+              borderRadius: BorderRadius.circular(
+                ScreenUtil().radius(5),
               ),
-            ],
-          ),
-          child: Center(
-            child: SvgPicture.asset('assets/svg/add_address.svg'),
+              border: Border.all(
+                color: PrimaryColor,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: ShadowColor,
+                  // spreadRadius: 5,
+                  blurRadius: 7.0,
+                  offset: Offset(0.0, 8),
+                ),
+              ],
+            ),
+            child: Center(
+              child: SvgPicture.asset('assets/svg/add_address.svg'),
+            ),
           ),
         ),
       ],

@@ -4,25 +4,26 @@ class Categories {
   int id;
   String slug;
   String name;
-  Null categoryIconPath;
-  Null image;
+  String categoryIconPath;
+  String image;
   String code;
   List<Categories> subCategories;
 
   Categories(
       {this.id,
-        this.slug,
-        this.name,
-        this.categoryIconPath,
-        this.image,
-        this.code,
-        this.subCategories});
+      this.slug,
+      this.name,
+      this.categoryIconPath,
+      this.image,
+      this.code,
+      this.subCategories});
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     slug = json['slug'];
-    name = json['name'];
-    categoryIconPath = json['category_icon_path'];
+    name = json['name']==null? ' ' :json['name'];
+    categoryIconPath =
+        json['category_icon_path'] == null ? null : json['category_icon_path'];
     image = json['image'];
     code = json['code'];
     if (json['subCategories'] != null) {

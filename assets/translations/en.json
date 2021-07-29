@@ -53,6 +53,7 @@
   "Saving": "Saving",
   "ShippingAddress": "Shipping Address",
   "PrimaryAddress": "Primary Address",
+  "SecondaryAddress": "Secondary Address",
   "AddNewAddress": "Add New Address",
   "Address": "Address",
   "Continue": "Continue",

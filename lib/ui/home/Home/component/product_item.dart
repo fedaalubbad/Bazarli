@@ -49,7 +49,7 @@ class ProductItem extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(width:0.5.sw,
-                  child: Text(product.name,style:TitlesInHome,)),
+                  child: Text(product.name,style:TitlesInHome,maxLines: 2,)),
               Container(width:0.5.sw,
                   child: Text(product.formatedPrice,style:SliderTitle2Style,)),
             ],

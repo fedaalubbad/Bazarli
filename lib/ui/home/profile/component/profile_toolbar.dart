@@ -16,7 +16,7 @@ class ProfileToolBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      height: ScreenUtil.defaultSize.height/4,
+      height: ScreenUtil.defaultSize.height.h/4.h,
       decoration: BoxDecoration(
         color: WhiteColor,
         boxShadow: [
@@ -29,7 +29,7 @@ class ProfileToolBar extends StatelessWidget {
         ],
       ),
       child: Container(
-        margin: EdgeInsets.only(top: 57.h),
+        margin: EdgeInsets.only(top: 55.h),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,

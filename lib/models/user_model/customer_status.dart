@@ -1,25 +1,29 @@
+import 'dart:convert';
 import 'customer_data.dart';
 
-class LoginStatus {
+Login loginFromJson(String str) => Login.fromJson(json.decode(str));
+
+String loginToJson(Login data) => json.encode(data.toJson());
+
+class Login {
+  Login({
+    this.token,
+    this.message,
+    this.data,
+  });
+
+  String token;
   String message;
   CustomerData data;
-  String token;
+  factory Login.fromJson(Map<String, dynamic> json) => Login(
+        token: json["token"],
+        message: json["message"],
+        data: CustomerData.fromJson(json["data"]),
+      );
 
-  LoginStatus({this.message, this.data, this.token});
-
-  LoginStatus.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    data = json['data'] != null ? new CustomerData.fromJson(json['data']) : null;
-    token = json['token'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    data['token'] = this.token;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "token": token,
+        "message": message,
+        "data": data.toJson(),
+      };
 }

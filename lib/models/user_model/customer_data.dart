@@ -1,64 +1,61 @@
 import 'group.dart';
 
 class CustomerData {
+  CustomerData({
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.name,
+    this.gender,
+    this.dateOfBirth,
+    this.phone,
+    this.status,
+    this.group,
+    this.createdAt,
+    this.updatedAt,
+  });
+
   int id;
   String email;
   String firstName;
   String lastName;
   String name;
-  Null gender;
-  Null dateOfBirth;
-  Null phone;
+  dynamic gender;
+  dynamic dateOfBirth;
+  dynamic phone;
   int status;
   Group group;
-  String createdAt;
-  String updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  CustomerData(
-      {this.id,
-        this.email,
-        this.firstName,
-        this.lastName,
-        this.name,
-        this.gender,
-        this.dateOfBirth,
-        this.phone,
-        this.status,
-        this.group,
-        this.createdAt,
-        this.updatedAt});
+  factory CustomerData.fromJson(Map<String, dynamic> json) => CustomerData(
+        id: json["id"],
+        email: json["email"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        name: json["name"],
+        gender: json["gender"],
+        dateOfBirth: json["date_of_birth"],
+        phone: json["phone"],
+        status: json["status"],
+        group: Group.fromJson(json["group"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  CustomerData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    email = json['email'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    name = json['name'];
-    gender = json['gender'];
-    dateOfBirth = json['date_of_birth'];
-    phone = json['phone'];
-    status = json['status'];
-    group = json['group'] != null ? new Group.fromJson(json['group']) : null;
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['name'] = this.name;
-    data['gender'] = this.gender;
-    data['date_of_birth'] = this.dateOfBirth;
-    data['phone'] = this.phone;
-    data['status'] = this.status;
-    if (this.group != null) {
-      data['group'] = this.group.toJson();
-    }
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "email": email,
+        "first_name": firstName,
+        "last_name": lastName,
+        "name": name,
+        "gender": gender,
+        "date_of_birth": dateOfBirth,
+        "phone": phone,
+        "status": status,
+        "group": group.toJson(),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

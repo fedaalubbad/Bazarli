@@ -157,19 +157,19 @@ class AuthenticationProvider extends ChangeNotifier {
 
     formStateKey.currentState.save();
     // vaidate=true;
-    Map<String, dynamic> response = await AuthenticationApi.api
+    Map<String,dynamic> response = await AuthenticationApi.api
         .customerSign(authData['email'], authData['password']);
     if (response['status'] == true) {
-      LoginStatus loginStatus = response['loginResponse'];
-      SPHelper.spHelper.setUSer(loginStatus.data.toJson());
-      SPHelper.spHelper.setToken(loginStatus.token);
-      _showToast(context, 'login successfully');
+    Login loginStatus = response['loginResponse'];
+    SPHelper.spHelper.setUSer(loginStatus.data.toJson());
+    SPHelper.spHelper.setToken(loginStatus.token);
+    _showToast(context, 'login successfully');
 
-      this.isLoading = false;
-      notifyListeners();
-      SPHelper.spHelper.setLoged(true);
-      NavigationService.navigationService
-          .navigateAndReplaceWidget(HomeMainScreen());
+    this.isLoading = false;
+    notifyListeners();
+    SPHelper.spHelper.setLoged(true);
+    NavigationService.navigationService
+        .navigateAndReplaceWidget(HomeMainScreen(selectedPageIndex:0 ,));
     } else {
       this.isLoading = false;
       notifyListeners();

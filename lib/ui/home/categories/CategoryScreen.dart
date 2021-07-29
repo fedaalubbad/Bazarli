@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../home_main_screen.dart';
 import 'component/category_item.dart';
 import 'component/product_shop_item.dart';
 
@@ -30,11 +31,14 @@ class CategoriesScreenState extends State<CategoriesScreen>
   RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
-  void _onRefresh() async {
+  void _onRefresh() async{
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:1)));
     // monitor network fetch
-    await Future.delayed(
-      Duration(milliseconds: 1000),
-    );
+    await Future.delayed(Duration(milliseconds: 1000));
+
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }

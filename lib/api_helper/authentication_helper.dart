@@ -3,70 +3,80 @@ import 'package:bazarli/models/user_model/customer_status.dart';
 import 'package:bazarli/models/user_model/supplier_status.dart';
 import 'package:dio/dio.dart';
 import 'constants.dart';
+import 'dart:convert';
 
 class AuthenticationApi {
   AuthenticationApi._();
 
   static AuthenticationApi api = AuthenticationApi._();
   Dio dio = Dio();
-  Options options=Options(
-    followRedirects: false,
-    validateStatus: (status) {
-    return status < 500;
-  },
-  headers : { "contentType":"application/json","Authorization":"Bearer "},
+  Options options = Options(
+    // followRedirects: false,
+    // validateStatus: (status) {
+    //   return status < 500;
+    // },
+    headers: {"Accept": "application/json", "Authorization": "Bearer "},
   );
 
-  Future<Map<String,dynamic>> customerSign(String email,String password) async {
+  Future<Map<String,dynamic>> customerSign(String email, String password) async {
     final formData = {
       'email': email,
       'password': password,
-      'token':null,
+      'token': true,
     };
+    Map<String,dynamic>status;
     print(formData);
-    LoginStatus loginStatus = LoginStatus();
-      Response response = await dio.post(
-          baseUrl + CUSTOMER_LOGIN_URL,options: options, data: formData);
-    Map<String, dynamic> responseBody;
-    Map<String,dynamic> status=Map<String,dynamic>();
-
     try {
-      responseBody=response.data;
+      final response = await dio.post(baseUrl + CUSTOMER_LOGIN_URL,
+          data: formData, options: options);
       if (response.statusCode == 200) {
-        print('loginJson${responseBody}');
-        CustomerData userData = CustomerData();
-        loginStatus = LoginStatus.fromJson(responseBody);
-        // String token = responseBody["token"];
-        Map map = responseBody["data"];
-        userData = CustomerData.fromJson(map);
-        print('userData${userData}');
-          status={'loginResponse':loginStatus,'status':true};
-          return status;
-      } else if (response.statusCode == 401) {
-        responseBody=response.data;
-        // // print(responseBody["error"]);
-        // // loginStatus = null;
-        status={'errorMessage':responseBody,'status':false};
+        Map<String, dynamic> responseBody = response.data;
+        // var jsonDataObject = jsonDecode(response.data);
+        // print('000000000000000000000000');
+        Login loginResponse = Login.fromJson(responseBody);
+        status = {'loginResponse':loginResponse, 'status': true};
         return status;
-      }else{
-        status={'errorMessage':'login failed','status':false};
+      } else {
+        Map<String, dynamic> responseBody = response.data;
+        status = {'errorMessage': responseBody['error'], 'status': false};
         return status;
+        throw Exception();
       }
-    }
-    catch (e) {
-      final errorMessage = DioErrorType.response.toString();
-      print(errorMessage);
-        // responseBody=response.extra;
-        status = {'errorMessage':'something went wrong', 'status': false};
+    } on DioError catch (e) {
+        status = {'errorMessage': 'something went wrong', 'status': false};
         return status;
-
+      //   print('errormsg $e');
+      throw Exception();
     }
+    // String token = responseBody["token"];
+    // Map map = responseBody["data"];
+    // userData = CustomerData.fromJson(map);
+    // print('userData${userData}');
+    // status = {'loginResponse': loginStatus, 'status': true};
+    // return status;
+    // } else if (response.statusCode == 401) {
+    //   responseBody = response.data;
+    // // print(responseBody["error"]);
+    // // loginStatus = null;
+    // status = {'errorMessage': responseBody, 'status': false};
+    // return status;
+    // } else {
+    //   status = {'errorMessage': 'login failed', 'status': false};
+    // } catch (e) {
+    //   final errorMessage = DioErrorType.response.toString();
+    //   print(errorMessage);
+    //   // responseBody=response.extra;
+    //   // status = {'errorMessage': 'something went wrong', 'status': false};
+    //   // return status;
+    // }
   }
 
-
-  Future<Map<String,dynamic>> customerRedister(String firstName,String lastName,String email,
-    String password,String passwordConfirmation) async {
-
+  Future<Map<String, dynamic>> customerRedister(
+      String firstName,
+      String lastName,
+      String email,
+      String password,
+      String passwordConfirmation) async {
     final formData = {
       'first_name': firstName,
       'last_name': lastName,
@@ -74,54 +84,55 @@ class AuthenticationApi {
       'password': password,
       'password_confirmation': passwordConfirmation,
     };
-    Response response = await dio.post(
-        baseUrl + CUSTOMER_REGISTER_URL,options: options, data: formData);
+    Response response = await dio.post(baseUrl + CUSTOMER_REGISTER_URL,
+        options: options, data: formData);
     print(formData);
     Map<String, dynamic> responseBody;
-    Map<String,dynamic> status=Map<String,dynamic>();
+    Map<String, dynamic> status = Map<String, dynamic>();
 
     try {
       if (response.statusCode == 200) {
-        responseBody=response.data;
-        status={'response':responseBody['message'],'status':true};
+        responseBody = response.data;
+        status = {'response': responseBody['message'], 'status': true};
         return status;
-
       } else {
         // Map<String, List<String>> responseBody;
         // responseBody = response.toString();
         // Map<String,dynamic> errors=responseBody["errors"][];
-        status = {'errorResponse': 'The email has already been taken', 'status': false};
+        status = {
+          'errorResponse': 'The email has already been taken',
+          'status': false
+        };
         return status;
       }
       // }else{
       //   status={'errorResponse':'register failed','status':false};
       //   return status;
       // }
-    }
-    catch (e) {
+    } catch (e) {
       final errorMessage = DioErrorType.response.toString();
       // print(errorMessage);
-      status={'catchResponse':'something went wrong','status':false};
+      status = {'catchResponse': 'something went wrong', 'status': false};
       return status;
-
     }
   }
 
-  Future<Map<String,dynamic>> supplierSign(String email,String password) async {
+  Future<Map<String, dynamic>> supplierSign(
+      String email, String password) async {
     final formData = {
       'email': email,
       'password': password,
-      'token':null,
+      'token': true,
     };
     print(formData);
     SupplierLoginStatus loginStatus = SupplierLoginStatus();
-    Response response = await dio.post(
-        baseUrl + SUPPLIER_LOGIN_URL,options: options, data: formData);
+    Response response = await dio.post(baseUrl + SUPPLIER_LOGIN_URL,
+        options: options, data: formData);
     Map<String, dynamic> responseBody;
-    Map<String,dynamic> status=Map<String,dynamic>();
+    Map<String, dynamic> status = Map<String, dynamic>();
 
     try {
-      responseBody=response.data;
+      responseBody = response.data;
       if (response.statusCode == 200) {
         print('loginJson${responseBody}');
         CustomerData userData = CustomerData();
@@ -130,32 +141,33 @@ class AuthenticationApi {
         Map map = responseBody["data"];
         userData = CustomerData.fromJson(map);
         print('userData${userData}');
-        status={'loginResponse':loginStatus,'status':true};
+        status = {'loginResponse': loginStatus, 'status': true};
         return status;
       } else if (response.statusCode == 401) {
-        responseBody=response.data;
+        responseBody = response.data;
         // // print(responseBody["error"]);
         // // loginStatus = null;
-        status={'errorMessage':responseBody,'status':false};
+        status = {'errorMessage': responseBody, 'status': false};
         return status;
-      }else{
-        status={'errorMessage':'login failed','status':false};
+      } else {
+        status = {'errorMessage': 'login failed', 'status': false};
         return status;
       }
-    }
-    catch (e) {
+    } catch (e) {
       final errorMessage = DioErrorType.response.toString();
       print(errorMessage);
       // responseBody=response.extra;
-      status = {'errorMessage':'something went wrong', 'status': false};
+      status = {'errorMessage': 'something went wrong', 'status': false};
       return status;
-
     }
   }
 
-  Future<Map<String,dynamic>> supplierRedister(String firstName,String lastName,String email,
-    String password,String passwordConfirmation) async {
-
+  Future<Map<String, dynamic>> supplierRedister(
+      String firstName,
+      String lastName,
+      String email,
+      String password,
+      String passwordConfirmation) async {
     final formData = {
       'first_name': firstName,
       'last_name': lastName,
@@ -163,66 +175,56 @@ class AuthenticationApi {
       'password': password,
       'password_confirmation': passwordConfirmation,
     };
-    Response response = await dio.post(
-        baseUrl + SUPPLIER_REGISTER_URL,options: options, data: formData);
+    Response response = await dio.post(baseUrl + SUPPLIER_REGISTER_URL,
+        options: options, data: formData);
     print(formData);
     Map<String, dynamic> responseBody;
-    Map<String,dynamic> status=Map<String,dynamic>();
+    Map<String, dynamic> status = Map<String, dynamic>();
 
     try {
       if (response.statusCode == 200) {
-        responseBody=response.data;
-        status={'response':responseBody['message'],'status':true};
+        responseBody = response.data;
+        status = {'response': responseBody['message'], 'status': true};
         return status;
-
       } else {
         // Map<String, List<String>> responseBody;
         // responseBody = response.toString();
         // Map<String,dynamic> errors=responseBody["errors"][];
-        status = {'errorResponse': 'The email has already been taken', 'status': false};
+        status = {
+          'errorResponse': 'The email has already been taken',
+          'status': false
+        };
         return status;
       }
       // }else{
       //   status={'errorResponse':'register failed','status':false};
       //   return status;
       // }
-    }
-    catch (e) {
+    } catch (e) {
       final errorMessage = DioErrorType.response.toString();
       // print(errorMessage);
-      status={'catchResponse':'something went wrong','status':false};
+      status = {'catchResponse': 'something went wrong', 'status': false};
       return status;
-
     }
   }
 
-
-  Future<Map<String,dynamic>> forgetPassword(String email) async {
-
+  Future<Map<String, dynamic>> forgetPassword(String email) async {
     final formData = {
-      'email':email,
+      'email': email,
     };
-    Response response = await dio.post(
-        baseUrl + CUSTOMER_FORGET_PASSWORD_URL,options: options, data: formData);
+    Response response = await dio.post(baseUrl + CUSTOMER_FORGET_PASSWORD_URL,
+        options: options, data: formData);
     print(formData);
     Map<String, dynamic> responseBody;
-    Map<String,dynamic> status=Map<String,dynamic>();
+    Map<String, dynamic> status = Map<String, dynamic>();
 
     try {
-        responseBody=response.data;
-
-    }
-    catch (e) {
+      responseBody = response.data;
+    } catch (e) {
       final errorMessage = DioErrorType.response.toString();
       // print(errorMessage);
-      status={'catchResponse':'something went wrong','status':false};
+      status = {'catchResponse': 'something went wrong', 'status': false};
       return status;
-
     }
   }
-
-
-
-
-
 }

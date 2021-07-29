@@ -8,7 +8,6 @@ class CategoryApi {
   static CategoryApi api = CategoryApi._();
   Dio dio = Dio();
 
-
   Future<List<Categories>> getAllCategories() async {
     Response response = await dio.get(baseUrl + GET_CATEGORIES_URL,);
     // options : options);

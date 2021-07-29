@@ -21,12 +21,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../home_main_screen.dart';
 import 'component/carousel_slider.dart';
 import 'component/home_title_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+
   @override
   HomeScreenState createState() {
     return HomeScreenState();
@@ -62,325 +65,330 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   ScrollController _scrollController = new ScrollController();
-////////////refresh
-//   RefreshController _refreshController =
-  // RefreshController(initialRefresh: false);
+//////////refresh
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
 
-  // void _onRefresh() async{
-  //
-  //   // monitor network fetch
-  //   await Future.delayed(Duration(milliseconds: 1000));
-  //
-  //   // if failed,use refreshFailed()
-  //   _refreshController.refreshCompleted();
-  // }
-  //
-  // void _onLoading() async {
-  //   await Future.delayed(Duration(milliseconds: 1000));
-  //   if (mounted)
-  //     setState(() {
-  //       // Navigator.pushReplacement(
-  //       //     context,
-  //       //     MaterialPageRoute(
-  //       //         builder: (BuildContext context) => super.widget));
-  //     });
-  //   _refreshController.loadComplete();
-  // }
+  void _onRefresh() async{
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:0)));
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    if (mounted)
+      setState(() {
+
+      });
+
+    _refreshController.loadComplete();
+  }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // executes after build
-    });
-    return
-        // SmartRefresher(
-        //     enablePullDown: true,
-        //     enablePullUp: true,
-        //     header: WaterDropHeader(),
-        // footer: CustomFooter(
-        // builder: (BuildContext context,LoadStatus mode){
-        // Widget body ;
-        // if(mode==LoadStatus.idle){
-        // body =  Text("pull up load");
-        // }
-        // else if(mode==LoadStatus.loading){
-        // body =  CupertinoActivityIndicator();
-        // }
-        // else if(mode == LoadStatus.failed){
-        // body = Text("Load Failed!Click retry!");
-        // }
-        // else if(mode == LoadStatus.canLoading){
-        // body = Text("release to load more");
-        // }
-        // else{
-        // body = Text("No more Data");
-        // }
-        // return Container(
-        // height: 55.0,
-        // child: Center(child:body),
-        // );
-        // },
-        // ),
-        // controller: _refreshController,
-        // onRefresh: _onRefresh,
-        // onLoading: _onLoading,
-        // child:
+    return  SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropHeader(),
+          footer: CustomFooter(
+          builder: (BuildContext context,LoadStatus mode){
+          Widget body ;
+          if(mode==LoadStatus.idle){
+          body =  Text("pull up load");
+          }
+          else if(mode==LoadStatus.loading){
+          body =  CupertinoActivityIndicator();
+          }
+          else if(mode == LoadStatus.failed){
+          body = Text("Load Failed!Click retry!");
+          }
+          else if(mode == LoadStatus.canLoading){
+          body = Text("release to load more");
+          }
+          else{
+          body = Text("No more Data");
+          }
+          return Container(
+          height: 55.h,
+          child: Center(child:body),
+          );
+          },
+          ),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+
+        child:
         Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            getCategories(context),
-            Divider(
-              color: DividerColor,
-              height: 1.h,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                getCategories(context),
+                Divider(
+                  color: DividerColor,
+                  height: 1.h,
+                ),
+                SizedBox(
+                  height: 10.5.h,
+                ),
+                getBrands(),
+                SizedBox(
+                  height: 15.h,
+                ),
+                dottedSlider(),
+                SizedBox(
+                  height: 30.h,
+                ),
+                BuildHomeTitle(
+                  titleText: 'Flash Sale\nUP TO 80% OFF',
+                  buttonText: 'ShopNow',
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                getTopProducts(context),
+                SizedBox(
+                  height: 10.h,
+                ),
+                BuildHomeTitle(
+                  titleText: 'Tops',
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                getGridProducts(context),
+                SizedBox(
+                  height: 80.h,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 10.5.h,
-            ),
-            getBrands(),
-            SizedBox(
-              height: 15.h,
-            ),
-            dottedSlider(),
-            SizedBox(
-              height: 30.h,
-            ),
-            BuildHomeTitle(
-              titleText: 'Flash Sale\nUP TO 80% OFF',
-              buttonText: 'ShopNow',
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            getTop(),
-            SizedBox(
-              height: 10.h,
-            ),
-            BuildHomeTitle(
-              titleText: 'Tops',
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            getGrid(),
-            SizedBox(
-              height: 30.h,
-            ),
-          ],
+            // )
+          ),
         ),
-        // )
-      ),
+
     );
   }
 
-  getTop() {
-    return StreamBuilder<Response>(
-        stream: Provider.of<ProductProvider>(
-          context,
-          listen: false,
-        ).getTopProducts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return buildProductItemPlaceholder();
-          }
-          // var products = snapshot.data.body;
-
-          if (snapshot.hasData) {
-            print('dataResponse${snapshot.data}');
-            Response responseBody = snapshot.data;
-            List<dynamic> mapList = responseBody.data['data'];
-            return Container(
-              //   width: ScreenUtil.defaultSize.width,
-              child: BuildCarouselSlider(
-                product: mapList.map((e) => Product.fromJson(e)).toList(),
-                currentIndex: 0,
-              ),
-            );
-          } else {
-            return buildProductItemPlaceholder();
-          }
-        });
-  }
-
-  // getTopProducts(BuildContext context) {
-  //   if( Provider.of<ProductProvider>(context,).productList.length==0) {
-  //     return FutureBuilder<List<Product>>(
-  //       future: Provider.of<ProductProvider>(context, listen: false)
-  //           .getAllProducts(),
+  // getTop() {
+  //   return StreamBuilder<Response>(
+  //       stream: Provider.of<ProductProvider>(
+  //         context,
+  //         listen: false,
+  //       ).getTopProducts(),
   //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           return Container(
-  //             //   width: ScreenUtil.defaultSize.width,
-  //               child: BuildCarouselSlider(
-  //                 product: snapshot.data,
-  //                 currentIndex: 0,
-  //               ));
-  //         } else if (snapshot.hasError) {
+  //         if (snapshot.connectionState == ConnectionState.waiting) {
   //           return buildProductItemPlaceholder();
   //         }
+  //         // var products = snapshot.data.body;
   //
-  //         // By default, show a loading spinner. placeholder view
-  //         return buildProductItemPlaceholder();
-  //       },
-  //     );
-  //   }else{
-  //     return Container(
-  //       //   width: ScreenUtil.defaultSize.width,
-  //         child: BuildCarouselSlider(
-  //           product: Provider.of<ProductProvider>(context,listen: false).productList,
-  //           currentIndex: 0,
-  //         ));
-  //   }
+  //         if (snapshot.hasData) {
+  //           print('dataResponse${snapshot.data}');
+  //           Response responseBody = snapshot.data;
+  //           List<dynamic> mapList = responseBody.data['data'];
+  //           if (mapList.length != 0) {
+  //             return Container(
+  //               //   width: ScreenUtil.defaultSize.width,
+  //               child: BuildCarouselSlider(
+  //                 product: mapList.map((e) => Product.fromJson(e)).toList(),
+  //                 currentIndex: 0,
+  //               ),
+  //             );
+  //           } else {
+  //             return buildProductItemPlaceholder();
+  //           }
+  //         }else{
+  //           return buildProductItemPlaceholder();
+  //
+  //         }
+  //       });
   // }
-  getGrid() {
-    return StreamBuilder<Response>(
-        stream: Provider.of<ProductProvider>(
-          context,
-          listen: false,
-        ).getTopProducts(),
+
+  getTopProducts(BuildContext context) {
+    if( Provider.of<ProductProvider>(context,).productList.length==0) {
+      return FutureBuilder<List<Product>>(
+        future: Provider.of<ProductProvider>(context, listen: false)
+            .getAllProducts(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: StaggeredGridView.countBuilder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildGridItem(),
-                staggeredTileBuilder: (int index) =>
-                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                mainAxisSpacing: 10.w,
-                crossAxisSpacing: 10.h,
-              ),
-            );
-          }
-          // var products = snapshot.data.body;
           if (snapshot.hasData) {
-            print('dataResponse${snapshot.data}');
-            Response responseBody = snapshot.data;
-            List<dynamic> mapList = responseBody.data['data'];
-            List<Product> products =
-                mapList.map((e) => Product.fromJson(e)).toList();
             return Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: StaggeredGridView.countBuilder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) => ProductItem(
-                  product: products[index],
-                ),
-                staggeredTileBuilder: (int index) =>
-                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                mainAxisSpacing: 10.w,
-                crossAxisSpacing: 10.h,
-              ),
-            );
-          } else {
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: StaggeredGridView.countBuilder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildGridItem(),
-                staggeredTileBuilder: (int index) =>
-                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                mainAxisSpacing: 10.w,
-                crossAxisSpacing: 10.h,
-              ),
-            );
+              //   width: ScreenUtil.defaultSize.width,
+                child: BuildCarouselSlider(
+                  product: snapshot.data,
+                  currentIndex: 0,
+                ));
+          } else if (snapshot.hasError) {
+            return buildProductItemPlaceholder();
           }
-        });
+
+          // By default, show a loading spinner. placeholder view
+          return buildProductItemPlaceholder();
+        },
+      );
+    }else{
+      return Container(
+        //   width: ScreenUtil.defaultSize.width,
+          child: BuildCarouselSlider(
+            product: Provider.of<ProductProvider>(context,listen: false).productList,
+            currentIndex: 0,
+          ));
+    }
   }
-  // getGridProducts(BuildContext context) {
-  //  if( Provider.of<ProductProvider>(context,).productList.length==0) {
-  //    return
-  //      FutureBuilder<List<Product>>(
-  //        future:
-  //        Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
-  //        builder: (context, snapshot) {
-  //          if (snapshot.hasData) {
-  //            return Container(
-  //                margin: EdgeInsets.symmetric(horizontal: 20.w),
-  //                child: StaggeredGridView.countBuilder(
-  //                  physics: ScrollPhysics(),
-  //                  shrinkWrap: true,
-  //                  crossAxisCount: 4,
-  //                  itemCount: snapshot.data.length,
-  //                  itemBuilder: (BuildContext context, int index) =>
-  //                      ProductItem(
-  //                        product: snapshot.data[index],
-  //                      ),
-  //                  staggeredTileBuilder: (int index) =>
-  //                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-  //                  mainAxisSpacing: 10.w,
-  //                  crossAxisSpacing: 10.h,
-  //                ));
-  //          } else if (snapshot.hasError) {
-  //            return Container(
-  //                margin: EdgeInsets.symmetric(horizontal: 20.w),
-  //                child: StaggeredGridView.countBuilder(
-  //                  physics: ScrollPhysics(),
-  //                  shrinkWrap: true,
-  //                  crossAxisCount: 4,
-  //                  itemCount: 5,
-  //                  itemBuilder: (BuildContext context, int index) =>
-  //                      _buildGridItem(),
-  //                  staggeredTileBuilder: (int index) =>
-  //                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-  //                  mainAxisSpacing: 10.w,
-  //                  crossAxisSpacing: 10.h,
-  //                ));
-  //          }
-  //
-  //          // By default, show a loading spinner. placeholder view
-  //          return Container(
-  //              margin: EdgeInsets.symmetric(horizontal: 20.w),
-  //              child: StaggeredGridView.countBuilder(
-  //                physics: ScrollPhysics(),
-  //                shrinkWrap: true,
-  //                crossAxisCount: 4,
-  //                itemCount: 5,
-  //                itemBuilder: (BuildContext context, int index) =>
-  //                    _buildGridItem(),
-  //                staggeredTileBuilder: (int index) =>
-  //                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-  //                mainAxisSpacing: 10.w,
-  //                crossAxisSpacing: 10.h,
-  //              ));
-  //        },
-  //      );
-  //  }else{
-  //    return Container(
-  //        margin: EdgeInsets.symmetric(horizontal: 20.w),
-  //        child: StaggeredGridView.countBuilder(
-  //          physics: ScrollPhysics(),
-  //          shrinkWrap: true,
-  //          crossAxisCount: 4,
-  //          itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
-  //          itemBuilder: (BuildContext context, int index) =>
-  //              ProductItem(
-  //                product: Provider.of<ProductProvider>(context,listen: false).productList[index],
-  //              ),
-  //          staggeredTileBuilder: (int index) =>
-  //              StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-  //          mainAxisSpacing: 10.w,
-  //          crossAxisSpacing: 10.h,
-  //        )
-  //    );
-  //  }
-  //
+  // getGrid() {
+  //   return StreamBuilder<Response>(
+  //       stream: Provider.of<ProductProvider>(
+  //         context,
+  //         listen: false,
+  //       ).getTopProducts(),
+  //       builder: (context, snapshot) {
+  //         if (snapshot.connectionState == ConnectionState.waiting) {
+  //           return Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 20.w),
+  //             child: StaggeredGridView.countBuilder(
+  //               physics: ScrollPhysics(),
+  //               shrinkWrap: true,
+  //               crossAxisCount: 4,
+  //               itemCount: 5,
+  //               itemBuilder: (BuildContext context, int index) =>
+  //                   _buildGridItem(),
+  //               staggeredTileBuilder: (int index) =>
+  //                   StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+  //               mainAxisSpacing: 10.w,
+  //               crossAxisSpacing: 10.h,
+  //             ),
+  //           );
+  //         }
+  //         // var products = snapshot.data.body;
+  //         if (snapshot.hasData) {
+  //           print('dataResponse${snapshot.data}');
+  //           Response responseBody = snapshot.data;
+  //           List<dynamic> mapList = responseBody.data['data'];
+  //           List<Product> products =
+  //               mapList.map((e) => Product.fromJson(e)).toList();
+  //           return Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 20.w),
+  //             child: StaggeredGridView.countBuilder(
+  //               physics: ScrollPhysics(),
+  //               shrinkWrap: true,
+  //               crossAxisCount: 4,
+  //               itemCount: products.length,
+  //               itemBuilder: (BuildContext context, int index) => ProductItem(
+  //                 product: products[index],
+  //               ),
+  //               staggeredTileBuilder: (int index) =>
+  //                   StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+  //               mainAxisSpacing: 10.w,
+  //               crossAxisSpacing: 10.h,
+  //             ),
+  //           );
+  //         } else {
+  //           return Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 20.w),
+  //             child: StaggeredGridView.countBuilder(
+  //               physics: ScrollPhysics(),
+  //               shrinkWrap: true,
+  //               crossAxisCount: 4,
+  //               itemCount: 5,
+  //               itemBuilder: (BuildContext context, int index) =>
+  //                   _buildGridItem(),
+  //               staggeredTileBuilder: (int index) =>
+  //                   StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+  //               mainAxisSpacing: 10.w,
+  //               crossAxisSpacing: 10.h,
+  //             ),
+  //           );
+  //         }
+  //       });
   // }
+  //
+  getGridProducts(BuildContext context) {
+   if( Provider.of<ProductProvider>(context,).productList.length==0) {
+     return
+       FutureBuilder<List<Product>>(
+         future:
+         Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
+         builder: (context, snapshot) {
+           if (snapshot.hasData) {
+             return Container(
+                 margin: EdgeInsets.symmetric(horizontal: 20.w),
+                 child: StaggeredGridView.countBuilder(
+                   physics: ScrollPhysics(),
+                   shrinkWrap: true,
+                   crossAxisCount: 4,
+                   itemCount: snapshot.data.length,
+                   itemBuilder: (BuildContext context, int index) =>
+                       ProductItem(
+                         product: snapshot.data[index],
+                       ),
+                   staggeredTileBuilder: (int index) =>
+                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                   mainAxisSpacing: 10.w,
+                   crossAxisSpacing: 10.h,
+                 ));
+           } else if (snapshot.hasError) {
+             return Container(
+                 margin: EdgeInsets.symmetric(horizontal: 20.w),
+                 child: StaggeredGridView.countBuilder(
+                   physics: ScrollPhysics(),
+                   shrinkWrap: true,
+                   crossAxisCount: 4,
+                   itemCount: 5,
+                   itemBuilder: (BuildContext context, int index) =>
+                       _buildGridItem(),
+                   staggeredTileBuilder: (int index) =>
+                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                   mainAxisSpacing: 10.w,
+                   crossAxisSpacing: 10.h,
+                 ));
+           }
+           // By default, show a loading spinner. placeholder view
+           return Container(
+               margin: EdgeInsets.symmetric(horizontal: 20.w),
+               child: StaggeredGridView.countBuilder(
+                 physics: ScrollPhysics(),
+                 shrinkWrap: true,
+                 crossAxisCount: 4,
+                 itemCount: 5,
+                 itemBuilder: (BuildContext context, int index) =>
+                     _buildGridItem(),
+                 staggeredTileBuilder: (int index) =>
+                     StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                 mainAxisSpacing: 10.w,
+                 crossAxisSpacing: 10.h,
+               ));
+         },
+       );
+   }else{
+     return Container(
+         margin: EdgeInsets.symmetric(horizontal: 20.w),
+         child: StaggeredGridView.countBuilder(
+           physics: ScrollPhysics(),
+           shrinkWrap: true,
+           crossAxisCount: 4,
+           itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
+           itemBuilder: (BuildContext context, int index) =>
+               ProductItem(
+                 product: Provider.of<ProductProvider>(context,listen: false).productList[index],
+               ),
+           staggeredTileBuilder: (int index) =>
+               StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+           mainAxisSpacing: 10.w,
+           crossAxisSpacing: 10.h,
+         )
+     );
+   }
+
+  }
 
   getCategories(BuildContext context) {
     return Container(
-      width: ScreenUtil.defaultSize.width,
+      width: ScreenUtil.defaultSize.width.w,
       height: 50.h,
       // color: WhiteColor,
       child: FutureBuilder<List<Categories>>(

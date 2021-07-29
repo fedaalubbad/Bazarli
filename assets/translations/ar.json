@@ -54,6 +54,7 @@
   "Saving": "توفير",
   "ShippingAddress": "عنوان الشحن",
   "PrimaryAddress": "العنوان الافتراضي",
+  "SecondaryAddress": "عنوان ثانوي",
   "AddNewAddress": "اضافة عنوان جديد",
   "Address": "العنوان",
   "Continue": "استمر",

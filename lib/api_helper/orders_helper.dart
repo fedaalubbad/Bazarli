@@ -1,4 +1,5 @@
 import 'package:bazarli/models/cart_model/add_to_cart_model.dart';
+import 'package:bazarli/models/cart_model/get_cart_model.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,22 +13,24 @@ class OrdersApi{
 
 
   Future<AddToCart> addProductToCart(BuildContext context,productId,quantity) async{
-    final formData = {
-      'quantity': quantity,
-    };
-    try{
     dio.options.headers["authorization"] =
     "Bearer ${SPHelper.spHelper.getToken()}";
-    Response response = await dio.post(baseUrl + ADD_PRODUCT_TO_CART_URL+productId,data: formData);
+    final formData = {
+      'quantity': quantity,
+      'product_id':productId,
+    };
+    try{
+
+    Response response = await dio.post(baseUrl + ADD_PRODUCT_TO_CART_URL+productId+'?token=true',data: formData);
 
     if(response.statusCode==200){
       Map<String,dynamic> responseBody=response.data;
       AddToCart addToCartResponse=AddToCart.fromJson(responseBody);
-      print('productListJson${responseBody}');
+      print('addCartJson${responseBody}');
       _showToast(context, addToCartResponse.message);
     }else{
       Map<String,dynamic> responseBody=response.data;
-      print('productListJson${responseBody}');
+      print('addCartJsonElse${responseBody}');
       _showToast(context, responseBody['error']['message']);
       throw Exception();
     }
@@ -39,33 +42,43 @@ class OrdersApi{
   }
 
 
- Future getCart(BuildContext context)async{
+ Future<GetCart> getCart(BuildContext context) async {
    try{
      dio.options.headers["authorization"] =
      "Bearer ${SPHelper.spHelper.getToken()}";
+
      Response response = await dio.get(baseUrl + GET_CART_URL+'?token=true');
 
      if(response.statusCode==200){
        Map<String,dynamic> responseBody=response.data;
-       AddToCart addToCartResponse=AddToCart.fromJson(responseBody);
-       print('productListJson${responseBody}');
-       _showToast(context, addToCartResponse.message);
+       if(responseBody['data']==null){
+         print('cartListJson null');
+         return null;
+       }else {
+         GetCart getCartResponse = GetCart.fromJson(responseBody);
+         print('cartListJson${responseBody}');
+         // _showToast(context, addToCartResponse.message);
+         return getCartResponse;
+       }
      }else{
        Map<String,dynamic> responseBody=response.data;
-       print('productListJson${responseBody}');
-       _showToast(context, responseBody['error']['message']);
+       print('cartListJsonelse${responseBody}');
+       // _showToast(context, responseBody['error']['message']);
+       return null;
        throw Exception();
      }
-   }on DioError catch (e) {
+
+   } on DioError catch (e) {
      _showToast(context,'something went wrong');
      print('errormsg $e');
+     return null;
      throw Exception();
    }
+
   }
 
 
-
-  Future removeItemFromCart(BuildContext context,productId)async{
+  Future removeItemFromCart(BuildContext context,productId) async {
      dio.options.headers["authorization"] =
      "Bearer ${SPHelper.spHelper.getToken()}";
      try{

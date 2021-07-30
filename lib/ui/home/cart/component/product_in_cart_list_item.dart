@@ -1,6 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/cart_model/cartItem.dart';
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/ui/home/Home/component/star_rating.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,113 +10,136 @@ import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ProductInCartListItem extends StatelessWidget{
-  Product product;
+  CartItem item;
   WishList wishList;
-  ProductInCartListItem({this.product,this.wishList});
+  Function onPressed;
+  ProductInCartListItem({this.item,this.wishList,this.onPressed});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Container(
-            height: ScreenUtil.defaultSize.height.h/5.h,
-            margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: ShadowColor,
-                    // spreadRadius: 5,
-                    blurRadius: 7.0,
-                    offset: Offset(0.0, 8)
-                ),
-              ],
-              color: WhiteColor,
-              borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),),
-            child: Container(
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-                        child: Container(
-                          height: ScreenUtil.defaultSize.height.h/5.h,
-                          width: 70.w,
-                          decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-                            image: DecorationImage(
-                              // colorFilter: ColorFilter.mode(
-                              //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
-                              fit: BoxFit.cover,
-                              image: NetworkImage('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg'),
+    return InkWell(
+      onTap: onPressed
+      ,
+      child: Container(
+        child: Stack(
+          children: [
+            Container(
+              height: ScreenUtil.defaultSize.height.h/5.h,
+              margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: ShadowColor,
+                      // spreadRadius: 5,
+                      blurRadius: 7.0,
+                      offset: Offset(0.0, 8)
+                  ),
+                ],
+                color: WhiteColor,
+                borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),),
+              child: Container(
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:[
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+                          child: Container(
+                            height: ScreenUtil.defaultSize.height.h/5.h,
+                            width: 70.w,
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
+                              image: DecorationImage(
+                                // colorFilter: ColorFilter.mode(
+                                //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
+                                fit: BoxFit.cover,
+                                image: NetworkImage(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.baseImage.largeImageUrl),
+                              ),
+                            ),
+                          )
+                      ),
+
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(width: 40.w,height: 40.h,
+                              margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
+                              child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.images[0].mediumImageUrl)),
+
+
+                          Container(
+                            margin: context.locale.toString()=='en'?EdgeInsets.only(top:10.h,left:5.w,):EdgeInsets.only(top:10.h,right:5.w,),
+                            child: Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                  width:0.45.sw,
+                                  child: Text(wishList!=null?wishList.product.name:item.product.name,
+                                    style:TabsTextStyle,
+                                    maxLines:2,overflow: TextOverflow.ellipsis,)
+                                  ),
+                                ),
+                                SizedBox(height: 5.h,),
+                                Flexible(
+                                  child: Container(
+                                      width:0.55.sw,
+                                      child: Text(wishList!=null?wishList.product.formatedPrice:item.product.formatedPrice,
+                                        style:PriceTextStyle,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
+                                ),
+                                SizedBox(height: 6.h,),
+
+                                Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    StarRating(rating: 3.5,size: ScreenUtil().radius(15),),
+                                      Container(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        // crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          SizedBox(width: 20.w,),
+                                          SvgPicture.asset('assets/svg/delete.svg'),
+                                          if(wishList==null)
+                                          SizedBox(width: 15.w,),
+                                          if(wishList==null)
+                                          Text('QTY',style: QTYStyle,),
+                                          if(wishList==null)
+                                          SizedBox(width: 6.w,),
+                                          if(wishList==null)
+                                            incAnddescWidget(),
+                                          if(wishList==null)
+                                          SizedBox(width: 10.w,),
+                                          if(wishList==null)
+                                         SvgPicture.asset('assets/svg/add.svg'),
+                                        ],
+
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        )
-                    ),
-
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(width: 40.w,height: 40.h,
-                            margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
-                            child: Image.network('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg')),
+                        ],
+                      ),
 
 
-                        Container(
-                          margin: context.locale.toString()=='en'?EdgeInsets.only(top:10.h,left:5.w,):EdgeInsets.only(top:10.h,right:5.w,),
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                              width:0.4.sw,
-                              child: Text(wishList!=null?"wishList.product.description":product.shortDescription,style:TabsTextStyle,maxLines:2,)
-                              ),
-                              SizedBox(height: 5.h,),
-                              Text(wishList!=null?"wishList.product.name":product.formatedPrice,style:PriceTextStyle,),
-                              SizedBox(height: 6.h,),
+                    ]
 
-                              Row(
-                                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  StarRating(rating: 3.5,size: ScreenUtil().radius(15),),
-                                  Container(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      // crossAxisAlignment: CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        SizedBox(width: 20.w,),
-                                        SvgPicture.asset('assets/svg/delete.svg'),
-                                        SizedBox(width: 15.w,),
-                                        Text('QTY',style: QTYStyle,),
-                                        SizedBox(width: 6.w,),
-                                        incAnddescWidget(),
-                                        SizedBox(width: 10.w,),
-                                        SvgPicture.asset('assets/svg/add.svg'),
-                                      ],
-
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-
-                  ]
-
+                ),
               ),
             ),
-          ),
-          circleWidget(context,2),
-        ],
-        overflow: Overflow.visible,
+            if(wishList==null)
+              circleWidget(context,item.quantity),
+          ],
+          overflow: Overflow.visible,
+        ),
       ),
     );
   }
@@ -145,7 +168,7 @@ incAnddescWidget(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('1',style: DiscountOffStyle,),
+        Text(wishList!=null?'1':item.quantity.toString(),style: DiscountOffStyle,),
         SizedBox(
           width: 5.w,
         ),

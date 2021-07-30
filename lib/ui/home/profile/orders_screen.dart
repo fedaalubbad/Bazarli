@@ -34,16 +34,17 @@ class OrdersScreen extends StatelessWidget{
                     Container(
                       // height: ScreenUtil.defaultSize.height,
                       // height: 480.h,
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
-                        shrinkWrap: true,
-                        itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
-                        itemBuilder: (context,index){
-                          return
-                            ProductInCartListItem(product:Provider.of<ProductProvider>(context,listen: false).productList[index],);
-                        },
+                      // child: ListView.builder(
+                      //   physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+                      //   shrinkWrap: true,
+                      //   itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
+                      //   itemBuilder: (context,index){
+                      //     return
+                      //       ProductInCartListItem(product:Provider.of<ProductProvider>(context,listen: false).productList[index],
+                      //       );
+                      //   },
 
-                      ),
+                      // ),
                     ),
                   ],
                 ),

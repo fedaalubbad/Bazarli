@@ -263,7 +263,7 @@ class Item {
     this.formatedDiscountAmount,
     this.baseDiscountAmount,
     this.formatedBaseDiscountAmount,
-    this.additional,
+    // this.additional,
     this.child,
     this.product,
     this.createdAt,
@@ -299,7 +299,7 @@ class Item {
   String formatedDiscountAmount;
   String baseDiscountAmount;
   String formatedBaseDiscountAmount;
-  Additional additional;
+  // Additional additional;
   dynamic child;
   Product product;
   DateTime createdAt;
@@ -335,7 +335,7 @@ class Item {
     formatedDiscountAmount: json["formated_discount_amount"],
     baseDiscountAmount: json["base_discount_amount"],
     formatedBaseDiscountAmount: json["formated_base_discount_amount"],
-    additional: Additional.fromJson(json["additional"]),
+    // additional: Additional.fromJson(json["additional"]),
     child: json["child"],
     product: Product.fromJson(json["product"]),
     createdAt: DateTime.parse(json["created_at"]),
@@ -372,7 +372,7 @@ class Item {
     "formated_discount_amount": formatedDiscountAmount,
     "base_discount_amount": baseDiscountAmount,
     "formated_base_discount_amount": formatedBaseDiscountAmount,
-    "additional": additional.toJson(),
+    // "additional": additional.toJson(),
     "child": child,
     "product": product.toJson(),
     "created_at": createdAt.toIso8601String(),

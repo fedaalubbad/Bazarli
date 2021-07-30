@@ -4,6 +4,7 @@ import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/addresses_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/providers/orders_provider.dart';
 import 'package:bazarli/providers/reviews_provider.dart';
 import 'package:bazarli/providers/wishlist_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
@@ -62,6 +63,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AddressesProvider>(
           create: (context) => AddressesProvider(),
+        ),
+        ChangeNotifierProvider<OrdersProvider>(
+          create: (context) => OrdersProvider(),
         ),
       ],
       child: RefreshConfiguration(

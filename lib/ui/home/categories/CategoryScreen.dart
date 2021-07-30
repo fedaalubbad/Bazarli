@@ -64,7 +64,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(),
+      header: WaterDropHeader(waterDropColor: PrimaryColor,),
       footer: CustomFooter(
         builder: (BuildContext context, LoadStatus mode) {
           Widget body;

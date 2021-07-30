@@ -1,11 +1,13 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/providers/orders_provider.dart';
+import 'package:bazarli/ui/Product/product_details_screen.dart';
 import 'package:bazarli/ui/home/cart/shipping_addresses_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,6 +23,12 @@ class CartScreen extends StatefulWidget {
 
 class CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
+@override
+  void initState() {
+  Provider.of<OrdersProvider>(context, listen: false)
+      .getCart(context);
+    super.initState();
+  }
   @override
   bool get wantKeepAlive => true;
 
@@ -30,11 +38,13 @@ class CartScreenState extends State<CartScreen>
   GlobalKey _contentKey = GlobalKey();
   GlobalKey _refresherKey = GlobalKey();
   void _onRefresh() async {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:3)));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:3)));
     // monitor network fetch
+    Provider.of<OrdersProvider>(context, listen: false)
+        .getCart(context);
     await Future.delayed(Duration(milliseconds: 1000));
 
     // if failed,use refreshFailed()
@@ -54,7 +64,7 @@ class CartScreenState extends State<CartScreen>
       key: _refresherKey,
         enablePullDown: true,
         enablePullUp: true,
-        header: WaterDropHeader(),
+        header: WaterDropHeader(waterDropColor: PrimaryColor,),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus mode) {
             Widget body;
@@ -84,24 +94,29 @@ class CartScreenState extends State<CartScreen>
             key: _contentKey,
             child: Stack(
               children: [
+                Provider.of<OrdersProvider>(context, ).careList
+                    .length!=0?
                     Container(
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       physics:NeverScrollableScrollPhysics(),
                       itemCount:
-                          Provider.of<ProductProvider>(context, listen: false)
-                              .productList
-                              .length,
+                      Provider.of<OrdersProvider>(context, listen: false).careList
+                          .length,
                       itemBuilder: (context, index) {
                         return ProductInCartListItem(
-                          product:
-                              Provider.of<ProductProvider>(context, listen: false)
-                                  .productList[index],
+                          item: Provider.of<OrdersProvider>(context, listen: false).careList[index],
+                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).careList[index].product ,));},
                         );
                       },
                     ),
-                  ),
+                  ):
+                    Container(
+                      margin: EdgeInsets.only(bottom: 100.h),
+                      child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
+                    )
+                ,
                 checkOutBtnWidget()
               ],
             ),

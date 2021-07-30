@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_classes/images.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/home/Home/component/dotted_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +36,7 @@ class ProductDetailsScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  dottedSlider(context),
+                  dottedSlider(context,product.images),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -72,15 +73,12 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  dottedSlider(BuildContext context) {
+  dottedSlider(BuildContext context,List<Images>images) {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);
     return Container(
-      child: DottedSlider(maxHeight: 283.h, children: [
-        _productSlideImage(context, 'assets/images/promotion_one.png'),
-        _productSlideImage(context, 'assets/images/promotion_one.png'),
-        // _productSlideImage('https://www.google.ps/url?sa=i&url=https%3A%2F%2Fteamfusionlifestyle.com%2F2020%2F10%2F07%2Fcycle-of-fashion-trend%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAI'),
-        // _productSlideImage('https://www.google.ps/url?sa=i&url=http%3A%2F%2Fthepreppursuit.com%2Findian-fashion-industry%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAO'),
-      ]),
+      child: DottedSlider(maxHeight: 283.h, children:[
+       ... images.map((e) => _productSlideImage(context, e.largeImageUrl))]
+      ),
     );
   }
 
@@ -101,7 +99,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
             borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
             image:
-                DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover),
+                DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
           ),
         ),
         if (context.locale.toString() == 'en')

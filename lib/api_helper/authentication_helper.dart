@@ -227,4 +227,23 @@ class AuthenticationApi {
       return status;
     }
   }
+
+  Future<Map<String, dynamic>> getLocals() async {
+
+    Response response = await dio.get(baseUrl +GET_LOCALS_LANGUAGES_URL,
+        options: options,);
+    Map<String, dynamic> responseBody;
+    Map<String, dynamic> status = Map<String, dynamic>();
+
+    try {
+      if(response.statusCode==200) {
+        responseBody = response.data;
+      }
+    } catch (e) {
+      final errorMessage = DioErrorType.response.toString();
+      // print(errorMessage);
+      status = {'catchResponse': 'something went wrong', 'status': false};
+      return status;
+    }
+  }
 }

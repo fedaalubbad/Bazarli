@@ -39,7 +39,7 @@ class ProductToolBar extends StatelessWidget {
                   width: 0.7.sw,
                   // height: 45.h,
                   alignment:context.fallbackLocale.toString()=='en'? Alignment.centerLeft:Alignment.centerRight,
-                  child: Text(productName,style: ProducttoolbarTitleStyle,maxLines: 2,)
+                  child: Text(productName,style: ProducttoolbarTitleStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)
                 ),
       ]))
 

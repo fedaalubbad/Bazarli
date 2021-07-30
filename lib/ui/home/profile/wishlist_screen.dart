@@ -19,7 +19,8 @@ class WishListScreen extends StatelessWidget{
     // Provider.of<WishListProvider>(context, listen: false).getCustomerWishList();
     return Scaffold(
       backgroundColor: HomeBackgroundColor,
-      body: Container(
+      body:SafeArea(
+        child: Container(
         height: ScreenUtil.defaultSize.height.h,
         width: ScreenUtil.defaultSize.width.w,
         child: Stack(
@@ -32,7 +33,7 @@ class WishListScreen extends StatelessWidget{
           ],
         ),
       ),
-    );
+      ));
 
   }
   getWishList(BuildContext context){

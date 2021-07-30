@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/orders_provider.dart';
 import 'package:bazarli/providers/wishlist_provider.dart';
 import 'package:bazarli/ui/Product/product_details_screen.dart';
 import 'package:bazarli/ui/home/Home/component/star_rating.dart';
@@ -123,7 +124,11 @@ class BuildCarouselSlider extends StatelessWidget{
 
                             SizedBox(width: 20.w,),
 
-                            SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,),
+                            InkWell(
+                                onTap:(){
+                                  Provider.of<OrdersProvider>(context, listen: false).addProductToCart(context,product[index].id.toString(),1);
+                                },
+                                child: SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,)),
 
                           ],
                         ),

@@ -8,7 +8,7 @@ const String PRODUCT_ADDITIONAL_INFO_URL =
     "product-additional-information/"; //ID
 
 //
-const String GET_CATEGORIES_URL = "getCategories/";
+const String GET_CATEGORIES_URL = "getCategories";
 const String GET_ATTRIBUTES_URL = "attributes/";
 const String GET_PRODUCT_ATTRIBUTES_URL = "families/";
 const String GET_LOCALS_LANGUAGES_URL = "locales?token=true";
@@ -21,7 +21,7 @@ const String TEST_ODOO_SUPPLIER_URL = "suppliers/odoo";
 
 //SUPPLIER PRODUCTS
 const String GET_SUPPLIER_PRODUCTS_URL = "suppliers/products";
-const String GET_BRANDS_URL = "suppliers/products/brands/";
+const String GET_BRANDS_URL = "suppliers/products/brands";
 const String DELETE_PRODUCT_URL = "suppliers/products/destory";
 const String CREATE_UPDATE_PRODUCT_URL = "suppliers/products/create";
 

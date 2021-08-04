@@ -1,10 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
-import 'package:bazarli/shared_preference/sp_helper.dart';
-import 'package:bazarli/ui/Authentication/loginAndRegister.dart';
 import 'package:bazarli/ui/home/cart/shipping_addresses_screen.dart';
 import 'package:bazarli/ui/home/profile/profile_details_screen.dart';
 import 'package:bazarli/ui/home/profile/returns_screen.dart';
@@ -52,7 +49,6 @@ class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCli
                   Divider(),
                   ProfileListItemWidget(context,'SignOut',8,'assets/svg/fi_logout.svg'),
                   Divider(),
-
                   SizedBox(height:15.h,),
                   ExtraWidget(),
                   SizedBox(height:85.h,),

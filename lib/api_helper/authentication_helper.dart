@@ -2,21 +2,23 @@ import 'package:bazarli/models/user_model/customer_data.dart';
 import 'package:bazarli/models/user_model/customer_status.dart';
 import 'package:bazarli/models/user_model/supplier_status.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'dart:convert';
+import 'dio_settings.dart';
 
 class AuthenticationApi {
   AuthenticationApi._();
 
   static AuthenticationApi api = AuthenticationApi._();
-  Dio dio = Dio();
-  Options options = Options(
-    // followRedirects: false,
-    // validateStatus: (status) {
-    //   return status < 500;
-    // },
-    headers: {"Accept": "application/json", "Authorization": "Bearer "},
-  );
+  // Dio dio = Dio();
+  // Options options = Options(
+  //   // followRedirects: false,
+  //   // validateStatus: (status) {
+  //   //   return status < 500;
+  //   // },
+  //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
+  // );
 
   Future<Map<String,dynamic>> customerSign(String email, String password) async {
     final formData = {
@@ -27,8 +29,9 @@ class AuthenticationApi {
     Map<String,dynamic>status;
     print(formData);
     try {
-      final response = await dio.post(baseUrl + CUSTOMER_LOGIN_URL,
-          data: formData, options: options);
+      Response response = await Settings.settings.dio.post(CUSTOMER_LOGIN_URL, data: formData);
+      // final response = await dio.post(baseUrl + CUSTOMER_LOGIN_URL,
+      //     data: formData, options: options);
       if (response.statusCode == 200) {
         Map<String, dynamic> responseBody = response.data;
         // var jsonDataObject = jsonDecode(response.data);
@@ -71,8 +74,7 @@ class AuthenticationApi {
     // }
   }
 
-  Future<Map<String, dynamic>> customerRedister(
-      String firstName,
+  Future<Map<String, dynamic>> customerRedister(String firstName,
       String lastName,
       String email,
       String password,
@@ -83,9 +85,10 @@ class AuthenticationApi {
       'email': email,
       'password': password,
       'password_confirmation': passwordConfirmation,
+      // 'language_id': id,
     };
-    Response response = await dio.post(baseUrl + CUSTOMER_REGISTER_URL,
-        options: options, data: formData);
+    Response response = await Settings.settings.dio.post(CUSTOMER_REGISTER_URL, data: formData);
+
     print(formData);
     Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
@@ -126,8 +129,8 @@ class AuthenticationApi {
     };
     print(formData);
     SupplierLoginStatus loginStatus = SupplierLoginStatus();
-    Response response = await dio.post(baseUrl + SUPPLIER_LOGIN_URL,
-        options: options, data: formData);
+    Response response = await Settings.settings.dio.post(SUPPLIER_LOGIN_URL, data: formData);
+
     Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
 
@@ -175,8 +178,8 @@ class AuthenticationApi {
       'password': password,
       'password_confirmation': passwordConfirmation,
     };
-    Response response = await dio.post(baseUrl + SUPPLIER_REGISTER_URL,
-        options: options, data: formData);
+    Response response = await Settings.settings.dio.post(SUPPLIER_REGISTER_URL, data: formData);
+
     print(formData);
     Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
@@ -208,30 +211,39 @@ class AuthenticationApi {
     }
   }
 
-  Future<Map<String, dynamic>> forgetPassword(String email) async {
+  Future<Map<String, dynamic>> forgetPassword(BuildContext context,String email) async {
     final formData = {
       'email': email,
     };
-    Response response = await dio.post(baseUrl + CUSTOMER_FORGET_PASSWORD_URL,
-        options: options, data: formData);
     print(formData);
-    Map<String, dynamic> responseBody;
-    Map<String, dynamic> status = Map<String, dynamic>();
-
     try {
-      responseBody = response.data;
+      Response response = await Settings.settings.dio.post( CUSTOMER_FORGET_PASSWORD_URL, data: formData);
+
+      Map<String, dynamic> responseBody;
+      if(response.statusCode==200){
+        responseBody=response.data;
+        _showToast(context, responseBody['message']);
+        Navigator.of(context).pop();
+
+     }else{
+        responseBody=response.data;
+        _showToast(context, responseBody['error']);
+      }
+
+
     } catch (e) {
       final errorMessage = DioErrorType.response.toString();
+      _showToast(context,errorMessage.toString());
+
       // print(errorMessage);
-      status = {'catchResponse': 'something went wrong', 'status': false};
-      return status;
+      // status = {'catchResponse': 'something went wrong', 'status': false};
+      // return status;
     }
   }
 
   Future<Map<String, dynamic>> getLocals() async {
+    Response response = await Settings.settings.dio.get(GET_LOCALS_LANGUAGES_URL);
 
-    Response response = await dio.get(baseUrl +GET_LOCALS_LANGUAGES_URL,
-        options: options,);
     Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
 
@@ -245,5 +257,15 @@ class AuthenticationApi {
       status = {'catchResponse': 'something went wrong', 'status': false};
       return status;
     }
+  }
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        // action: SnackBarAction(label: 'Done', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }

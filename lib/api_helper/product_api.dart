@@ -3,19 +3,20 @@ import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 
 import 'constants.dart';
+import 'dio_settings.dart';
 
 class ProductApi {
   ProductApi._();
   static ProductApi api = ProductApi._();
-  Dio dio = Dio();
-
-  Options options = Options(
-    // followRedirects: false,
-    // validateStatus: (status) {
-    //   return status < 500;
-    // },
-    headers: {"Accept": "application/json", "Authorization": "Bearer "},
-  );
+  // Dio dio = Dio();
+  //
+  // Options options = Options(
+  //   // followRedirects: false,
+  //   // validateStatus: (status) {
+  //   //   return status < 500;
+  //   // },
+  //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
+  // );
 
   Future<List<Product>> getAllProducts({product_id,category_id,search,order,sort,price,brand,size,new_arrivals_in}) async {
     final formData = {
@@ -38,10 +39,8 @@ class ProductApi {
       if(new_arrivals_in!=null)
       'new_arrivals_in': new_arrivals_in,
     };
-    dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
-    Response response =
-        await dio.post(baseUrl + GET_PRODUCTS_URL, );
-    // options : options);
+    Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL);
+
     Map<String, dynamic> responseBody = response.data;
     print('productListJson${responseBody}');
     List<dynamic> mapList = responseBody["data"];
@@ -51,13 +50,13 @@ class ProductApi {
     return productsList;
   }
 
-  Stream<Response> getTopProducts() async* {
-    yield* Stream.periodic(Duration(seconds: 5), (_) {
-      return dio.post(
-        baseUrl + GET_PRODUCTS_URL,
-      );
-    }).asyncMap((event) async => await event);
-  }
+  // Stream<Response> getTopProducts() async* {
+  //   yield* Stream.periodic(Duration(seconds: 5), (_) {
+  //     return dio.post(
+  //       baseUrl + GET_PRODUCTS_URL,
+  //     );
+  //   }).asyncMap((event) async => await event);
+  // }
 
   //  Future<UserModel> getUSerById(String userId)async{
   //    Response response = await dio.get(baseUrl + users+userId,

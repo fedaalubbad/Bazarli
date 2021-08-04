@@ -1,13 +1,13 @@
 import 'package:bazarli/api_helper/brand_api.dart';
-import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class BrandProvider extends ChangeNotifier{
-  List<Brands> brandList=[];
+  List<Brand> brandList=[];
 
-  Future<List<Brands>> getAllBrandss() async {
-    List<Brands> users = await BrandApi.api.getAllBrands();
-    this.brandList = users;
+  Future<List<Brand>> getAllBrandss() async {
+    BrandResponse brandResponse = await BrandApi.api.getAllBrands();
+    this.brandList = brandResponse.brands;
     notifyListeners();
     return brandList;
   }

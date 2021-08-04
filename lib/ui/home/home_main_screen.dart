@@ -65,7 +65,7 @@ class HomeScreenState extends State<HomeMainScreen> {
             child:  Container(
                   margin: EdgeInsets.only(
                       top:selectedPageIndex  == 2
-                          ? ScreenUtil.defaultSize.height.h / 4.h
+                          ? ScreenUtil.defaultSize.height.h/3.5.h
                           : 120.h),
                   // height: double.infinity,
                   // width: double.infinity,

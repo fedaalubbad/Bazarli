@@ -16,11 +16,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'api_helper/dio_settings.dart';
 import 'navigation_service/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SPHelper.spHelper.initSharedPrefences();
+  await Settings.settings.initDio();
+
   await EasyLocalization.ensureInitialized();
 
   runApp(

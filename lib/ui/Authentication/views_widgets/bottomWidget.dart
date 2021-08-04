@@ -1,11 +1,14 @@
 import 'dart:ui';
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/Authentication/widgets/custom_login_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class LoginBottomWidget extends StatelessWidget{
   LoginBottomWidget();
@@ -22,9 +25,11 @@ class LoginBottomWidget extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Checkbox(value: false, onChanged:(val){
-                    val=!val;
-            }),
+            Checkbox(
+                value: Provider.of<AuthenticationProvider>(context, listen: false).checkValue,
+                onChanged:Provider.of<AuthenticationProvider>(context, listen: false).switchCheckVal,
+              checkColor: PrimaryColor,
+            ),
             // SizedBox(width:10.w,),
             Container(
               margin: EdgeInsets.only(top: 10.h),

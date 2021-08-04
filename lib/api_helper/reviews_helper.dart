@@ -1,26 +1,16 @@
 import 'package:bazarli/models/reviews_model/give_review_response.dart';
 import 'package:bazarli/models/reviews_model/review_classes/review_data.dart';
-import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'constants.dart';
+import 'dio_settings.dart';
 
 class ReviewsApi{
   ReviewsApi._();
   static ReviewsApi api=ReviewsApi._();
-  Dio dio=Dio();
-  Options options=Options(
-    followRedirects: false,
-    validateStatus: (status) {
-      return status < 500;
-    },
-    headers : { "contentType":"application/json","Authorization":"Bearer ${SPHelper.spHelper.getToken()}"},
-  );
 
   Future<List<ReviewData>> getCustomerReviewsList() async{
-    final formData = {
-      'token':null,
-    };
-    Response response = await dio.get(baseUrl + GET_REVIEWS_URL,options: options);
+
+    Response response = await Settings.settings.dio.get(GET_REVIEWS_URL);
 
     Map<String,dynamic> responseBody=response.data;
     print('reviewListJson${responseBody}');
@@ -39,7 +29,7 @@ class ReviewsApi{
       'comment':comment,
       'name':name,
     };
-    Response response = await dio.post(baseUrl + GET_REVIEWS_URL+'/$product_id/create',options: options,data: formData);
+    Response response = await Settings.settings.dio.post(GET_REVIEWS_URL+'/$product_id/create',data: formData);
 
     Map<String,dynamic> responseBody=response.data;
     print('addReviewJson${responseBody}');
@@ -48,8 +38,7 @@ class ReviewsApi{
   }
 
   Future<void> deleteReview(String product_id) async{
-
-    Response response = await dio.delete(baseUrl + GET_REVIEWS_URL+'/$product_id',options: options);
+    Response response = await Settings.settings.dio.delete(GET_REVIEWS_URL+'/$product_id');
 
     Map<String,dynamic> responseBody=response.data;
     print('deleteReviewJson${responseBody}');

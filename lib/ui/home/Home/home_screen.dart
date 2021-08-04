@@ -1,7 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/categories_classes/category.dart';
-import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
@@ -12,7 +12,6 @@ import 'package:bazarli/ui/home/Home/component/dotted_slider.dart';
 import 'package:bazarli/ui/home/Home/component/product_item.dart';
 import 'package:bazarli/ui/home/utils/indicator.dart';
 import 'package:bazarli/ui/search/categorySearchScreen.dart';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../home_main_screen.dart';
 import 'component/carousel_slider.dart';
 import 'component/home_title_widget.dart';
@@ -495,7 +493,7 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   getBrands() {
-    return FutureBuilder<List<Brands>>(
+    return FutureBuilder<List<Brand>>(
         future: Provider.of<BrandProvider>(
           context,
           listen: false,

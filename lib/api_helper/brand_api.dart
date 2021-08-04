@@ -1,24 +1,31 @@
-import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:dio/dio.dart';
-
 import 'constants.dart';
+import 'dio_settings.dart';
 
 class BrandApi {
   BrandApi._();
 
   static BrandApi api = BrandApi._();
-  Dio dio = Dio();
+  // Dio dio = Dio();
 
 
-  Future<List<Brands>> getAllBrands() async {
-    Response response = await dio.get(baseUrl +GET_BRANDS_URL,);
-    // options : options);
-    Map<String, dynamic> responseBody = response.data;
-    print('brandListJson${responseBody}');
-    List<dynamic> mapList = responseBody["brands"];
-    List<Brands> brandList = mapList.map((e) => Brands.fromJson(e)).toList();
-    print('brandsList${brandList[0]}');
-    return brandList;
+  Future<BrandResponse> getAllBrands() async {
+    try {
+      Response response = await Settings.settings.dio.get(GET_BRANDS_URL);
+      if (response.statusCode < 400) {
+        Map<String, dynamic> responseBody = response.data;
+        print('brandListJson${responseBody}');
+
+        BrandResponse brandResponse=BrandResponse.fromJson(responseBody);
+        return brandResponse;
+        } else {
+        print('brands'+response.data);
+        }
+  } on Exception catch (e) {
+  print('brandserror'+e.toString());
+  return null;
   }
+}
 
 }

@@ -16,7 +16,7 @@ class ProfileToolBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      height: ScreenUtil.defaultSize.height.h/4.h,
+      height: ScreenUtil.defaultSize.height.h/3.5.h,
       decoration: BoxDecoration(
         color: WhiteColor,
         boxShadow: [

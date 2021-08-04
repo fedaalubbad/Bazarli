@@ -1,13 +1,16 @@
+import 'package:bazarli/api_helper/orders_helper.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/cart_model/cartItem.dart';
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
+import 'package:bazarli/providers/orders_provider.dart';
 import 'package:bazarli/ui/home/Home/component/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 class ProductInCartListItem extends StatelessWidget{
   CartItem item;
@@ -16,7 +19,7 @@ class ProductInCartListItem extends StatelessWidget{
   ProductInCartListItem({this.item,this.wishList,this.onPressed});
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onPressed
       ,
       child: Container(
@@ -104,7 +107,11 @@ class ProductInCartListItem extends StatelessWidget{
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           SizedBox(width: 20.w,),
-                                          SvgPicture.asset('assets/svg/delete.svg'),
+                                          InkWell(
+                                            onTap: (){
+                                              Provider.of<OrdersProvider>(context, listen: false).removeItemFromCart(context,item.product.id);
+                                            },
+                                              child: SvgPicture.asset('assets/svg/delete.svg')),
                                           if(wishList==null)
                                           SizedBox(width: 15.w,),
                                           if(wishList==null)
@@ -112,7 +119,7 @@ class ProductInCartListItem extends StatelessWidget{
                                           if(wishList==null)
                                           SizedBox(width: 6.w,),
                                           if(wishList==null)
-                                            incAnddescWidget(),
+                                            incAnddescWidget(context),
                                           if(wishList==null)
                                           SizedBox(width: 10.w,),
                                           if(wishList==null)
@@ -164,7 +171,7 @@ circleWidget(BuildContext context,int count){
   ;
 }
 
-incAnddescWidget(){
+incAnddescWidget(BuildContext context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -187,14 +194,22 @@ incAnddescWidget(){
           children: [
             InkWell(
               child: SvgPicture.asset('assets/svg/arrow_up.svg',color: PrimaryColor,width: 6.w,height:6.h,),
-              onTap: () {},
+              onTap: () {
+                Provider.of<OrdersProvider>(context, listen: false).updateCartItem(context,item.id,item.quantity+1);
+
+              },
             ),
             SizedBox(
               height: 10.h,
             ),
             InkWell(
               child: SvgPicture.asset('assets/svg/arrow_down.svg',color: PrimaryColor,width: 6.w,height:6.h,),
-              onTap: () {},
+              onTap: () {
+                if(item.quantity>1)
+                Provider.of<OrdersProvider>(context, listen: false).updateCartItem(context,item.id,item.quantity-1);
+
+                // print(response.data);
+              },
             )
           ],
         )

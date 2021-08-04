@@ -1,5 +1,5 @@
 import 'package:bazarli/constants/MyColors.dart';
-import 'package:bazarli/models/brand_model/brand_classes/brand.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/providers/BrandProvider.dart';
 import 'package:bazarli/providers/CategoriesProvider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
@@ -200,7 +200,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
   }
 
   getBrands() {
-    return FutureBuilder<List<Brands>>(
+    return FutureBuilder<List<Brand>>(
         future: Provider.of<BrandProvider>(
           context,
           listen: false,

@@ -2,8 +2,6 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/Authentication/utils/BottomWaveClipper.dart';
-import 'package:bazarli/ui/Authentication/views_widgets/bottomWidget.dart';
-import 'package:bazarli/ui/Authentication/views_widgets/midWidget.dart';
 import 'package:bazarli/ui/Authentication/widgets/custom_login_button.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -109,7 +107,7 @@ class ForgetPasswordScreen extends StatelessWidget {
 
                   //form/////////////////////////////////
                    Form(
-                    // key:Provider.of<AuthenticationProvider>(context, listen: false).formStateKey,
+                    key:Provider.of<AuthenticationProvider>(context, listen: false).formStateKey2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisSize: MainAxisSize.min,
@@ -129,11 +127,11 @@ class ForgetPasswordScreen extends StatelessWidget {
                           linesNo: 1,
                           isObscure: false,
                           isPassword: false,
-                          // contraller: Provider.of<AuthenticationProvider>(context, listen: false).emailContraller,
+                          contraller: Provider.of<AuthenticationProvider>(context, listen: false).emailForgetPassContraller,
                           hint: 'Email'.tr(),
                           textInputType:TextInputType.emailAddress,
-                          // save:Provider.of<AuthenticationProvider>(context, listen: false).saveEmail,
-                          // validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
+                          save:Provider.of<AuthenticationProvider>(context, listen: false).saveEmail2,
+                          validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail2,
                         ),
                       //////////////////////////////////////bottom
                         SizedBox(

@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formStateKey2 = GlobalKey<FormState>();
   bool isLoading = false;
   bool isObscure = true;
+  bool checkValue=false;
   bool vaidate = true;
   AuthMode authMode;
   Language language;
@@ -21,6 +23,8 @@ class AuthenticationProvider extends ChangeNotifier {
   final fNameContraller = TextEditingController();
   final lNameContraller = TextEditingController();
   final emailContraller = TextEditingController();
+  final emailForgetPassContraller = TextEditingController();
+  String email2='';
   Map<String, dynamic> authData = {
     'fName': '',
     'lName': '',
@@ -30,6 +34,12 @@ class AuthenticationProvider extends ChangeNotifier {
   };
   switchObscure() {
     isObscure = !isObscure;
+    notifyListeners();
+  }
+
+
+  switchCheckVal(val) {
+    checkValue = !checkValue;
     notifyListeners();
   }
 
@@ -80,6 +90,11 @@ class AuthenticationProvider extends ChangeNotifier {
 
   saveEmail(val) {
     authData['email'] = val;
+    notifyListeners();
+  }
+
+  saveEmail2(val) {
+    email2 = val;
     notifyListeners();
   }
 
@@ -143,6 +158,12 @@ class AuthenticationProvider extends ChangeNotifier {
     }
     return null;
   }
+  String validateEmail2(val) {
+    if (val.isEmpty || !val.contains('@')) {
+      return 'Invalid email';
+    }
+    return null;
+  }
 
   void customerSign(BuildContext context) async {
     this.isLoading = true;
@@ -154,7 +175,12 @@ class AuthenticationProvider extends ChangeNotifier {
       // notifyListeners();
       return;
     }
-
+  else if(!checkValue){
+  _showToast(context,'you should accept privacy policy first');
+  this.isLoading = false;
+  notifyListeners();
+  return;
+  }
     formStateKey.currentState.save();
     // vaidate=true;
     Map<String,dynamic> response = await AuthenticationApi.api
@@ -184,8 +210,10 @@ class AuthenticationProvider extends ChangeNotifier {
     if (!formStateKey.currentState.validate()) {
       this.isLoading = false;
       notifyListeners();
-      // vaidate=false;
-      // notifyListeners();
+
+      return;
+    }else if(!checkValue){
+      _showToast(context,'you should accept privacy policy first');
       return;
     }
 
@@ -216,6 +244,25 @@ class AuthenticationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void forgetPassword(BuildContext context) async {
+    this.isLoading = true;
+    notifyListeners();
+    if (!formStateKey2.currentState.validate()) {
+      this.isLoading = false;
+      notifyListeners();
+      // vaidate=false;
+      // notifyListeners();
+      return;
+    }
+
+    formStateKey2.currentState.save();
+    // vaidate=true;
+    Map<String, dynamic> response = await AuthenticationApi.api
+        .forgetPassword(context, email2,);
+    this.isLoading = false;
+    notifyListeners();
+     }
 
   void logout() {
     SPHelper.spHelper.setLoged(false);

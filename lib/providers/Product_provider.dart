@@ -15,9 +15,9 @@ class ProductProvider extends ChangeNotifier{
     return productList;
   }
 
-    Stream<Response> getTopProducts(){
-    Stream<Response> stream= ProductApi.api.getTopProducts();
-    return stream;
-  }
+  //   Stream<Response> getTopProducts(){
+  //   Stream<Response> stream= ProductApi.api.getTopProducts();
+  //   return stream;
+  // }
 
 }

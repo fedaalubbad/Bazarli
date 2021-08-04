@@ -22,4 +22,17 @@ class OrdersProvider extends ChangeNotifier{
     getCart(context);
   }
 
+
+   Future removeItemFromCart(context,productId)async{
+    await  OrdersApi.api.removeItemFromCart(context,productId);
+    getCart(context);
+
+   }
+   Future updateCartItem(context,productId,newQty)async{
+    await  OrdersApi.api.updateCartItem(context,productId,newQty);
+    getCart(context);
+
+   }
+
+
 }

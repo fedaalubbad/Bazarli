@@ -7,25 +7,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'dio_settings.dart';
 
 class AddressesApi {
   AddressesApi._();
 
   static AddressesApi api = AddressesApi._();
-  Dio dio = Dio();
-  Options options = Options(
-    followRedirects: false,
-    validateStatus: (status) {
-      return status < 500;
-    },
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      // "charset": "utf-8",
-      // "Accept-Charset": "utf-8",
-      "Authorization": "Bearer +${SPHelper.spHelper.getToken()}"
-    },
-  );
 
   Future<CreateAddress> createAddress(BuildContext context,
     var address1,
@@ -50,13 +37,12 @@ class AddressesApi {
       'token': null,
     };
     print(formData);
-    dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
-    dio.options.headers["Content-Type"] = "application/json";
-    dio.options.headers["Accept"] = "application/json";
+    // dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
+    // dio.options.headers["Content-Type"] = "application/json";
+    // dio.options.headers["Accept"] = "application/json";
     try{
-    Response response = await dio.post(
-      baseUrl + CREATE_ADDRESSES_URL,
-      data: formData);
+      Response response = await Settings.settings.dio.post(CREATE_ADDRESSES_URL,
+          data: formData);
 
     if(response.statusCode==200){
 
@@ -103,13 +89,12 @@ Future<CreateAddress> updateAddress(BuildContext context,
       'token': null,
     };
     print(formData);
-    dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
-    dio.options.headers["Content-Type"] = "application/json";
-    dio.options.headers["Accept"] = "application/json";
+    // dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
+    // dio.options.headers["Content-Type"] = "application/json";
+    // dio.options.headers["Accept"] = "application/json";
     try{
-    Response response = await dio.post(
-      baseUrl + UPDATE_DELETE_ADDRESS_URL + addressId + '?_method=PUT',
-      data: formData);
+      Response response = await Settings.settings.dio.post(UPDATE_DELETE_ADDRESS_URL + addressId + '?_method=PUT',
+          data: formData);
 
     if(response.statusCode==200){
 
@@ -133,12 +118,10 @@ Future<CreateAddress> updateAddress(BuildContext context,
 
 
 Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId,) async {
-    dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
-    // dio.options.headers["Content-Type"] = "application/json";
-    // dio.options.headers["Accept"] = "application/json";
+
     try{
-    Response response = await dio.delete(
-      baseUrl + UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true',);
+      Response response = await Settings.settings.dio.delete(UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true');
+
 
     if(response.statusCode==200){
 
@@ -162,15 +145,15 @@ Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId
 
 
   Future<GetAddress> getCustomerAddresses() async {
-    // print("tokennn Bearer ${SPHelper.spHelper.getToken()}");
-    dio.options.headers["authorization"] =
-        "Bearer ${SPHelper.spHelper.getToken()}";
-    dio.options.headers["Content-Type"] = "application/json";
-    dio.options.headers["Accept"] = "application/json";
+
+    // // print("tokennn Bearer ${SPHelper.spHelper.getToken()}");
+    // dio.options.headers["authorization"] =
+    //     "Bearer ${SPHelper.spHelper.getToken()}";
+    // dio.options.headers["Content-Type"] = "application/json";
+    // dio.options.headers["Accept"] = "application/json";
     try {
-      final response = await dio.get(
-        baseUrl + GET_ADDRESSES_URL,
-      );
+      Response response = await Settings.settings.dio.get(GET_ADDRESSES_URL);
+
       print('000'+response.statusMessage);
 
       if (response.statusCode == 200) {

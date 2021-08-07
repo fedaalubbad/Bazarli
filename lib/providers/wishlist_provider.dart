@@ -3,31 +3,31 @@ import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:flutter/material.dart';
 
 class WishListProvider extends ChangeNotifier{
-  List<WishList> wishList=[];
+  List<WishData> wishList=[];
   bool isFav=false;
 
-  Future<List<WishList>> getCustomerWishList() async {
+  Future<List<WishData>> getCustomerWishList() async {
     this.wishList= await WishListApi.api.getCustomerWishList();
     notifyListeners();
     return wishList;
   }
 
-  Future<Map<String,dynamic>> addToWishList(BuildContext context,int productId)async{
-    Map<String,dynamic> response= await WishListApi.api.addToWishList(productId.toString());
-    if(response['status']==true){
+  Future<WishlistResponse> addToWishList(BuildContext context,int productId)async{
+    Map<String, dynamic> response=await WishListApi.api.addToWishList(productId.toString());
+        if(response!=null){
       // WishList wishListResponse=response['wishListResponse'];
-      if(response['wishListResponse'] == null){
+      if(response['data'] == null){
         _showToast(context,response['message']);
         notifyListeners();
       }else{
         _showToast(context,response['message']);
         notifyListeners();
       }
-      print(response['data'].toString());
+      // print(response['data'].toString());
 
     }else{
-      _showToast(context,'errorMessage');
-      print(response['errorMessage']);
+      _showToast(context,'error');
+      // print(response['errorMessage']);
     }
   }
 

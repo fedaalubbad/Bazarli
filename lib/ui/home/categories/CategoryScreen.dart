@@ -1,7 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
+import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
-import 'package:bazarli/providers/BrandProvider.dart';
-import 'package:bazarli/providers/CategoriesProvider.dart';
+import 'package:bazarli/providers/home_provider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:bazarli/ui/home/Home/component/home_title_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../home_main_screen.dart';
 import 'component/category_item.dart';
 import 'component/product_shop_item.dart';
@@ -49,8 +49,8 @@ class CategoriesScreenState extends State<CategoriesScreen>
       Duration(milliseconds: 1000),
     );
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    Provider.of<CategoriesProvider>(context, listen: false).getAllCategories();
-    Provider.of<BrandProvider>(context, listen: false).getAllBrandss();
+    Provider.of<HomeProvider>(context, listen: false).getAllCategories();
+    Provider.of<HomeProvider>(context, listen: false).getAllBrandss();
     // items.add((items.length+1).toString());
     // if(mounted)
     //   setState(() {
@@ -98,31 +98,62 @@ class CategoriesScreenState extends State<CategoriesScreen>
                 semanticContainer: false,
                 shape: BeveledRectangleBorder(
                   // borderRadius: BorderRadius.circular(ScreenUtil().radius(10)),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(
-                      ScreenUtil().radius(10),
-                    ),
-                    topRight: Radius.circular(
-                      ScreenUtil().radius(10),
-                    ),
-                    bottomLeft: Radius.circular(
-                      ScreenUtil().radius(10),
-                    ),
-                  ),
+                  // borderRadius: BorderRadius.only(
+                  //   topLeft: Radius.circular(
+                  //     ScreenUtil().radius(10),
+                  //   ),
+                  //   topRight: Radius.circular(
+                  //     ScreenUtil().radius(10),
+                  //   ),
+                  //   bottomLeft: Radius.circular(
+                  //     ScreenUtil().radius(10),
+                  //   ),
+                  // ),
                 ),
                 shadowColor: ShadowColor,
-                elevation: ScreenUtil().radius(45),
-                color: Colors.white,
+                elevation: ScreenUtil().radius(10),
+                color: WhiteColor,
                 child: Container(
-                  color: WhiteColor,
+                  decoration: BoxDecoration(
+                    color: WhiteColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          ScreenUtil().radius(10),
+                        ),
+                        topRight: Radius.circular(
+                          ScreenUtil().radius(10),
+                        ),
+                        bottomLeft: Radius.circular(
+                          ScreenUtil().radius(10),
+                        ),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: ShadowColor,
+                          // spreadRadius: 5,
+                          blurRadius:7.0,
+                          offset: Offset(5, 8)
+                      ),
+                    ],
+
+                  ),
                   height: 0.65.sh,
                   width: 0.47.sw,
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: Provider.of<HomeProvider>(context, listen: false)
+                        .categoriesList.length,
                     itemBuilder: (context, index) {
+                      Category category=Provider.of<HomeProvider>(context, listen: false)
+                          .categoriesList[index];
                       return ListTile(
+                        onTap: (){
+
+                        },
                         title: Center(
-                          child: Text('list$index'),
+                          child: Text(context.locale.toString()=='en'
+
+                              ?category.translations[1].name
+                          :category.translations[0].name)
                         ),
                       );
                     },
@@ -177,7 +208,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
         vertical: 20.h,
       ),
       child: GridView.builder(
-        itemCount: Provider.of<CategoriesProvider>(
+        itemCount: Provider.of<HomeProvider>(
           context,
           listen: false,
         ).categoriesList.length,
@@ -190,7 +221,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
           childAspectRatio: 0.5.h,
         ),
         itemBuilder: (context, index) => CategoryItem(
-          category: Provider.of<CategoriesProvider>(
+          category: Provider.of<HomeProvider>(
             context,
             listen: false,
           ).categoriesList[index],
@@ -201,7 +232,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
 
   getBrands() {
     return FutureBuilder<List<Brand>>(
-        future: Provider.of<BrandProvider>(
+        future: Provider.of<HomeProvider>(
           context,
           listen: false,
         ).getAllBrandss(),
@@ -223,7 +254,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
                   childAspectRatio: 1.h,
                 ),
                 itemBuilder: (context, index) => BrandItem(
-                  icon: Provider.of<BrandProvider>(
+                  icon: Provider.of<HomeProvider>(
                     context,
                     listen: false,
                   ).brandList[index].smallBrandLogo,

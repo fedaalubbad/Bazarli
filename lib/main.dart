@@ -1,6 +1,5 @@
 import 'package:bazarli/constants/MyColors.dart';
-import 'package:bazarli/providers/BrandProvider.dart';
-import 'package:bazarli/providers/CategoriesProvider.dart';
+import 'package:bazarli/providers/home_provider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/addresses_provider.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
@@ -15,7 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import 'api_helper/dio_settings.dart';
 import 'navigation_service/navigation_service.dart';
 
@@ -52,11 +50,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProductProvider>(
           create: (context) => ProductProvider(),
         ),
-        ChangeNotifierProvider<BrandProvider>(
-          create: (context) => BrandProvider(),
-        ),
-        ChangeNotifierProvider<CategoriesProvider>(
-          create: (context) => CategoriesProvider(),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
         ),
         ChangeNotifierProvider<WishListProvider>(
           create: (context) => WishListProvider(),

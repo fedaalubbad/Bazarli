@@ -37,9 +37,7 @@ class AddressesApi {
       'token': null,
     };
     print(formData);
-    // dio.options.headers["authorization"] = "Bearer ${SPHelper.spHelper.getToken()}";
-    // dio.options.headers["Content-Type"] = "application/json";
-    // dio.options.headers["Accept"] = "application/json";
+
     try{
       Response response = await Settings.settings.dio.post(CREATE_ADDRESSES_URL,
           data: formData);

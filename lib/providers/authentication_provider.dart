@@ -186,7 +186,7 @@ class AuthenticationProvider extends ChangeNotifier {
     Map<String,dynamic> response = await AuthenticationApi.api
         .customerSign(authData['email'], authData['password']);
     if (response['status'] == true) {
-    Login loginStatus = response['loginResponse'];
+    LoginResponse loginStatus = response['loginResponse'];
     SPHelper.spHelper.setUSer(loginStatus.data.toJson());
     SPHelper.spHelper.setToken(loginStatus.token);
     _showToast(context, 'login successfully');

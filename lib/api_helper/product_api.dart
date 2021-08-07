@@ -18,7 +18,7 @@ class ProductApi {
   //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
   // );
 
-  Future<List<Product>> getAllProducts({product_id,category_id,search,order,sort,price,brand,size,new_arrivals_in}) async {
+  Future<List<Product>> getAllProducts({int product_id,int category_id,String search,String order,String sort,var price,String brand,int size,int new_arrivals_in}) async {
     final formData = {
       if(product_id!=null)
       'product_id': product_id,
@@ -39,7 +39,7 @@ class ProductApi {
       if(new_arrivals_in!=null)
       'new_arrivals_in': new_arrivals_in,
     };
-    Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL);
+    Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL,data: formData);
 
     Map<String, dynamic> responseBody = response.data;
     print('productListJson${responseBody}');

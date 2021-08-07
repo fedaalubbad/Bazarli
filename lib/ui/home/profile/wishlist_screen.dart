@@ -37,7 +37,7 @@ class WishListScreen extends StatelessWidget{
 
   }
   getWishList(BuildContext context){
-    return FutureBuilder<List<WishList>>(
+    return FutureBuilder<List<WishData>>(
         future: Provider.of<WishListProvider>(context, listen: false).getCustomerWishList(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {

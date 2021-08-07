@@ -1,6 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/Categories_model/categories_classes/category.dart';
+import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/home/Home/component/home_toolbar.dart';
 import 'package:bazarli/ui/search/new_arrivals_screen.dart';
@@ -16,7 +16,7 @@ import 'brand_screen.dart';
 import 'color_seach_screen.dart';
 
 class CategorySearchScreen extends StatelessWidget {
-  Categories category;
+  Category category;
   CategorySearchScreen({this.category});
   @override
   Widget build(BuildContext context) {

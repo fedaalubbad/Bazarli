@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class ProductInCartListItem extends StatelessWidget{
   CartItem item;
-  WishList wishList;
+  WishData wishList;
   Function onPressed;
   ProductInCartListItem({this.item,this.wishList,this.onPressed});
   @override

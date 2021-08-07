@@ -1,5 +1,7 @@
+import 'package:bazarli/providers/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class DottedSlider extends StatefulWidget {
   final Color color;
@@ -13,18 +15,21 @@ class DottedSlider extends StatefulWidget {
 }
 
 class _DottedSliderState extends State<DottedSlider> {
-  PageController controller = PageController();
+  // PageController controller = PageController();
 
-  double currentPage = 0;
+  // double currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    controller.addListener(() {
-      setState(() {
-        currentPage = controller.page;
-      });
-    });
+    // controller.addListener(() {
+      // setState(() {
+      // Provider.of<HomeProvider>(
+      //   context,
+      //   listen: false,
+      // ).currentIndex = controller.page;
+      // });
+    // });
   }
 
   @override
@@ -34,11 +39,14 @@ class _DottedSliderState extends State<DottedSlider> {
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: widget.maxHeight,minWidth: ScreenUtil.defaultSize.width),
           child: PageView(
-            controller: controller,
+            // controller: controller,
             children: widget.children,
           ),
         ),
-        _drawDots(currentPage)
+        _drawDots(Provider.of<HomeProvider>(
+          context,
+          listen: false,
+        ).currentIndex)
       ],
     );
   }

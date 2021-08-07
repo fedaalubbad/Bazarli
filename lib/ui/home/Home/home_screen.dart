@@ -1,11 +1,10 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/Categories_model/categories_classes/category.dart';
+import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/providers/BrandProvider.dart';
-import 'package:bazarli/providers/CategoriesProvider.dart';
+import 'package:bazarli/providers/home_provider.dart';
 import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/ui/home/Home/component/brand_item.dart';
 import 'package:bazarli/ui/home/Home/component/dotted_slider.dart';
@@ -27,7 +26,6 @@ import 'component/carousel_slider.dart';
 import 'component/home_title_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-
   @override
   HomeScreenState createState() {
     return HomeScreenState();
@@ -42,8 +40,13 @@ class HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getSliders(context);
+
     _tabController = new TabController(
-      length: Provider.of<CategoriesProvider>(
+      length: Provider.of<HomeProvider>(
         context,
         listen: false,
       ).categoriesList.length,
@@ -63,15 +66,17 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   ScrollController _scrollController = new ScrollController();
+
 //////////refresh
   RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
-  void _onRefresh() async{
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:0)));
+  void _onRefresh() async {
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) =>
+    //             HomeMainScreen(selectedPageIndex: 0)));
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
 
@@ -81,96 +86,88 @@ class HomeScreenState extends State<HomeScreen>
 
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    if (mounted)
-      setState(() {
-
-      });
+    if (mounted) setState(() {});
 
     _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-      header: WaterDropHeader(waterDropColor: PrimaryColor,),
-          footer: CustomFooter(
-          builder: (BuildContext context,LoadStatus mode){
-          Widget body ;
-          if(mode==LoadStatus.idle){
-          body =  Text("pull up load");
-          }
-          else if(mode==LoadStatus.loading){
-          body =  CupertinoActivityIndicator();
-          }
-          else if(mode == LoadStatus.failed){
-          body = Text("Load Failed!Click retry!");
-          }
-          else if(mode == LoadStatus.canLoading){
-          body = Text("release to load more");
-          }
-          else{
-          body = Text("No more Data");
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      header: WaterDropHeader(
+        waterDropColor: PrimaryColor,
+      ),
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = Text("pull up load");
+          } else if (mode == LoadStatus.loading) {
+            body = CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = Text("Load Failed!Click retry!");
+          } else if (mode == LoadStatus.canLoading) {
+            body = Text("release to load more");
+          } else {
+            body = Text("No more Data");
           }
           return Container(
-          height: 55.h,
-          child: Center(child:body),
+            height: 55.h,
+            child: Center(child: body),
           );
-          },
+        },
+      ),
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              getCategories(context),
+              Divider(
+                color: DividerColor,
+                height: 1.h,
+              ),
+              SizedBox(
+                height: 10.5.h,
+              ),
+              getBrands(),
+              SizedBox(
+                height: 15.h,
+              ),
+              dottedSlider(),
+              SizedBox(
+                height: 30.h,
+              ),
+              BuildHomeTitle(
+                titleText: 'Flash Sale\nUP TO 80% OFF',
+                buttonText: 'ShopNow',
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+              getTopProducts(context),
+              SizedBox(
+                height: 10.h,
+              ),
+              BuildHomeTitle(
+                titleText: 'Tops',
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+              getGridProducts(context),
+              SizedBox(
+                height: 80.h,
+              ),
+            ],
           ),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
-
-        child:
-        Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                getCategories(context),
-                Divider(
-                  color: DividerColor,
-                  height: 1.h,
-                ),
-                SizedBox(
-                  height: 10.5.h,
-                ),
-                getBrands(),
-                SizedBox(
-                  height: 15.h,
-                ),
-                dottedSlider(),
-                SizedBox(
-                  height: 30.h,
-                ),
-                BuildHomeTitle(
-                  titleText: 'Flash Sale\nUP TO 80% OFF',
-                  buttonText: 'ShopNow',
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                getTopProducts(context),
-                SizedBox(
-                  height: 10.h,
-                ),
-                BuildHomeTitle(
-                  titleText: 'Tops',
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                getGridProducts(context),
-                SizedBox(
-                  height: 80.h,
-                ),
-              ],
-            ),
-            // )
-          ),
+          // )
         ),
-
+      ),
     );
   }
 
@@ -209,18 +206,21 @@ class HomeScreenState extends State<HomeScreen>
   // }
 
   getTopProducts(BuildContext context) {
-    if( Provider.of<ProductProvider>(context,).productList.length==0) {
+    if (Provider.of<ProductProvider>(
+          context,
+        ).productList.length ==
+        0) {
       return FutureBuilder<List<Product>>(
         future: Provider.of<ProductProvider>(context, listen: false)
             .getAllProducts(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
-              //   width: ScreenUtil.defaultSize.width,
+                //   width: ScreenUtil.defaultSize.width,
                 child: BuildCarouselSlider(
-                  product: snapshot.data,
-                  currentIndex: 0,
-                ));
+              product: snapshot.data,
+              currentIndex: 0,
+            ));
           } else if (snapshot.hasError) {
             return buildProductItemPlaceholder();
           }
@@ -229,15 +229,17 @@ class HomeScreenState extends State<HomeScreen>
           return buildProductItemPlaceholder();
         },
       );
-    }else{
+    } else {
       return Container(
-        //   width: ScreenUtil.defaultSize.width,
+          //   width: ScreenUtil.defaultSize.width,
           child: BuildCarouselSlider(
-            product: Provider.of<ProductProvider>(context,listen: false).productList,
-            currentIndex: 0,
-          ));
+        product:
+            Provider.of<ProductProvider>(context, listen: false).productList,
+        currentIndex: 0,
+      ));
     }
   }
+
   // getGrid() {
   //   return StreamBuilder<Response>(
   //       stream: Provider.of<ProductProvider>(
@@ -306,95 +308,98 @@ class HomeScreenState extends State<HomeScreen>
   // }
   //
   getGridProducts(BuildContext context) {
-   if( Provider.of<ProductProvider>(context,).productList.length==0) {
-     return
-       FutureBuilder<List<Product>>(
-         future:
-         Provider.of<ProductProvider>(context, listen: false).getAllProducts(),
-         builder: (context, snapshot) {
-           if (snapshot.hasData) {
-             return Container(
-                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                 child: StaggeredGridView.countBuilder(
-                   physics: ScrollPhysics(),
-                   shrinkWrap: true,
-                   crossAxisCount: 4,
-                   itemCount: snapshot.data.length,
-                   itemBuilder: (BuildContext context, int index) =>
-                       ProductItem(
-                         product: snapshot.data[index],
-                       ),
-                   staggeredTileBuilder: (int index) =>
-                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                   mainAxisSpacing: 10.w,
-                   crossAxisSpacing: 10.h,
-                 ));
-           } else if (snapshot.hasError) {
-             return Container(
-                 margin: EdgeInsets.symmetric(horizontal: 20.w),
-                 child: StaggeredGridView.countBuilder(
-                   physics: ScrollPhysics(),
-                   shrinkWrap: true,
-                   crossAxisCount: 4,
-                   itemCount: 5,
-                   itemBuilder: (BuildContext context, int index) =>
-                       _buildGridItem(),
-                   staggeredTileBuilder: (int index) =>
-                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                   mainAxisSpacing: 10.w,
-                   crossAxisSpacing: 10.h,
-                 ));
-           }
-           // By default, show a loading spinner. placeholder view
-           return Container(
-               margin: EdgeInsets.symmetric(horizontal: 20.w),
-               child: StaggeredGridView.countBuilder(
-                 physics: ScrollPhysics(),
-                 shrinkWrap: true,
-                 crossAxisCount: 4,
-                 itemCount: 5,
-                 itemBuilder: (BuildContext context, int index) =>
-                     _buildGridItem(),
-                 staggeredTileBuilder: (int index) =>
-                     StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-                 mainAxisSpacing: 10.w,
-                 crossAxisSpacing: 10.h,
-               ));
-         },
-       );
-   }else{
-     return Container(
-         margin: EdgeInsets.symmetric(horizontal: 20.w),
-         child: StaggeredGridView.countBuilder(
-           physics: ScrollPhysics(),
-           shrinkWrap: true,
-           crossAxisCount: 4,
-           itemCount: Provider.of<ProductProvider>(context,listen: false).productList.length,
-           itemBuilder: (BuildContext context, int index) =>
-               ProductItem(
-                 product: Provider.of<ProductProvider>(context,listen: false).productList[index],
-               ),
-           staggeredTileBuilder: (int index) =>
-               StaggeredTile.count(2, index.isEven ? 2.5 : 2),
-           mainAxisSpacing: 10.w,
-           crossAxisSpacing: 10.h,
-         )
-     );
-   }
-
+    if (Provider.of<ProductProvider>(
+          context,
+        ).productList.length ==
+        0) {
+      return FutureBuilder<List<Product>>(
+        future: Provider.of<ProductProvider>(context, listen: false)
+            .getAllProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: StaggeredGridView.countBuilder(
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 4,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) => ProductItem(
+                    product: snapshot.data[index],
+                  ),
+                  staggeredTileBuilder: (int index) =>
+                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                  mainAxisSpacing: 10.w,
+                  crossAxisSpacing: 10.h,
+                ));
+          } else if (snapshot.hasError) {
+            return Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: StaggeredGridView.countBuilder(
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  crossAxisCount: 4,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) =>
+                      _buildGridItem(),
+                  staggeredTileBuilder: (int index) =>
+                      StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                  mainAxisSpacing: 10.w,
+                  crossAxisSpacing: 10.h,
+                ));
+          }
+          // By default, show a loading spinner. placeholder view
+          return Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: StaggeredGridView.countBuilder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 4,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) =>
+                    _buildGridItem(),
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 10.h,
+              ));
+        },
+      );
+    } else {
+      return Container(
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
+          child: StaggeredGridView.countBuilder(
+            physics: ScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 4,
+            itemCount: Provider.of<ProductProvider>(context, listen: false)
+                .productList
+                .length,
+            itemBuilder: (BuildContext context, int index) => ProductItem(
+              product: Provider.of<ProductProvider>(context, listen: false)
+                  .productList[index],
+            ),
+            staggeredTileBuilder: (int index) =>
+                StaggeredTile.count(2, index.isEven ? 2.5 : 2),
+            mainAxisSpacing: 10.w,
+            crossAxisSpacing: 10.h,
+          ));
+    }
   }
 
   getCategories(BuildContext context) {
+    print('////////////////////////////////function//////////////////////////////////');
     return Container(
       width: ScreenUtil.defaultSize.width.w,
       height: 50.h,
       // color: WhiteColor,
-      child: FutureBuilder<List<Categories>>(
-        future: Provider.of<CategoriesProvider>(
+      child: FutureBuilder<List<Category>>(
+        future: Provider.of<HomeProvider>(
           context,
           listen: false,
         ).getAllCategories(),
         builder: (context, snapshot) {
+
           if (snapshot.hasData) {
             _tabController = new TabController(
               length: snapshot.data.length,
@@ -433,7 +438,9 @@ class HomeScreenState extends State<HomeScreen>
                         baseColor: BlueDarkColor,
                         highlightColor: PrimaryColor.withOpacity(0.3),
                         child: Text(
-                          snapshot.data[tabIndex].name,
+                          context.locale.toString() == 'en'
+                              ? snapshot.data[tabIndex].translations[1].name
+                              : snapshot.data[tabIndex].translations[0].name,
                           style: TabsTextStyle,
                         ),
                       ),
@@ -494,7 +501,7 @@ class HomeScreenState extends State<HomeScreen>
 
   getBrands() {
     return FutureBuilder<List<Brand>>(
-        future: Provider.of<BrandProvider>(
+        future: Provider.of<HomeProvider>(
           context,
           listen: false,
         ).getAllBrandss(),
@@ -617,6 +624,7 @@ class HomeScreenState extends State<HomeScreen>
           );
         });
   }
+
   // getBrands() {
   //   return Selector<BrandProvider, List<Brands>>(
   //       builder: (context, response, widget) {
@@ -689,12 +697,14 @@ class HomeScreenState extends State<HomeScreen>
 
   dottedSlider() {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);
-    return DottedSlider(maxHeight: 140.h, children: [
-      _productSlideImage('assets/images/promotion_one.png'),
-      _productSlideImage('assets/images/promotion_one.png'),
-      // _productSlideImage('https://www.google.ps/url?sa=i&url=https%3A%2F%2Fteamfusionlifestyle.com%2F2020%2F10%2F07%2Fcycle-of-fashion-trend%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAI'),
-      // _productSlideImage('https://www.google.ps/url?sa=i&url=http%3A%2F%2Fthepreppursuit.com%2Findian-fashion-industry%2F&psig=AOvVaw095oKbomyb-F0yDCocYfmv&ust=1625833349036000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJjZ87K70_ECFQAAAAAdAAAAABAO'),
-    ]);
+    return DottedSlider(color: BlueDarkColor,maxHeight: 140.h, children:[
+      ...Provider.of<HomeProvider>(
+        context,
+        listen: false,
+      ).sliderList.map((e) => _productSlideImage(e.imageUrl))
+    ]
+
+    );
   }
 
   _productSlideImage(String imageUrl) {
@@ -707,7 +717,7 @@ class HomeScreenState extends State<HomeScreen>
           ScreenUtil().radius(2),
         ),
         image: DecorationImage(
-          image: AssetImage(imageUrl),
+          image: NetworkImage(imageUrl),
           fit: BoxFit.cover,
         ),
       ),

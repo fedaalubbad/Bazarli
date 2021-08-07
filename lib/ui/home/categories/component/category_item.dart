@@ -1,11 +1,11 @@
-import 'package:bazarli/models/Categories_model/categories_classes/category.dart';
+import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../sub_caategories_Screen.dart';
 
 class CategoryItem extends StatelessWidget {
-  Categories category;
+  Category category;
   CategoryItem({this.category});
   @override
   Widget build(BuildContext context) {

@@ -64,9 +64,9 @@ class Product {
       });
     }
     // if (json['videos'] != null) {
-    //   videos = new List<Null>();
+    //   videos = new List<dynamic>();
     //   json['videos'].forEach((v) {
-    //     videos.add(new Null.fromJson(v));
+    //     videos.add(new List<dynamic>.from(v));
     //   });
     // }
     baseImage = json['base_image'] != null

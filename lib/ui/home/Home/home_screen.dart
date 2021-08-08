@@ -21,7 +21,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shimmer/shimmer.dart';
-import '../home_main_screen.dart';
 import 'component/carousel_slider.dart';
 import 'component/home_title_widget.dart';
 

@@ -2,7 +2,9 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/ui/home/Home/component/home_toolbar.dart';
+import 'package:bazarli/ui/search/category_select_screen.dart';
 import 'package:bazarli/ui/search/new_arrivals_screen.dart';
 import 'package:bazarli/ui/search/price_search_screen.dart';
 import 'package:bazarli/ui/search/product_rating_screen.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 import 'brand_screen.dart';
 import 'color_seach_screen.dart';
 
@@ -32,42 +35,44 @@ class CategorySearchScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 5.h,),
-                    Container(
-                 // width: ScreenUtil.defaultSize.width,
-                 height: 60.h,
-                       child: Row(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         Column(
-                           children: [
-                             Text('Category',style: TextLabelStyle,).tr(),
-                             SizedBox(height: 5.h,),
-                             Text(category.name,style: DescriptionStyle,),
-                           ],
-                         ),
-                         context.locale.toString()=='ar'?
-                         SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
-                        :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,)  ,
-                       ],
-                       ),
-                    ),
+                 //    Container(
+                 // // width: ScreenUtil.defaultSize.width,
+                 // height: 60.h,
+                 //       child: Row(
+                 //       crossAxisAlignment: CrossAxisAlignment.center,
+                 //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 //       children: [
+                 //         Column(
+                 //           children: [
+                 //             Text('Category',style: TextLabelStyle,).tr(),
+                 //             SizedBox(height: 5.h,),
+                 //             Text(category==null?'':category.name,style: DescriptionStyle,),
+                 //           ],
+                 //         ),
+                 //         context.locale.toString()=='ar'?
+                 //         SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
+                 //        :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,),
+                 //       ],
+                 //       ),
+                 //    ),
+                 //    Divider(),
+                    categoryWidget(context,'Category',Provider.of<ProductProvider>(context, listen: false).categoryName,0,),
                     Divider(),
-                   categoryWidget(context,'Brand',1),
+                    categoryWidget(context,'Brand',Provider.of<ProductProvider>(context, listen: false).brandName,1),
                     Divider(),
-                    categoryWidget(context,'Price',2),
+                    categoryWidget(context,'Price','',2),
                     Divider(),
-                    categoryWidget(context,'ProductRating',3),
+                    categoryWidget(context,'ProductRating','',3),
                     Divider(),
-                    categoryWidget(context,'Size',4,),
+                    categoryWidget(context,'Size','',4,),
                     Divider(),
-                    categoryWidget(context,'NewArrivals',5),
+                    categoryWidget(context,'NewArrivals','',5),
                     Divider(),
-                    categoryWidget(context,'Department',6),
+                    categoryWidget(context,'Department','',6),
                     Divider(),
-                    categoryWidget(context,'Color',7),
+                    categoryWidget(context,'Color','',7),
                     Divider(),
-                    categoryWidget(context,'Seller',8),
+                    categoryWidget(context,'Seller','',8),
                     Divider(),
                     SizedBox(height:15.h,),
 
@@ -91,10 +96,12 @@ class CategorySearchScreen extends StatelessWidget {
     ]));
   }
 
-  categoryWidget(BuildContext context,text,int index){
+  categoryWidget(BuildContext context,String title,String subTitle,int index){
     return InkWell(
          onTap: (){
-          index==1?
+          index==0?
+          NavigationService.navigationService.navigateToWidget(CategorySelectScreen())
+          :index==1?
           NavigationService.navigationService.navigateToWidget(BrandScreen())
           :index==2?
           NavigationService.navigationService.navigateToWidget(PriceSearchScreen())
@@ -113,7 +120,7 @@ class CategorySearchScreen extends StatelessWidget {
       },
       child: Container(
         // width: ScreenUtil.defaultSize.width,
-        height: 50.h,
+        height: 60.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +128,14 @@ class CategorySearchScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(text,style: TextLabelStyle,).tr(),
+                Column(
+                  children: [
+                    Text(title,style: TextLabelStyle,).tr(),
+                    SizedBox(height: 5.h,),
+                    Text(subTitle==null?'':subTitle,style: DescriptionStyle,),
+                  ],
+                ),
+                // Text(text,style: TextLabelStyle,).tr(),
                 context.locale.toString()=='ar'?
                 SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
                 :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,)

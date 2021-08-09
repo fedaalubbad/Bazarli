@@ -33,6 +33,8 @@ const String CUSTOMER_REGISTER_URL = "customer/register";
 const String CUSTOMER_FORGET_PASSWORD_URL = "customer/forgot-password";
 const String UPDATE_CUSTOMER_PROFILE_URL = "customer/profile?_method=PUT";
 const String GET_CUSTOMER_PROFILE_URL = "customers/"; //ID
+const String GET_CUSTOMER_LOGOUT_URL = "customer/logout?token=true"; //ID
+
 //CUSTOMER ADDRESSES
 const String CREATE_ADDRESSES_URL = "addresses/create?token=true";
 const String GET_ADDRESSES_URL = "addresses?token=true"; //USED FOR DELETE ALSO

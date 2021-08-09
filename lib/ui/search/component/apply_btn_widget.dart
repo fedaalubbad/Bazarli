@@ -6,6 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ApplyButtonWidget extends StatelessWidget{
+  Function onPressed;
+  ApplyButtonWidget({this.onPressed});
+
   @override
   Widget build(BuildContext context) {
      return Positioned(
@@ -13,8 +16,7 @@ class ApplyButtonWidget extends StatelessWidget{
        left: 20.w,
        right: 20.w,
        child: InkWell(
-           onTap: () {
-           },
+           onTap: onPressed,
            child: Container(
              // margin: EdgeInsets.symmetric(horizontal: 20.w),
              alignment: Alignment.center,

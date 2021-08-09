@@ -135,9 +135,8 @@ class CategoriesScreenState extends State<CategoriesScreen>
                           offset: Offset(5, 8)
                       ),
                     ],
-
                   ),
-                  height: 0.65.sh,
+                  height: 0.55.sh,
                   width: 0.47.sw,
                   child: ListView.builder(
                     itemCount: Provider.of<HomeProvider>(context, listen: false)
@@ -151,7 +150,6 @@ class CategoriesScreenState extends State<CategoriesScreen>
                         },
                         title: Center(
                           child: Text(context.locale.toString()=='en'
-
                               ?category.translations[1].name
                           :category.translations[0].name)
                         ),

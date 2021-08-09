@@ -18,7 +18,7 @@ class ProductApi {
   //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
   // );
 
-  Future<List<Product>> getAllProducts({int product_id,int category_id,String search,String order,String sort,var price,String brand,int size,int new_arrivals_in}) async {
+  Future<List<Product>> getAllProducts({int product_id,int category_id,String search,String order,String sort,var price,int brand,int size,int new_arrivals_in}) async {
     final formData = {
       if(product_id!=null)
       'product_id': product_id,

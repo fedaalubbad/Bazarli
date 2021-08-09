@@ -1,4 +1,7 @@
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
+import 'package:bazarli/providers/Product_provider.dart';
 import 'package:bazarli/providers/home_provider.dart';
 import 'package:bazarli/ui/home/tool_bar_widget.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +40,10 @@ class BrandScreen extends StatelessWidget {
                                .brandList.length,
                            shrinkWrap: true,
                            itemBuilder:(context,index){
-                          return _myRadioButton(title: Provider.of<HomeProvider>(context, listen: false)
-                              .brandList[index].adminName, value:index,);
+                           Brand brand=Provider.of<HomeProvider>(context, listen: false)
+                               .brandList[index];
+                           return  buildRadio(context,brand.id,brand.adminName);
+                          // return _myRadioButton(context,title: brand.adminName, value:brand.id );
                        }),
                      ),
 
@@ -57,22 +62,115 @@ class BrandScreen extends StatelessWidget {
                     ]),
                 ),
             ),
-            ApplyButtonWidget(),
+            ApplyButtonWidget(onPressed: (){
+              Navigator.of(context).pop();
+            },),
           ],
       ),
     ]),
         ));
   }
-  Widget _myRadioButton({String title, int value, Function onChanged}) {
-    return RadioListTile(
-      value: value,
-      groupValue: _groupValue,
-      onChanged: onChanged,
-      title: Text(
-        title,
-        style: DescriptionStyle,
-      ),
-    );
-  }
+  // Widget _myRadioButton(BuildContext context,{String title, int value}) {
+  //   return RadioListTile(
+  //     value: value,
+  //     groupValue: _groupValue,
+  //     onChanged: (val){
+  //       Provider
+  //           .of<ProductProvider>(context, listen: false)
+  //           .brand = val.toString();
+  //       print('brandId=$val');
+  //     },
+  //     selectedTileColor: PrimaryColor,
+  //     activeColor:PrimaryColor ,
+  //     title: Text(
+  //       title,
+  //       style: DescriptionStyle,
+  //     ),
+  //
+  //   );
+  // }
+ Widget buildRadio(BuildContext context,int id,String title) {
+  return  Selector<ProductProvider, int>(
+        selector: (_, provider) => provider.brandId,
+      // shouldRebuild: (previous, next) => previous == next,
+      builder: (context, number, child) {
+          return Row(
+            children: [
+              SizedBox(
+                width: 12,
+              ),
+              Radio(
+                value: id,
+                groupValue:number,
+                activeColor:PrimaryColor,
+                onChanged:(val) {
+                  number=val;
+                  Provider .of<ProductProvider>(context, listen: false).selectBrand(val,title);
+                 print('Build num2$val');
 
+                }
+                // myDialog();
+
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              Text(title),
+            ],
+          );
+
+        }
+        );
+
+ // return Selector<ProductProvider, String>(
+ //                  builder: (context, response, widget) {
+ //                // if (response == null) {
+ //           return Row(
+ //             children: [
+ //               SizedBox(
+ //                 width: 12,
+ //               ),
+ //               Radio(
+ //                 value: response,
+ //                 groupValue:Provider.of<ProductProvider>(context,listen: false).brand,
+ //                 activeColor:PrimaryColor,
+ //                 onChanged:
+ //                   Provider.of<ProductProvider>(context, listen: false).selectBrand,
+ //                   // myDialog();
+ //
+ //               ),
+ //               SizedBox(
+ //                 width: 12,
+ //               ),
+ //               Text(title),
+ //             ],
+ //           );
+ //                      }, selector: (context, provider) {
+ //                        return provider.selectBrand(No);
+ //                      });
+    // return Row(
+    //   children: [
+    //     SizedBox(
+    //       width: 12,
+    //     ),
+    //     Radio(
+    //       value: No,
+    //       groupValue:Provider
+    //           .of<ProductProvider>(context,listen: false)
+    //           .brand,
+    //       activeColor:PrimaryColor,
+    //       onChanged:
+    //         Provider
+    //             .of<ProductProvider>(context, listen: false)
+    //             .selectBrand,
+    //         // myDialog();
+    //
+    //     ),
+    //     SizedBox(
+    //       width: 12,
+    //     ),
+    //     Text(title),
+    //   ],
+    // );
+  }
 }

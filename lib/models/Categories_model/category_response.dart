@@ -111,7 +111,7 @@ class Category {
   Map<String, dynamic> toJson() => {
     "id": id,
     "position": position,
-    "image": image,
+    "image": image==null?null:image,
     "status": status,
     "_lft": lft,
     "_rgt": rgt,

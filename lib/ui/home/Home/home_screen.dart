@@ -158,7 +158,7 @@ class HomeScreenState extends State<HomeScreen>
               SizedBox(
                 height: 30.h,
               ),
-              getGridProducts(context),
+              getSelectedCategorise(context),
               SizedBox(
                 height: 80.h,
               ),
@@ -306,14 +306,14 @@ class HomeScreenState extends State<HomeScreen>
   //       });
   // }
   //
-  getGridProducts(BuildContext context) {
+  getSelectedCategorise(BuildContext context) {
     if (Provider.of<ProductProvider>(
           context,
         ).productList.length ==
         0) {
-      return FutureBuilder<List<Product>>(
-        future: Provider.of<ProductProvider>(context, listen: false)
-            .getAllProducts(),
+      return FutureBuilder<List<Category>>(
+        future: Provider.of<HomeProvider>(context, listen: false)
+            .getAllCategories(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -324,7 +324,7 @@ class HomeScreenState extends State<HomeScreen>
                   crossAxisCount: 4,
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) => ProductItem(
-                    product: snapshot.data[index],
+                    category: snapshot.data[index],
                   ),
                   staggeredTileBuilder: (int index) =>
                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
@@ -371,12 +371,12 @@ class HomeScreenState extends State<HomeScreen>
             physics: ScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 4,
-            itemCount: Provider.of<ProductProvider>(context, listen: false)
-                .productList
+            itemCount: Provider.of<HomeProvider>(context, listen: false)
+                .categoriesList
                 .length,
             itemBuilder: (BuildContext context, int index) => ProductItem(
-              product: Provider.of<ProductProvider>(context, listen: false)
-                  .productList[index],
+              category : Provider.of<HomeProvider>(context, listen: false)
+                  .categoriesList[index],
             ),
             staggeredTileBuilder: (int index) =>
                 StaggeredTile.count(2, index.isEven ? 2.5 : 2),

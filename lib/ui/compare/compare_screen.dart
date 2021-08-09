@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoriesScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return SubCategoriesScreenState();

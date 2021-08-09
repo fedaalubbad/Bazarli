@@ -1,6 +1,9 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
+import 'package:bazarli/ui/compare/compare_screen.dart';
+import 'package:bazarli/ui/search/categorySearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -86,7 +89,7 @@ class HomeToolBar extends StatelessWidget {
                     width: 0.25.sw,
                     child: InkWell(
                         onTap: () {
-                          // NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
+                          NavigationService.navigationService.navigateToWidget(CategorySearchScreen())  ;
                         },
                         child: Container(
                           alignment: Alignment.center,

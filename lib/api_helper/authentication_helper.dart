@@ -151,6 +151,15 @@ class AuthenticationApi {
       return status;
     }
   }
+  Future logout()async{
+    Response response = await Settings.settings.dio.get(GET_CUSTOMER_LOGOUT_URL);
+    if(response.statusCode==200){
+
+  }else {
+
+    }
+  }
+
   // Future<Map<String, dynamic>> supplierSign(
   //     String email, String password) async {
   //   final formData = {

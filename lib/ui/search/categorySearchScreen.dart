@@ -3,6 +3,7 @@ import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/providers/Product_provider.dart';
+import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
 import 'package:bazarli/ui/home/Home/component/home_toolbar.dart';
 import 'package:bazarli/ui/search/category_select_screen.dart';
 import 'package:bazarli/ui/search/new_arrivals_screen.dart';
@@ -56,13 +57,15 @@ class CategorySearchScreen extends StatelessWidget {
                  //       ),
                  //    ),
                  //    Divider(),
-                    categoryWidget(context,'Category',Provider.of<ProductProvider>(context, listen: false).categoryName,0,),
+                    categoryWidget(context,'Category',Provider.of<ProductProvider>(context).categoryName,0,),
                     Divider(),
-                    categoryWidget(context,'Brand',Provider.of<ProductProvider>(context, listen: false).brandName,1),
+                    categoryWidget(context,'Brand',Provider.of<ProductProvider>(context).brandName,1),
                     Divider(),
-                    categoryWidget(context,'Price','',2),
+                    // categoryWidget(context,'Price','',2),
+                    selectPriceExpandedListWidget(context,'Price','',2),
                     Divider(),
-                    categoryWidget(context,'ProductRating','',3),
+                    // categoryWidget(context,'ProductRating','',3),
+                    selectRateExpandedListWidget(context,'ProductRating','',3),
                     Divider(),
                     categoryWidget(context,'Size','',4,),
                     Divider(),
@@ -103,10 +106,10 @@ class CategorySearchScreen extends StatelessWidget {
           NavigationService.navigationService.navigateToWidget(CategorySelectScreen())
           :index==1?
           NavigationService.navigationService.navigateToWidget(BrandScreen())
-          :index==2?
-          NavigationService.navigationService.navigateToWidget(PriceSearchScreen())
-          :index==3?
-          NavigationService.navigationService.navigateToWidget(ProductRatingSearchScreen())
+          // :index==2?
+          // NavigationService.navigationService.navigateToWidget(PriceSearchScreen())
+          // :index==3?
+          // NavigationService.navigationService.navigateToWidget(ProductRatingSearchScreen())
           :index==4?
           NavigationService.navigationService.navigateToWidget(SizesSearchScreen())
           : index==5?
@@ -120,6 +123,7 @@ class CategorySearchScreen extends StatelessWidget {
       },
       child: Container(
         // width: ScreenUtil.defaultSize.width,
+        margin: EdgeInsets.only(left: 15.w,right: 15.w),
         height: 60.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -148,6 +152,176 @@ class CategorySearchScreen extends StatelessWidget {
       ),
     );
   }
+
+selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,int index){
+   return Form(
+     key: Provider.of<ProductProvider>(context,listen: false).priceFormStateKey,
+     child: Container(
+          // width: ScreenUtil.defaultSize.width,
+          // height: 60.h,
+          // child: Padding(
+            // padding: const EdgeInsets.all(8.0),
+            child:Theme(
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                textColor:PrimaryColor,
+                iconColor:PrimaryColor,
+                maintainState: true,
+                title: Text(
+                  "Price",
+                  style: TextLabelStyle,
+                ).tr(),
+                trailing:  context.locale.toString()=='ar'?
+                SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
+                    :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,),
+                children: [
+                  buildFromToWidget(context),
+
+                ],
+              ),
+            ),
+          ),
+      // ),
+   );
+  }
+
+
+  selectRateExpandedListWidget(BuildContext context,String title,String subTitle,int index){
+   return Container(
+          // width: ScreenUtil.defaultSize.width,
+          // height: 60.h,
+          // child: Padding(
+            // padding: const EdgeInsets.all(8.0),
+            child:Theme(
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                textColor:PrimaryColor,
+                iconColor:PrimaryColor,
+                maintainState: true,
+                title: Text(
+                  "ProductRating",
+                  style: TextLabelStyle,
+                ).tr(),
+                trailing:  context.locale.toString()=='ar'?
+                SvgPicture.asset('assets/svg/arrow_left.svg',width: 12.w,height: 12.h,)
+                    :SvgPicture.asset('assets/svg/arrow_right.svg',width: 12.w,height: 12.h,),
+
+                children: [
+                  buildRateSlider(context)
+                ],
+              ),
+            ),
+   );
+  }
+
+
+  buildRateSlider(BuildContext context){
+   return Container(
+      // height: ScreenUtil.defaultSize.height,
+      margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 20,bottom: 20),
+      child: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children:[
+          // SizedBox(
+          //   height: 25.h,
+          // ),
+          Text('1.0 Stars or More',style:DescriptionStyle ,).tr(),
+          Selector<ProductProvider, double>(
+              selector: (_, provider) => provider.rate,
+              // shouldRebuild: (previous, next) => previous == next,
+              builder: (context, number, child) {
+                return Slider(
+                    inactiveColor: GrayColor, activeColor: PrimaryColor,
+                    value:Provider
+                        .of<ProductProvider>(context)
+                        .rate,
+                    onChanged: Provider
+                        .of<ProductProvider>(context,listen: false)
+                        .getSlider,
+                  min: 1.0,
+                    max: 5.0,
+                    );
+              }
+              ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('1.0 Stars',style:SliderTitle2Style ,).tr(),
+              Text(Provider
+                  .of<ProductProvider>(context)
+                  .rate.toString().substring(0,3),style:SliderTitle2Style ,).tr(),
+
+            ],)
+        ]),
+      ),
+    );
+  }
+  buildFromToWidget(BuildContext context){
+    return Container(
+      height: 100.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: 50.h,
+            width: 70.w,
+            decoration: BoxDecoration(
+              color:TextFormFieldColor ,
+              borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+            ),
+            child: CustomTextfieldWidget(
+              contraller:Provider.of<ProductProvider>(context, listen: false).minPriceController ,
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
+              hint: '00',
+              textInputType:TextInputType.text,
+              save:Provider.of<ProductProvider>(context, listen: false).saveinitialPrice,
+              // validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
+            ),
+          ),
+          Text('To',style: TextLabelStyle,),
+
+          Container(
+            height: 50.h,
+            width: 70.w,
+            decoration: BoxDecoration(
+              color:TextFormFieldColor ,
+              borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+            ),
+            child: CustomTextfieldWidget(
+              contraller:Provider.of<ProductProvider>(context, listen: false).maxPriceController ,
+              isObscure: false,
+              isPassword: false,
+              linesNo: 1,
+              hint: '00',
+              textInputType:TextInputType.text,
+              save:Provider.of<ProductProvider>(context, listen: false).saveEndPrice,
+              // validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
+            ),
+          ),
+          InkWell(
+              onTap: () {
+              },
+              child: Container(
+                // margin: EdgeInsets.symmetric(horizontal: 20.w),
+                alignment: Alignment.center,
+                height: 50.h,
+                width: 70.w,
+                decoration: BoxDecoration(
+                  color: PrimaryColor,
+                  borderRadius:
+                  BorderRadius.circular(ScreenUtil().radius(5)),
+                ),
+                child: Text(
+                  'Go',
+                  style:WhiteButtonStyle,
+                ).tr(),
+              )),
+        ],
+      ),
+    );
+  }
+
 
   buildMoreFiltersWidget(){
     return Container(

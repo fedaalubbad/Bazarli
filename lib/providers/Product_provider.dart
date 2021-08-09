@@ -13,12 +13,46 @@ class ProductProvider extends ChangeNotifier{
       String search;
       String order;
       String sort;
-      var price;
+      double rate=0.0;
+      List<int> price;
       int size;
       int newArrivals;
+      final GlobalKey<FormState> priceFormStateKey = GlobalKey<FormState>();
+      final minPriceController = TextEditingController();
+      final maxPriceController = TextEditingController();
 
-    List<Product> productList=[];
+      List<Product> productList=[];
+    List<Product> productSearchResultList=[];
 
+      saveinitialPrice(val) {
+        price[0] = val;
+        notifyListeners();
+      }
+
+      saveEndPrice(val) {
+        price[1] = val;
+        notifyListeners();
+      }
+
+      // String validateMinPrice(val) {
+      //   if (val.isEmpty) {
+      //     return 'enter min price';
+      //   }
+      //   return null;
+      // }
+      //
+      // String validateMaxPrice(val) {
+      //   if (val.isEmpty) {
+      //     return 'enter max price';
+      //   }
+      //   return null;
+      // }
+
+    double getSlider(double value){
+            this.rate=value;
+            notifyListeners();
+            return value;
+    }
 
    int selectBrand(value,name){
       this.brandId=value;

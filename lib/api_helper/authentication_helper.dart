@@ -1,4 +1,5 @@
 import 'package:bazarli/models/user_model/customer_status.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -151,6 +152,44 @@ class AuthenticationApi {
       return status;
     }
   }
+  Future editProfile(BuildContext context,
+      {firstName, lastName, gender, dateOfBirth, languageId})async{
+    final formData = {
+      'first_name': firstName,
+      'last_name': lastName,
+      'gender': 'Male',
+      // 'date_of_birth': dateOfBirth,
+      'language_id': languageId,
+    };
+    print(formData.toString());
+      var response = await Settings.settings.dio.post(UPDATE_CUSTOMER_PROFILE_URL,data:formData);
+    print(response.statusCode);
+    try {
+
+    Map<String, dynamic> responseBody;
+      if (response.statusCode == 200) {
+        responseBody = response.data;
+        _showToast(context,responseBody['message']);
+        Data userResponse=Data.fromJson(responseBody['data']);
+        // return status;
+        SPHelper.spHelper.setUSer(userResponse.toJson());
+      } else {
+        _showToast(context,responseBody['error']);
+
+      }
+      // }else{
+      //   status={'errorResponse':'register failed','status':false};
+      //   return status;
+      // }
+    } catch (e) {
+      final errorMessage = DioErrorType.response.toString();
+      // print(errorMessage);
+      // status = {'catchResponse': 'something went wrong', 'status': false};
+      // return status;
+    }
+  }
+
+
   Future logout()async{
     Response response = await Settings.settings.dio.get(GET_CUSTOMER_LOGOUT_URL);
     if(response.statusCode==200){

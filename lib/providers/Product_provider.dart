@@ -13,7 +13,7 @@ class ProductProvider extends ChangeNotifier{
       String search;
       String order;
       String sort;
-      double rate=0.0;
+      double rate=1.0;
       List<int> price;
       int size;
       int newArrivals;

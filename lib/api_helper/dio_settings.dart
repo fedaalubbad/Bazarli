@@ -10,6 +10,7 @@ class Settings {
     String token = SPHelper.spHelper.getToken();
     dio = Dio();
     dio.options.baseUrl = baseurl;
+    // dio.options.headers=getHeaders();
     dio.options.headers['Accept'] = 'application/json';
     dio.options.headers['Authorization'] = 'Bearer $token';
   }

@@ -1,11 +1,13 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
 import 'package:bazarli/ui/home/profile/component/profile_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatelessWidget{
   @override
@@ -21,9 +23,9 @@ class EditProfileScreen extends StatelessWidget{
                   child: Column(
                     children: [
                       SizedBox(height: 10.h,),
-                      buildProfileDetailsWidget(),
+                      buildProfileDetailsWidget(context),
                       SizedBox(height: 20.h,),
-                      doneBtnWidget(),
+                      doneBtnWidget(context),
                       SizedBox(height: 10.h,),
                       cancelBtnWidget(),
                       SizedBox(height: 20.h,),
@@ -35,7 +37,7 @@ class EditProfileScreen extends StatelessWidget{
         )
     );
   }
-  buildProfileDetailsWidget(){
+  buildProfileDetailsWidget(BuildContext context){
     return  Container(
         margin: EdgeInsets.symmetric(horizontal:2.w),
         width:double.infinity,
@@ -52,106 +54,115 @@ class EditProfileScreen extends StatelessWidget{
           ],
           // border: Border.all(color:PrimaryColor)
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child:Form(
+          key:Provider.of<AuthenticationProvider>(context, listen: false).profileFormStateKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              children: [
-                Text(
-                  'Profile',
-                  style: TextLabelStyle,
-                ).tr(),
+                children: [
+                  Text(
+                    'Profile',
+                    style: TextLabelStyle,
+                  ).tr(),
 
-              ],
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'Manage your profile details',
-              style: SliderTitle2Style,
-            ).tr(),
-            SizedBox(
-              height:20.h,
-            ),
-            Text(
-              'GeneralInformation',
-              style: TitlesInHome,
-            ).tr(),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Text(
+                'Manage your profile details',
+                style: SliderTitle2Style,
+              ).tr(),
+              SizedBox(
+                height:20.h,
+              ),
+              Text(
+                'GeneralInformation',
+                style: TitlesInHome,
+              ).tr(),
 ////////////////////////////////////////////////////
-            SizedBox(
-              height:20.h,
-            ),
-            Text('FirstName',
-              style: TextLabelStyle,
-            ).tr(),
-            SizedBox(
-              height: 10.h,
-            ),
-            Container(
-              height: 50.h,
-              decoration: BoxDecoration(
-                color:TextFormFieldColor ,
-                borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+              SizedBox(
+                height:20.h,
               ),
-              child:
-              CustomTextfieldWidget(
-                isObscure: false,
-                isPassword: false,
-                linesNo: 1,
-                hint: 'FirstName'.tr(),
-                textInputType:TextInputType.text,
-              ),),
-            SizedBox(
-              height: 15.h,
-            ),
-            Text('LastName',
-              style: TextLabelStyle,
-            ).tr(),
-            SizedBox(
-              height: 10.h,
-            ),
-            Container(
-              height: 50.h,
-              decoration: BoxDecoration(
-                color:TextFormFieldColor ,
-                borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+              Text('FirstName',
+                style: TextLabelStyle,
+              ).tr(),
+              SizedBox(
+                height: 10.h,
               ),
-              child: CustomTextfieldWidget(
-                isObscure: false,
-                isPassword: false,
-                linesNo: 1,
-                hint: 'LastName'.tr(),
-                textInputType:TextInputType.text,
+              Container(
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color:TextFormFieldColor,
+                  borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+                ),
+                child:
+                CustomTextfieldWidget(
+                  contraller:Provider.of<AuthenticationProvider>(context, listen: false).fNameContraller2,
+                  isObscure: false,
+                  isPassword: false,
+                  linesNo: 1,
+                  hint: 'FirstName'.tr(),
+                  textInputType:TextInputType.text,
+                  save: Provider.of<AuthenticationProvider>(context, listen: false).saveFName2,
+                  validator: Provider.of<AuthenticationProvider>(context, listen: false).validateFName,
+                ),),
+              SizedBox(
+                height: 15.h,
               ),
-            ),
+              Text('LastName',
+                style: TextLabelStyle,
+              ).tr(),
+              SizedBox(
+                height: 10.h,
+              ),
+              Container(
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color:TextFormFieldColor ,
+                  borderRadius:  BorderRadius.circular(ScreenUtil().radius(5)),
+                ),
+                child: CustomTextfieldWidget(
+                  contraller:Provider.of<AuthenticationProvider>(context, listen: false).lNameContraller2,
+                  isObscure: false,
+                  isPassword: false,
+                  linesNo: 1,
+                  hint: 'LastName'.tr(),
+                  textInputType:TextInputType.text,
+                  save: Provider.of<AuthenticationProvider>(context, listen: false).saveLName2,
+                  validator: Provider.of<AuthenticationProvider>(context, listen: false).validateLName,
+                ),
+              ),
 ///////////////////////////////////////////////////
-            SizedBox(
-              height:20.h,
-            ),
-            Text(
-              'PreferredLanguage',
-              style: TitlesInHome,
-            ).tr(),
-            SizedBox(
-              height:20.h,
-            ),
-            buildAddressLableWidget(),
-            SizedBox(
-              height:20.h,
-            ),
-          ],
+              SizedBox(
+                height:20.h,
+              ),
+              Text(
+                'PreferredLanguage',
+                style: TitlesInHome,
+              ).tr(),
+              SizedBox(
+                height:20.h,
+              ),
+              buildAddressLableWidget(),
+              SizedBox(
+                height:20.h,
+              ),
+            ],
+          ),
         )
     );
   }
-  doneBtnWidget(){
+  doneBtnWidget(BuildContext context){
     return InkWell(
         onTap: (){
-          // NavigationService.navigationService.navigateToWidget(EditProfileScreen());
-        },
+          Provider.of<AuthenticationProvider>(context, listen: false).editProfile(context) ;
+          },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),
           alignment: Alignment.center,

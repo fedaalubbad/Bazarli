@@ -31,7 +31,7 @@ const String CREATE_UPDATE_PRODUCT_URL = "suppliers/products/create";
 const String CUSTOMER_LOGIN_URL = "customer/login";
 const String CUSTOMER_REGISTER_URL = "customer/register";
 const String CUSTOMER_FORGET_PASSWORD_URL = "customer/forgot-password";
-const String UPDATE_CUSTOMER_PROFILE_URL = "customer/profile?_method=PUT";
+const String UPDATE_CUSTOMER_PROFILE_URL = "customer/profile?_method=PUT&token=true";
 const String GET_CUSTOMER_PROFILE_URL = "customers/"; //ID
 const String GET_CUSTOMER_LOGOUT_URL = "customer/logout?token=true"; //ID
 

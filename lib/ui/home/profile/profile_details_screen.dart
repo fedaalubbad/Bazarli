@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -101,7 +102,7 @@ class ProfileDetailsScreen extends StatelessWidget{
                   width:10.w,
                 ),
                 Text(
-                  'Ahmed ',
+                  SPHelper.spHelper.getUSer().firstName ,
                   style:TabsTextStyle,
                 ),
               ],
@@ -121,7 +122,7 @@ class ProfileDetailsScreen extends StatelessWidget{
                   width:10.w,
                 ),
                 Text(
-                  'Hassun',
+                  SPHelper.spHelper.getUSer().lastName,
                   style:TabsTextStyle,
                 ),
               ],

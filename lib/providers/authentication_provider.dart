@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 class AuthenticationProvider extends ChangeNotifier {
   final GlobalKey<FormState> formStateKey = GlobalKey<FormState>();
   final GlobalKey<FormState> formStateKey2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> profileFormStateKey = GlobalKey<FormState>();
+  String editFName;
+  String editLName;
   bool isLoading = false;
   bool isObscure = true;
   bool checkValue=false;
@@ -24,6 +27,8 @@ class AuthenticationProvider extends ChangeNotifier {
   final lNameContraller = TextEditingController();
   final emailContraller = TextEditingController();
   final emailForgetPassContraller = TextEditingController();
+  final fNameContraller2 = TextEditingController();
+  final lNameContraller2 = TextEditingController();
   String email2='';
   Map<String, dynamic> authData = {
     'fName': '',
@@ -117,11 +122,20 @@ class AuthenticationProvider extends ChangeNotifier {
     authData['lName'] = val;
     notifyListeners();
   }
+  saveFName2(val) {
+    editFName = val;
+    notifyListeners();
+  }
+
+  saveLName2(val) {
+    editLName = val;
+    notifyListeners();
+  }
 
   String validateFName(val) {
     if (val.isEmpty) {
       return 'enter your first name';
-    } else if (val.length < 4) {
+    } else if (val.length < 2) {
       return ' first  name too short';
     }
     return null;
@@ -130,7 +144,7 @@ class AuthenticationProvider extends ChangeNotifier {
   String validateLName(val) {
     if (val.isEmpty) {
       return 'enter your last name';
-    } else if (val.length < 4) {
+    } else if (val.length < 3) {
       return ' last name too short';
     }
     return null;
@@ -264,7 +278,24 @@ class AuthenticationProvider extends ChangeNotifier {
     notifyListeners();
      }
 
-  void logout() {
+
+    void editProfile(BuildContext context)async{
+      if (!profileFormStateKey.currentState.validate()) {
+        // this.isLoading = false;
+        notifyListeners();
+        return;
+
+      }
+      profileFormStateKey.currentState.save();
+
+      await AuthenticationApi.api.editProfile(context,firstName:editFName,
+          lastName:editLName,languageId:context.locale.toString()=='en'? 1:5);
+
+    }
+
+  void logout() async{
+    // await AuthenticationApi.api
+    //     .logout();
     SPHelper.spHelper.setLoged(false);
     NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
   }
@@ -301,6 +332,9 @@ class AuthenticationProvider extends ChangeNotifier {
       ),
     );
   }
+
+
+
 }
 
 enum AuthMode { signUp, login }

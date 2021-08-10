@@ -231,14 +231,14 @@ selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,
               builder: (context, number, child) {
                 return Slider(
                     inactiveColor: GrayColor, activeColor: PrimaryColor,
-                    value:Provider
-                        .of<ProductProvider>(context)
-                        .rate,
+                    value:number,
                     onChanged: Provider
                         .of<ProductProvider>(context,listen: false)
                         .getSlider,
-                  min: 1.0,
+                    min: 1.0,
                     max: 5.0,
+                  divisions: 4,
+
                     );
               }
               ),

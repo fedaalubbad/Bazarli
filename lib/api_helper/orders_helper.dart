@@ -12,7 +12,6 @@ class OrdersApi{
   static OrdersApi api=OrdersApi._();
   // Dio dio=Dio();
 
-
   Future<AddToCart> addProductToCart(BuildContext context,productId,quantity) async{
     // dio.options.headers["authorization"] =
     // "Bearer ${SPHelper.spHelper.getToken()}";

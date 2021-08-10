@@ -326,7 +326,7 @@ class AuthenticationApi {
   }
 
   Future<Map<String, dynamic>> getLocals() async {
-    Response response = await Settings.settings.dio.get(GET_LOCALS_LANGUAGES_URL);
+    Response response = await Settings.settings.dio.get(GET_LOCALS_URL);
 
     Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
@@ -340,6 +340,23 @@ class AuthenticationApi {
       // print(errorMessage);
       status = {'catchResponse': 'something went wrong', 'status': false};
       return status;
+    }
+  }
+
+  Future<Map<String, dynamic>> getCountriesState() async {
+    Response response = await Settings.settings.dio.get(GET_COUNTRY_STATE_URL);
+
+    Map<String, dynamic> responseBody;
+
+    try {
+      if(response.statusCode==200) {
+
+        responseBody = response.data;
+
+      }
+
+    } catch (e) {
+      final errorMessage = DioErrorType.response.toString();
     }
   }
 

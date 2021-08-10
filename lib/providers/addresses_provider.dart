@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/api_helper/addresses_helper.dart';
 import 'package:bazarli/models/address_model/createAddress_model.dart';
@@ -9,7 +10,15 @@ import 'package:flutter/material.dart';
 
 class AddressesProvider extends ChangeNotifier {
   List<Datum> addressList = [];
+  final GlobalKey<FormState> addressesFormStateKey = GlobalKey<FormState>();
 
+  String country;
+   var address1;
+   String address2;
+   String state;
+   String city;
+   String postcode;
+   String phone;
   Future<List<Datum>> getCustomerAddresses() async {
     GetAddress address = await AddressesApi.api.getCustomerAddresses();
     this.addressList=address.data;
@@ -19,7 +28,7 @@ class AddressesProvider extends ChangeNotifier {
 
     Future<CreateAddress> createNewAddress(BuildContext context) async {
       final updatedAddress = await AddressesApi.api.createAddress(context,jsonEncode(['address1']),' country',' state',' city',' postcode',
-          'phone', 'first_name', 'last_name');
+          'phone',SPHelper.spHelper.getUSer().firstName,SPHelper.spHelper.getUSer().lastName);
 
          _showToast(context,updatedAddress.message);
           return updatedAddress;

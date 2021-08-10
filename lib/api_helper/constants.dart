@@ -18,7 +18,6 @@ const String GET_HOME_CATEGORIES_URL = "home-categories";
 const String GET_ATTRIBUTES_URL = "attributes/";
 const String GET_Sliders_URL = "sliders";
 const String GET_PRODUCT_ATTRIBUTES_URL = "families/";
-const String GET_LOCALS_LANGUAGES_URL = "locales?token=true";
 
 // //SUPPLIER AUTH
 // const String SUPPLIER_LOGIN_URL = "suppliers/login";

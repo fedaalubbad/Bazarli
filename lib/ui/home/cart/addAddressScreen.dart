@@ -1,9 +1,11 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/providers/addresses_provider.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,41 +25,44 @@ class AddAddressScreen extends StatelessWidget {
           Container(
            padding: EdgeInsets.only( left:20.w,right:20.w,top: 117.h),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Text(
-                    'EditAddress',
-                    style: TitlesInHome,
-                  ).tr(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  buildDeliveryAddressWidget('DeliveryAddress'),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  addDescriptionWidget(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  buildAddressLableWidget(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  buildPersonalInfoWidget(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  buildSaveAddressButton(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
+              child: Form(
+                key:Provider.of<AddressesProvider>(context, listen: false).addressesFormStateKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    Text(
+                      'EditAddress',
+                      style: TitlesInHome,
+                    ).tr(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildDeliveryAddressWidget('DeliveryAddress'),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    addDescriptionWidget(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildAddressLableWidget(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildPersonalInfoWidget(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    buildSaveAddressButton(context),
+                    SizedBox(
+                      height: 20.h,
+                    ),
 
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -281,12 +286,14 @@ class AddAddressScreen extends StatelessWidget {
 
   }
 
-  buildSaveAddressButton() {
+  buildSaveAddressButton(BuildContext context) {
     return Container(
       child: InkWell(
-          onTap: () {
-            NavigationService.navigationService
-                .navigateToWidget(PaymentScreen());
+          onTap: ()async {
+            await  Provider.of<AddressesProvider>(context, listen: false).createNewAddress(context);
+            Provider.of<AddressesProvider>(context, listen: false).getCustomerAddresses();
+            // NavigationService.navigationService
+            //     .navigateToWidget(PaymentScreen());
           },
           child: Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w),

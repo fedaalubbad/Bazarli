@@ -6,6 +6,11 @@ const String GET_PRODUCTS_URL = "products/search"; // ID FOR ONE PRODUCT
 const String SEARCH_PRODUCTS_URL = "products/search";
 const String PRODUCT_ADDITIONAL_INFO_URL =
     "product-additional-information/"; //ID
+//locals
+const String GET_COUNTRY_STATE_URL = "country-states?token=true"; //ID
+const String GET_COUNTRIES_URL = "countries?token=trues"; //ID
+const String GET_LOCALS_URL = "locales?token=true"; //ID
+const String GET_CURRENCIES_URL = "currencies?token=true"; //ID
 
 //Home
 const String GET_CATEGORIES_URL = "getCategories";
@@ -15,11 +20,11 @@ const String GET_Sliders_URL = "sliders";
 const String GET_PRODUCT_ATTRIBUTES_URL = "families/";
 const String GET_LOCALS_LANGUAGES_URL = "locales?token=true";
 
-//SUPPLIER AUTH
-const String SUPPLIER_LOGIN_URL = "suppliers/login";
-const String SUPPLIER_REGISTER_URL = "suppliers/register";
-const String GET_SUPPLIER_PROFILE_URL = "suppliers/get";
-const String TEST_ODOO_SUPPLIER_URL = "suppliers/odoo";
+// //SUPPLIER AUTH
+// const String SUPPLIER_LOGIN_URL = "suppliers/login";
+// const String SUPPLIER_REGISTER_URL = "suppliers/register";
+// const String GET_SUPPLIER_PROFILE_URL = "suppliers/get";
+// const String TEST_ODOO_SUPPLIER_URL = "suppliers/odoo";
 
 //SUPPLIER PRODUCTS
 const String GET_SUPPLIER_PRODUCTS_URL = "suppliers/products";

@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../tool_bar_widget.dart';
@@ -29,7 +28,7 @@ class WishListScreen extends StatelessWidget{
               name: 'WishList',
             ),
             getWishList(context),
-            checkOutBtnWidget()
+            checkOutBtnWidget(context)
           ],
         ),
       ),
@@ -91,13 +90,14 @@ class WishListScreen extends StatelessWidget{
         },
     );
   }
-  checkOutBtnWidget(){
+  checkOutBtnWidget(BuildContext context){
     return Positioned(
       bottom:10.h,
       left: 20.w,
       right: 20.w,
       child: InkWell(
         onTap: (){
+          Navigator.of(context).pop();
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),

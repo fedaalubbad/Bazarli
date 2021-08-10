@@ -141,12 +141,13 @@ class ProfileDetailsScreen extends StatelessWidget{
             ),
             Row(
               children: [
-                SvgPicture.asset('assets/svg/en.svg',width: 14.w,height: 14.h,),
+                SvgPicture.asset(SPHelper.spHelper.getUSer().languageId==1?'assets/svg/en.svg':'assets/svg/ar.svg',
+                  width: 14.w,height: 14.h,),
                 SizedBox(
                   width:5.w,
                 ),
                 Text(
-                  'English',
+                  SPHelper.spHelper.getUSer().languageId==1? 'English':'Arabic',
                   style: TabsTextStyle,
                 ).tr(),
 

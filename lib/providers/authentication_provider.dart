@@ -21,6 +21,7 @@ class AuthenticationProvider extends ChangeNotifier {
   bool vaidate = true;
   AuthMode authMode;
   Language language;
+  int languageId=0;
   final passwordContraller = TextEditingController();
   final confirmPasswordContraller = TextEditingController();
   final fNameContraller = TextEditingController();
@@ -30,6 +31,8 @@ class AuthenticationProvider extends ChangeNotifier {
   final fNameContraller2 = TextEditingController();
   final lNameContraller2 = TextEditingController();
   String email2='';
+
+
   Map<String, dynamic> authData = {
     'fName': '',
     'lName': '',
@@ -57,9 +60,29 @@ class AuthenticationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  selectLanguage(String lang) {
+    if (lang == 'en') {
+      languageId=0;
+      notifyListeners();
+    } else {
+      languageId=1;
+      notifyListeners();
+    }
+  }
 
   switchLanguage(BuildContext context) {
     if (language == Language.English) {
+      language = Language.Arabic;
+      context.locale = Locale('ar');
+      notifyListeners();
+    } else {
+      language = Language.English;
+      context.locale = Locale('en');
+      notifyListeners();
+    }
+  }
+  changeLanguage(BuildContext context,int lang){
+    if (lang ==5) {
       language = Language.Arabic;
       context.locale = Locale('ar');
       notifyListeners();
@@ -282,14 +305,14 @@ class AuthenticationProvider extends ChangeNotifier {
     void editProfile(BuildContext context)async{
       if (!profileFormStateKey.currentState.validate()) {
         // this.isLoading = false;
-        notifyListeners();
+        // notifyListeners();
         return;
 
       }
       profileFormStateKey.currentState.save();
 
       await AuthenticationApi.api.editProfile(context,firstName:editFName,
-          lastName:editLName,languageId:context.locale.toString()=='en'? 1:5);
+          lastName:editLName,languageId:languageId==0? 1:5);
 
     }
 

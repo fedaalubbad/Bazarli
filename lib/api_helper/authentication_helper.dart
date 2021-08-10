@@ -1,8 +1,10 @@
 import 'package:bazarli/models/user_model/customer_status.dart';
+import 'package:bazarli/providers/authentication_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'constants.dart';
 import 'dio_settings.dart';
 
@@ -155,11 +157,12 @@ class AuthenticationApi {
   Future editProfile(BuildContext context,
       {firstName, lastName, gender, dateOfBirth, languageId})async{
     final formData = {
-      'first_name': firstName,
-      'last_name': lastName,
+
+      'first_name': firstName==null||firstName==''?SPHelper.spHelper.getUSer().firstName:firstName,
+      'last_name': firstName==null||lastName==''?SPHelper.spHelper.getUSer().lastName:lastName,
       'gender': 'Male',
       // 'date_of_birth': dateOfBirth,
-      'language_id': languageId,
+      'language_id': languageId==null||languageId==''?SPHelper.spHelper.getUSer().languageId:languageId,
     };
     print(formData.toString());
       var response = await Settings.settings.dio.post(UPDATE_CUSTOMER_PROFILE_URL,data:formData);
@@ -173,6 +176,8 @@ class AuthenticationApi {
         Data userResponse=Data.fromJson(responseBody['data']);
         // return status;
         SPHelper.spHelper.setUSer(userResponse.toJson());
+
+        Provider.of<AuthenticationProvider>(context, listen: false).changeLanguage(context,SPHelper.spHelper.getUSer().languageId);
       } else {
         _showToast(context,responseBody['error']);
 

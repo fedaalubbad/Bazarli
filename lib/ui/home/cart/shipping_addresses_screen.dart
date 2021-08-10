@@ -237,10 +237,13 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
           height: 10.h,
         ),
         InkWell(
-          onTap: ()async{
-          await  Provider.of<AddressesProvider>(context, listen: false).createNewAddress(context);
-          Provider.of<AddressesProvider>(context, listen: false).getCustomerAddresses();
-
+        onTap: ()async{
+        NavigationService.navigationService.navigateToWidget(
+            AddAddressScreen(),
+          );
+          // await  Provider.of<AddressesProvider>(context, listen: false).createNewAddress(context);
+          // Provider.of<AddressesProvider>(context, listen: false).getCustomerAddresses();
+          //
           },
           child: Container(
             height: 220.h,
@@ -278,9 +281,9 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
     return Container(
       child: InkWell(
         onTap: () {
-          NavigationService.navigationService.navigateToWidget(
-            AddAddressScreen(),
-          );
+          // NavigationService.navigationService.navigateToWidget(
+          //   AddAddressScreen(),
+          // );
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),

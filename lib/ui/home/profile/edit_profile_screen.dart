@@ -1,6 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/ui/Authentication/widgets/textFormField_widget.dart';
 import 'package:bazarli/ui/home/profile/component/profile_toolbar.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class EditProfileScreen extends StatelessWidget{
                       SizedBox(height: 20.h,),
                       doneBtnWidget(context),
                       SizedBox(height: 10.h,),
-                      cancelBtnWidget(),
+                      cancelBtnWidget(context),
                       SizedBox(height: 20.h,),
                     ],
                   ),
@@ -107,6 +108,7 @@ class EditProfileScreen extends StatelessWidget{
                   isObscure: false,
                   isPassword: false,
                   linesNo: 1,
+                  label: SPHelper.spHelper.getUSer().firstName,
                   hint: 'FirstName'.tr(),
                   textInputType:TextInputType.text,
                   save: Provider.of<AuthenticationProvider>(context, listen: false).saveFName2,
@@ -132,6 +134,7 @@ class EditProfileScreen extends StatelessWidget{
                   isObscure: false,
                   isPassword: false,
                   linesNo: 1,
+                  label: SPHelper.spHelper.getUSer().lastName,
                   hint: 'LastName'.tr(),
                   textInputType:TextInputType.text,
                   save: Provider.of<AuthenticationProvider>(context, listen: false).saveLName2,
@@ -149,7 +152,7 @@ class EditProfileScreen extends StatelessWidget{
               SizedBox(
                 height:20.h,
               ),
-              buildAddressLableWidget(),
+              buildAddressLableWidget(context),
               SizedBox(
                 height:20.h,
               ),
@@ -180,10 +183,10 @@ class EditProfileScreen extends StatelessWidget{
     );
   }
 
-  cancelBtnWidget(){
+  cancelBtnWidget(BuildContext context){
     return  InkWell(
         onTap: (){
-          // NavigationService.navigationService.navigateToWidget(EditProfileScreen());
+          Navigator.of(context).pop();
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -204,21 +207,23 @@ class EditProfileScreen extends StatelessWidget{
   }
 
 
-  int _groupValue = -1;
+  // int _groupValue = -1;
 
-  buildAddressLableWidget() {
+  buildAddressLableWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
         _myRadioButton(
+          context,
           title: 'English'.tr(),
           value: 0,
           assetName: 'assets/svg/en.svg'
           // onChanged: (newValue) => setState(() => _groupValue = newValue),
         ),
         _myRadioButton(
-          title: 'Arabic'.tr(),
+            context,
+            title: 'Arabic'.tr(),
           value: 1,
             assetName: 'assets/svg/ar.svg'
           // onChanged: (newValue) => setState(() => _groupValue = newValue),
@@ -227,11 +232,14 @@ class EditProfileScreen extends StatelessWidget{
     );
   }
 
-  Widget _myRadioButton({String title, int value, Function onChanged,String assetName}) {
+  Widget _myRadioButton(BuildContext context,{String title, int value,String assetName}) {
     return RadioListTile(
       value: value,
-      groupValue: _groupValue,
-      onChanged: onChanged,
+      groupValue:Provider.of<AuthenticationProvider>(context).languageId,
+      onChanged:(val){
+        Provider.of<AuthenticationProvider>(context, listen: false).selectLanguage(val==0?'en':'ar');
+      },
+      activeColor: PrimaryColor,
       title: Row(
         children: [
           SvgPicture.asset(assetName,width: 14,height: 14,),

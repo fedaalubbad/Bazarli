@@ -15,21 +15,21 @@ class DottedSlider extends StatefulWidget {
 }
 
 class _DottedSliderState extends State<DottedSlider> {
-  // PageController controller = PageController();
+  PageController controller = PageController();
 
   // double currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    // controller.addListener(() {
-      // setState(() {
-      // Provider.of<HomeProvider>(
-      //   context,
-      //   listen: false,
-      // ).currentIndex = controller.page;
-      // });
-    // });
+    controller.addListener(() {
+      setState(() {
+      Provider.of<HomeProvider>(
+        context,
+        listen: false,
+      ).currentIndex = controller.page;
+      });
+    });
   }
 
   @override
@@ -39,13 +39,13 @@ class _DottedSliderState extends State<DottedSlider> {
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: widget.maxHeight,minWidth: ScreenUtil.defaultSize.width),
           child: PageView(
-            // controller: controller,
+            controller: controller,
             children: widget.children,
           ),
         ),
         _drawDots(Provider.of<HomeProvider>(
           context,
-          listen: false,
+          // listen: false,
         ).currentIndex)
       ],
     );

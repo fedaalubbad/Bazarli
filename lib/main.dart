@@ -32,7 +32,7 @@ void main() async {
       ],
       path:
           'assets/translations', // <-- change the path of the translation files
-      fallbackLocale: Locale('en'),
+      fallbackLocale: Locale('ar'),
       // useOnlyLangCode: true,
       child: MyApp(),
     ),

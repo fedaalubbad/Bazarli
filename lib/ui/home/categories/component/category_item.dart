@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
           // SizedBox(height: 10.h,),
           Container(
             width: 75.w,
-            child: Text(category.name),
+            child: Text(category.title),
           )
         ],
         ),

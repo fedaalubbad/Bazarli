@@ -31,107 +31,59 @@ class CategoriesResponse {
 class Category {
   Category({
     this.id,
-    this.position,
+    this.categoryId,
+    this.title,
+    this.description,
     this.image,
+    this.imageSize,
+    this.position,
     this.status,
-    this.lft,
-    this.rgt,
-    this.parentId,
     this.createdAt,
     this.updatedAt,
-    this.displayMode,
-    this.categoryIconPath,
-    this.additional,
-    this.isDisplayOnHome,
-    this.homeCategoryContent,
-    this.homeCategoryImage,
-    this.homeCategoryPosition,
-    this.name,
-    this.description,
-    this.slug,
-    this.urlPath,
-    this.metaTitle,
-    this.metaDescription,
-    this.metaKeywords,
+    this.imageUrl,
     this.translations,
   });
 
   int id;
+  int categoryId;
+  String title;
+  String description;
+  String image;
+  String imageSize;
   int position;
-  dynamic image;
   int status;
-  int lft;
-  int rgt;
-  int parentId;
   DateTime createdAt;
   DateTime updatedAt;
-  String displayMode;
-  dynamic categoryIconPath;
-  dynamic additional;
-  int isDisplayOnHome;
-  String homeCategoryContent;
-  String homeCategoryImage;
-  int homeCategoryPosition;
-  String name;
-  String description;
-  String slug;
-  String urlPath;
-  String metaTitle;
-  String metaDescription;
-  String metaKeywords;
+  String imageUrl;
   List<Translation> translations;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
-    position: json["position"],
+    categoryId: json["category_id"],
+    title: json["title"],
+    description: json["description"],
     image: json["image"],
+    imageSize: json["image_size"],
+    position: json["position"],
     status: json["status"],
-    lft: json["_lft"],
-    rgt: json["_rgt"],
-    parentId: json["parent_id"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    displayMode: json["display_mode"],
-    categoryIconPath: json["category_icon_path"],
-    additional: json["additional"],
-    isDisplayOnHome: json["is_display_on_home"],
-    homeCategoryContent: json["home_category_content"],
-    homeCategoryImage: json["home_category_image"],
-    homeCategoryPosition: json["home_category_position"],
-    name: json["name"],
-    description: json["description"],
-    slug: json["slug"],
-    urlPath: json["url_path"],
-    metaTitle: json["meta_title"],
-    metaDescription: json["meta_description"],
-    metaKeywords: json["meta_keywords"],
+    imageUrl: json["image_url"]==null?null:json["image_url"],
     translations: List<Translation>.from(json["translations"].map((x) => Translation.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "category_id": categoryId,
+    "title": title,
+    "description": description,
+    "image": image,
+    "image_size": imageSize,
     "position": position,
-    "image": image==null?null:image,
     "status": status,
-    "_lft": lft,
-    "_rgt": rgt,
-    "parent_id": parentId,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "display_mode": displayMode,
-    "category_icon_path": categoryIconPath,
-    "additional": additional,
-    "is_display_on_home": isDisplayOnHome,
-    "home_category_content": homeCategoryContent,
-    "home_category_image": homeCategoryImage,
-    "home_category_position": homeCategoryPosition,
-    "name": name,
-    "description": description,
-    "slug": slug,
-    "url_path": urlPath,
-    "meta_title": metaTitle,
-    "meta_description": metaDescription,
-    "meta_keywords": metaKeywords,
+    "image_url": imageUrl,
     "translations": List<dynamic>.from(translations.map((x) => x.toJson())),
   };
 }
@@ -139,55 +91,31 @@ class Category {
 class Translation {
   Translation({
     this.id,
-    this.name,
-    this.slug,
-    this.description,
-    this.metaTitle,
-    this.metaDescription,
-    this.metaKeywords,
-    this.categoryId,
     this.locale,
-    this.localeId,
-    this.urlPath,
+    this.title,
+    this.description,
+    this.homeCategoryId,
   });
 
   int id;
-  String name;
-  String slug;
-  String description;
-  String metaTitle;
-  String metaDescription;
-  String metaKeywords;
-  int categoryId;
   String locale;
-  int localeId;
-  String urlPath;
+  String title;
+  String description;
+  int homeCategoryId;
 
   factory Translation.fromJson(Map<String, dynamic> json) => Translation(
     id: json["id"],
-    name: json["name"],
-    slug: json["slug"],
-    description: json["description"],
-    metaTitle: json["meta_title"],
-    metaDescription: json["meta_description"],
-    metaKeywords: json["meta_keywords"],
-    categoryId: json["category_id"],
     locale: json["locale"],
-    localeId: json["locale_id"],
-    urlPath: json["url_path"],
+    title: json["title"],
+    description: json["description"],
+    homeCategoryId: json["home_category_id"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
-    "slug": slug,
-    "description": description,
-    "meta_title": metaTitle,
-    "meta_description": metaDescription,
-    "meta_keywords": metaKeywords,
-    "category_id": categoryId,
     "locale": locale,
-    "locale_id": localeId,
-    "url_path": urlPath,
+    "title": title,
+    "description": description,
+    "home_category_id": homeCategoryId,
   };
 }

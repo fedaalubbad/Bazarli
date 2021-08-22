@@ -438,8 +438,8 @@ class HomeScreenState extends State<HomeScreen>
                         highlightColor: PrimaryColor.withOpacity(0.3),
                         child: Text(
                           context.locale.toString() == 'en'
-                              ? snapshot.data[tabIndex].translations[1].name
-                              : snapshot.data[tabIndex].translations[0].name,
+                              ? snapshot.data[tabIndex].translations[1].title
+                              : snapshot.data[tabIndex].translations[0].title,
                           style: TabsTextStyle,
                         ),
                       ),

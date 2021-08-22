@@ -150,8 +150,8 @@ class CategoriesScreenState extends State<CategoriesScreen>
                         },
                         title: Center(
                           child: Text(context.locale.toString()=='en'
-                              ?category.translations[1].name
-                          :category.translations[0].name)
+                              ?category.translations[1].title
+                          :category.translations[0].title)
                         ),
                       );
                     },

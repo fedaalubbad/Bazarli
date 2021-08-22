@@ -30,7 +30,7 @@ class ProductItem extends StatelessWidget{
                    // colorFilter: ColorFilter.mode(
                    //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
                    fit: BoxFit.cover,
-                   image: NetworkImage('https://test.bazarli.com/'+category.homeCategoryImage),
+                   image: NetworkImage(category.imageUrl.toString()),
                  ),
                ),
                // margin: EdgeInsets.symmetric(horizontal: 5),
@@ -55,9 +55,9 @@ class ProductItem extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(width:0.5.sw,
-                    child: Text(category.name,style:TitlesInHome,maxLines: 2,)),
+                    child: Text(category.title,style:TitlesInHome,maxLines: 2,)),
                 Container(width:0.5.sw,
-                    child: Text(category.homeCategoryContent,style:SliderTitle2Style,)),
+                    child: Text(category.description,style:SliderTitle2Style,)),
               ],
             ),
           ),

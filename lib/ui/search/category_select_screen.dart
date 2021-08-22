@@ -43,7 +43,7 @@ class CategorySelectScreen extends StatelessWidget {
                                 itemBuilder:(context,index){
                                   Category category=Provider.of<HomeProvider>(context, listen: false)
                                       .categoriesList[index];
-                                  return  buildRadio(context,category.id,category.name);
+                                  return  buildRadio(context,category.id,category.title);
                                   // return _myRadioButton(context,title: category.adminName, value:category.id );
                                 }),
                           ),

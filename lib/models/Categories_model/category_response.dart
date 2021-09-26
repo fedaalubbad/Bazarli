@@ -68,7 +68,7 @@ class Category {
     status: json["status"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    imageUrl: json["image_url"]==null?null:json["image_url"],
+    imageUrl: json["image_url"],
     translations: List<Translation>.from(json["translations"].map((x) => Translation.fromJson(x))),
   );
 

@@ -15,16 +15,16 @@ class AddressesApi {
   static AddressesApi api = AddressesApi._();
 
   Future<CreateAddress> createAddress(BuildContext context,
-    var address1,
-    String country,
-    String state,
-    String city,
-    String postcode,
-    String phone,
-    String first_name,
-    String last_name,
+      var address1,
+      String country,
+      String state,
+      String city,
+      String postcode,
+      String phone,
+      String first_name,
+      String last_name,
 
-  ) async {
+      ) async {
     final formData = {
       'address1': address1,
       'country': country,
@@ -42,38 +42,38 @@ class AddressesApi {
       Response response = await Settings.settings.dio.post(CREATE_ADDRESSES_URL,
           data: formData);
 
-    if(response.statusCode==200){
+      if(response.statusCode==200){
 
-     Map<String,dynamic> responseBody=response.data;
-     CreateAddress createAddressResponse=CreateAddress.fromJson(responseBody);
-     _showToast(context,responseBody['message']);
-     return createAddressResponse;
+        Map<String,dynamic> responseBody=response.data;
+        CreateAddress createAddressResponse=CreateAddress.fromJson(responseBody);
+        _showToast(context,responseBody['message']);
+        return createAddressResponse;
 
-  } else {
-      Map<String,dynamic> responseBody=response.data;
-      _showToast(context,responseBody['message']);
-      throw Exception();
-    }
-  }on DioError catch (e) {
+      } else {
+        Map<String,dynamic> responseBody=response.data;
+        _showToast(context,responseBody['message']);
+        throw Exception();
+      }
+    }on DioError catch (e) {
       _showToast(context,'something went wrong');
       print('errormsg $e');
-    throw Exception();
+      throw Exception();
     }
 
-      }
+  }
 
-Future<CreateAddress> updateAddress(BuildContext context,
-    var address1,
-    String addressId,
-    String country,
-    String state,
-    String city,
-    String postcode,
-    String phone,
-    String first_name,
-    String last_name,
+  Future<CreateAddress> updateAddress(BuildContext context,
+      var address1,
+      String addressId,
+      String country,
+      String state,
+      String city,
+      String postcode,
+      String phone,
+      String first_name,
+      String last_name,
 
-  ) async {
+      ) async {
     final formData = {
       'id': addressId,
       'address1': address1,
@@ -94,52 +94,52 @@ Future<CreateAddress> updateAddress(BuildContext context,
       Response response = await Settings.settings.dio.post(UPDATE_DELETE_ADDRESS_URL + addressId + '?_method=PUT',
           data: formData);
 
-    if(response.statusCode==200){
+      if(response.statusCode==200){
 
-     Map<String,dynamic> responseBody=response.data;
-     CreateAddress createAddressResponse=CreateAddress.fromJson(responseBody);
-     _showToast(context,responseBody['message']);
-     return createAddressResponse;
+        Map<String,dynamic> responseBody=response.data;
+        CreateAddress createAddressResponse=CreateAddress.fromJson(responseBody);
+        _showToast(context,responseBody['message']);
+        return createAddressResponse;
 
-  } else {
-      Map<String,dynamic> responseBody=response.data;
-      _showToast(context,responseBody['message']);
-      throw Exception();
-    }
-  }on DioError catch (e) {
+      } else {
+        Map<String,dynamic> responseBody=response.data;
+        _showToast(context,responseBody['message']);
+        throw Exception();
+      }
+    }on DioError catch (e) {
       _showToast(context,'something went wrong');
       print('errormsg $e');
-    throw Exception();
+      throw Exception();
     }
 
-      }
+  }
 
 
-Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId,) async {
+  Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId,) async {
 
     try{
       Response response = await Settings.settings.dio.delete(UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true');
 
 
-    if(response.statusCode==200){
+      if(response.statusCode==200){
 
-     Map<String,dynamic> responseBody=response.data;
-     _showToast(context,responseBody['message']);
-     return responseBody;
+        Map<String,dynamic> responseBody=response.data;
+        _showToast(context,responseBody['message']);
+        return responseBody;
 
-  } else {
-      Map<String,dynamic> responseBody=response.data;
-      _showToast(context,'error');
-      return responseBody;
-      throw Exception();
-    }
-  }on DioError catch (e) {
+      } else {
+        Map<String,dynamic> responseBody=response.data;
+        _showToast(context,'error');
+        return responseBody;
+        throw Exception();
+      }
+    }on DioError catch (e) {
       _showToast(context,'something went wrong');
       print('errormsg $e');
-    throw Exception();
+      throw Exception();
     }
 
-      }
+  }
 
 
   Future<GetAddress> getCustomerAddresses() async {
@@ -155,8 +155,8 @@ Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId
       print('000'+response.statusMessage);
 
       if (response.statusCode == 200) {
-      Map<String,dynamic>  responseBody = response.data;
-      print('000'+responseBody.toString());
+        Map<String,dynamic>  responseBody = response.data;
+        print('000'+responseBody.toString());
         // var jsonDataObject = jsonDecode(response.data);
         GetAddress mAddressResponse = GetAddress.fromJson(responseBody);
         return mAddressResponse;
@@ -180,4 +180,6 @@ Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId
       ),
     );
   }
+
+//////////////end addresses
 }

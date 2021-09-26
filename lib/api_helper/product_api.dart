@@ -1,4 +1,5 @@
 import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_model.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 
@@ -18,7 +19,7 @@ class ProductApi {
   //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
   // );
 
-  Future<List<Product>> getAllProducts({int product_id,int category_id,String search,String order,String sort,var price,int brand,int size,int new_arrivals_in}) async {
+  Future<ProductRespone> getAllProducts({int product_id,int category_id,String search,String order,String sort,var price,int brand,int size,int new_arrivals_in}) async {
     final formData = {
       if(product_id!=null)
       'product_id': product_id,
@@ -40,13 +41,7 @@ class ProductApi {
       'new_arrivals_in': new_arrivals_in,
     };
     Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL,data: formData);
-
-    Map<String, dynamic> responseBody = response.data;
-    print('productListJson${responseBody}');
-    List<dynamic> mapList = responseBody["data"];
-    List<Product> productsList =
-        mapList.map((e) => Product.fromJson(e)).toList();
-    print('productsList${productsList}');
+    ProductRespone productsList = ProductRespone.fromJson(response.data);
     return productsList;
   }
 

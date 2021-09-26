@@ -1,5 +1,5 @@
 import 'package:bazarli/models/user_model/customer_status.dart';
-import 'package:bazarli/providers/authentication_provider.dart';
+import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';

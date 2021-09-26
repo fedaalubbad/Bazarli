@@ -2,6 +2,8 @@ import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'dio_settings.dart';
 
@@ -10,44 +12,41 @@ class HomeApi {
 
   static HomeApi api = HomeApi._();
 
-  Future<List<Category>> getAllCategories() async {
+  Future<CategoriesResponse> getAllCategories(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        Map<String, dynamic> responseBody = response.data;
-        print('categoriesListJson${responseBody}');
-        List<dynamic> mapList = responseBody["categories"];
-        List<Category> categoriesList = mapList.map((e) =>
-            Category.fromJson(e)).toList();
-        print('categoriesList${categoriesList[0]}');
-        return categoriesList;
+        CategoriesResponse getCategoriesResponse =
+        CategoriesResponse.fromJson(response.data);
+        return getCategoriesResponse;
       } else {
-        print('categories'+response.data);
+        print(response.data);
+        _showToast(context,response.statusMessage);
       }
     } on Exception catch (e) {
-      print(e.toString());
+      _showToast(context,'getAllCategoriesfailed'+e.toString());
+
       return null;
     }
   }
 
-  Future<CategoriesResponse> getAllHomeCategories() async {
+  Future<CategoriesResponse> getAllHomeCategories(context) async {
     try {
-      Response response = await Settings.settings.dio.get(GET_HOME_CATEGORIES_URL);
-      print('categoriesListJson ${response.statusCode}');
+      Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        Map<String, dynamic> responseBody = response.data;
-        print('categoriesListJson${responseBody} ${response.statusCode}');
-       CategoriesResponse categoriesResponse =CategoriesResponse.fromJson(responseBody);
-        return categoriesResponse ;
+        CategoriesResponse getCategoriesResponse =
+        CategoriesResponse.fromJson(response.data);
+        return getCategoriesResponse;
       } else {
-        print('categories'+response.data);
+        _showToast(context,response.statusMessage);
+        print(response.data);
       }
     } on Exception catch (e) {
-      print(e.toString());
+      _showToast(context,'getAllCategoriesfailed'+e.toString());
       return null;
     }
   }
-  Future<SlidersResponse> getSliders() async {
+  Future<SlidersResponse> getSliders(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_Sliders_URL+'?locale=en&language=en');
       if (response.statusCode < 400) {
@@ -56,15 +55,17 @@ class HomeApi {
         SlidersResponse slidersResponse= SlidersResponse.fromJson(responseBody);
         return slidersResponse;
       } else {
+        _showToast(context,response.statusMessage);
         print('sliders'+response.data);
       }
     } on Exception catch (e) {
+      _showToast(context,'getSlidersfailed'+e.toString());
       print(e.toString());
       return null;
     }
   }
 
-  Future<BrandResponse> getAllBrands() async {
+  Future<BrandResponse> getAllBrands(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_BRANDS_URL);
       if (response.statusCode < 400) {
@@ -74,11 +75,22 @@ class HomeApi {
         BrandResponse brandResponse=BrandResponse.fromJson(responseBody);
         return brandResponse;
       } else {
+        _showToast(context,response.statusMessage);
         print('brands'+response.data);
       }
     } on Exception catch (e) {
+      _showToast(context,'getAllBrandsfailed'+e.toString());
       print('brandserror'+e.toString());
       return null;
     }
+  }
+  void _showToast(BuildContext context, String message) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        // action: SnackBarAction(label: 'Done', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }

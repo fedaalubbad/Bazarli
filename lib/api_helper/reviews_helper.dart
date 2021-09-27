@@ -1,7 +1,7 @@
 import 'package:bazarli/models/reviews_model/give_review_response.dart';
 import 'package:bazarli/models/reviews_model/review_classes/review_data.dart';
 import 'package:dio/dio.dart';
-import 'constants.dart';
+import 'constants_urls.dart';
 import 'dio_settings.dart';
 
 class ReviewsApi{

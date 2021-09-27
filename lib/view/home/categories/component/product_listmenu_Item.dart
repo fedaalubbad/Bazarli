@@ -1,6 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:bazarli/view/home/Home/component/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductListMenuItem extends StatelessWidget{
-  Product product;
+  productResponse.Datum product;
   ProductListMenuItem({this.product,});
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ProductListMenuItem extends StatelessWidget{
                   // colorFilter: ColorFilter.mode(
                   //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
                   fit: BoxFit.cover,
-                  image: NetworkImage('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg'),
+                  image: NetworkImage(product.baseImage.mediumImageUrl),
                 ),
               ),
              )
@@ -54,7 +54,7 @@ class ProductListMenuItem extends StatelessWidget{
           children: [
             Container(width: 40.w,height: 40.h,
                 margin: EdgeInsets.only(left:2.w,),
-                child: Image.network('https://www.hausvoneden.de/wp-content/uploads/2020/04/slow-fashion-700x850.jpg')),
+                child: Image.network(product.baseImage.smallImageUrl)),
 
 
             Container(
@@ -64,7 +64,7 @@ class ProductListMenuItem extends StatelessWidget{
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    Container(width:200.w,
-                       child: Text(product.shortDescription,style:TabsTextStyle,maxLines:2,)),
+                       child: Text(product.shortDescription==null?'':product.shortDescription,style:TabsTextStyle,maxLines:2,)),
                    SizedBox(width: 10.h,),
                    Text(product.formatedPrice,style:PriceTextStyle,),
                    SizedBox(height: 6.h,),

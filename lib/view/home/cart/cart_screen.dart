@@ -93,7 +93,7 @@ class CartScreenState extends State<CartScreen>
             key: _contentKey,
             child: Stack(
               children: [
-                Provider.of<OrdersProvider>(context, ).careList
+                Provider.of<OrdersProvider>(context, ).getCartResponse.data.items
                     .length!=0?
                     Container(
                     child: ListView.builder(
@@ -101,12 +101,12 @@ class CartScreenState extends State<CartScreen>
                       shrinkWrap: true,
                       physics:NeverScrollableScrollPhysics(),
                       itemCount:
-                      Provider.of<OrdersProvider>(context, listen: false).careList
+                      Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items
                           .length,
                       itemBuilder: (context, index) {
                         return ProductInCartListItem(
-                          item: Provider.of<OrdersProvider>(context, listen: false).careList[index],
-                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).careList[index].product ,));},
+                          item: Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index],
+                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product ,));},
                         );
                       },
                     ),

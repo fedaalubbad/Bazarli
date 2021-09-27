@@ -1,22 +1,22 @@
 import 'package:bazarli/api_helper/orders_helper.dart';
 import 'package:bazarli/models/cart_model/add_to_cart_model.dart';
-import 'package:bazarli/models/cart_model/cartItem.dart';
-import 'package:bazarli/models/cart_model/get_cart_model.dart';
+import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:flutter/cupertino.dart';
 
 class OrdersProvider extends ChangeNotifier{
 
-   List<CartItem> careList = [];
+   // List<getCartResponse.Data> careList = [];
+ GetCartResponse getCartResponse;
 
- getCart(BuildContext context)async{
-  GetCart getCart = await OrdersApi.api.getCart(context);
+ Future<GetCartResponse>getCart(BuildContext context)async{
+  GetCartResponse getCart = await OrdersApi.api.getCart(context);
   if(getCart!=null) {
-   careList = getCart.data.items;
+   getCartResponse= getCart;
    notifyListeners();
   }
-  print('cart==${careList}');
-   return careList;
+   return  getCartResponse;
   }
+
    addProductToCart(BuildContext context,String productId,int quantity)async{
     AddToCart addCart = await OrdersApi.api.addProductToCart(context,productId,quantity);
     getCart(context);

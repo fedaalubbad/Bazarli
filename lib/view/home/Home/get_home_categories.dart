@@ -5,8 +5,6 @@ import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/view/home/utils/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
@@ -20,7 +18,7 @@ class GetHomeCategories extends StatefulWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<HomeProvider, CategoriesResponse>(
+    return Selector<HomeProvider, CategoryResponse>(
         builder: (context, response, widget) {
           if (response == null) {
             return Container(
@@ -43,7 +41,7 @@ class GetHomeCategories extends StatefulWidget {
                     );
                   }),
             );
-          } else if (response.categories.length == 0) {
+          } else if (response.data.length == 0) {
             return Container(height: 0,);
           } else {
             Provider
@@ -52,7 +50,7 @@ class GetHomeCategories extends StatefulWidget {
               listen: false,
             )
                 .tabController = new TabController(
-              length: response.categories.length,
+              length: response.data.length,
               vsync: this,
               initialIndex: Provider.of<HomeProvider>(
                 context,
@@ -92,7 +90,7 @@ class GetHomeCategories extends StatefulWidget {
                   .tabController,
               isScrollable: true,
               tabs: List<Tab>.generate(
-                  response.categories.length, (int tabIndex) {
+                  response.data.length, (int tabIndex) {
                 return Tab(
                   child: InkWell(
                     // onTap: () {
@@ -107,7 +105,7 @@ class GetHomeCategories extends StatefulWidget {
                         baseColor: BlueDarkColor,
                         highlightColor: PrimaryColor.withOpacity(0.3),
                         child: Text(
-                          response.categories[tabIndex].title,
+                          response.data[tabIndex].name,
                           style: TabsTextStyle,
                         ),
                       ),

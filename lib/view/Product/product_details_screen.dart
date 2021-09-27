@@ -1,8 +1,7 @@
 import 'dart:math';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
-import 'package:bazarli/models/product_model/product_classes/images.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:bazarli/view/home/Home/component/dotted_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  Product product;
+  productResponse.Datum product;
 
   ProductDetailsScreen({this.product});
 
@@ -27,7 +26,7 @@ class ProductDetailsScreen extends StatelessWidget {
       body: Stack(
         children: [
           ProductToolBar(
-            productName: product.name,
+            productName: product.name==null?'':product.name,
           ),
           Container(
             color: HomeBackgroundColor,
@@ -72,7 +71,7 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  dottedSlider(BuildContext context,List<Images>images) {
+  dottedSlider(BuildContext context,List<productResponse.Image>images) {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);
     return Container(
       child: DottedSlider(maxHeight: 283.h, children:[

@@ -1,27 +1,14 @@
 import 'package:bazarli/constants/MyColors.dart';
-import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/Categories_model/category_response.dart';
-import 'package:bazarli/models/brand_model/brand_model.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/view/home/Home/get_home_categories.dart';
-import 'package:bazarli/view/home/utils/indicator.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:shimmer/shimmer.dart';
-import 'component/brand_item.dart';
-import 'component/carousel_slider.dart';
 import 'component/dotted_slider.dart';
 import 'component/home_title_widget.dart';
-import 'component/product_item.dart';
 import 'get_brands.dart';
 import 'get_selected_categories.dart';
 import 'get_top_products.dart';
@@ -97,6 +84,24 @@ class HomeScreenState extends State<HomeScreen>
     //         builder: (BuildContext context) =>
     //             HomeMainScreen(selectedPageIndex: 0)));
     // monitor network fetch
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllCategories(context);
+
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getSliders(context);
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllBrandss(context);
+
+    Provider.of<ProductProvider>(
+      context,
+      listen: false,
+    ).getAllProducts();
     await Future.delayed(Duration(milliseconds: 1000));
 
     // if failed,use refreshFailed()

@@ -1,6 +1,4 @@
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
-import 'package:bazarli/models/product_model/product_model.dart';
-import 'package:dio/dio.dart';
+import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +19,9 @@ class ProductProvider extends ChangeNotifier{
       final GlobalKey<FormState> priceFormStateKey = GlobalKey<FormState>();
       final minPriceController = TextEditingController();
       final maxPriceController = TextEditingController();
-    ProductRespone productRespone;
-    List<Product> productList=[];
-    List<Product> productSearchResultList=[];
+      ProductResponse productRespone;
+    List<Datum> productList=[];
+    List<Datum> productSearchResultList=[];
 
       saveinitialPrice(val) {
         price[0] = val;
@@ -71,15 +69,15 @@ class ProductProvider extends ChangeNotifier{
     }
 
 
-  Future<ProductRespone> getAllProducts({int productId}) async {
-    ProductRespone response = await ProductApi.api.getAllProducts(product_id:productId,);
+  Future<ProductResponse> getAllProducts({int productId}) async {
+    ProductResponse response = await ProductApi.api.getAllProducts(product_id:productId,);
     this.productList = response.data;
     productRespone=response;
     notifyListeners();
     return productRespone;
   }
-      Future<ProductRespone> getSearchProducts({int productId}) async {
-        ProductRespone  response= await ProductApi.api.getAllProducts(product_id:productId,category_id:categoryId,search:search,order:order,
+      Future<ProductResponse> getSearchProducts({int productId}) async {
+        ProductResponse  response= await ProductApi.api.getAllProducts(product_id:productId,category_id:categoryId,search:search,order:order,
             sort:sort,price:price,brand:brandId,size:size,new_arrivals_in:newArrivals);
         productList =  response.data;
         productRespone=response;

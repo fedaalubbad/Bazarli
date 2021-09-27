@@ -14,7 +14,7 @@ class GetSelectedCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<HomeProvider, CategoriesResponse>(
+    return Selector<HomeProvider, CategoryResponse>(
         builder: (context, response, widget) {
           if (response == null) {
             return Container(
@@ -31,7 +31,7 @@ class GetSelectedCategories extends StatelessWidget {
                   mainAxisSpacing: 10.w,
                   crossAxisSpacing: 10.h,
                 ));
-          } else if (response.categories.length == 0) {
+          } else if (response.data.length == 0) {
             return Container(height: 0,);
           } else {
             return Container(
@@ -40,9 +40,9 @@ class GetSelectedCategories extends StatelessWidget {
                   physics: ScrollPhysics(),
                   shrinkWrap: true,
                   crossAxisCount: 4,
-                  itemCount: response.categories.length,
+                  itemCount: response.data.length,
                   itemBuilder: (BuildContext context, int index) => ProductItem(
-                    category: response.categories[index],
+                    category: response.data[index],
                   ),
                   staggeredTileBuilder: (int index) =>
                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
@@ -87,7 +87,7 @@ class GetSelectedCategories extends StatelessWidget {
           // Positioned(
           //   bottom: 0,
           Expanded(
-            flex: 20,
+            flex: 30,
             child: Container(
               padding: EdgeInsets.all(
                 ScreenUtil().radius(10),

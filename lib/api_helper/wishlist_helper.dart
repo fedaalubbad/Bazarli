@@ -1,7 +1,7 @@
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
-import 'constants.dart';
+import 'constants_urls.dart';
 import 'dio_settings.dart';
 
 class WishListApi {

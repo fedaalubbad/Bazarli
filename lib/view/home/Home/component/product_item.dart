@@ -3,12 +3,12 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
-import 'package:bazarli/view/compare/compare_screen.dart';
+import 'package:bazarli/view/home/categories/sub_caategories_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductItem extends StatelessWidget{
-  Category category;
+  Datum category;
   ProductItem({this.category});
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class ProductItem extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(width:0.5.sw,
-                    child: Text(category.title,style:TitlesInHome,maxLines: 2,)),
+                    child: Text(category.name,style:TitlesInHome,maxLines: 2,)),
                 Container(width:0.5.sw,
                     child: Text(category.description,style:SliderTitle2Style,)),
               ],

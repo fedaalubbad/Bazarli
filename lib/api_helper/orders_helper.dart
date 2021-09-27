@@ -1,10 +1,10 @@
 import 'package:bazarli/models/cart_model/add_to_cart_model.dart';
-import 'package:bazarli/models/cart_model/get_cart_model.dart';
+import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'constants_urls.dart';
 import 'dio_settings.dart';
 
 class OrdersApi{
@@ -42,7 +42,7 @@ class OrdersApi{
   }
 
 
- Future<GetCart> getCart(BuildContext context) async {
+ Future<GetCartResponse> getCart(BuildContext context) async {
    try{
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
@@ -55,7 +55,7 @@ class OrdersApi{
          print('cartListJson null');
          return null;
        }else {
-         GetCart getCartResponse = GetCart.fromJson(responseBody);
+         GetCartResponse getCartResponse =GetCartResponse.fromJson(responseBody);
          print('cartListJson${responseBody}');
          // _showToast(context, addToCartResponse.message);
          return getCartResponse;
@@ -65,14 +65,12 @@ class OrdersApi{
        print('cartListJsonelse${responseBody}');
        // _showToast(context, responseBody['error']['message']);
        return null;
-       throw Exception();
      }
 
    } on DioError catch (e) {
      _showToast(context,'something went wrong');
      print('errormsg $e');
      return null;
-     throw Exception();
    }
 
   }

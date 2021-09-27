@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
+import 'package:bazarli/view/Authentication/loginAndRegister.dart';
 import 'package:bazarli/view/home/home_main_screen.dart';
 import 'package:bazarli/view/slider_splash/slider_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,8 @@ class SplashState extends State<SplashScreen>{
 
     await Future.delayed(Duration(seconds:4));
     if(SPHelper.spHelper.isLoged())
-    NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen(selectedPageIndex: 0,));
+      // NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
+      NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen(selectedPageIndex: 0,));
     else
       NavigationService.navigationService.navigateAndReplaceWidget(SliderScreen());
 

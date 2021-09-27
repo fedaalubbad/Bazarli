@@ -316,11 +316,10 @@ class AuthenticationProvider extends ChangeNotifier {
 
     }
 
-  void logout() async{
-    // await AuthenticationApi.api
-    //     .logout();
-    SPHelper.spHelper.setLoged(false);
-    NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
+  void logout(context) async{
+    await AuthenticationApi.api
+        .logout(context);
+
   }
 
 // user defined function

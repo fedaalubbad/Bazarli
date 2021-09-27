@@ -1,11 +1,11 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 class BasicDetailsWidget extends StatelessWidget{
-  Product product;
+  productResponse.Datum product;
   BasicDetailsWidget({this.product});
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class BasicDetailsWidget extends StatelessWidget{
                     : EdgeInsets.only(right: 20.w),
                 width: 0.6.sw,
                 child: Text(
-                  product.name,
+                  product.name==null?'':product.name,
                   style: ProductTitleStyle,
                   maxLines: 2,
                 ),
@@ -50,7 +50,7 @@ class BasicDetailsWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('was', style: TextLabelStyle).tr(),
-                Text(product.price, style: DiscountStyle),
+                Text(product.price.toString(), style: DiscountStyle),
               ],
             ),
           ),

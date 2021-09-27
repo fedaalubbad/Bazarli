@@ -1,6 +1,5 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/ViewModel/wishlist_provider.dart';
@@ -14,10 +13,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'cordinator_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 
 class BuildCarouselSlider extends StatelessWidget{
   int currentIndex;
-  List<Product> product;
+  List<productResponse.Datum> product;
   BuildCarouselSlider({this.product, this.currentIndex});
   @override
   Widget build(BuildContext context) {
@@ -93,7 +93,7 @@ class BuildCarouselSlider extends StatelessWidget{
                              mainAxisAlignment: MainAxisAlignment.start,
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                                Text(product[index].name,style:TabsTextStyle,maxLines: 2,),
+                                Text(product[index].name==null?'':product[index].name,style:TabsTextStyle,maxLines: 2,),
                                 SizedBox(width: 10.h,),
                                 Text(product[index].formatedPrice,style:PriceTextStyle,),
                                 SizedBox(height: 6.h,),

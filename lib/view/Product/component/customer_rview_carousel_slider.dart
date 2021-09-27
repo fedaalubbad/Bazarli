@@ -1,4 +1,4 @@
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/view/home/Home/component/cordinator_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ import 'customer_review_list_item.dart';
 
 class BuildCustomerReviewCarouselSlider extends StatelessWidget{
   int currentIndex;
-  List<Product> product;
+  List<productResponse.Datum> product;
   BuildCustomerReviewCarouselSlider({this.product, this.currentIndex});
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,28 @@
-import 'cartItem.dart';
-import 'ing_address.dart';
+// To parse this JSON data, do
+//
+//     final getCartResponse = getCartResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+GetCartResponse getCartResponseFromJson(String str) => GetCartResponse.fromJson(json.decode(str));
+
+String getCartResponseToJson(GetCartResponse data) => json.encode(data.toJson());
+
+class GetCartResponse {
+  GetCartResponse({
+    this.data,
+  });
+
+  Data data;
+
+  factory GetCartResponse.fromJson(Map<String, dynamic> json) => GetCartResponse(
+    data: Data.fromJson(json["data"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "data": data.toJson(),
+  };
+}
 
 class Data {
   Data({
@@ -42,8 +65,8 @@ class Data {
     this.items,
     this.selectedShippingRate,
     this.payment,
-    // this.billingAddress,
-    // this.shippingAddress,
+    this.billingAddress,
+    this.shippingAddress,
     this.createdAt,
     this.updatedAt,
     this.taxes,
@@ -90,11 +113,11 @@ class Data {
   dynamic conversionTime;
   dynamic customer;
   dynamic channel;
-  List<CartItem> items;
+  List<dynamic> items;
   dynamic selectedShippingRate;
   dynamic payment;
-  // IngAddress billingAddress;
-  // IngAddress shippingAddress;
+  dynamic billingAddress;
+  dynamic shippingAddress;
   DateTime createdAt;
   DateTime updatedAt;
   String taxes;
@@ -141,11 +164,11 @@ class Data {
     conversionTime: json["conversion_time"],
     customer: json["customer"],
     channel: json["channel"],
-    items: List<CartItem>.from(json["items"].map((x) => CartItem.fromJson(x))),
+    items: List<dynamic>.from(json["items"].map((x) => x)),
     selectedShippingRate: json["selected_shipping_rate"],
     payment: json["payment"],
-    // billingAddress: IngAddress.fromJson(json["billing_address"]),
-    // shippingAddress: IngAddress.fromJson(json["shipping_address"]),
+    billingAddress: json["billing_address"],
+    shippingAddress: json["shipping_address"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     taxes: json["taxes"],
@@ -193,11 +216,11 @@ class Data {
     "conversion_time": conversionTime,
     "customer": customer,
     "channel": channel,
-    "items": List<dynamic>.from(items.map((x) => x.toJson())),
+    "items": List<dynamic>.from(items.map((x) => x)),
     "selected_shipping_rate": selectedShippingRate,
     "payment": payment,
-    // "billing_address": billingAddress.toJson(),
-    // "shipping_address": shippingAddress.toJson(),
+    "billing_address": billingAddress,
+    "shipping_address": shippingAddress,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "taxes": taxes,

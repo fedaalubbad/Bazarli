@@ -1,12 +1,12 @@
 import 'dart:ui';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_classes/Data.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductShopItem extends StatelessWidget{
-  Product product;
+  productResponse.Datum product;
   ProductShopItem({this.product});
   @override
   Widget build(BuildContext context) {

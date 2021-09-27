@@ -1,5 +1,5 @@
-import 'package:bazarli/models/product_model/product_classes/base_images.dart';
-import 'package:bazarli/models/product_model/product_classes/reviews.dart';
+import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
+import 'package:bazarli/models/reviews_model/review_classes/reviews.dart';
 
 import 'category.dart';
 
@@ -16,7 +16,7 @@ class Product {
   List<Category> category;
   // List<Null> images;
   // List<Null> videos;
-  BaseImage baseImage;
+  productResponse. BaseImage baseImage;
   String createdAt;
   String updatedAt;
   Reviews reviews;
@@ -78,7 +78,7 @@ class Product {
     //   });
     // }
     baseImage = json['base_image'] != null
-        ? new BaseImage.fromJson(json['base_image'])
+        ? new productResponse.BaseImage.fromJson(json['base_image'])
         : null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

@@ -18,7 +18,7 @@ import 'color_seach_screen.dart';
 import 'new_arrivals_screen.dart';
 
 class CategorySearchScreen extends StatelessWidget {
-  Category category;
+  Datum category;
   CategorySearchScreen({this.category});
   @override
   Widget build(BuildContext context) {

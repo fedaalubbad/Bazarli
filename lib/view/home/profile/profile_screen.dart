@@ -73,7 +73,7 @@ class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCli
         NavigationService.navigationService.navigateToWidget(WishListScreen())
             :index==7?
         NavigationService.navigationService.navigateToWidget(LanguagesScreen())
-       :Provider.of<AuthenticationProvider>(context, listen: false).logout();
+       :Provider.of<AuthenticationProvider>(context, listen: false).logout(context);
 
       },
       child: Container(

@@ -1,12 +1,10 @@
-import 'dart:convert';
-import 'dart:ffi';
+import 'package:bazarli/api_helper/constants_urls.dart';
 import 'package:bazarli/models/address_model/createAddress_model.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
-import 'package:bazarli/shared_preference/sp_helper.dart';
+import 'package:bazarli/models/message_response/message_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
 import 'dio_settings.dart';
 
 class AddressesApi {
@@ -115,22 +113,20 @@ class AddressesApi {
   }
 
 
-  Future<Map<String,dynamic>> deleteAddress(BuildContext context, String addressId,) async {
+  Future<MessageResponse> deleteAddress(BuildContext context, String addressId,) async {
 
     try{
       Response response = await Settings.settings.dio.delete(UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true');
 
 
       if(response.statusCode==200){
-
-        Map<String,dynamic> responseBody=response.data;
-        _showToast(context,responseBody['message']);
-        return responseBody;
+        MessageResponse messageResponse=MessageResponse.fromJson(response.data);
+        _showToast(context, messageResponse.message);
+        return messageResponse;
 
       } else {
-        Map<String,dynamic> responseBody=response.data;
         _showToast(context,'error');
-        return responseBody;
+        // return messageResponse ;
         throw Exception();
       }
     }on DioError catch (e) {

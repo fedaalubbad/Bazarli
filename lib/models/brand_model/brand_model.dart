@@ -1,3 +1,6 @@
+// To parse this JSON data, do
+//
+//     final brandResponse = brandResponseFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -45,7 +48,7 @@ class Brand {
     adminName: json["admin_name"],
     sortOrder: json["sort_order"],
     attributeId: json["attribute_id"],
-    swatchValue: json["swatch_value"],
+    swatchValue: json["swatch_value"] == null ? null : json["swatch_value"],
     smallBrandLogo: json["small_brand_logo"],
     largeBrandLogo: json["large_brand_logo"],
   );
@@ -55,7 +58,7 @@ class Brand {
     "admin_name": adminName,
     "sort_order": sortOrder,
     "attribute_id": attributeId,
-    "swatch_value": swatchValue,
+    "swatch_value": swatchValue == null ? null : swatchValue,
     "small_brand_logo": smallBrandLogo,
     "large_brand_logo": largeBrandLogo,
   };

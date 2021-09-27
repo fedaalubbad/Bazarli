@@ -136,16 +136,16 @@ class CategoriesScreenState extends State<CategoriesScreen>
                   width: 0.47.sw,
                   child: ListView.builder(
                     itemCount: Provider.of<HomeProvider>(context, listen: false)
-                        .categoriesList.length,
+                        .categoriesResponse.data.length,
                     itemBuilder: (context, index) {
-                      Category category=Provider.of<HomeProvider>(context, listen: false)
-                          .categoriesList[index];
+                      Datum category=Provider.of<HomeProvider>(context, listen: false)
+                          .categoriesResponse.data[index];
                       return ListTile(
                         onTap: (){
 
                         },
                         title: Center(
-                          child: Text(category.title)
+                          child: Text(category.name)
                         ),
                       );
                     },

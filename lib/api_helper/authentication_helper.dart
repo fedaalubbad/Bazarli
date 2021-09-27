@@ -1,11 +1,14 @@
+import 'package:bazarli/models/message_response/message_response.dart';
 import 'package:bazarli/models/user_model/customer_status.dart';
 import 'package:bazarli/ViewModel/authentication_provider.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
+import 'package:bazarli/view/Authentication/loginAndRegister.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'constants.dart';
+import 'constants_urls.dart';
 import 'dio_settings.dart';
 
 class AuthenticationApi {
@@ -195,13 +198,27 @@ class AuthenticationApi {
   }
 
 
-  Future logout()async{
-    Response response = await Settings.settings.dio.get(GET_CUSTOMER_LOGOUT_URL);
-    if(response.statusCode==200){
-
-  }else {
-
-    }
+  Future<MessageResponse> logout(context)async{
+      try {
+        Response response = await Settings.settings.dio.get(
+            GET_CUSTOMER_LOGOUT_URL);
+        if (response.statusCode == 200) {
+          MessageResponse messageResponse = MessageResponse.fromJson(
+              response.data);
+          _showToast(context, messageResponse.message);
+          SPHelper.spHelper.setLoged(false);
+          NavigationService.navigationService.navigateAndReplaceWidget(
+              LoginPage());
+        } else {
+          NavigationService.navigationService.navigateAndReplaceWidget(
+              LoginPage());
+          SPHelper.spHelper.setLoged(false);
+        }
+      } catch (e) {
+        NavigationService.navigationService.navigateAndReplaceWidget(
+            LoginPage());
+        SPHelper.spHelper.setLoged(false);
+          }
   }
 
   // Future<Map<String, dynamic>> supplierSign(

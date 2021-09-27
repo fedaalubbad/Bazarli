@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../sub_caategories_Screen.dart';
 
 class CategoryItem extends StatelessWidget {
-  Category category;
+  Datum category;
   CategoryItem({this.category});
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
           // SizedBox(height: 10.h,),
           Container(
             width: 75.w,
-            child: Text(category.title),
+            child: Text(category.name),
           )
         ],
         ),

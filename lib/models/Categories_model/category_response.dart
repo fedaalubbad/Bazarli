@@ -1,121 +1,189 @@
 // To parse this JSON data, do
 //
-//     final categoriesResponse = categoriesResponseFromJson(jsonString);
+//     final categoryResponse = categoryResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-CategoriesResponse categoriesResponseFromJson(String str) => CategoriesResponse.fromJson(json.decode(str));
+CategoryResponse categoryResponseFromJson(String str) => CategoryResponse.fromJson(json.decode(str));
 
-String categoriesResponseToJson(CategoriesResponse data) => json.encode(data.toJson());
+String categoryResponseToJson(CategoryResponse data) => json.encode(data.toJson());
 
-class CategoriesResponse {
-  CategoriesResponse({
-    this.success,
-    this.categories,
+class CategoryResponse {
+  CategoryResponse({
+    this.data,
+    this.links,
+    this.meta,
   });
 
-  bool success;
-  List<Category> categories;
+  List<Datum> data;
+  Links links;
+  Meta meta;
 
-  factory CategoriesResponse.fromJson(Map<String, dynamic> json) => CategoriesResponse(
-    success: json["success"],
-    categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+  factory CategoryResponse.fromJson(Map<String, dynamic> json) => CategoryResponse(
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    links: Links.fromJson(json["links"]),
+    meta: Meta.fromJson(json["meta"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "links": links.toJson(),
+    "meta": meta.toJson(),
   };
 }
 
-class Category {
-  Category({
+class Datum {
+  Datum({
     this.id,
-    this.categoryId,
-    this.title,
+    this.code,
+    this.name,
+    this.slug,
+    this.displayMode,
     this.description,
-    this.image,
-    this.imageSize,
-    this.position,
+    this.metaTitle,
+    this.metaDescription,
+    this.metaKeywords,
     this.status,
+    this.imageUrl,
+    this.additional,
     this.createdAt,
     this.updatedAt,
-    this.imageUrl,
-    this.translations,
   });
 
   int id;
-  int categoryId;
-  String title;
+  dynamic code;
+  String name;
+  String slug;
+  DisplayMode displayMode;
   String description;
-  String image;
-  String imageSize;
-  int position;
+  String metaTitle;
+  dynamic metaDescription;
+  String metaKeywords;
   int status;
+  dynamic imageUrl;
+  dynamic additional;
   DateTime createdAt;
   DateTime updatedAt;
-  String imageUrl;
-  List<Translation> translations;
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
-    categoryId: json["category_id"],
-    title: json["title"],
+    code: json["code"],
+    name: json["name"],
+    slug: json["slug"],
+    displayMode: displayModeValues.map[json["display_mode"]],
     description: json["description"],
-    image: json["image"],
-    imageSize: json["image_size"],
-    position: json["position"],
+    metaTitle: json["meta_title"] == null ? null : json["meta_title"],
+    metaDescription: json["meta_description"],
+    metaKeywords: json["meta_keywords"] == null ? null : json["meta_keywords"],
     status: json["status"],
+    imageUrl: json["image_url"],
+    additional: json["additional"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    imageUrl: json["image_url"],
-    translations: List<Translation>.from(json["translations"].map((x) => Translation.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "category_id": categoryId,
-    "title": title,
+    "code": code,
+    "name": name,
+    "slug": slug,
+    "display_mode": displayModeValues.reverse[displayMode],
     "description": description,
-    "image": image,
-    "image_size": imageSize,
-    "position": position,
+    "meta_title": metaTitle == null ? null : metaTitle,
+    "meta_description": metaDescription,
+    "meta_keywords": metaKeywords == null ? null : metaKeywords,
     "status": status,
+    "image_url": imageUrl,
+    "additional": additional,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "image_url": imageUrl,
-    "translations": List<dynamic>.from(translations.map((x) => x.toJson())),
   };
 }
 
-class Translation {
-  Translation({
-    this.id,
-    this.locale,
-    this.title,
-    this.description,
-    this.homeCategoryId,
+enum DisplayMode { PRODUCTS_AND_DESCRIPTION }
+
+final displayModeValues = EnumValues({
+  "products_and_description": DisplayMode.PRODUCTS_AND_DESCRIPTION
+});
+
+class Links {
+  Links({
+    this.first,
+    this.last,
+    this.prev,
+    this.next,
   });
 
-  int id;
-  String locale;
-  String title;
-  String description;
-  int homeCategoryId;
+  String first;
+  String last;
+  dynamic prev;
+  String next;
 
-  factory Translation.fromJson(Map<String, dynamic> json) => Translation(
-    id: json["id"],
-    locale: json["locale"],
-    title: json["title"],
-    description: json["description"],
-    homeCategoryId: json["home_category_id"],
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
+    first: json["first"],
+    last: json["last"],
+    prev: json["prev"],
+    next: json["next"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "locale": locale,
-    "title": title,
-    "description": description,
-    "home_category_id": homeCategoryId,
+    "first": first,
+    "last": last,
+    "prev": prev,
+    "next": next,
   };
+}
+
+class Meta {
+  Meta({
+    this.currentPage,
+    this.from,
+    this.lastPage,
+    this.path,
+    this.perPage,
+    this.to,
+    this.total,
+  });
+
+  int currentPage;
+  int from;
+  int lastPage;
+  String path;
+  int perPage;
+  int to;
+  int total;
+
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+    currentPage: json["current_page"],
+    from: json["from"],
+    lastPage: json["last_page"],
+    path: json["path"],
+    perPage: json["per_page"],
+    to: json["to"],
+    total: json["total"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_page": currentPage,
+    "from": from,
+    "last_page": lastPage,
+    "path": path,
+    "per_page": perPage,
+    "to": to,
+    "total": total,
+  };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

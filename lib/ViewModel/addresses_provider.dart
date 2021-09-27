@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bazarli/models/message_response/message_response.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/Authentication/widgets/FormError.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -41,7 +42,7 @@ class AddressesProvider extends ChangeNotifier {
           return address;
     }
 
-    Future deleteAddress(BuildContext context,addressId) async {
+    Future<MessageResponse> deleteAddress(BuildContext context,addressId) async {
       final response = await AddressesApi.api.deleteAddress(context,addressId.toString());
 
     }

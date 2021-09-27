@@ -4,7 +4,7 @@ import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'constants_urls.dart';
 import 'dio_settings.dart';
 
 class HomeApi {
@@ -12,12 +12,12 @@ class HomeApi {
 
   static HomeApi api = HomeApi._();
 
-  Future<CategoriesResponse> getAllCategories(context) async {
+  Future<CategoryResponse> getAllCategories(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        CategoriesResponse getCategoriesResponse =
-        CategoriesResponse.fromJson(response.data);
+        CategoryResponse getCategoriesResponse =
+        CategoryResponse.fromJson(response.data);
         return getCategoriesResponse;
       } else {
         print(response.data);
@@ -30,12 +30,12 @@ class HomeApi {
     }
   }
 
-  Future<CategoriesResponse> getAllHomeCategories(context) async {
+  Future<CategoryResponse> getAllHomeCategories(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        CategoriesResponse getCategoriesResponse =
-        CategoriesResponse.fromJson(response.data);
+        CategoryResponse getCategoriesResponse =
+        CategoryResponse.fromJson(response.data);
         return getCategoriesResponse;
       } else {
         _showToast(context,response.statusMessage);

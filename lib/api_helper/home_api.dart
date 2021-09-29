@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/HomeCategoriesResponse.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
@@ -21,28 +22,28 @@ class HomeApi {
         return getCategoriesResponse;
       } else {
         print(response.data);
-        _showToast(context,response.statusMessage);
+        // _showToast(context,response.statusMessage);
       }
     } on Exception catch (e) {
-      _showToast(context,'getAllCategoriesfailed'+e.toString());
+      // _showToast(context,'getAllCategoriesfailed'+e.toString());
 
       return null;
     }
   }
 
-  Future<CategoryResponse> getAllHomeCategories(context) async {
+  Future<HomeCategoriesResponse> getAllHomeCategories(context) async {
     try {
-      Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
+      Response response = await Settings.settings.dio.get(GET_HOME_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        CategoryResponse getCategoriesResponse =
-        CategoryResponse.fromJson(response.data);
+        HomeCategoriesResponse getCategoriesResponse =
+        HomeCategoriesResponse.fromJson(response.data);
         return getCategoriesResponse;
       } else {
-        _showToast(context,response.statusMessage);
+        // _showToast(context,response.statusMessage);
         print(response.data);
       }
     } on Exception catch (e) {
-      _showToast(context,'getAllCategoriesfailed'+e.toString());
+      // _showToast(context,'getAllCategoriesfailed'+e.toString());
       return null;
     }
   }
@@ -55,11 +56,11 @@ class HomeApi {
         SlidersResponse slidersResponse= SlidersResponse.fromJson(responseBody);
         return slidersResponse;
       } else {
-        _showToast(context,response.statusMessage);
+        // _showToast(context,response.statusMessage);
         print('sliders'+response.data);
       }
     } on Exception catch (e) {
-      _showToast(context,'getSlidersfailed'+e.toString());
+      // _showToast(context,'getSlidersfailed'+e.toString());
       print(e.toString());
       return null;
     }
@@ -75,11 +76,11 @@ class HomeApi {
         BrandResponse brandResponse=BrandResponse.fromJson(responseBody);
         return brandResponse;
       } else {
-        _showToast(context,response.statusMessage);
+        // _showToast(context,response.statusMessage);
         print('brands'+response.data);
       }
     } on Exception catch (e) {
-      _showToast(context,'getAllBrandsfailed'+e.toString());
+      // _showToast(context,'getAllBrandsfailed'+e.toString());
       print('brandserror'+e.toString());
       return null;
     }

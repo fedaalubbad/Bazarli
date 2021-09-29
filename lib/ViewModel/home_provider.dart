@@ -4,6 +4,9 @@ import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'HomeCategoriesResponse.dart';
+
+
 class HomeProvider extends ChangeNotifier {
   TabController tabController;
   ScrollController scrollController = new ScrollController();
@@ -14,6 +17,7 @@ class HomeProvider extends ChangeNotifier {
   SlidersResponse slidersResponse;
   BrandResponse brandResponse;
   CategoryResponse categoriesResponse;
+  HomeCategoriesResponse homeCategoriesResponse;
   // setIndex(){
   //
   // }
@@ -48,6 +52,13 @@ class HomeProvider extends ChangeNotifier {
    categoriesResponse=response;
     notifyListeners();
     return categoriesResponse;
+  }
+  Future<HomeCategoriesResponse> getAllHomeCategories(context) async {
+    HomeCategoriesResponse response= await HomeApi.api.getAllHomeCategories(context);
+    // this.homeCategoriesList = response.data;
+   homeCategoriesResponse=response;
+    notifyListeners();
+    return homeCategoriesResponse;
   }
 
   Future<BrandResponse> getAllBrandss(context) async {

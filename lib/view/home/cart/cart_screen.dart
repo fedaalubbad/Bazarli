@@ -106,7 +106,7 @@ class CartScreenState extends State<CartScreen>
                       itemBuilder: (context, index) {
                         return ProductInCartListItem(
                           item: Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index],
-                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product ,));},
+                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product,));},
                         );
                       },
                     ),

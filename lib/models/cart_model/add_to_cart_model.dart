@@ -64,6 +64,7 @@ class Data {
     this.isGuest,
     this.isActive,
     this.conversionTime,
+    this.customer,
     this.channel,
     this.items,
     this.selectedShippingRate,
@@ -81,9 +82,9 @@ class Data {
   });
 
   int id;
-  dynamic customerEmail;
-  dynamic customerFirstName;
-  dynamic customerLastName;
+  String customerEmail;
+  String customerFirstName;
+  String customerLastName;
   dynamic shippingMethod;
   dynamic couponCode;
   int isGift;
@@ -114,6 +115,7 @@ class Data {
   int isGuest;
   int isActive;
   dynamic conversionTime;
+  dynamic customer;
   dynamic channel;
   List<Item> items;
   dynamic selectedShippingRate;
@@ -164,6 +166,7 @@ class Data {
     isGuest: json["is_guest"],
     isActive: json["is_active"],
     conversionTime: json["conversion_time"],
+    customer: json["customer"],
     channel: json["channel"],
     items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
     selectedShippingRate: json["selected_shipping_rate"],
@@ -215,6 +218,7 @@ class Data {
     "is_guest": isGuest,
     "is_active": isActive,
     "conversion_time": conversionTime,
+    "customer": customer,
     "channel": channel,
     "items": List<dynamic>.from(items.map((x) => x.toJson())),
     "selected_shipping_rate": selectedShippingRate,
@@ -263,7 +267,7 @@ class Item {
     this.formatedDiscountAmount,
     this.baseDiscountAmount,
     this.formatedBaseDiscountAmount,
-    // this.additional,
+    this.additional,
     this.child,
     this.product,
     this.createdAt,
@@ -299,7 +303,7 @@ class Item {
   String formatedDiscountAmount;
   String baseDiscountAmount;
   String formatedBaseDiscountAmount;
-  // Additional additional;
+  Additional additional;
   dynamic child;
   Product product;
   DateTime createdAt;
@@ -335,7 +339,7 @@ class Item {
     formatedDiscountAmount: json["formated_discount_amount"],
     baseDiscountAmount: json["base_discount_amount"],
     formatedBaseDiscountAmount: json["formated_base_discount_amount"],
-    // additional: Additional.fromJson(json["additional"]),
+    additional: Additional.fromJson(json["additional"]),
     child: json["child"],
     product: Product.fromJson(json["product"]),
     createdAt: DateTime.parse(json["created_at"]),
@@ -372,7 +376,7 @@ class Item {
     "formated_discount_amount": formatedDiscountAmount,
     "base_discount_amount": baseDiscountAmount,
     "formated_base_discount_amount": formatedBaseDiscountAmount,
-    // "additional": additional.toJson(),
+    "additional": additional.toJson(),
     "child": child,
     "product": product.toJson(),
     "created_at": createdAt.toIso8601String(),
@@ -382,19 +386,23 @@ class Item {
 
 class Additional {
   Additional({
+    this.token,
     this.quantity,
     this.productId,
   });
 
+  String token;
   String quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
+    token: json["token"],
     quantity: json["quantity"],
     productId: json["product_id"],
   );
 
   Map<String, dynamic> toJson() => {
+    "token": token,
     "quantity": quantity,
     "product_id": productId,
   };
@@ -423,10 +431,6 @@ class Product {
     this.isWishlisted,
     this.isItemInCart,
     this.showQuantityChanger,
-    this.specialPrice,
-    this.formatedSpecialPrice,
-    this.regularPrice,
-    this.formatedRegularPrice,
   });
 
   int id;
@@ -438,8 +442,8 @@ class Product {
   String formatedPrice;
   String shortDescription;
   String description;
-  List<Category> category;
-  List<Image> images;
+  List<dynamic> category;
+  List<dynamic> images;
   List<dynamic> videos;
   BaseImage baseImage;
   DateTime createdAt;
@@ -450,10 +454,6 @@ class Product {
   bool isWishlisted;
   bool isItemInCart;
   bool showQuantityChanger;
-  String specialPrice;
-  String formatedSpecialPrice;
-  String regularPrice;
-  String formatedRegularPrice;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -465,8 +465,8 @@ class Product {
     formatedPrice: json["formated_price"],
     shortDescription: json["short_description"],
     description: json["description"],
-    category: List<Category>.from(json["category"].map((x) => Category.fromJson(x))),
-    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+    category: List<dynamic>.from(json["category"].map((x) => x)),
+    images: List<dynamic>.from(json["images"].map((x) => x)),
     videos: List<dynamic>.from(json["videos"].map((x) => x)),
     baseImage: BaseImage.fromJson(json["base_image"]),
     createdAt: DateTime.parse(json["created_at"]),
@@ -477,10 +477,6 @@ class Product {
     isWishlisted: json["is_wishlisted"],
     isItemInCart: json["is_item_in_cart"],
     showQuantityChanger: json["show_quantity_changer"],
-    specialPrice: json["special_price"],
-    formatedSpecialPrice: json["formated_special_price"],
-    regularPrice: json["regular_price"],
-    formatedRegularPrice: json["formated_regular_price"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -493,8 +489,8 @@ class Product {
     "formated_price": formatedPrice,
     "short_description": shortDescription,
     "description": description,
-    "category": List<dynamic>.from(category.map((x) => x.toJson())),
-    "images": List<dynamic>.from(images.map((x) => x.toJson())),
+    "category": List<dynamic>.from(category.map((x) => x)),
+    "images": List<dynamic>.from(images.map((x) => x)),
     "videos": List<dynamic>.from(videos.map((x) => x)),
     "base_image": baseImage.toJson(),
     "created_at": createdAt.toIso8601String(),
@@ -505,10 +501,6 @@ class Product {
     "is_wishlisted": isWishlisted,
     "is_item_in_cart": isItemInCart,
     "show_quantity_changer": showQuantityChanger,
-    "special_price": specialPrice,
-    "formated_special_price": formatedSpecialPrice,
-    "regular_price": regularPrice,
-    "formated_regular_price": formatedRegularPrice,
   };
 }
 
@@ -537,114 +529,6 @@ class BaseImage {
     "medium_image_url": mediumImageUrl,
     "large_image_url": largeImageUrl,
     "original_image_url": originalImageUrl,
-  };
-}
-
-class Category {
-  Category({
-    this.id,
-    this.code,
-    this.name,
-    this.slug,
-    this.displayMode,
-    this.description,
-    this.metaTitle,
-    this.metaDescription,
-    this.metaKeywords,
-    this.status,
-    this.imageUrl,
-    this.additional,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int id;
-  dynamic code;
-  String name;
-  String slug;
-  String displayMode;
-  String description;
-  String metaTitle;
-  String metaDescription;
-  String metaKeywords;
-  int status;
-  dynamic imageUrl;
-  dynamic additional;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["id"],
-    code: json["code"],
-    name: json["name"],
-    slug: json["slug"],
-    displayMode: json["display_mode"],
-    description: json["description"],
-    metaTitle: json["meta_title"],
-    metaDescription: json["meta_description"],
-    metaKeywords: json["meta_keywords"],
-    status: json["status"],
-    imageUrl: json["image_url"],
-    additional: json["additional"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "code": code,
-    "name": name,
-    "slug": slug,
-    "display_mode": displayMode,
-    "description": description,
-    "meta_title": metaTitle,
-    "meta_description": metaDescription,
-    "meta_keywords": metaKeywords,
-    "status": status,
-    "image_url": imageUrl,
-    "additional": additional,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}
-
-class Image {
-  Image({
-    this.id,
-    this.path,
-    this.url,
-    this.originalImageUrl,
-    this.smallImageUrl,
-    this.mediumImageUrl,
-    this.largeImageUrl,
-  });
-
-  int id;
-  String path;
-  String url;
-  String originalImageUrl;
-  String smallImageUrl;
-  String mediumImageUrl;
-  String largeImageUrl;
-
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
-    id: json["id"],
-    path: json["path"],
-    url: json["url"],
-    originalImageUrl: json["original_image_url"],
-    smallImageUrl: json["small_image_url"],
-    mediumImageUrl: json["medium_image_url"],
-    largeImageUrl: json["large_image_url"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "path": path,
-    "url": url,
-    "original_image_url": originalImageUrl,
-    "small_image_url": smallImageUrl,
-    "medium_image_url": mediumImageUrl,
-    "large_image_url": largeImageUrl,
   };
 }
 

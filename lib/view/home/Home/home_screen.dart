@@ -36,6 +36,11 @@ class HomeScreenState extends State<HomeScreen>
     Provider.of<HomeProvider>(
       context,
       listen: false,
+    ).getAllHomeCategories(context);
+
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
     ).getSliders(context);
     Provider.of<HomeProvider>(
       context,
@@ -88,6 +93,11 @@ class HomeScreenState extends State<HomeScreen>
       context,
       listen: false,
     ).getAllCategories(context);
+
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllHomeCategories(context);
 
     Provider.of<HomeProvider>(
       context,

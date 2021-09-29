@@ -113,7 +113,7 @@ class Data {
   dynamic conversionTime;
   dynamic customer;
   dynamic channel;
-  List<dynamic> items;
+  List<Item> items;
   dynamic selectedShippingRate;
   dynamic payment;
   dynamic billingAddress;
@@ -164,7 +164,7 @@ class Data {
     conversionTime: json["conversion_time"],
     customer: json["customer"],
     channel: json["channel"],
-    items: List<dynamic>.from(json["items"].map((x) => x)),
+    items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
     selectedShippingRate: json["selected_shipping_rate"],
     payment: json["payment"],
     billingAddress: json["billing_address"],
@@ -216,7 +216,7 @@ class Data {
     "conversion_time": conversionTime,
     "customer": customer,
     "channel": channel,
-    "items": List<dynamic>.from(items.map((x) => x)),
+    "items": List<dynamic>.from(items.map((x) => x.toJson())),
     "selected_shipping_rate": selectedShippingRate,
     "payment": payment,
     "billing_address": billingAddress,
@@ -229,5 +229,329 @@ class Data {
     "formated_base_taxes": formatedBaseTaxes,
     "formated_discounted_sub_total": formatedDiscountedSubTotal,
     "formated_base_discounted_sub_total": formatedBaseDiscountedSubTotal,
+  };
+}
+
+class Item {
+  Item({
+    this.id,
+    this.quantity,
+    this.sku,
+    this.type,
+    this.name,
+    this.couponCode,
+    this.weight,
+    this.totalWeight,
+    this.baseTotalWeight,
+    this.price,
+    this.formatedPrice,
+    this.basePrice,
+    this.formatedBasePrice,
+    this.customPrice,
+    this.formatedCustomPrice,
+    this.total,
+    this.formatedTotal,
+    this.baseTotal,
+    this.formatedBaseTotal,
+    this.taxPercent,
+    this.taxAmount,
+    this.formatedTaxAmount,
+    this.baseTaxAmount,
+    this.formatedBaseTaxAmount,
+    this.discountPercent,
+    this.discountAmount,
+    this.formatedDiscountAmount,
+    this.baseDiscountAmount,
+    this.formatedBaseDiscountAmount,
+    this.additional,
+    this.child,
+    this.product,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  int quantity;
+  String sku;
+  String type;
+  String name;
+  dynamic couponCode;
+  String weight;
+  String totalWeight;
+  String baseTotalWeight;
+  String price;
+  String formatedPrice;
+  String basePrice;
+  String formatedBasePrice;
+  dynamic customPrice;
+  String formatedCustomPrice;
+  String total;
+  String formatedTotal;
+  String baseTotal;
+  String formatedBaseTotal;
+  String taxPercent;
+  String taxAmount;
+  String formatedTaxAmount;
+  String baseTaxAmount;
+  String formatedBaseTaxAmount;
+  String discountPercent;
+  String discountAmount;
+  String formatedDiscountAmount;
+  String baseDiscountAmount;
+  String formatedBaseDiscountAmount;
+  Additional additional;
+  dynamic child;
+  Product product;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Item.fromJson(Map<String, dynamic> json) => Item(
+    id: json["id"],
+    quantity: json["quantity"],
+    sku: json["sku"],
+    type: json["type"],
+    name: json["name"],
+    couponCode: json["coupon_code"],
+    weight: json["weight"],
+    totalWeight: json["total_weight"],
+    baseTotalWeight: json["base_total_weight"],
+    price: json["price"],
+    formatedPrice: json["formated_price"],
+    basePrice: json["base_price"],
+    formatedBasePrice: json["formated_base_price"],
+    customPrice: json["custom_price"],
+    formatedCustomPrice: json["formated_custom_price"],
+    total: json["total"],
+    formatedTotal: json["formated_total"],
+    baseTotal: json["base_total"],
+    formatedBaseTotal: json["formated_base_total"],
+    taxPercent: json["tax_percent"],
+    taxAmount: json["tax_amount"],
+    formatedTaxAmount: json["formated_tax_amount"],
+    baseTaxAmount: json["base_tax_amount"],
+    formatedBaseTaxAmount: json["formated_base_tax_amount"],
+    discountPercent: json["discount_percent"],
+    discountAmount: json["discount_amount"],
+    formatedDiscountAmount: json["formated_discount_amount"],
+    baseDiscountAmount: json["base_discount_amount"],
+    formatedBaseDiscountAmount: json["formated_base_discount_amount"],
+    additional: Additional.fromJson(json["additional"]),
+    child: json["child"],
+    product: Product.fromJson(json["product"]),
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "quantity": quantity,
+    "sku": sku,
+    "type": type,
+    "name": name,
+    "coupon_code": couponCode,
+    "weight": weight,
+    "total_weight": totalWeight,
+    "base_total_weight": baseTotalWeight,
+    "price": price,
+    "formated_price": formatedPrice,
+    "base_price": basePrice,
+    "formated_base_price": formatedBasePrice,
+    "custom_price": customPrice,
+    "formated_custom_price": formatedCustomPrice,
+    "total": total,
+    "formated_total": formatedTotal,
+    "base_total": baseTotal,
+    "formated_base_total": formatedBaseTotal,
+    "tax_percent": taxPercent,
+    "tax_amount": taxAmount,
+    "formated_tax_amount": formatedTaxAmount,
+    "base_tax_amount": baseTaxAmount,
+    "formated_base_tax_amount": formatedBaseTaxAmount,
+    "discount_percent": discountPercent,
+    "discount_amount": discountAmount,
+    "formated_discount_amount": formatedDiscountAmount,
+    "base_discount_amount": baseDiscountAmount,
+    "formated_base_discount_amount": formatedBaseDiscountAmount,
+    "additional": additional.toJson(),
+    "child": child,
+    "product": product.toJson(),
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
+class Additional {
+  Additional({
+    this.token,
+    this.quantity,
+    this.productId,
+  });
+
+  String token;
+  String quantity;
+  String productId;
+
+  factory Additional.fromJson(Map<String, dynamic> json) => Additional(
+    token: json["token"],
+    quantity: json["quantity"],
+    productId: json["product_id"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "token": token,
+    "quantity": quantity,
+    "product_id": productId,
+  };
+}
+
+class Product {
+  Product({
+    this.id,
+    this.sku,
+    this.type,
+    this.name,
+    this.urlKey,
+    this.price,
+    this.formatedPrice,
+    this.shortDescription,
+    this.description,
+    this.category,
+    this.images,
+    this.videos,
+    this.baseImage,
+    this.createdAt,
+    this.updatedAt,
+    this.reviews,
+    this.inStock,
+    this.isSaved,
+    this.isWishlisted,
+    this.isItemInCart,
+    this.showQuantityChanger,
+  });
+
+  int id;
+  String sku;
+  String type;
+  String name;
+  String urlKey;
+  String price;
+  String formatedPrice;
+  String shortDescription;
+  String description;
+  List<dynamic> category;
+  List<dynamic> images;
+  List<dynamic> videos;
+  BaseImage baseImage;
+  DateTime createdAt;
+  DateTime updatedAt;
+  Reviews reviews;
+  bool inStock;
+  bool isSaved;
+  bool isWishlisted;
+  bool isItemInCart;
+  bool showQuantityChanger;
+
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+    id: json["id"],
+    sku: json["sku"],
+    type: json["type"],
+    name: json["name"],
+    urlKey: json["url_key"],
+    price: json["price"],
+    formatedPrice: json["formated_price"],
+    shortDescription: json["short_description"],
+    description: json["description"],
+    category: List<dynamic>.from(json["category"].map((x) => x)),
+    images: List<dynamic>.from(json["images"].map((x) => x)),
+    videos: List<dynamic>.from(json["videos"].map((x) => x)),
+    baseImage: BaseImage.fromJson(json["base_image"]),
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+    reviews: Reviews.fromJson(json["reviews"]),
+    inStock: json["in_stock"],
+    isSaved: json["is_saved"],
+    isWishlisted: json["is_wishlisted"],
+    isItemInCart: json["is_item_in_cart"],
+    showQuantityChanger: json["show_quantity_changer"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "sku": sku,
+    "type": type,
+    "name": name,
+    "url_key": urlKey,
+    "price": price,
+    "formated_price": formatedPrice,
+    "short_description": shortDescription,
+    "description": description,
+    "category": List<dynamic>.from(category.map((x) => x)),
+    "images": List<dynamic>.from(images.map((x) => x)),
+    "videos": List<dynamic>.from(videos.map((x) => x)),
+    "base_image": baseImage.toJson(),
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+    "reviews": reviews.toJson(),
+    "in_stock": inStock,
+    "is_saved": isSaved,
+    "is_wishlisted": isWishlisted,
+    "is_item_in_cart": isItemInCart,
+    "show_quantity_changer": showQuantityChanger,
+  };
+}
+
+class BaseImage {
+  BaseImage({
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+    this.originalImageUrl,
+  });
+
+  String smallImageUrl;
+  String mediumImageUrl;
+  String largeImageUrl;
+  String originalImageUrl;
+
+  factory BaseImage.fromJson(Map<String, dynamic> json) => BaseImage(
+    smallImageUrl: json["small_image_url"],
+    mediumImageUrl: json["medium_image_url"],
+    largeImageUrl: json["large_image_url"],
+    originalImageUrl: json["original_image_url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "small_image_url": smallImageUrl,
+    "medium_image_url": mediumImageUrl,
+    "large_image_url": largeImageUrl,
+    "original_image_url": originalImageUrl,
+  };
+}
+
+class Reviews {
+  Reviews({
+    this.total,
+    this.totalRating,
+    this.averageRating,
+    this.percentage,
+  });
+
+  int total;
+  int totalRating;
+  int averageRating;
+  List<dynamic> percentage;
+
+  factory Reviews.fromJson(Map<String, dynamic> json) => Reviews(
+    total: json["total"],
+    totalRating: json["total_rating"],
+    averageRating: json["average_rating"],
+    percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "total": total,
+    "total_rating": totalRating,
+    "average_rating": averageRating,
+    "percentage": List<dynamic>.from(percentage.map((x) => x)),
   };
 }

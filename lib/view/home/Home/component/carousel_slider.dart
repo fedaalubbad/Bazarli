@@ -126,7 +126,7 @@ class BuildCarouselSlider extends StatelessWidget{
 
                             InkWell(
                                 onTap:(){
-                                  Provider.of<OrdersProvider>(context, listen: false).addProductToCart(context,product[index].id.toString(),1);
+                                  Provider.of<OrdersProvider>(context, listen: false).addProductToCart(context,product[index].variants[0].id.toString(),1);
                                 },
                                 child: SvgPicture.asset('assets/svg/fi_shopping-cart.svg',color: PrimaryColor,)),
 

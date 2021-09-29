@@ -1,20 +1,20 @@
+import 'package:bazarli/ViewModel/HomeCategoriesResponse.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
-import 'package:bazarli/models/Categories_model/category_response.dart';
+import 'package:bazarli/view/home/categories/component/selectedCategoryItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'component/product_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GetSelectedCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<HomeProvider, CategoryResponse>(
+    return Selector<HomeProvider, HomeCategoriesResponse>(
         builder: (context, response, widget) {
           if (response == null) {
             return Container(
@@ -31,7 +31,7 @@ class GetSelectedCategories extends StatelessWidget {
                   mainAxisSpacing: 10.w,
                   crossAxisSpacing: 10.h,
                 ));
-          } else if (response.data.length == 0) {
+          } else if (response.categories.length == 0) {
             return Container(height: 0,);
           } else {
             return Container(
@@ -40,9 +40,9 @@ class GetSelectedCategories extends StatelessWidget {
                   physics: ScrollPhysics(),
                   shrinkWrap: true,
                   crossAxisCount: 4,
-                  itemCount: response.data.length,
-                  itemBuilder: (BuildContext context, int index) => ProductItem(
-                    category: response.data[index],
+                  itemCount: response.categories.length,
+                  itemBuilder: (BuildContext context, int index) =>selectedCategoryItem(
+                    category: response.categories[index],
                   ),
                   staggeredTileBuilder: (int index) =>
                       StaggeredTile.count(2, index.isEven ? 2.5 : 2),
@@ -51,7 +51,7 @@ class GetSelectedCategories extends StatelessWidget {
                 ));
           }
         }, selector: (context, provider) {
-      return provider.categoriesResponse;
+      return provider.homeCategoriesResponse;
     });
   }
 

@@ -55,9 +55,9 @@ class ProfileToolBar extends StatelessWidget {
             Row(
               children: [
                 Text('Hello',style: SliderTitle1Style,).tr(),
-                if(SPHelper.spHelper.getUSer()!=null)
+                if(SPHelper.spHelper.isLoged())
                   SizedBox(width: 5.w,),
-                if(SPHelper.spHelper.getUSer()!=null)
+                if(SPHelper.spHelper.isLoged())
                 Text(SPHelper.spHelper.getUSer().firstName,style: SliderTitle1Style,),
 
                 Text('!',style: SliderTitle1Style,),
@@ -65,7 +65,7 @@ class ProfileToolBar extends StatelessWidget {
             ),
             SizedBox(height: 5.h,),
 
-            Text(SPHelper.spHelper.getUSer()!=null?SPHelper.spHelper.getUSer().email:'The region’s favourite online marketplace',style: SliderTitle2Style,).tr(),
+            Text(SPHelper.spHelper.isLoged()?SPHelper.spHelper.getUSer().email:'The region’s favourite online marketplace',style: SliderTitle2Style,).tr(),
 
           ],
         ),

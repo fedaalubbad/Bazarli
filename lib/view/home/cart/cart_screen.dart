@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/Product/product_details_screen.dart';
 import 'package:bazarli/view/home/cart/shipping_addresses_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +25,8 @@ class CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
 @override
   void initState() {
-  Provider.of<OrdersProvider>(context, listen: false)
+  if(SPHelper.spHelper.isLoged())
+    Provider.of<OrdersProvider>(context, listen: false)
       .getCart(context);
     super.initState();
   }
@@ -42,7 +44,8 @@ class CartScreenState extends State<CartScreen>
     //     MaterialPageRoute(
     //         builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:3)));
     // monitor network fetch
-    Provider.of<OrdersProvider>(context, listen: false)
+    if(SPHelper.spHelper.isLoged())
+      Provider.of<OrdersProvider>(context, listen: false)
         .getCart(context);
     await Future.delayed(Duration(milliseconds: 1000));
 
@@ -91,7 +94,8 @@ class CartScreenState extends State<CartScreen>
           child: Container(
             height: ScreenUtil.defaultSize.height.h-(ScreenUtil.defaultSize.height.h / 3.2.h),
             key: _contentKey,
-            child: Stack(
+            child:SPHelper.spHelper.isLoged()?
+                Stack(
               children: [
                 Provider.of<OrdersProvider>(context, ).getCartResponse.data.items
                     .length!=0?
@@ -117,6 +121,16 @@ class CartScreenState extends State<CartScreen>
                     )
                 ,
                 checkOutBtnWidget()
+              ],
+            ):Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  // margin: EdgeInsets.only(bottom: 80.h),
+                  child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
+                ),
+                SizedBox(height: 40.h,),
+                Center(child: Container(child:Text('login first'))),
               ],
             ),
           ),

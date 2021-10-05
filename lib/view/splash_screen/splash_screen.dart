@@ -1,4 +1,6 @@
+import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
+import 'package:bazarli/models/get_attribute_filter/get_attribute_filter.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
@@ -37,7 +39,6 @@ class SplashState extends State<SplashScreen>{
   }
   @override
   void initState() {
-    // Provider.of<HomeProvider>(context, listen: false). getAllBrandss();
     // Provider.of<HomeProvider>(context, listen: false). getAllCategories();
 
     super.initState();

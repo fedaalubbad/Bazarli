@@ -2,6 +2,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/authentication_provider.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/home/cart/shipping_addresses_screen.dart';
 import 'package:bazarli/view/home/profile/profile_details_screen.dart';
 import 'package:bazarli/view/home/profile/returns_screen.dart';
@@ -59,8 +60,9 @@ class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCli
   ProfileListItemWidget(BuildContext context,text,int index,String asset){
     return InkWell(
       onTap: (){
+        SPHelper.spHelper.isLoged()?
         index==1?
-        NavigationService.navigationService.navigateToWidget(ProfileDetailsScreen())
+       NavigationService.navigationService.navigateToWidget(ProfileDetailsScreen())
             :index==2?
         NavigationService.navigationService.navigateToWidget(OrdersScreen())
             :index==3?
@@ -73,8 +75,8 @@ class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCli
         NavigationService.navigationService.navigateToWidget(WishListScreen())
             :index==7?
         NavigationService.navigationService.navigateToWidget(LanguagesScreen())
-       :Provider.of<AuthenticationProvider>(context, listen: false).logout(context);
-
+       :Provider.of<AuthenticationProvider>(context, listen: false).logout(context)
+        :null;
       },
       child: Container(
         // width: ScreenUtil.defaultSize.width,

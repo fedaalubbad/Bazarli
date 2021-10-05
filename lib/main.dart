@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
@@ -64,6 +65,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<OrdersProvider>(
           create: (context) => OrdersProvider(),
+        ),
+        ChangeNotifierProvider<AttributeFilterProvider>(
+          create: (context) => AttributeFilterProvider(),
         ),
       ],
       child: RefreshConfiguration(

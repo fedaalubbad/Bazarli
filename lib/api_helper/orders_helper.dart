@@ -48,24 +48,12 @@ class OrdersApi{
      // "Bearer ${SPHelper.spHelper.getToken()}";
      Response response = await Settings.settings.dio.get(GET_CART_URL+'?token=true');
 
-
      if(response.statusCode==200){
-       Map<String,dynamic> responseBody=response.data;
-       if(responseBody['data']==null){
-         print('cartListJson null');
-         return null;
-       }else {
-         GetCartResponse getCartResponse =GetCartResponse.fromJson(responseBody);
-         print('cartListJson${responseBody}');
-         // _showToast(context, addToCartResponse.message);
-         return getCartResponse;
+       GetCartResponse getCartResponse=GetCartResponse.fromJson(response.data);
+       print('cartListJson${getCartResponse}');
+       return getCartResponse;
+     }else {
        }
-     }else{
-       Map<String,dynamic> responseBody=response.data;
-       print('cartListJsonelse${responseBody}');
-       // _showToast(context, responseBody['error']['message']);
-       return null;
-     }
 
    } on DioError catch (e) {
      _showToast(context,'something went wrong');

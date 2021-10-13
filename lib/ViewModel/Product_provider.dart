@@ -16,6 +16,9 @@ class ProductProvider extends ChangeNotifier{
       List<int> price;
       int size;
       int newArrivals;
+      int selectedVarientIndex = 0;
+      dynamic selectedVarientId;
+
       final GlobalKey<FormState> priceFormStateKey = GlobalKey<FormState>();
       final minPriceController = TextEditingController();
       final maxPriceController = TextEditingController();
@@ -33,6 +36,42 @@ class ProductProvider extends ChangeNotifier{
         notifyListeners();
       }
 
+
+      selectVarientIndex(val) {
+        selectedVarientIndex = val;
+        notifyListeners();
+      }
+      selectVarientId(val) {
+        selectedVarientId = val;
+        notifyListeners();
+      }
+
+      int quantity=1;
+      int availableQuantity;
+
+      increaseQuantity(){
+        // if(quantity<=availableQuantity)
+        quantity+=1;
+        notifyListeners();
+      }
+      decreaseQuantity(){
+        if(quantity>1)
+         quantity-=1;
+        notifyListeners();
+      }
+      String getSize(product,index) {
+        return product.superAttributes[1].options.where((element) =>
+        element.id == product.variants[index].size).map((e) {
+          return e.adminName;
+        }
+        ).toString().replaceAll("(",'').replaceAll(')', '');
+      }
+      String getColors(product,index){
+      return product.superAttributes[0].options.where((element) => element.id==product.variants[index].color).map((e) {
+        return e.adminName.toString();
+       }
+       ).toString().replaceAll("(",'').replaceAll(')', '');
+      }
       // String validateMinPrice(val) {
       //   if (val.isEmpty) {
       //     return 'enter min price';

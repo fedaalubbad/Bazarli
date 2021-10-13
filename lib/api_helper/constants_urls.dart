@@ -49,7 +49,7 @@ const String UPDATE_DELETE_ADDRESS_URL = "addresses/";
 const String GET_ORDERS_URL = "orders";
 const String ADD_PRODUCT_TO_CART_URL =
     "checkout/cart/add/"; //PRODUCTID, QUANTITY
-const String GET_CART_URL = "checkout/cart";
+const String GET_CART_URL = "checkout/cart?token=true";
 const String EMPTY_CART_URL = "checkout/cart/empty";
 const String REMOVE_ITEM_CART_URL = "checkout/cart/remove-item/"; // ID
 const String APPLY_COUPON_URL =

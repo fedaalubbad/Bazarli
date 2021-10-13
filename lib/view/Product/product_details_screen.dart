@@ -1,25 +1,44 @@
 import 'dart:math';
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
+import 'package:bazarli/view/Product/component/getColors.dart';
 import 'package:bazarli/view/home/Home/component/dotted_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'component/add_to_cart_widget.dart';
 import 'component/basic_detais_widget.dart';
+import 'component/getMeasurement.dart';
 import 'component/measurements_widgets.dart';
 import 'component/toggle_view.dart';
 import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget{
   // productResponse.Datum product;
-  dynamic product;
+ dynamic product;
 
   ProductDetailsScreen({this.product});
+  @override
+  State<StatefulWidget> createState() {
+   return ProductDetailsScreenState();
+  }
 
+}
+
+class ProductDetailsScreenState extends State<ProductDetailsScreen> {
+
+@override
+  void initState() {
+  Provider.of<ProductProvider>(
+    context,listen: false
+  ).selectVarientIndex(0);
+
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -27,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
       body: Stack(
         children: [
           ProductToolBar(
-            productName: product.name==null?'':product.name,
+            productName: widget.product.name==null?'':widget.product.name,
           ),
           Container(
             color: HomeBackgroundColor,
@@ -35,31 +54,36 @@ class ProductDetailsScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  dottedSlider(context,product.images),
+                  dottedSlider(context,widget.product.images),
                   SizedBox(
                     height: 20.h,
                   ),
-                  BasicDetailsWidget(product:product),
+                  BasicDetailsWidget(product:widget.product),
                   SizedBox(
                     height: 20.h,
                   ),
-                  getMeasures(),
+                  GetMeasurement(product: widget.product,),
                   SizedBox(
                     height: 20.h,
                   ),
-                  getColors(),
+               if( Provider.of<ProductProvider>(
+                      context,listen: false
+                  ).getColors(widget.product,Provider.of<ProductProvider>(
+                    context,
+                  ).selectedVarientIndex)!='')
+                  GetColors(product: widget.product,),
                   SizedBox(
                     height: 20.h,
                   ),
-                  AddToCartWidet(),
+                  AddToCartWidet(widget.product),
                   SizedBox(
                     height: 40.h,
                   ),
                   OverViewAndCustomerReviewToggleView(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  MeasurementsWidgets(),
+                  // SizedBox(
+                  //   height: 20.h,
+                  // ),
+                  // MeasurementsWidgets(),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -77,7 +101,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return Container(
       child: DottedSlider(maxHeight: 283.h, children:[
        ... images.map((e) => _productSlideImage(context, e.largeImageUrl))]
-      ),
+      ,color: PrimaryColor,),
     );
   }
 
@@ -168,78 +192,6 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
 
-  getMeasures() {
-    List<String> meauresList = ['S', 'M', 'L', 'XL', '2XL'];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          child: Text(
-            'Measures',
-            style: TextLabelStyle,
-          ).tr(),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.w),
-          height: 39.h,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: meauresList.length,
-              itemBuilder: (ctx, index) {
-                return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(ScreenUtil().radius(2)),
-                        border: Border.all(color: GrayLiteColor)),
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    height: 39.h,
-                    width: 48.w,
-                    child: Text(meauresList[index]));
-              }),
-        ),
-      ],
-    );
-  }
-
-  getColors() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          child: Text(
-            'Colors',
-            style: TextLabelStyle,
-          ).tr(),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.w),
-          height: 35.h,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: (ctx, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(ScreenUtil().radius(2)),
-                    color: Colors
-                        .primaries[Random().nextInt(Colors.primaries.length)],
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  height: 35.h,
-                  width: 48.w,
-                );
-              }),
-        ),
-      ],
-    );
-  }
 
 
 

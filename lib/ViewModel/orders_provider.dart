@@ -17,7 +17,7 @@ class OrdersProvider extends ChangeNotifier{
    return  getCartResponse;
   }
 
-   addProductToCart(BuildContext context,String productId,int quantity)async{
+   addProductToCart(BuildContext context,dynamic productId,dynamic quantity)async{
     AddToCart addCart = await OrdersApi.api.addProductToCart(context,productId,quantity);
     getCart(context);
   }

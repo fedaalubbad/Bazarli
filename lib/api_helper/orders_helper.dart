@@ -46,11 +46,10 @@ class OrdersApi{
    try{
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
-     Response response = await Settings.settings.dio.get(GET_CART_URL+'?token=true');
-
+     Response response = await Settings.settings.dio.get(GET_CART_URL);
      if(response.statusCode==200){
        GetCartResponse getCartResponse=GetCartResponse.fromJson(response.data);
-       print('cartListJson${getCartResponse}');
+       print('cartListJson${response}');
        return getCartResponse;
      }else {
        }

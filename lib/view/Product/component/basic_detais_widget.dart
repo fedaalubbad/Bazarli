@@ -1,9 +1,11 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 class BasicDetailsWidget extends StatelessWidget{
   productResponse.Datum product;
   BasicDetailsWidget({this.product});
@@ -15,11 +17,11 @@ class BasicDetailsWidget extends StatelessWidget{
           Row(
             children: [
               Container(
-                  height: 80,
-                  width: 80,
+                  height: 70.h,
+                  width: 70.w,
                   child: Image.network(
-                    product.baseImage.originalImageUrl,
-                    fit: BoxFit.cover,
+                    product.category[0].imageUrl,
+                    fit: BoxFit.fill,
                   )),
               Container(
                 margin: context.locale.toString() == 'en'
@@ -27,7 +29,11 @@ class BasicDetailsWidget extends StatelessWidget{
                     : EdgeInsets.only(right: 20.w),
                 width: 0.6.sw,
                 child: Text(
-                  product.name==null?'':product.name,
+                  product.variants[Provider.of<ProductProvider>(
+                    context,
+                  ).selectedVarientIndex].name==null?'':product.variants[Provider.of<ProductProvider>(
+                    context,
+                  ).selectedVarientIndex].name,
                   style: ProductTitleStyle,
                   maxLines: 2,
                 ),
@@ -40,7 +46,9 @@ class BasicDetailsWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('modelNo', style: TextLabelStyle).tr(),
-                Text('U1542AZ-CB', style: DescriptionStyle),
+                Text(product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].productNumber, style: DescriptionStyle),
               ],
             ),
           ),
@@ -50,7 +58,9 @@ class BasicDetailsWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('was', style: TextLabelStyle).tr(),
-                Text(product.price.toString(), style: DiscountStyle),
+                Text(product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].price.toString(), style: DiscountStyle),
               ],
             ),
           ),
@@ -60,7 +70,9 @@ class BasicDetailsWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Now', style: TextLabelStyle).tr(),
-                Text(product.formatedPrice, style: PriceNowTextStyle),
+                Text(product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].specialPrice.toString(), style: PriceNowTextStyle),
               ],
             ),
           ),
@@ -70,10 +82,15 @@ class BasicDetailsWidget extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Saving', style: TextLabelStyle).tr(),
+                if( product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].savingPrice!=null)
                 Row(
                   children: [
                     Container(
-                      child: Text(product.price, style: PriceTextStyle),
+                      child: Text(product.variants[Provider.of<ProductProvider>(
+                        context,
+                      ).selectedVarientIndex].savingPrice.toString().substring(0,5), style: PriceTextStyle),
                     ),
                     SizedBox(
                       width: 2.w,
@@ -82,7 +99,10 @@ class BasicDetailsWidget extends StatelessWidget{
                         decoration:
                         BoxDecoration(color: PrimaryColor.withOpacity(0.2)),
                         child: Text(
-                          '80% off',
+                          product.variants[Provider.of<ProductProvider>(
+                            context,
+                          ).selectedVarientIndex].savingPrice.toString().substring(5,product.variants[Provider.of<ProductProvider>(
+                            context,).selectedVarientIndex].savingPrice.length),
                           style: DiscountOffStyle,
                         )),
                   ],

@@ -56,6 +56,10 @@ class Datum {
     this.isItemInCart,
     this.showQuantityChanger,
     this.variants,
+    this.specialPrice,
+    this.formatedSpecialPrice,
+    this.regularPrice,
+    this.formatedRegularPrice,
     this.superAttributes,
   });
 
@@ -64,7 +68,7 @@ class Datum {
   String type;
   String name;
   String urlKey;
-  dynamic price;
+  String price;
   String formatedPrice;
   String shortDescription;
   String description;
@@ -81,18 +85,22 @@ class Datum {
   bool isItemInCart;
   bool showQuantityChanger;
   List<Variant> variants;
-  List<dynamic> superAttributes;
+  String specialPrice;
+  String formatedSpecialPrice;
+  String regularPrice;
+  String formatedRegularPrice;
+  List<SuperAttribute> superAttributes;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     sku: json["sku"],
     type: json["type"],
-    name: json["name"] == null ? null : json["name"],
+    name: json["name"],
     urlKey: json["url_key"],
     price: json["price"],
     formatedPrice: json["formated_price"],
-    shortDescription: json["short_description"] == null ? null : json["short_description"],
-    description: json["description"] == null ? null : json["description"],
+    shortDescription: json["short_description"],
+    description: json["description"],
     category: List<Category>.from(json["category"].map((x) => Category.fromJson(x))),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
     videos: List<dynamic>.from(json["videos"].map((x) => x)),
@@ -106,19 +114,23 @@ class Datum {
     isItemInCart: json["is_item_in_cart"],
     showQuantityChanger: json["show_quantity_changer"],
     variants: List<Variant>.from(json["variants"].map((x) => Variant.fromJson(x))),
-    superAttributes: List<dynamic>.from(json["super_attributes"].map((x) => x)),
+    specialPrice: json["special_price"],
+    formatedSpecialPrice: json["formated_special_price"],
+    regularPrice: json["regular_price"],
+    formatedRegularPrice: json["formated_regular_price"],
+    superAttributes: List<SuperAttribute>.from(json["super_attributes"].map((x) => SuperAttribute.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "sku": sku,
     "type": type,
-    "name": name == null ? null : name,
+    "name": name,
     "url_key": urlKey,
     "price": price,
     "formated_price": formatedPrice,
-    "short_description": shortDescription == null ? null : shortDescription,
-    "description": description == null ? null : description,
+    "short_description": shortDescription,
+    "description": description,
     "category": List<dynamic>.from(category.map((x) => x.toJson())),
     "images": List<dynamic>.from(images.map((x) => x.toJson())),
     "videos": List<dynamic>.from(videos.map((x) => x)),
@@ -132,7 +144,11 @@ class Datum {
     "is_item_in_cart": isItemInCart,
     "show_quantity_changer": showQuantityChanger,
     "variants": List<dynamic>.from(variants.map((x) => x.toJson())),
-    "super_attributes": List<dynamic>.from(superAttributes.map((x) => x)),
+    "special_price": specialPrice,
+    "formated_special_price": formatedSpecialPrice,
+    "regular_price": regularPrice,
+    "formated_regular_price": formatedRegularPrice,
+    "super_attributes": List<dynamic>.from(superAttributes.map((x) => x.toJson())),
   };
 }
 
@@ -192,7 +208,7 @@ class Category {
   dynamic metaDescription;
   String metaKeywords;
   int status;
-  dynamic imageUrl;
+  String imageUrl;
   dynamic additional;
   DateTime createdAt;
   DateTime updatedAt;
@@ -204,9 +220,9 @@ class Category {
     slug: json["slug"],
     displayMode: json["display_mode"],
     description: json["description"],
-    metaTitle: json["meta_title"] == null ? null : json["meta_title"],
+    metaTitle: json["meta_title"],
     metaDescription: json["meta_description"],
-    metaKeywords: json["meta_keywords"] == null ? null : json["meta_keywords"],
+    metaKeywords: json["meta_keywords"],
     status: json["status"],
     imageUrl: json["image_url"],
     additional: json["additional"],
@@ -221,9 +237,9 @@ class Category {
     "slug": slug,
     "display_mode": displayMode,
     "description": description,
-    "meta_title": metaTitle == null ? null : metaTitle,
+    "meta_title": metaTitle,
     "meta_description": metaDescription,
-    "meta_keywords": metaKeywords == null ? null : metaKeywords,
+    "meta_keywords": metaKeywords,
     "status": status,
     "image_url": imageUrl,
     "additional": additional,
@@ -300,6 +316,105 @@ class Reviews {
   };
 }
 
+class SuperAttribute {
+  SuperAttribute({
+    this.id,
+    this.code,
+    this.type,
+    this.name,
+    this.swatchType,
+    this.options,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  Code code;
+  SuperAttributeType type;
+  Name name;
+  SwatchType swatchType;
+  List<Option> options;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory SuperAttribute.fromJson(Map<String, dynamic> json) => SuperAttribute(
+    id: json["id"],
+    code: codeValues.map[json["code"]],
+    type: superAttributeTypeValues.map[json["type"]],
+    name: nameValues.map[json["name"]],
+    swatchType: swatchTypeValues.map[json["swatch_type"]],
+    options: List<Option>.from(json["options"].map((x) => Option.fromJson(x))),
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "code": codeValues.reverse[code],
+    "type": superAttributeTypeValues.reverse[type],
+    "name": nameValues.reverse[name],
+    "swatch_type": swatchTypeValues.reverse[swatchType],
+    "options": List<dynamic>.from(options.map((x) => x.toJson())),
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
+enum Code { COLOR, SIZE }
+
+final codeValues = EnumValues({
+  "color": Code.COLOR,
+  "size": Code.SIZE
+});
+
+enum Name { COLOR, SIZE }
+
+final nameValues = EnumValues({
+  "Color": Name.COLOR,
+  "Size": Name.SIZE
+});
+
+class Option {
+  Option({
+    this.id,
+    this.adminName,
+    this.label,
+    this.swatchValue,
+  });
+
+  int id;
+  String adminName;
+  String label;
+  String swatchValue;
+
+  factory Option.fromJson(Map<String, dynamic> json) => Option(
+    id: json["id"],
+    adminName: json["admin_name"],
+    label: json["label"] == null ? null : json["label"],
+    swatchValue: json["swatch_value"] == null ? null : json["swatch_value"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "admin_name": adminName,
+    "label": label == null ? null : label,
+    "swatch_value": swatchValue == null ? null : swatchValue,
+  };
+}
+
+enum SwatchType { COLOR, DROPDOWN }
+
+final swatchTypeValues = EnumValues({
+  "color": SwatchType.COLOR,
+  "dropdown": SwatchType.DROPDOWN
+});
+
+enum SuperAttributeType { SELECT }
+
+final superAttributeTypeValues = EnumValues({
+  "select": SuperAttributeType.SELECT
+});
+
 class Variant {
   Variant({
     this.id,
@@ -310,61 +425,55 @@ class Variant {
     this.parentId,
     this.attributeFamilyId,
     this.supplierId,
-    this.links,
-    this.batteryPowerMah,
-    this.screenSize,
-    this.cameraResolution,
-    this.screenResolution,
-    this.displayTechnology,
-    this.frontCameraResolution,
-    this.screenSizeRange,
-    this.displayType,
-    this.touchScreen,
-    this.numberOfRearCameras,
-    this.mainCameraFlash,
-    this.numberOfFrontCameras,
-    this.frontCameraResolutionRange,
-    this.frontCameraFlash,
-    this.os,
-    this.processorBrand,
-    this.ramCapacity,
-    this.cpuRange,
-    this.headphoneJack,
-    this.batteryCapacityRange,
-    this.chargeInput,
-    this.chargeSpeed,
-    this.wirelessCharging,
-    this.mobileConnectionSpeed,
-    this.bluetooth,
-    this.gps,
-    this.nfc,
-    this.radio,
-    this.fingerprintReader,
-    this.faceRecognition,
-    this.videoChat,
-    this.waterdustResistance,
-    this.doubleLine,
-    this.screenRefreshRate,
-    this.videoRecordingResolution,
-    this.mainCameraResolutionRange,
-    this.expandableMemoryMemoryCardSupport,
-    this.typeOfBinding,
+    this.materiel,
+    this.pattern,
+    this.armType,
     this.usageArea,
+    this.fabricType,
+    this.style,
+    this.collar,
+    this.colour,
+    this.armLenght,
+    this.skinType,
+    this.additionalFeature,
+    this.form,
+    this.purposeOfUsage,
+    this.typeOfBinding,
+    this.exteriorMaterial,
     this.baseType,
-    this.desen,
-    this.kalip,
-    this.materyal,
-    this.yaka,
-    this.renk,
-    this.teknik,
-    this.kumasIplik,
-    this.urunTipi,
-    this.kolBoyu,
-    this.koleksiyon,
+    this.connection,
+    this.audioFeature,
+    this.activeNoiseCancellationAnc,
+    this.watersweatResistance,
+    this.microphone,
+    this.warrantyPeriod,
+    this.drawing,
+    this.kolTipi,
+    this.fabricYarn,
+    this.productType,
+    this.collection,
+    this.wristStyle,
+    this.ground,
+    this.nailType,
+    this.rim,
+    this.bikeType,
+    this.quick,
+    this.brakeType,
+    this.heightSize,
+    this.closing,
+    this.fabricTechnology,
+    this.pocketType,
+    this.property,
+    this.model,
+    this.technical,
+    this.thickness,
+    this.productDetail,
+    this.pocket,
+    this.packageIncluded,
+    this.nice,
+    this.trousersType,
     this.shortDescription,
     this.description,
-    this.merchantId,
-    this.campaignId,
     this.name,
     this.urlKey,
     this.taxCategoryId,
@@ -372,11 +481,16 @@ class Variant {
     this.featured,
     this.visibleIndividually,
     this.status,
+    this.color,
+    this.size,
     this.brand,
     this.guestCheckout,
     this.productNumber,
-    this.importProductSize,
+    this.merchantId,
+    this.campaignId,
     this.listingId,
+    this.contentId,
+    this.originalName,
     this.metaTitle,
     this.metaKeywords,
     this.metaDescription,
@@ -385,6 +499,7 @@ class Variant {
     this.specialPrice,
     this.specialPriceFrom,
     this.specialPriceTo,
+    this.savingPrice,
     this.width,
     this.height,
     this.depth,
@@ -395,158 +510,152 @@ class Variant {
 
   int id;
   String sku;
-  Type type;
+  VariantType type;
   DateTime createdAt;
   DateTime updatedAt;
   int parentId;
   int attributeFamilyId;
   dynamic supplierId;
-  dynamic links;
-  dynamic batteryPowerMah;
-  dynamic screenSize;
-  dynamic cameraResolution;
-  dynamic screenResolution;
-  dynamic displayTechnology;
-  dynamic frontCameraResolution;
-  dynamic screenSizeRange;
-  dynamic displayType;
-  dynamic touchScreen;
-  dynamic numberOfRearCameras;
-  dynamic mainCameraFlash;
-  dynamic numberOfFrontCameras;
-  dynamic frontCameraResolutionRange;
-  dynamic frontCameraFlash;
-  dynamic os;
-  dynamic processorBrand;
-  dynamic ramCapacity;
-  dynamic cpuRange;
-  dynamic headphoneJack;
-  dynamic batteryCapacityRange;
-  dynamic chargeInput;
-  dynamic chargeSpeed;
-  dynamic wirelessCharging;
-  dynamic mobileConnectionSpeed;
-  dynamic bluetooth;
-  dynamic gps;
-  dynamic nfc;
-  dynamic radio;
-  dynamic fingerprintReader;
-  dynamic faceRecognition;
-  dynamic videoChat;
-  dynamic waterdustResistance;
-  dynamic doubleLine;
-  dynamic screenRefreshRate;
-  dynamic videoRecordingResolution;
-  dynamic mainCameraResolutionRange;
-  dynamic expandableMemoryMemoryCardSupport;
+  Materiel materiel;
+  Pattern pattern;
+  dynamic armType;
+  String usageArea;
+  String fabricType;
+  Style style;
+  String collar;
+  Colour colour;
+  dynamic armLenght;
+  dynamic skinType;
+  dynamic additionalFeature;
+  dynamic form;
+  dynamic purposeOfUsage;
   dynamic typeOfBinding;
-  dynamic usageArea;
+  dynamic exteriorMaterial;
   dynamic baseType;
-  dynamic desen;
-  dynamic kalip;
-  dynamic materyal;
-  dynamic yaka;
-  dynamic renk;
-  dynamic teknik;
-  dynamic kumasIplik;
-  dynamic urunTipi;
-  dynamic kolBoyu;
-  dynamic koleksiyon;
-  dynamic shortDescription;
-  dynamic description;
-  String merchantId;
-  String campaignId;
+  dynamic connection;
+  dynamic audioFeature;
+  dynamic activeNoiseCancellationAnc;
+  dynamic watersweatResistance;
+  dynamic microphone;
+  dynamic warrantyPeriod;
+  String drawing;
+  String kolTipi;
+  dynamic fabricYarn;
+  dynamic productType;
+  dynamic collection;
+  dynamic wristStyle;
+  dynamic ground;
+  dynamic nailType;
+  dynamic rim;
+  dynamic bikeType;
+  dynamic quick;
+  dynamic brakeType;
+  dynamic heightSize;
+  dynamic closing;
+  dynamic fabricTechnology;
+  dynamic pocketType;
+  dynamic property;
+  dynamic model;
+  dynamic technical;
+  dynamic thickness;
+  dynamic productDetail;
+  dynamic pocket;
+  dynamic packageIncluded;
+  String nice;
+  String trousersType;
+  String shortDescription;
+  String description;
   String name;
   String urlKey;
   dynamic taxCategoryId;
-  dynamic variantNew;
-  dynamic featured;
-  dynamic visibleIndividually;
+  int variantNew;
+  int featured;
+  int visibleIndividually;
   int status;
+  int color;
+  int size;
   int brand;
   dynamic guestCheckout;
-  dynamic productNumber;
-  String importProductSize;
+  String productNumber;
+  String merchantId;
+  String campaignId;
   String listingId;
+  String contentId;
+  String originalName;
   dynamic metaTitle;
   dynamic metaKeywords;
   dynamic metaDescription;
   String price;
   dynamic cost;
-  dynamic specialPrice;
+  String specialPrice;
   dynamic specialPriceFrom;
   dynamic specialPriceTo;
+  String savingPrice;
   dynamic width;
   dynamic height;
   dynamic depth;
-  dynamic weight;
+  String weight;
   List<Inventory> inventories;
   AttributeFamily attributeFamily;
 
   factory Variant.fromJson(Map<String, dynamic> json) => Variant(
     id: json["id"],
     sku: json["sku"],
-    type: typeValues.map[json["type"]],
+    type: variantTypeValues.map[json["type"]],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     parentId: json["parent_id"],
     attributeFamilyId: json["attribute_family_id"],
     supplierId: json["supplier_id"],
-    links: json["links"],
-    batteryPowerMah: json["battery-power-mah"],
-    screenSize: json["screen-size"],
-    cameraResolution: json["camera-resolution"],
-    screenResolution: json["screen-resolution"],
-    displayTechnology: json["display-technology"],
-    frontCameraResolution: json["front-camera-resolution"],
-    screenSizeRange: json["screen-size-range"],
-    displayType: json["display-type"],
-    touchScreen: json["touch-screen"],
-    numberOfRearCameras: json["number-of-rear-cameras"],
-    mainCameraFlash: json["main-camera-flash"],
-    numberOfFrontCameras: json["number-of-front-cameras"],
-    frontCameraResolutionRange: json["front-camera-resolution-range"],
-    frontCameraFlash: json["front-camera-flash"],
-    os: json["os"],
-    processorBrand: json["processor-brand"],
-    ramCapacity: json["ram-capacity"],
-    cpuRange: json["cpu-range"],
-    headphoneJack: json["headphone-jack"],
-    batteryCapacityRange: json["battery-capacity-range"],
-    chargeInput: json["charge-input"],
-    chargeSpeed: json["charge-speed"],
-    wirelessCharging: json["wireless-charging"],
-    mobileConnectionSpeed: json["mobile-connection-speed"],
-    bluetooth: json["bluetooth"],
-    gps: json["gps"],
-    nfc: json["nfc"],
-    radio: json["radio"],
-    fingerprintReader: json["fingerprint-reader"],
-    faceRecognition: json["face-recognition"],
-    videoChat: json["video-chat"],
-    waterdustResistance: json["waterdust-resistance"],
-    doubleLine: json["double-line"],
-    screenRefreshRate: json["screen-refresh-rate"],
-    videoRecordingResolution: json["video-recording-resolution"],
-    mainCameraResolutionRange: json["main-camera-resolution-range"],
-    expandableMemoryMemoryCardSupport: json["expandable-memory-memory-card-support"],
+    materiel: json["materiel"] == null ? null : materielValues.map[json["materiel"]],
+    pattern: json["pattern"] == null ? null : patternValues.map[json["pattern"]],
+    armType: json["arm-type"],
+    usageArea: json["usage-area"] == null ? null : json["usage-area"],
+    fabricType: json["fabric-type"] == null ? null : json["fabric-type"],
+    style: json["style"] == null ? null : styleValues.map[json["style"]],
+    collar: json["collar"] == null ? null : json["collar"],
+    colour: json["colour"] == null ? null : colourValues.map[json["colour"]],
+    armLenght: json["arm-lenght"],
+    skinType: json["skin-type"],
+    additionalFeature: json["additional-feature"],
+    form: json["form"],
+    purposeOfUsage: json["purpose-of-usage"],
     typeOfBinding: json["type-of-binding"],
-    usageArea: json["usage-area"],
+    exteriorMaterial: json["exterior-material"],
     baseType: json["base-type"],
-    desen: json["desen"],
-    kalip: json["kalip"],
-    materyal: json["materyal"],
-    yaka: json["yaka"],
-    renk: json["renk"],
-    teknik: json["teknik"],
-    kumasIplik: json["kumas-iplik"],
-    urunTipi: json["urun-tipi"],
-    kolBoyu: json["kol-boyu"],
-    koleksiyon: json["koleksiyon"],
+    connection: json["connection"],
+    audioFeature: json["audio-feature"],
+    activeNoiseCancellationAnc: json["active-noise-cancellation-anc"],
+    watersweatResistance: json["watersweat-resistance"],
+    microphone: json["microphone"],
+    warrantyPeriod: json["warranty-period"],
+    drawing: json["drawing"] == null ? null : json["drawing"],
+    kolTipi: json["kol-tipi"] == null ? null : json["kol-tipi"],
+    fabricYarn: json["fabric-yarn"],
+    productType: json["product-type"],
+    collection: json["collection"],
+    wristStyle: json["wrist-style"],
+    ground: json["ground"],
+    nailType: json["nail-type"],
+    rim: json["rim"],
+    bikeType: json["bike-type"],
+    quick: json["quick"],
+    brakeType: json["brake-type"],
+    heightSize: json["height-size"],
+    closing: json["closing"],
+    fabricTechnology: json["fabric-technology"],
+    pocketType: json["pocket-type"],
+    property: json["property"],
+    model: json["model"],
+    technical: json["technical"],
+    thickness: json["thickness"],
+    productDetail: json["product-detail"],
+    pocket: json["pocket"],
+    packageIncluded: json["package-included"],
+    nice: json["nice"] == null ? null : json["nice"],
+    trousersType: json["trousers-type"] == null ? null : json["trousers-type"],
     shortDescription: json["short_description"],
     description: json["description"],
-    merchantId: json["merchant_id"],
-    campaignId: json["campaign_id"],
     name: json["name"],
     urlKey: json["url_key"],
     taxCategoryId: json["tax_category_id"],
@@ -554,11 +663,16 @@ class Variant {
     featured: json["featured"],
     visibleIndividually: json["visible_individually"],
     status: json["status"],
+    color: json["color"] == null ? null : json["color"],
+    size: json["size"],
     brand: json["brand"],
     guestCheckout: json["guest_checkout"],
     productNumber: json["product_number"],
-    importProductSize: json["import_product_size"],
+    merchantId: json["merchant_id"],
+    campaignId: json["campaign_id"],
     listingId: json["listing_id"],
+    contentId: json["content_id"],
+    originalName: json["original_name"],
     metaTitle: json["meta_title"],
     metaKeywords: json["meta_keywords"],
     metaDescription: json["meta_description"],
@@ -567,6 +681,7 @@ class Variant {
     specialPrice: json["special_price"],
     specialPriceFrom: json["special_price_from"],
     specialPriceTo: json["special_price_to"],
+    savingPrice: json["saving_price"] == null ? null : json["saving_price"],
     width: json["width"],
     height: json["height"],
     depth: json["depth"],
@@ -578,67 +693,61 @@ class Variant {
   Map<String, dynamic> toJson() => {
     "id": id,
     "sku": sku,
-    "type": typeValues.reverse[type],
+    "type": variantTypeValues.reverse[type],
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "parent_id": parentId,
     "attribute_family_id": attributeFamilyId,
     "supplier_id": supplierId,
-    "links": links,
-    "battery-power-mah": batteryPowerMah,
-    "screen-size": screenSize,
-    "camera-resolution": cameraResolution,
-    "screen-resolution": screenResolution,
-    "display-technology": displayTechnology,
-    "front-camera-resolution": frontCameraResolution,
-    "screen-size-range": screenSizeRange,
-    "display-type": displayType,
-    "touch-screen": touchScreen,
-    "number-of-rear-cameras": numberOfRearCameras,
-    "main-camera-flash": mainCameraFlash,
-    "number-of-front-cameras": numberOfFrontCameras,
-    "front-camera-resolution-range": frontCameraResolutionRange,
-    "front-camera-flash": frontCameraFlash,
-    "os": os,
-    "processor-brand": processorBrand,
-    "ram-capacity": ramCapacity,
-    "cpu-range": cpuRange,
-    "headphone-jack": headphoneJack,
-    "battery-capacity-range": batteryCapacityRange,
-    "charge-input": chargeInput,
-    "charge-speed": chargeSpeed,
-    "wireless-charging": wirelessCharging,
-    "mobile-connection-speed": mobileConnectionSpeed,
-    "bluetooth": bluetooth,
-    "gps": gps,
-    "nfc": nfc,
-    "radio": radio,
-    "fingerprint-reader": fingerprintReader,
-    "face-recognition": faceRecognition,
-    "video-chat": videoChat,
-    "waterdust-resistance": waterdustResistance,
-    "double-line": doubleLine,
-    "screen-refresh-rate": screenRefreshRate,
-    "video-recording-resolution": videoRecordingResolution,
-    "main-camera-resolution-range": mainCameraResolutionRange,
-    "expandable-memory-memory-card-support": expandableMemoryMemoryCardSupport,
+    "materiel": materiel == null ? null : materielValues.reverse[materiel],
+    "pattern": pattern == null ? null : patternValues.reverse[pattern],
+    "arm-type": armType,
+    "usage-area": usageArea == null ? null : usageArea,
+    "fabric-type": fabricType == null ? null : fabricType,
+    "style": style == null ? null : styleValues.reverse[style],
+    "collar": collar == null ? null : collar,
+    "colour": colour == null ? null : colourValues.reverse[colour],
+    "arm-lenght": armLenght,
+    "skin-type": skinType,
+    "additional-feature": additionalFeature,
+    "form": form,
+    "purpose-of-usage": purposeOfUsage,
     "type-of-binding": typeOfBinding,
-    "usage-area": usageArea,
+    "exterior-material": exteriorMaterial,
     "base-type": baseType,
-    "desen": desen,
-    "kalip": kalip,
-    "materyal": materyal,
-    "yaka": yaka,
-    "renk": renk,
-    "teknik": teknik,
-    "kumas-iplik": kumasIplik,
-    "urun-tipi": urunTipi,
-    "kol-boyu": kolBoyu,
-    "koleksiyon": koleksiyon,
+    "connection": connection,
+    "audio-feature": audioFeature,
+    "active-noise-cancellation-anc": activeNoiseCancellationAnc,
+    "watersweat-resistance": watersweatResistance,
+    "microphone": microphone,
+    "warranty-period": warrantyPeriod,
+    "drawing": drawing == null ? null : drawing,
+    "kol-tipi": kolTipi == null ? null : kolTipi,
+    "fabric-yarn": fabricYarn,
+    "product-type": productType,
+    "collection": collection,
+    "wrist-style": wristStyle,
+    "ground": ground,
+    "nail-type": nailType,
+    "rim": rim,
+    "bike-type": bikeType,
+    "quick": quick,
+    "brake-type": brakeType,
+    "height-size": heightSize,
+    "closing": closing,
+    "fabric-technology": fabricTechnology,
+    "pocket-type": pocketType,
+    "property": property,
+    "model": model,
+    "technical": technical,
+    "thickness": thickness,
+    "product-detail": productDetail,
+    "pocket": pocket,
+    "package-included": packageIncluded,
+    "nice": nice == null ? null : nice,
+    "trousers-type": trousersType == null ? null : trousersType,
     "short_description": shortDescription,
     "description": description,
-    "merchant_id": merchantId,
-    "campaign_id": campaignId,
     "name": name,
     "url_key": urlKey,
     "tax_category_id": taxCategoryId,
@@ -646,11 +755,16 @@ class Variant {
     "featured": featured,
     "visible_individually": visibleIndividually,
     "status": status,
+    "color": color == null ? null : color,
+    "size": size,
     "brand": brand,
     "guest_checkout": guestCheckout,
     "product_number": productNumber,
-    "import_product_size": importProductSize,
+    "merchant_id": merchantId,
+    "campaign_id": campaignId,
     "listing_id": listingId,
+    "content_id": contentId,
+    "original_name": originalName,
     "meta_title": metaTitle,
     "meta_keywords": metaKeywords,
     "meta_description": metaDescription,
@@ -659,6 +773,7 @@ class Variant {
     "special_price": specialPrice,
     "special_price_from": specialPriceFrom,
     "special_price_to": specialPriceTo,
+    "saving_price": savingPrice == null ? null : savingPrice,
     "width": width,
     "height": height,
     "depth": depth,
@@ -700,6 +815,13 @@ class AttributeFamily {
   };
 }
 
+enum Colour { MOTHER, WHITE }
+
+final colourValues = EnumValues({
+  "Mother": Colour.MOTHER,
+  "White": Colour.WHITE
+});
+
 class Inventory {
   Inventory({
     this.id,
@@ -732,10 +854,30 @@ class Inventory {
   };
 }
 
-enum Type { SIMPLE }
+enum Materiel { DENIM, COTTON }
 
-final typeValues = EnumValues({
-  "simple": Type.SIMPLE
+final materielValues = EnumValues({
+  "Cotton": Materiel.COTTON,
+  "Denim": Materiel.DENIM
+});
+
+enum Pattern { BALLOON, SLIM_FIT }
+
+final patternValues = EnumValues({
+  "Balloon": Pattern.BALLOON,
+  "Slim Fit": Pattern.SLIM_FIT
+});
+
+enum Style { STREET_STYLE }
+
+final styleValues = EnumValues({
+  "Street Style": Style.STREET_STYLE
+});
+
+enum VariantType { SIMPLE }
+
+final variantTypeValues = EnumValues({
+  "simple": VariantType.SIMPLE
 });
 
 class Links {
@@ -749,7 +891,7 @@ class Links {
   String first;
   String last;
   dynamic prev;
-  dynamic next;
+  String next;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
     first: json["first"],

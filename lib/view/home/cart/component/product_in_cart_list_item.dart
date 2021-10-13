@@ -65,7 +65,7 @@ class ProductInCartListItem extends StatelessWidget{
                         children: [
                           Container(width: 40.w,height: 40.h,
                               margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
-                              child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.images[0].mediumImageUrl)),
+                              child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.baseImage.mediumImageUrl)),
 
 
                           Container(

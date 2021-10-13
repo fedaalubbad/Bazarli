@@ -82,9 +82,9 @@ class BuildCarouselSlider extends StatelessWidget{
                      child: Row(
                        children: [
                          Container(
-                         height: 80.h,
-                         width: 0.2.sw,
-                         child: Image.network(product[index].baseImage.smallImageUrl)
+                         height: 60.h,
+                         width: 0.17.sw,
+                         child: Image.network(product[index].category[0].imageUrl,fit: BoxFit.fill,)
                          ),
                          SizedBox(width: 5.w,),
                          Container(
@@ -93,7 +93,7 @@ class BuildCarouselSlider extends StatelessWidget{
                              mainAxisAlignment: MainAxisAlignment.start,
                              crossAxisAlignment: CrossAxisAlignment.start,
                              children: [
-                                Text(product[index].name==null?'':product[index].name,style:TabsTextStyle,maxLines: 2,),
+                                Text(product[index].name==null?'':product[index].name,style:TabsTextStyle,maxLines: 1,),
                                 SizedBox(width: 10.h,),
                                 Text(product[index].formatedPrice,style:PriceTextStyle,),
                                 SizedBox(height: 6.h,),

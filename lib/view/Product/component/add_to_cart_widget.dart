@@ -1,12 +1,18 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
+import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 class AddToCartWidet extends StatelessWidget{
+  Datum product;
+  AddToCartWidet(this.product);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,10 +22,21 @@ class AddToCartWidet extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            child: Text(
-              'Quantity',
-              style: TextLabelStyle,
-            ).tr(),
+            child: Row(
+              children: [
+                Text(
+                  'Quantity',
+                  style: TextLabelStyle,
+                ).tr(),
+                SizedBox(width: 5.w,),
+                // Text(
+                //  product.variants[Provider.of<ProductProvider>(
+                //    context,
+                //  ).selectedVarientIndex],
+                //   style: BottomBarTextStyle,
+                // )
+              ],
+            ),
           ),
           SizedBox(height: 10.h,),
           Row(
@@ -35,7 +52,9 @@ class AddToCartWidet extends StatelessWidget{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('1'),
+                        Text(Provider.of<ProductProvider>(
+                                      context,
+                                      ).quantity.toString()),
                         SizedBox(
                           width: 10.w,
                         ),
@@ -53,15 +72,24 @@ class AddToCartWidet extends StatelessWidget{
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              child: SvgPicture.asset('assets/svg/arrow_up.svg'),
-                              onTap: () {},
+                                    child: Center(child: SvgPicture.asset('assets/svg/arrow_up.svg',fit: BoxFit.fill,)),
+                              onTap: () {
+                                Provider.of<ProductProvider>(
+                                    context,listen: false
+                                ).increaseQuantity();
+                              },
                             ),
                             SizedBox(
                               height: 20.h,
                             ),
                             InkWell(
-                              child: SvgPicture.asset('assets/svg/arrow_down.svg'),
-                              onTap: () {},
+
+                                  child: Center(child: SvgPicture.asset('assets/svg/arrow_down.svg',fit: BoxFit.fill,)),
+                              onTap: () {
+                                Provider.of<ProductProvider>(
+                                    context,listen: false
+                                ).decreaseQuantity();
+                              },
                             )
                           ],
                         )
@@ -72,8 +100,12 @@ class AddToCartWidet extends StatelessWidget{
                 Container(
                   child: InkWell(
                       onTap: () {
-                        // NavigationService.navigationService
-                        //     .navigateToWidget(HomeMainScreen());
+                        Provider.of<OrdersProvider>(
+                            context,listen: false
+                        ).addProductToCart(context, product.variants[Provider.of<ProductProvider>(
+                            context,listen: false).selectedVarientIndex].id.toString(), Provider.of<ProductProvider>(
+                            context,listen: false
+                        ).quantity);
                       },
                       child: Container(
                         // margin: EdgeInsets.symmetric(horizontal: 20.w),

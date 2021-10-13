@@ -73,10 +73,6 @@ class Data {
     this.shippingAddress,
     this.createdAt,
     this.updatedAt,
-    this.taxes,
-    this.formatedTaxes,
-    this.baseTaxes,
-    this.formatedBaseTaxes,
     this.formatedDiscountedSubTotal,
     this.formatedBaseDiscountedSubTotal,
   });
@@ -124,10 +120,6 @@ class Data {
   dynamic shippingAddress;
   DateTime createdAt;
   DateTime updatedAt;
-  String taxes;
-  String formatedTaxes;
-  String baseTaxes;
-  String formatedBaseTaxes;
   String formatedDiscountedSubTotal;
   String formatedBaseDiscountedSubTotal;
 
@@ -175,10 +167,6 @@ class Data {
     shippingAddress: json["shipping_address"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    taxes: json["taxes"],
-    formatedTaxes: json["formated_taxes"],
-    baseTaxes: json["base_taxes"],
-    formatedBaseTaxes: json["formated_base_taxes"],
     formatedDiscountedSubTotal: json["formated_discounted_sub_total"],
     formatedBaseDiscountedSubTotal: json["formated_base_discounted_sub_total"],
   );
@@ -227,10 +215,6 @@ class Data {
     "shipping_address": shippingAddress,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "taxes": taxes,
-    "formated_taxes": formatedTaxes,
-    "base_taxes": baseTaxes,
-    "formated_base_taxes": formatedBaseTaxes,
     "formated_discounted_sub_total": formatedDiscountedSubTotal,
     "formated_base_discounted_sub_total": formatedBaseDiscountedSubTotal,
   };
@@ -392,7 +376,7 @@ class Additional {
   });
 
   String token;
-  String quantity;
+    int quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -431,6 +415,10 @@ class Product {
     this.isWishlisted,
     this.isItemInCart,
     this.showQuantityChanger,
+    this.specialPrice,
+    this.formatedSpecialPrice,
+    this.regularPrice,
+    this.formatedRegularPrice,
   });
 
   int id;
@@ -454,6 +442,10 @@ class Product {
   bool isWishlisted;
   bool isItemInCart;
   bool showQuantityChanger;
+  String specialPrice;
+  String formatedSpecialPrice;
+  String regularPrice;
+  String formatedRegularPrice;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -477,6 +469,10 @@ class Product {
     isWishlisted: json["is_wishlisted"],
     isItemInCart: json["is_item_in_cart"],
     showQuantityChanger: json["show_quantity_changer"],
+    specialPrice: json["special_price"],
+    formatedSpecialPrice: json["formated_special_price"],
+    regularPrice: json["regular_price"],
+    formatedRegularPrice: json["formated_regular_price"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -501,6 +497,10 @@ class Product {
     "is_wishlisted": isWishlisted,
     "is_item_in_cart": isItemInCart,
     "show_quantity_changer": showQuantityChanger,
+    "special_price": specialPrice,
+    "formated_special_price": formatedSpecialPrice,
+    "regular_price": regularPrice,
+    "formated_regular_price": formatedRegularPrice,
   };
 }
 

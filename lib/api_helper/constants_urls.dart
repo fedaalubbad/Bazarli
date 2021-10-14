@@ -31,6 +31,7 @@ const String GET_ATTRIBUTES_FILTER_URL = "attribute?attribute=";   //attribute
 const String GET_BRANDS_URL = "suppliers/products/brands";
 // const String DELETE_PRODUCT_URL = "suppliers/products/destory";
 // const String CREATE_UPDATE_PRODUCT_URL = "suppliers/products/create";
+//cities
 
 //CUSTOMER AUTH
 const String CUSTOMER_LOGIN_URL = "customer/login";
@@ -41,6 +42,7 @@ const String GET_CUSTOMER_PROFILE_URL = "customers/"; //ID
 const String GET_CUSTOMER_LOGOUT_URL = "customer/logout?token=true"; //ID
 
 //CUSTOMER ADDRESSES
+const String GET_CITIES_URL = "cities";
 const String CREATE_ADDRESSES_URL = "addresses/create?token=true";
 const String GET_ADDRESSES_URL = "addresses?token=true"; //USED FOR DELETE ALSO
 const String UPDATE_DELETE_ADDRESS_URL = "addresses/";

@@ -1,6 +1,7 @@
 import 'package:bazarli/api_helper/constants_urls.dart';
 import 'package:bazarli/models/address_model/createAddress_model.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
+import 'package:bazarli/models/get_cities_respons/get_cities_respons.dart';
 import 'package:bazarli/models/message_response/message_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -166,6 +167,30 @@ class AddressesApi {
       throw Exception();
     }
   }
+
+  Future<List<GetCitiesResponse>> getKuwitCities() async {
+
+    try {
+      Response response = await Settings.settings.dio.get(GET_CITIES_URL+'?language=en&country=KW');
+      print('002'+response.statusMessage);
+
+      if (response.statusCode < 400) {
+        List<dynamic> searchResponse = response.data;
+        List<GetCitiesResponse> ls = searchResponse.map((e) {
+          return GetCitiesResponse.fromJson(e);
+        }).toList();
+        print('002cities'+ls.first.toString());
+        return ls;
+      } else {
+        print('002citiesError'+response.data);
+      }
+    } on Exception catch (e) {
+      print('002citiesError'+e.toString());
+      return null;
+    }
+  }
+
+
 
   void _showToast(BuildContext context, String message) {
     final scaffold = ScaffoldMessenger.of(context);

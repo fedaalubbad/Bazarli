@@ -11,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class ProductInCartListItem extends StatelessWidget{
+
   dynamic item;
   WishData wishList;
   Function onPressed;
@@ -18,8 +19,7 @@ class ProductInCartListItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed
-      ,
+      onTap: onPressed,
       child: Container(
         child: Stack(
           children: [
@@ -66,7 +66,6 @@ class ProductInCartListItem extends StatelessWidget{
                           Container(width: 40.w,height: 40.h,
                               margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
                               child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.baseImage.mediumImageUrl)),
-
 
                           Container(
                             margin: context.locale.toString()=='en'?EdgeInsets.only(top:10.h,left:5.w,):EdgeInsets.only(top:10.h,right:5.w,),

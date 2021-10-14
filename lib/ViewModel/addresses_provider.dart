@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bazarli/models/get_cities_respons/get_cities_respons.dart';
 import 'package:bazarli/models/message_response/message_response.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/Authentication/widgets/FormError.dart';
@@ -11,6 +12,8 @@ import 'package:flutter/material.dart';
 
 class AddressesProvider extends ChangeNotifier {
   List<Datum> addressList = [];
+  List<GetCitiesResponse> getCitiesResponseList;
+
   final GlobalKey<FormState> addressesFormStateKey = GlobalKey<FormState>();
 
   String country;
@@ -20,6 +23,20 @@ class AddressesProvider extends ChangeNotifier {
    String city;
    String postcode;
    String phone;
+
+  GetCitiesResponse selectedCity;
+    selectCity(value){
+     selectedCity=value;
+      notifyListeners();
+}
+
+  Future< List<GetCitiesResponse>> getCKuwitCities() async {
+    List<GetCitiesResponse> response = await AddressesApi.api.getKuwitCities();
+    this.getCitiesResponseList=response;
+    notifyListeners();
+    return getCitiesResponseList;
+  }
+
   Future<List<Datum>> getCustomerAddresses() async {
     GetAddress address = await AddressesApi.api.getCustomerAddresses();
     this.addressList=address.data;

@@ -19,10 +19,13 @@ class ShippingAdressScreen extends StatefulWidget{
 
 }
 class ShippingAdressScreenState extends State<ShippingAdressScreen> {
+
   @override
   void initState() {
     Provider.of<AddressesProvider>(context, listen: false)
         .getCustomerAddresses();
+    Provider.of<AddressesProvider>(context, listen: false)
+        .getCKuwitCities();
     super.initState();
   }
   @override

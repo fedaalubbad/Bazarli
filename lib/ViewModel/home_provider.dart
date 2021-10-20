@@ -1,5 +1,6 @@
 import 'package:bazarli/api_helper/home_api.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
+import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ class HomeProvider extends ChangeNotifier {
   List<Sliderdatum> sliderList=[];
   double currentIndex=0;
   SlidersResponse slidersResponse;
+  ArrivalsResponse arrivalsResponse;
   BrandResponse brandResponse;
   CategoryResponse categoriesResponse;
   HomeCategoriesResponse homeCategoriesResponse;
@@ -75,5 +77,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
     return slidersResponse;
   }
+
+
 
 }

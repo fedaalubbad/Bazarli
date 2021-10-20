@@ -27,7 +27,7 @@ class BuildCarouselSlider extends StatelessWidget{
         NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product: product[currentIndex],));
       },
       child: CarouselSlider.builder(
-        itemCount: product.length,
+        itemCount: 5,
         itemBuilder: (_, index, realIdx) {
           return Container(
             child: Column(
@@ -82,13 +82,13 @@ class BuildCarouselSlider extends StatelessWidget{
                      ,
                      child: Row(
                        children: [
+                         product[index].superAttributes.length<3?SizedBox():
                          Container(
                          height: 60.h,
                          width: 0.17.sw,
                          child: Image.network(
-                           product[index].superAttributes.length==3?
                            Provider.of<ProductProvider>(
-                           context,).getBrand(product[index], index):product[index].category[0].imageUrl,
+                           context,).getBrand(product[index], index),
                              fit: BoxFit.fill,)
                          ),
                          SizedBox(width: 5.w,),

@@ -81,16 +81,19 @@ class CartScreenState extends State<CartScreen>
             } else {
               body = Text("No more Data");
             }
-            return Container(
-              height: 55.h,
-              child: Center(child: body),
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+
+              child: Container(
+                height: 55.h,
+                child: Center(child: body),
+              ),
             );
           },
         ),
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,
-        physics: BouncingScrollPhysics(),
           child: Container(
             height: ScreenUtil.defaultSize.height.h-(ScreenUtil.defaultSize.height.h / 3.2.h),
             key: _contentKey,
@@ -100,10 +103,11 @@ class CartScreenState extends State<CartScreen>
                 Provider.of<OrdersProvider>(context, ).getCartResponse.data.items
                     .length!=0?
                     Container(
+                      margin: EdgeInsets.only(bottom: 100),
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      physics:NeverScrollableScrollPhysics(),
+                      // physics:NeverScrollableScrollPhysics(),
                       itemCount:
                       Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items
                           .length,
@@ -116,7 +120,7 @@ class CartScreenState extends State<CartScreen>
                     ),
                   ):
                     Container(
-                      margin: EdgeInsets.only(bottom: 100.h),
+                      margin: EdgeInsets.only(bottom: 80.h),
                       child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
                     )
                 ,
@@ -140,7 +144,7 @@ class CartScreenState extends State<CartScreen>
 
   checkOutBtnWidget() {
     return Positioned(
-      bottom: 83.h,
+      bottom: 40.h,
       left: 20.w,
       right: 20.w,
       child: InkWell(

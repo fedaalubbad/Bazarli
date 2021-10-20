@@ -18,6 +18,7 @@ const String GET_CATEGORIES_URL = "categories";
 const String GET_HOME_CATEGORIES_URL = "home-categories";
 const String GET_ATTRIBUTES_URL = "attributes/";
 const String GET_Sliders_URL = "sliders";
+const String GET_ARRIVALS_URL = "arrivals";
 const String GET_PRODUCT_ATTRIBUTES_URL = "families/";
 const String GET_ATTRIBUTES_FILTER_URL = "attribute?attribute=";   //attribute
 

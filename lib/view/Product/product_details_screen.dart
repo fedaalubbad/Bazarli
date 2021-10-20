@@ -83,9 +83,23 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         AddToCartWidet(provider.productById.data),
                         SizedBox(
-                          height: 40.h,
+                          height: 20.h,
                         ),
-                        OverViewAndCustomerReviewToggleView(),
+                        Text(provider.productById.data.variants[Provider
+                            .of<ProductProvider>(
+                          context,
+                        ).selectedVarientIndex].shortDescription,style: ProductTitleStyle,),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(provider.productById.data.variants[Provider
+                            .of<ProductProvider>(
+                          context,
+                        ).selectedVarientIndex].description,style: DescriptionStyle,),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        OverViewAndCustomerReviewToggleView(provider.productById),
                         // SizedBox(
                         //   height: 20.h,
                         // ),

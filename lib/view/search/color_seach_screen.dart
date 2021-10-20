@@ -3,6 +3,7 @@ import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/get_attribute_filter/get_attribute_filter.dart';
+import 'package:bazarli/view/Product/component/getColors.dart';
 import 'package:bazarli/view/home/tool_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,9 +62,7 @@ class ColorsSearchScreenState extends State<ColorsSearchScreen> {
                                 childAspectRatio:0.8.h,
                               ),
                               itemBuilder: (context, index) {
-                                Color color = Colors.primaries[Random().nextInt(
-                                    Colors.primaries.length)];
-                                return  buildColorWidget(color, response[index].attribute);
+                                return buildColorWidget(HexColor.fromHex(response[index].colorCode), response[index].attribute);
                               }
                           );
                         }

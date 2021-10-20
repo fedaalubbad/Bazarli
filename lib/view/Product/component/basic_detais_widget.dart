@@ -16,7 +16,9 @@ class BasicDetailsWidget extends StatelessWidget{
         children: [
           Row(
             children: [
-              Container(
+         product.superAttributes.length<3?
+             Container()
+              :Container(
                   height: 70.h,
                   width: 70.w,
                   child: Image.network(

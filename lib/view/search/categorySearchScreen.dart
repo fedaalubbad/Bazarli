@@ -18,8 +18,8 @@ import 'color_seach_screen.dart';
 import 'new_arrivals_screen.dart';
 
 class CategorySearchScreen extends StatelessWidget {
-  Datum category;
-  CategorySearchScreen({this.category});
+  // Datum category;
+  // CategorySearchScreen({this.category});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +55,9 @@ class CategorySearchScreen extends StatelessWidget {
                  //       ),
                  //    ),
                  //    Divider(),
-                    categoryWidget(context,'Category',Provider.of<ProductProvider>(context).categoryName,0,),
+                    categoryWidget(context,'Category',Provider.of<ProductProvider>(context).selectedCategory==null?'':Provider.of<ProductProvider>(context).selectedCategory.name,0,),
                     Divider(),
-                    categoryWidget(context,'Brand',Provider.of<ProductProvider>(context).brandName,1),
+                    categoryWidget(context,'Brand',Provider.of<ProductProvider>(context).selectedBrand==null?"":Provider.of<ProductProvider>(context).selectedBrand.adminName,1),
                     Divider(),
                     // categoryWidget(context,'Price','',2),
                     selectPriceExpandedListWidget(context,'Price','',2),
@@ -131,6 +131,7 @@ class CategorySearchScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title,style: TextLabelStyle,).tr(),
                     SizedBox(height: 5.h,),

@@ -1,3 +1,6 @@
+import 'package:bazarli/models/Categories_model/category_response.dart' as categoryResponse;
+import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,10 +8,11 @@ import 'package:flutter/material.dart';
 import '../api_helper/product_api.dart';
 
 class ProductProvider extends ChangeNotifier {
-  int categoryId;
-  String categoryName;
-  int brandId;
-  String brandName;
+  // int categoryId;
+  // String categoryName;
+  categoryResponse.Datum selectedCategory;
+  Brand selectedBrand;
+  ArrivalsResponse selectedArrivals;
   String search;
   String order;
   String sort;
@@ -121,20 +125,21 @@ class ProductProvider extends ChangeNotifier {
     return value;
   }
 
-  int selectBrand(value, name) {
-    this.brandId = value;
-    this.brandName = name;
+ selectBrand(brand) {
+    selectedBrand=brand;
     notifyListeners();
-    print('brandId=$value');
-    return value;
+
   }
 
-  int selectCategory(value, name) {
-    this.categoryId = value;
-    this.categoryName = name;
+  selectCategory(value) {
+    selectedCategory=value;
     notifyListeners();
     print('catId=$value');
-    return value;
+  }
+  selectArrivals(value) {
+    selectedArrivals=value;
+    notifyListeners();
+
   }
 
   Future<GetProductById> getProductById({int productId}) async {
@@ -165,12 +170,12 @@ class ProductProvider extends ChangeNotifier {
   Future<ProductResponse> getSearchProducts({int productId}) async {
     ProductResponse response = await ProductApi.api.getAllProducts(
         product_id: productId,
-        category_id: categoryId,
+        category_id: selectedCategory.id,
         search: search,
         order: order,
         sort: sort,
         price: price,
-        brand: brandId,
+        brand: selectedBrand.id,
         size: size,
         new_arrivals_in: newArrivals);
     productList = response.data;

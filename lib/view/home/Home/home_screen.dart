@@ -1,6 +1,8 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
+import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:bazarli/view/home/Home/get_home_categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -212,26 +214,36 @@ class HomeScreenState extends State<HomeScreen>
       ...Provider.of<HomeProvider>(
         context,
         listen: false,
-      ).sliderList.map((e) => _productSlideImage(e.imageUrl))
+      ).sliderList.map((e) => _productSlideImage(e))
     ]
 
     );
   }
 
-  _productSlideImage(String imageUrl) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      height: 140.h,
-      width: ScreenUtil.defaultSize.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          ScreenUtil().radius(2),
+  _productSlideImage(Sliderdatum slider) {
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
+          height: 140.h,
+          width: ScreenUtil.defaultSize.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              ScreenUtil().radius(2),
+            ),
+            image: DecorationImage(
+              image: NetworkImage(slider.imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
+        Positioned(
+          left: 0.w,right: 0.w,top: 10.h,
+          child: Center(
+            child: Text(slider.title,style: DialogTitle1Style,),
+          ),
+        )
+      ],
     );
   }
 

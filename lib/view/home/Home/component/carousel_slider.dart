@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
@@ -84,7 +85,11 @@ class BuildCarouselSlider extends StatelessWidget{
                          Container(
                          height: 60.h,
                          width: 0.17.sw,
-                         child: Image.network(product[index].category[0].imageUrl,fit: BoxFit.fill,)
+                         child: Image.network(
+                           product[index].superAttributes.length==3?
+                           Provider.of<ProductProvider>(
+                           context,).getBrand(product[index], index):product[index].category[0].imageUrl,
+                             fit: BoxFit.fill,)
                          ),
                          SizedBox(width: 5.w,),
                          Container(

@@ -2,7 +2,7 @@ import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_response.dart';
+import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class AddToCartWidet extends StatelessWidget{
-  Datum product;
+  Data product;
   AddToCartWidet(this.product);
   @override
   Widget build(BuildContext context) {
@@ -29,12 +29,23 @@ class AddToCartWidet extends StatelessWidget{
                   style: TextLabelStyle,
                 ).tr(),
                 SizedBox(width: 5.w,),
-                // Text(
-                //  product.variants[Provider.of<ProductProvider>(
-                //    context,
-                //  ).selectedVarientIndex],
-                //   style: BottomBarTextStyle,
-                // )
+              if(product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].inventories!=null)
+                Text(
+                 product.variants[Provider.of<ProductProvider>(
+                   context,
+                 ).selectedVarientIndex].inventories[0].qty.toString(),
+                  style: BottomBarTextStyle,
+                ),
+                SizedBox(width: 5.w,),
+                if(product.variants[Provider.of<ProductProvider>(
+                  context,
+                ).selectedVarientIndex].inventories!=null)
+                Text(
+                 'Items',
+                  style: BottomBarTextStyle,
+                ).tr()
               ],
             ),
           ),

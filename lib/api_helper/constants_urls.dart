@@ -2,7 +2,8 @@ const String baseUrl = 'https://test.bazarli.com/api/';
 // Options options=Options(headers : { "app-id":"60bdbd22159b332fec7c83e6"} );
 
 //PRODUCTS
-const String GET_PRODUCTS_URL = "products/search"; // ID FOR ONE PRODUCT
+const String GET_PRODUCTS_URL = "products/search"; //
+const String GET_PRODUCT_BY_ID_URL = "products"; // ID FOR ONE PRODUCT
 const String SEARCH_PRODUCTS_URL = "products/search";
 const String PRODUCT_ADDITIONAL_INFO_URL =
     "product-additional-information/"; //ID

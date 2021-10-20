@@ -1,5 +1,7 @@
+import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'constants_urls.dart';
 import 'dio_settings.dart';
 
@@ -37,9 +39,30 @@ class ProductApi {
       if(new_arrivals_in!=null)
       'new_arrivals_in': new_arrivals_in,
     };
+    try{
     Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL,data: formData);
-    ProductResponse productsList = ProductResponse.fromJson(response.data);
-    return productsList;
+    if(response.statusCode==200) {
+      ProductResponse productsList = ProductResponse.fromJson(response.data);
+      return productsList;
+    }else{}
+  } on DioError catch (e) {
+  print('errormsg $e');
+  return null;
+  }
+  }
+  Future<GetProductById> getProductById({int product_id}) async {
+    try{
+    Response response = await Settings.settings.dio.get(GET_PRODUCT_BY_ID_URL+'/$product_id?token=true');
+    if(response.statusCode==200) {
+      GetProductById product = GetProductById.fromJson(response.data);
+      return product;
+    }else{
+
+    }
+  } on DioError catch (e) {
+  print('errormsg $e');
+  return null;
+  }
   }
 
   // Stream<Response> getTopProducts() async* {

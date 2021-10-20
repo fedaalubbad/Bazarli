@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
 import 'package:bazarli/view/Product/component/getColors.dart';
 import 'package:bazarli/view/home/Home/component/dotted_slider.dart';
@@ -13,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'component/add_to_cart_widget.dart';
 import 'component/basic_detais_widget.dart';
 import 'component/getMeasurement.dart';
-import 'component/measurements_widgets.dart';
 import 'component/toggle_view.dart';
 import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,77 +26,85 @@ class ProductDetailsScreen extends StatefulWidget{
   State<StatefulWidget> createState() {
    return ProductDetailsScreenState();
   }
-
 }
 
 class ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
 @override
   void initState() {
-  Provider.of<ProductProvider>(
-    context,listen: false
-  ).selectVarientIndex(0);
 
+  Provider.of<ProductProvider>(
+        context,listen: false
+      ).getProductById(productId: widget.product.id);
   super.initState();
   }
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Stack(
-        children: [
-          ProductToolBar(
-            productName: widget.product.name==null?'':widget.product.name,
-          ),
-          Container(
-            color: HomeBackgroundColor,
-            margin: EdgeInsets.only(top: 127.h, left: 20.w, right: 20.w),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  dottedSlider(context,widget.product.images),
-                  SizedBox(
-                    height: 20.h,
+      body: Consumer<ProductProvider>(
+          builder: (context,provider, child) {
+            if(provider.productById==null){
+              return Center(child: CircularProgressIndicator());
+            }else
+            return Stack(
+              children: [
+                ProductToolBar(
+                  productName: provider.productById.data.name == null ? '' :provider.productById.data
+                      .name,
+                ),
+                Container(
+                  color: HomeBackgroundColor,
+                  margin: EdgeInsets.only(top: 127.h, left: 20.w, right: 20.w),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        dottedSlider(context,provider.productById.data.images),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        BasicDetailsWidget(product:provider.productById.data),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        GetMeasurement(product: provider.productById.data,),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        if( Provider.of<ProductProvider>(
+                            context, listen: false
+                        ).getColors(provider.productById.data, Provider
+                            .of<ProductProvider>(
+                          context,
+                        ).selectedVarientIndex) != '')
+                       GetColors(product: provider.productById.data,),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        AddToCartWidet(provider.productById.data),
+                        SizedBox(
+                          height: 40.h,
+                        ),
+                        OverViewAndCustomerReviewToggleView(),
+                        // SizedBox(
+                        //   height: 20.h,
+                        // ),
+                        // MeasurementsWidgets(),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                      ],
+                    ),
                   ),
-                  BasicDetailsWidget(product:widget.product),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  GetMeasurement(product: widget.product,),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-               if( Provider.of<ProductProvider>(
-                      context,listen: false
-                  ).getColors(widget.product,Provider.of<ProductProvider>(
-                    context,
-                  ).selectedVarientIndex)!='')
-                  GetColors(product: widget.product,),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  AddToCartWidet(widget.product),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  OverViewAndCustomerReviewToggleView(),
-                  // SizedBox(
-                  //   height: 20.h,
-                  // ),
-                  // MeasurementsWidgets(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+                ),
+              ],
+            );
+          }
       ),
     );
   }
 
-  dottedSlider(BuildContext context,List<productResponse.Image>images) {
+  dottedSlider(BuildContext context,List<dynamic>images) {
     // ProductResponse.fromJson(widget.product).imagesList.add(ProductResponse.fromJson(widget.product).image);
     return Container(
       child: DottedSlider(maxHeight: 283.h, children:[

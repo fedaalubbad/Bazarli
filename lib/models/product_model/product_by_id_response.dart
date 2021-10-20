@@ -1,39 +1,31 @@
 // To parse this JSON data, do
 //
-//     final productResponse = productResponseFromJson(jsonString);
+//     final getProductById = getProductByIdFromJson(jsonString);
 
 import 'dart:convert';
 
-ProductResponse productResponseFromJson(String str) => ProductResponse.fromJson(json.decode(str));
+GetProductById getProductByIdFromJson(String str) => GetProductById.fromJson(json.decode(str));
 
-String productResponseToJson(ProductResponse data) => json.encode(data.toJson());
+String getProductByIdToJson(GetProductById data) => json.encode(data.toJson());
 
-class ProductResponse {
-  ProductResponse({
+class GetProductById {
+  GetProductById({
     this.data,
-    this.links,
-    this.meta,
   });
 
-  List<Datum> data;
-  Links links;
-  Meta meta;
+  Data data;
 
-  factory ProductResponse.fromJson(Map<String, dynamic> json) => ProductResponse(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    links: Links.fromJson(json["links"]),
-    meta: Meta.fromJson(json["meta"]),
+  factory GetProductById.fromJson(Map<String, dynamic> json) => GetProductById(
+    data: Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "links": links.toJson(),
-    "meta": meta.toJson(),
+    "data": data.toJson(),
   };
 }
 
-class Datum {
-  Datum({
+class Data {
+  Data({
     this.id,
     this.sku,
     this.type,
@@ -91,7 +83,7 @@ class Datum {
   String formatedRegularPrice;
   List<SuperAttribute> superAttributes;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     sku: json["sku"],
     type: json["type"],
@@ -329,20 +321,20 @@ class SuperAttribute {
   });
 
   int id;
-  Code code;
-  SuperAttributeType type;
-  Name name;
-  SwatchType swatchType;
+  String code;
+  String type;
+  String name;
+  String swatchType;
   List<Option> options;
   DateTime createdAt;
   DateTime updatedAt;
 
   factory SuperAttribute.fromJson(Map<String, dynamic> json) => SuperAttribute(
     id: json["id"],
-    code: codeValues.map[json["code"]],
-    type: superAttributeTypeValues.map[json["type"]],
-    name: nameValues.map[json["name"]],
-    swatchType: swatchTypeValues.map[json["swatch_type"]],
+    code: json["code"],
+    type: json["type"],
+    name: json["name"],
+    swatchType: json["swatch_type"],
     options: List<Option>.from(json["options"].map((x) => Option.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -350,31 +342,15 @@ class SuperAttribute {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "code": codeValues.reverse[code],
-    "type": superAttributeTypeValues.reverse[type],
-    "name": nameValues.reverse[name],
-    "swatch_type": swatchTypeValues.reverse[swatchType],
+    "code": code,
+    "type": type,
+    "name": name,
+    "swatch_type": swatchType,
     "options": List<dynamic>.from(options.map((x) => x.toJson())),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
 }
-
-enum Code { COLOR, SIZE, BRAND }
-
-final codeValues = EnumValues({
-  "brand": Code.BRAND,
-  "color": Code.COLOR,
-  "size": Code.SIZE
-});
-
-enum Name { COLOR, SIZE, BRAND }
-
-final nameValues = EnumValues({
-  "Brand": Name.BRAND,
-  "Color": Name.COLOR,
-  "Size": Name.SIZE
-});
 
 class Option {
   Option({
@@ -403,20 +379,6 @@ class Option {
     "swatch_value": swatchValue == null ? null : swatchValue,
   };
 }
-
-enum SwatchType { COLOR, DROPDOWN, IMAGE }
-
-final swatchTypeValues = EnumValues({
-  "color": SwatchType.COLOR,
-  "dropdown": SwatchType.DROPDOWN,
-  "image": SwatchType.IMAGE
-});
-
-enum SuperAttributeType { SELECT }
-
-final superAttributeTypeValues = EnumValues({
-  "select": SuperAttributeType.SELECT
-});
 
 class Variant {
   Variant({
@@ -491,9 +453,6 @@ class Variant {
     this.legLength,
     this.underUpperTeam,
     this.backToSchool,
-    this.sustainable,
-    this.liner,
-    this.cut,
     this.shortDescription,
     this.description,
     this.name,
@@ -532,20 +491,20 @@ class Variant {
 
   int id;
   String sku;
-  VariantType type;
+  String type;
   DateTime createdAt;
   DateTime updatedAt;
   int parentId;
   int attributeFamilyId;
   dynamic supplierId;
-  Materiel materiel;
-  Pattern pattern;
+  dynamic materiel;
+  dynamic pattern;
   dynamic armType;
   dynamic usageArea;
   dynamic fabricType;
-  Style style;
+  dynamic style;
   dynamic collar;
-  Colour colour;
+  dynamic colour;
   dynamic armLenght;
   dynamic skinType;
   dynamic additionalFeature;
@@ -560,8 +519,8 @@ class Variant {
   dynamic watersweatResistance;
   dynamic microphone;
   dynamic warrantyPeriod;
-  String drawing;
-  String kolTipi;
+  dynamic drawing;
+  dynamic kolTipi;
   dynamic fabricYarn;
   dynamic productType;
   dynamic collection;
@@ -582,8 +541,8 @@ class Variant {
   dynamic thickness;
   dynamic productDetail;
   dynamic pocket;
-  String packageIncluded;
-  Nice nice;
+  dynamic packageIncluded;
+  dynamic nice;
   dynamic trousersType;
   dynamic soleTechnology;
   dynamic heelLength;
@@ -601,9 +560,6 @@ class Variant {
   dynamic legLength;
   dynamic underUpperTeam;
   dynamic backToSchool;
-  dynamic sustainable;
-  dynamic liner;
-  dynamic cut;
   String shortDescription;
   String description;
   String name;
@@ -613,7 +569,7 @@ class Variant {
   int featured;
   int visibleIndividually;
   int status;
-  int color;
+  dynamic color;
   int size;
   int brand;
   dynamic guestCheckout;
@@ -642,20 +598,20 @@ class Variant {
   factory Variant.fromJson(Map<String, dynamic> json) => Variant(
     id: json["id"],
     sku: json["sku"],
-    type: variantTypeValues.map[json["type"]],
+    type: json["type"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     parentId: json["parent_id"],
     attributeFamilyId: json["attribute_family_id"],
     supplierId: json["supplier_id"],
-    materiel: json["materiel"] == null ? null : materielValues.map[json["materiel"]],
-    pattern: json["pattern"] == null ? null : patternValues.map[json["pattern"]],
+    materiel: json["materiel"],
+    pattern: json["pattern"],
     armType: json["arm-type"],
     usageArea: json["usage-area"],
     fabricType: json["fabric-type"],
-    style: json["style"] == null ? null : styleValues.map[json["style"]],
+    style: json["style"],
     collar: json["collar"],
-    colour: json["colour"] == null ? null : colourValues.map[json["colour"]],
+    colour: json["colour"],
     armLenght: json["arm-lenght"],
     skinType: json["skin-type"],
     additionalFeature: json["additional-feature"],
@@ -670,8 +626,8 @@ class Variant {
     watersweatResistance: json["watersweat-resistance"],
     microphone: json["microphone"],
     warrantyPeriod: json["warranty-period"],
-    drawing: json["drawing"] == null ? null : json["drawing"],
-    kolTipi: json["kol-tipi"] == null ? null : json["kol-tipi"],
+    drawing: json["drawing"],
+    kolTipi: json["kol-tipi"],
     fabricYarn: json["fabric-yarn"],
     productType: json["product-type"],
     collection: json["collection"],
@@ -692,8 +648,8 @@ class Variant {
     thickness: json["thickness"],
     productDetail: json["product-detail"],
     pocket: json["pocket"],
-    packageIncluded: json["package-included"] == null ? null : json["package-included"],
-    nice: json["nice"] == null ? null : niceValues.map[json["nice"]],
+    packageIncluded: json["package-included"],
+    nice: json["nice"],
     trousersType: json["trousers-type"],
     soleTechnology: json["sole-technology"],
     heelLength: json["heel-length"],
@@ -711,9 +667,6 @@ class Variant {
     legLength: json["leg-length"],
     underUpperTeam: json["under-upper-team"],
     backToSchool: json["back-to-school"],
-    sustainable: json["sustainable"],
-    liner: json["liner"],
-    cut: json["cut"],
     shortDescription: json["short_description"],
     description: json["description"],
     name: json["name"],
@@ -723,7 +676,7 @@ class Variant {
     featured: json["featured"],
     visibleIndividually: json["visible_individually"],
     status: json["status"],
-    color: json["color"] == null ? null : json["color"],
+    color: json["color"],
     size: json["size"],
     brand: json["brand"],
     guestCheckout: json["guest_checkout"],
@@ -741,7 +694,7 @@ class Variant {
     specialPrice: json["special_price"],
     specialPriceFrom: json["special_price_from"],
     specialPriceTo: json["special_price_to"],
-    savingPrice: json["saving_price"] == null ? null : json["saving_price"],
+    savingPrice: json["saving_price"],
     width: json["width"],
     height: json["height"],
     depth: json["depth"],
@@ -753,20 +706,20 @@ class Variant {
   Map<String, dynamic> toJson() => {
     "id": id,
     "sku": sku,
-    "type": variantTypeValues.reverse[type],
+    "type": type,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "parent_id": parentId,
     "attribute_family_id": attributeFamilyId,
     "supplier_id": supplierId,
-    "materiel": materiel == null ? null : materielValues.reverse[materiel],
-    "pattern": pattern == null ? null : patternValues.reverse[pattern],
+    "materiel": materiel,
+    "pattern": pattern,
     "arm-type": armType,
     "usage-area": usageArea,
     "fabric-type": fabricType,
-    "style": style == null ? null : styleValues.reverse[style],
+    "style": style,
     "collar": collar,
-    "colour": colour == null ? null : colourValues.reverse[colour],
+    "colour": colour,
     "arm-lenght": armLenght,
     "skin-type": skinType,
     "additional-feature": additionalFeature,
@@ -781,8 +734,8 @@ class Variant {
     "watersweat-resistance": watersweatResistance,
     "microphone": microphone,
     "warranty-period": warrantyPeriod,
-    "drawing": drawing == null ? null : drawing,
-    "kol-tipi": kolTipi == null ? null : kolTipi,
+    "drawing": drawing,
+    "kol-tipi": kolTipi,
     "fabric-yarn": fabricYarn,
     "product-type": productType,
     "collection": collection,
@@ -803,8 +756,8 @@ class Variant {
     "thickness": thickness,
     "product-detail": productDetail,
     "pocket": pocket,
-    "package-included": packageIncluded == null ? null : packageIncluded,
-    "nice": nice == null ? null : niceValues.reverse[nice],
+    "package-included": packageIncluded,
+    "nice": nice,
     "trousers-type": trousersType,
     "sole-technology": soleTechnology,
     "heel-length": heelLength,
@@ -822,9 +775,6 @@ class Variant {
     "leg-length": legLength,
     "under-upper-team": underUpperTeam,
     "back-to-school": backToSchool,
-    "sustainable": sustainable,
-    "liner": liner,
-    "cut": cut,
     "short_description": shortDescription,
     "description": description,
     "name": name,
@@ -834,7 +784,7 @@ class Variant {
     "featured": featured,
     "visible_individually": visibleIndividually,
     "status": status,
-    "color": color == null ? null : color,
+    "color": color,
     "size": size,
     "brand": brand,
     "guest_checkout": guestCheckout,
@@ -852,7 +802,7 @@ class Variant {
     "special_price": specialPrice,
     "special_price_from": specialPriceFrom,
     "special_price_to": specialPriceTo,
-    "saving_price": savingPrice == null ? null : savingPrice,
+    "saving_price": savingPrice,
     "width": width,
     "height": height,
     "depth": depth,
@@ -894,13 +844,6 @@ class AttributeFamily {
   };
 }
 
-enum Colour { WHITE, BLUE }
-
-final colourValues = EnumValues({
-  "blue": Colour.BLUE,
-  "White": Colour.WHITE
-});
-
 class Inventory {
   Inventory({
     this.id,
@@ -931,118 +874,4 @@ class Inventory {
     "inventory_source_id": inventorySourceId,
     "vendor_id": vendorId,
   };
-}
-
-enum Materiel { COTTON, DENIM }
-
-final materielValues = EnumValues({
-  "Cotton": Materiel.COTTON,
-  "Denim": Materiel.DENIM
-});
-
-enum Nice { HIGH_WAIST }
-
-final niceValues = EnumValues({
-  "High waist": Nice.HIGH_WAIST
-});
-
-enum Pattern { NORMAL, SKINNY }
-
-final patternValues = EnumValues({
-  "Normal": Pattern.NORMAL,
-  "Skinny": Pattern.SKINNY
-});
-
-enum Style { TREND }
-
-final styleValues = EnumValues({
-  "Trend": Style.TREND
-});
-
-enum VariantType { SIMPLE }
-
-final variantTypeValues = EnumValues({
-  "simple": VariantType.SIMPLE
-});
-
-class Links {
-  Links({
-    this.first,
-    this.last,
-    this.prev,
-    this.next,
-  });
-
-  String first;
-  String last;
-  dynamic prev;
-  String next;
-
-  factory Links.fromJson(Map<String, dynamic> json) => Links(
-    first: json["first"],
-    last: json["last"],
-    prev: json["prev"],
-    next: json["next"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "first": first,
-    "last": last,
-    "prev": prev,
-    "next": next,
-  };
-}
-
-class Meta {
-  Meta({
-    this.currentPage,
-    this.from,
-    this.lastPage,
-    this.path,
-    this.perPage,
-    this.to,
-    this.total,
-  });
-
-  int currentPage;
-  int from;
-  int lastPage;
-  String path;
-  int perPage;
-  int to;
-  int total;
-
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-    currentPage: json["current_page"],
-    from: json["from"],
-    lastPage: json["last_page"],
-    path: json["path"],
-    perPage: json["per_page"],
-    to: json["to"],
-    total: json["total"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "current_page": currentPage,
-    "from": from,
-    "last_page": lastPage,
-    "path": path,
-    "per_page": perPage,
-    "to": to,
-    "total": total,
-  };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }

@@ -1,13 +1,13 @@
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
+import 'package:bazarli/models/product_model/product_by_id_response.dart'as productResponse;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 class BasicDetailsWidget extends StatelessWidget{
-  productResponse.Datum product;
+  productResponse.Data product;
   BasicDetailsWidget({this.product});
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,11 @@ class BasicDetailsWidget extends StatelessWidget{
                   height: 70.h,
                   width: 70.w,
                   child: Image.network(
-                    product.category[0].imageUrl,
+                      Provider.of<ProductProvider>(
+                        context,).getBrand(product, Provider.of<ProductProvider>(
+                        context,
+                      ).selectedVarientIndex),
+                    // product.category[0].imageUrl,
                     fit: BoxFit.fill,
                   )),
               Container(

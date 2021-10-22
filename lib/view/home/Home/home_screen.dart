@@ -30,24 +30,7 @@ class HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    Provider.of<HomeProvider>(
-      context,
-      listen: false,
-    ).getAllCategories(context);
 
-    Provider.of<HomeProvider>(
-      context,
-      listen: false,
-    ).getAllHomeCategories(context);
-
-    Provider.of<HomeProvider>(
-      context,
-      listen: false,
-    ).getSliders(context);
-    Provider.of<HomeProvider>(
-      context,
-      listen: false,
-    ).getAllBrandss(context);
 
     Provider.of<ProductProvider>(
       context,

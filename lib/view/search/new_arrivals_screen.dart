@@ -1,4 +1,6 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
 import 'package:bazarli/view/home/tool_bar_widget.dart';
@@ -57,31 +59,38 @@ class NewArrivalScreenState extends State<NewArrivalScreen> {
                                     physics: ScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: response.length,
-                                    itemBuilder: (context,index){
-                                      ArrivalsResponse arrivals=response[index];
-                                      return _myCheckButton(arrivals,false);
+                                    itemBuilder: (context, index) {
+                                      ArrivalsResponse arrival = response[index];
+                                      // return _myCheckButton(arrival, false);
+                                      return buildRadio(context, arrival);
                                     });
-                              //   _myCheckButton(title: 'FOSSIL', value: 0,)
-                              // ,
-                              // _myCheckButton(title: 'FOSSIL', value: 1,),
-                              // _myCheckButton(title: 'FOSSIL', value: 2,),
+                                //   _myCheckButton(title: 'FOSSIL', value: 0,)
+                                // ,
+                                // _myCheckButton(title: 'FOSSIL', value: 1,),
+                                // _myCheckButton(title: 'FOSSIL', value: 2,),
                               }
-                              }, selector: (context, provider) {
+                            }, selector: (context, provider) {
                           return provider.getArrivalsList;
                         }),
                       ]),
                 ),
               ),
-              ApplyButtonWidget(),
-            ],
+              ApplyButtonWidget(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),            ],
           ),
         ]));
   }
 
-  Widget _myCheckButton(ArrivalsResponse arrival,isChecked) {
+  Widget _myCheckButton(ArrivalsResponse arrival, isChecked) {
     return CheckboxListTile(
-      onChanged: (val){
+      onChanged: (val) {
+        !val;
+        setState(() {
 
+        });
       },
       value: isChecked,
 
@@ -92,4 +101,34 @@ class NewArrivalScreenState extends State<NewArrivalScreen> {
     );
   }
 
+  Widget buildRadio(BuildContext context, ArrivalsResponse arrival) {
+    // return Selector<ProductProvider, int>(
+    //     selector: (_, provider) => provider.brandId,
+    // shouldRebuild: (previous, next) => previous == next,
+    // builder: (context, number, child) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 12,
+        ),
+        Radio(
+            value: arrival,
+            groupValue: Provider
+                .of<ProductProvider>(context,)
+                .selectedArrivals,
+            activeColor: PrimaryColor,
+            onChanged: (val) {
+              Provider.of<ProductProvider>(context, listen: false)
+                  .selectArrivals(val);
+            }
+          // myDialog();
+
+        ),
+        SizedBox(
+          width: 12,
+        ),
+        Text(arrival.arriveIn),
+      ],
+    );
+  }
 }

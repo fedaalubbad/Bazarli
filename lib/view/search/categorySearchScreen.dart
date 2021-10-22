@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
@@ -65,9 +66,9 @@ class CategorySearchScreen extends StatelessWidget {
                     // categoryWidget(context,'ProductRating','',3),
                     selectRateExpandedListWidget(context,'ProductRating','',3),
                     Divider(),
-                    categoryWidget(context,'Size','',4,),
+                    categoryWidget(context,'Size',Provider.of<AttributeFilterProvider>(context).selectedSizeResponse==null?"":Provider.of<AttributeFilterProvider>(context).selectedSizeResponse.attribute,4,),
                     Divider(),
-                    categoryWidget(context,'NewArrivals','',5),
+                    categoryWidget(context,'NewArrivals',Provider.of<ProductProvider>(context).selectedArrivals==null?"":Provider.of<ProductProvider>(context).selectedArrivals.arriveIn,5),
                     Divider(),
                     categoryWidget(context,'Department','',6),
                     Divider(),

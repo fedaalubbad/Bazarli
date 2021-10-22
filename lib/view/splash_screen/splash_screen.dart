@@ -1,10 +1,8 @@
-import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
+import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
-import 'package:bazarli/models/get_attribute_filter/get_attribute_filter.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
-import 'package:bazarli/view/Authentication/loginAndRegister.dart';
 import 'package:bazarli/view/home/home_main_screen.dart';
 import 'package:bazarli/view/slider_splash/slider_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +20,24 @@ class SplashState extends State<SplashScreen>{
   navigationTohome(BuildContext context) async{
 
     Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllCategories(context);
+
+    Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllHomeCategories(context);
+
+   Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getSliders(context);
+     Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    ).getAllBrandss(context);
 
     await Future.delayed(Duration(seconds:4));
     if(SPHelper.spHelper.isLoged())

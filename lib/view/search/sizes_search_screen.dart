@@ -1,8 +1,10 @@
+import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/view/home/tool_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'component/apply_btn_widget.dart';
 class SizesSearchScreen extends StatefulWidget{
   @override
@@ -12,17 +14,10 @@ class SizesSearchScreen extends StatefulWidget{
 
 }
 class SizesSearchScreenState extends State<SizesSearchScreen> {
-
-  List<RadioModel> sampleData = new List<RadioModel>();
  @override
   void initState() {
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
-   sampleData.add(new RadioModel(false, 'oneSize', '(733)'));
+   Provider.of<AttributeFilterProvider>(context, listen: false).getAttributeFliter(context,'size');
+
     super.initState();
   }
   @override
@@ -46,8 +41,13 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
                       SizedBox(
                         height: 25.h,
                       ),
-                      GridView.builder(
-                          itemCount: sampleData.length,
+                      Selector<AttributeFilterProvider, List<RadioModel>>(
+                      builder: (context, response, widget) {
+                          if (response == null) {
+                          return CircularProgressIndicator();
+                          } else {
+                        return GridView.builder(
+                          itemCount: response.length,
                           physics: ScrollPhysics(),
                           shrinkWrap: true,
                           gridDelegate:
@@ -62,15 +62,19 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
                             return
                               InkWell(
                                 onTap: (){
-                              setState(() {
-                                sampleData.forEach((element) => element.isSelected = false);
-                                sampleData[index].isSelected = true;
-                              });
+                              // setState(() {
+                              // response[index].isSelected=true;
+                              Provider.of<AttributeFilterProvider>(context,listen: false).selectSize(response[index]);
+                              // });
                             },
                             child:
-                            buildSizeWidget(sampleData[index])
+                            buildSizeWidget(response[index])
                             );
-                          }),
+                          });
+                      }
+                      }, selector: (context, provider) {
+                        return provider.sizesList;
+                      }),
                     ]),
               ),
             ),
@@ -95,14 +99,14 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              _item.buttonText,
+              _item.attribute,
               style: TextLabelStyle,
             ),
             SizedBox(
               height: 10.h,
             ),
             Text(
-             _item.text,
+             _item.count,
               style: TextLabelStyle,
             ),
           ],
@@ -156,13 +160,12 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
         ));
   }
 
-
-
 }
 class RadioModel {
   bool isSelected;
-  final String buttonText;
-  final String text;
+  final String attribute;
+  final String count;
+  final String clorCode;
 
-  RadioModel(this.isSelected, this.buttonText, this.text);
+  RadioModel(this.isSelected, this.count, this.attribute,{this.clorCode});
 }

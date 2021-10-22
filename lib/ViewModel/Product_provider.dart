@@ -3,6 +3,7 @@ import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
+import 'package:bazarli/view/search/sizes_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../api_helper/product_api.dart';
@@ -13,6 +14,8 @@ class ProductProvider extends ChangeNotifier {
   categoryResponse.Datum selectedCategory;
   Brand selectedBrand;
   ArrivalsResponse selectedArrivals;
+
+
   String search;
   String order;
   String sort;

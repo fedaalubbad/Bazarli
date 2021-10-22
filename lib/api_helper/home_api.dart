@@ -18,8 +18,7 @@ class HomeApi {
     try {
       Response response = await Settings.settings.dio.get(GET_CATEGORIES_URL);
       if (response.statusCode < 400) {
-        CategoryResponse getCategoriesResponse =
-        CategoryResponse.fromJson(response.data);
+        CategoryResponse getCategoriesResponse = CategoryResponse.fromJson(response.data);
         return getCategoriesResponse;
       } else {
         print(response.data);

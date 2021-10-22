@@ -54,10 +54,10 @@ class AuthenticationProvider extends ChangeNotifier {
   setLanguage(String lang) {
     if (lang == 'en') {
       language = Language.English;
-      notifyListeners();
+      // notifyListeners();
     } else {
       language = Language.Arabic;
-      notifyListeners();
+      // notifyListeners();
     }
   }
   selectLanguage(String lang) {

@@ -1,11 +1,11 @@
 import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/view/Authentication/widgets/textFormField_widget.dart';
 import 'package:bazarli/view/home/Home/component/home_toolbar.dart';
+import 'package:bazarli/view/home/categories/sub_caategories_Screen.dart';
 import 'package:bazarli/view/search/sizes_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +17,22 @@ import 'brand_screen.dart';
 import 'category_select_screen.dart';
 import 'color_seach_screen.dart';
 import 'new_arrivals_screen.dart';
+class CategorySearchScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+   return CategorySearchScreenState();
+  }
 
-class CategorySearchScreen extends StatelessWidget {
-  // Datum category;
-  // CategorySearchScreen({this.category});
+}
+class CategorySearchScreenState extends State<CategorySearchScreen> {
+
+  @override
+  void initState() {
+    Provider.of<AttributeFilterProvider>(context, listen: false).getAttributeFliter(context,'size');
+    Provider.of<AttributeFilterProvider>(context, listen: false).getAttributeFliter(context,'color');
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,13 +78,13 @@ class CategorySearchScreen extends StatelessWidget {
                     // categoryWidget(context,'ProductRating','',3),
                     selectRateExpandedListWidget(context,'ProductRating','',3),
                     Divider(),
-                    categoryWidget(context,'Size',Provider.of<AttributeFilterProvider>(context).selectedSizeResponse==null?"":Provider.of<AttributeFilterProvider>(context).selectedSizeResponse.attribute,4,),
+                    categoryWidget(context,'Size',Provider.of<ProductProvider>(context).selectedSizeResponse==null?"":Provider.of<ProductProvider>(context).selectedSizeResponse.attribute,4,),
                     Divider(),
                     categoryWidget(context,'NewArrivals',Provider.of<ProductProvider>(context).selectedArrivals==null?"":Provider.of<ProductProvider>(context).selectedArrivals.arriveIn,5),
                     Divider(),
                     categoryWidget(context,'Department','',6),
                     Divider(),
-                    categoryWidget(context,'Color','',7),
+                    categoryWidget(context,'Color',Provider.of<ProductProvider>(context).selectedColorResponse==null?"":Provider.of<ProductProvider>(context).selectedColorResponse.attribute,7,),
                     Divider(),
                     categoryWidget(context,'Seller','',8),
                     Divider(),
@@ -370,6 +382,7 @@ buildFilterWidget(String text){
     return Container(
       child: InkWell(
           onTap: () {
+            Provider.of<ProductProvider>(context, listen: false).resetFilter();
           },
           child: Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -389,9 +402,14 @@ buildFilterWidget(String text){
     );
   }
   buildApplyButton(){
-    return Container(
+    return !Provider.of<ProductProvider>(context).isSearchLoading
+        ?
+    Container(
       child: InkWell(
-          onTap: () {
+          onTap: () async{
+           await Provider.of<ProductProvider>(context, listen: false).getSearchProducts();
+           NavigationService.navigationService.navigateToWidget(SubCategoriesScreen());
+
           },
           child: Container(
             padding: EdgeInsets.all(ScreenUtil().radius(12)),
@@ -424,7 +442,7 @@ buildFilterWidget(String text){
               ],
             ),
           )),
-    );
+    ):CircularProgressIndicator(color: PrimaryColor,);
   }
 
 }

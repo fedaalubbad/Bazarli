@@ -1,6 +1,11 @@
+import 'package:bazarli/ViewModel/orders_provider.dart';
+import 'package:bazarli/ViewModel/wishlist_provider.dart';
+import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
-import 'package:bazarli/view/home/Home/component/carousel_slider.dart';
+import 'package:bazarli/models/product_model/product_response.dart';
+import 'package:bazarli/view/home/Home/component/star_rating.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/view/home/Home/component/home_toolbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'component/circle_categort_top_item.dart';
+import 'component/product_grid_menue_item.dart';
 import 'component/product_listmenu_Item.dart';
 
 class SubCategoriesScreen extends StatefulWidget{
@@ -31,7 +37,6 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
            width: double.infinity,
            height: double.infinity,
            child: SingleChildScrollView(
-
                  child: Column(
                    children: [
                      SizedBox(height: 1.h,),
@@ -41,8 +46,7 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
                      !isMenue?
                       getProductsInList(context)
                       : getProductsGrid(context),
-
-           ],
+                         ],
 
                ),
 
@@ -102,37 +106,22 @@ filterBar(){
  }
 
 getProductsGrid(BuildContext context){
-  return Column(
-    children: [
-      Container(
-        // height:400.h,
-        //   width: ScreenUtil.defaultSize.width,
-          child:  BuildCarouselSlider(
-            product:Provider.of<ProductProvider>(context,listen: false).productRespone.data
-            ,currentIndex: 0,)
+  return Container(
+    // margin: EdgeInsets.only(bottom: 20.h),
+    // height: 450.h,
+    child: ListView.builder(
+      physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+      shrinkWrap: true,
+      itemCount: Provider.of<ProductProvider>(context,listen: false).searchListResponse.data.length,
+      itemBuilder: (context,index){
+        return
+          ProductGridMenuItem(Provider.of<ProductProvider>(context,listen: false).searchListResponse.data[index],index);
 
+      },
 
-      ),
-      Container(
-        // height:400.h,
-        //   width: ScreenUtil.defaultSize.width,
-          child:  BuildCarouselSlider(
-            product:Provider.of<ProductProvider>(context,listen: false).productRespone.data
-            ,currentIndex: 0,)
-
-
-      ),
-      Container(
-        // height:400.h,
-        //   width: ScreenUtil.defaultSize.width,
-          child:  BuildCarouselSlider(
-            product:Provider.of<ProductProvider>(context,listen: false).productRespone.data
-            ,currentIndex: 0,)
-
-
-      ),
-    ],
+    ),
   );
+
 }
 getProductsInList(BuildContext context){
 return Container(
@@ -141,10 +130,10 @@ return Container(
     child: ListView.builder(
       physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
       shrinkWrap: true,
-      itemCount: Provider.of<ProductProvider>(context,listen: false).productRespone.data.length,
+      itemCount: Provider.of<ProductProvider>(context,listen: false).searchListResponse.data.length,
         itemBuilder: (context,index){
          return
-        ProductListMenuItem(product:Provider.of<ProductProvider>(context,listen: false).productRespone.data[index],);
+        ProductListMenuItem(product:Provider.of<ProductProvider>(context,listen: false).searchListResponse.data[index],);
 
         },
 

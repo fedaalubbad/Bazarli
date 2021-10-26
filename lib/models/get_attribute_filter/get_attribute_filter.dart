@@ -10,24 +10,28 @@ String getAttributeFilterToJson(List<GetAttributeFilter> data) => json.encode(Li
 
 class GetAttributeFilter {
   GetAttributeFilter({
+    this.id,
     this.attribute,
-    this.colorCode,
     this.count,
+    this.colorCode,
   });
 
+  int id;
   String attribute;
-  String colorCode;
   int count;
+  String colorCode;
 
   factory GetAttributeFilter.fromJson(Map<String, dynamic> json) => GetAttributeFilter(
+    id: json["id"],
     attribute: json["attribute"],
-    colorCode: json["color_code"],
     count: json["count"],
+    colorCode: json["color_code"],
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "attribute": attribute,
-    "color_code": colorCode,
     "count": count,
+    "color_code": colorCode,
   };
 }

@@ -13,11 +13,12 @@ class AttributeFilterProvider extends ChangeNotifier{
   Future<List<GetAttributeFilter>> getAttributeFliter (BuildContext context,attribute)async{
     List<GetAttributeFilter> response=await AttributeFilterApi.api.getAttributeFilter(context, attribute,'en');
     getAttributeFilter=response;
-    for(int i=0;i<getAttributeFilter.length;i++){
-      if(attribute=='color')
-     colorsList.add(RadioModel(false, getAttributeFilter[i].attribute, getAttributeFilter[i].count.toString(),clorCode:getAttributeFilter[i].colorCode ));
-        if(attribute=='size')
-     sizesList.add(RadioModel(false, getAttributeFilter[i].attribute, getAttributeFilter[i].count.toString()));
+    if(attribute=='color')
+      for(int i=0;i<getAttributeFilter.length;i++){
+     colorsList.add(RadioModel(id:getAttributeFilter[i].id,isSelected:false,attribute: getAttributeFilter[i].attribute, count:getAttributeFilter[i].count,clorCode:getAttributeFilter[i].colorCode ));
+    }else
+      for(int i=0;i<getAttributeFilter.length;i++){
+     sizesList.add(RadioModel(id:getAttributeFilter[i].id,isSelected:false, attribute:getAttributeFilter[i].attribute,count: getAttributeFilter[i].count));
 
     }
     notifyListeners();
@@ -30,21 +31,6 @@ class AttributeFilterProvider extends ChangeNotifier{
     notifyListeners();
     return response;
 
-  }
-  RadioModel selectedSizeResponse;
-  void selectSize(RadioModel model){
-
-     model.isSelected = true;
-    notifyListeners();
-    selectedSizeResponse =model;
-    notifyListeners();
-  }
- RadioModel selectedColorResponse;
-  void selectcolor(RadioModel model){
-     model.isSelected = true;
-    notifyListeners();
-    selectedColorResponse =model;
-    notifyListeners();
   }
 
 }

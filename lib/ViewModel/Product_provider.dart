@@ -21,7 +21,6 @@ class ProductProvider extends ChangeNotifier {
   String sort;
   double rate = 1.0;
   List<int> price;
-  int size;
   int newArrivals;
   int selectedVarientIndex = 0;
   dynamic selectedVarientId;
@@ -108,20 +107,31 @@ class ProductProvider extends ChangeNotifier {
         .replaceAll(')', '');
   }
 
-  // String validateMinPrice(val) {
-  //   if (val.isEmpty) {
-  //     return 'enter min price';
-  //   }
-  //   return null;
-  // }
-  //
-  // String validateMaxPrice(val) {
-  //   if (val.isEmpty) {
-  //     return 'enter max price';
-  //   }
-  //   return null;
-  // }
+  RadioModel selectedSizeResponse;
 
+  selectSize(model){
+    model.isSelected=!model.isSelected;
+    selectedSizeResponse=model;
+    notifyListeners();
+  }
+
+
+  RadioModel selectedColorResponse;
+  void selectcolor(RadioModel model){
+    model.isSelected=!model.isSelected;
+    selectedColorResponse =model;
+    notifyListeners();
+  }
+
+   resetFilter(){
+    selectedColorResponse=null;
+    selectedSizeResponse=null;
+    rate=1;
+    selectedArrivals=null;
+    selectedBrand=null;
+    selectedCategory=null;
+    notifyListeners();
+   }
   double getSlider(double value) {
     this.rate = value;
     notifyListeners();
@@ -170,20 +180,25 @@ class ProductProvider extends ChangeNotifier {
     return productRespone;
   }
 
+  ProductResponse searchListResponse;
+  bool isSearchLoading=false;
   Future<ProductResponse> getSearchProducts({int productId}) async {
+    isSearchLoading=true;
+    notifyListeners();
     ProductResponse response = await ProductApi.api.getAllProducts(
         product_id: productId,
-        category_id: selectedCategory.id,
+        category: selectedCategory,
         search: search,
         order: order,
         sort: sort,
         price: price,
-        brand: selectedBrand.id,
-        size: size,
-        new_arrivals_in: newArrivals);
-    productList = response.data;
-    productRespone = response;
+        brand: selectedBrand,
+        // color:selectedColorResponse.id;
+        size: selectedSizeResponse,
+        new_arrivals_in: selectedArrivals);
+    searchListResponse = response;
+    isSearchLoading=false;
     notifyListeners();
-    return productRespone;
+    return searchListResponse;
   }
 }

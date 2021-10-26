@@ -69,6 +69,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AttributeFilterProvider>(
           create: (context) => AttributeFilterProvider(),
         ),
+        // ChangeNotifierProvider<TestProvider>(
+        //   create: (context) => TestProvider(),
+        // ),
       ],
       child: RefreshConfiguration(
         footerTriggerDistance: 15,
@@ -106,6 +109,7 @@ class MyApp extends StatelessWidget {
           },
           navigatorKey: NavigationService.navigationService.navigatorKey,
           home: MyHomePage(),
+          // home: ProductScreen(),
           // routes: { '/': (context) => MyHomePage(),
           //  },
         ),

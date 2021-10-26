@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SubCategoriesScreen extends StatefulWidget {
+class CompareScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return SubCategoriesScreenState();
+    return CompareScreenState();
   }
 }
-class SubCategoriesScreenState extends State<SubCategoriesScreen> {
+class CompareScreenState extends State<CompareScreen> {
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/get_attribute_filter/get_attribute_filter.dart';
 import 'package:bazarli/view/Product/component/getColors.dart';
 import 'package:bazarli/view/home/tool_bar_widget.dart';
+import 'package:bazarli/view/search/sizes_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +22,6 @@ class ColorsSearchScreenState extends State<ColorsSearchScreen> {
   int _groupValue = -1;
 @override
   void initState() {
-  Provider.of<AttributeFilterProvider>(context, listen: false).getAttributeFliter(context,'color');
     super.initState();
   }
   @override
@@ -44,7 +45,7 @@ class ColorsSearchScreenState extends State<ColorsSearchScreen> {
                       SizedBox(
                         height: 25.h,
                       ),
-                  Selector<AttributeFilterProvider,List<GetAttributeFilter>>(
+                  Selector<AttributeFilterProvider, List<RadioModel>>(
                       builder: (context, response, widget) {
                         if (response == null) {
                           return Center(child: CircularProgressIndicator());
@@ -62,37 +63,50 @@ class ColorsSearchScreenState extends State<ColorsSearchScreen> {
                                 childAspectRatio:0.8.h,
                               ),
                               itemBuilder: (context, index) {
-                                return buildColorWidget(HexColor.fromHex(response[index].colorCode), response[index].attribute);
+                                response.map((e) => e.isSelected=false).toList();
+                                return
+                                  InkWell(
+                                    onTap: (){
+                                  Provider.of<ProductProvider>(context,listen: false).selectcolor(response[index]);
+
+                                },
+                                child:buildColorWidget(response[index])
+                                  );
                               }
                           );
                         }
                       }, selector: (context, provider) {
-                    return provider.getAttributeFilter;
+                    return provider.colorsList;
                   })
 
                     ]),
               ),
             ),
-            ApplyButtonWidget(),
+            ApplyButtonWidget(onPressed: (){
+              Navigator.pop(context);
+            },),
           ],
       ),
     ]),
         ));
   }
 
-  buildColorWidget(color,String name){
+  buildColorWidget(RadioModel model){
     return Container(
       width: 80.w,
       height: 80.h,
-      color: WhiteColor,
+      decoration: BoxDecoration(
+          color: WhiteColor,
+          border: Border.all(color:model==Provider.of<ProductProvider>(context).selectedColorResponse?PrimaryColor:WhiteColor)),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
               height: 40.h,
-              color: color),
+              color:HexColor.fromHex(model.clorCode)),
           SizedBox(height: 10.h,),
-          Text(name,style: TextLabelStyle,)
+          Text(model.attribute,style: TextLabelStyle,)
         ],
       ),
     );

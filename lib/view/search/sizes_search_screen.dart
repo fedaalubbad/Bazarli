@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/ViewModel/get_attribute_filter_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
@@ -14,12 +15,7 @@ class SizesSearchScreen extends StatefulWidget{
 
 }
 class SizesSearchScreenState extends State<SizesSearchScreen> {
- @override
-  void initState() {
-   Provider.of<AttributeFilterProvider>(context, listen: false).getAttributeFliter(context,'size');
 
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,13 +55,13 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
                           ),
                           itemBuilder: (context, index) {
                            // return buildSizeWidget('oneSize',);
+                            response.map((e) => e.isSelected=false).toList();
+
                             return
                               InkWell(
                                 onTap: (){
-                              // setState(() {
-                              // response[index].isSelected=true;
-                              Provider.of<AttributeFilterProvider>(context,listen: false).selectSize(response[index]);
-                              // });
+                             Provider.of<ProductProvider>(context,listen: false).selectSize(response[index]);
+
                             },
                             child:
                             buildSizeWidget(response[index])
@@ -92,8 +88,8 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
         width: 80.w,
         height: 80.h,
         decoration: BoxDecoration(
-            color: _item.isSelected?GrayColor:GrayLiteColor,
-            border: Border.all(color: _item.isSelected?PrimaryColor:GrayColor)),
+            color: _item==Provider.of<ProductProvider>(context).selectedSizeResponse?GrayColor:GrayLiteColor,
+            border: Border.all(color: _item==Provider.of<ProductProvider>(context).selectedSizeResponse?PrimaryColor:GrayColor)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,7 +102,7 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
               height: 10.h,
             ),
             Text(
-             _item.count,
+             _item.count.toString(),
               style: TextLabelStyle,
             ),
           ],
@@ -114,58 +110,59 @@ class SizesSearchScreenState extends State<SizesSearchScreen> {
      );
   }
   //
-  radio(_item) {
-    return Container(
-        margin: new EdgeInsets.all(15.0),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            new Container(
-              height: 50.0,
-              width: 50.0,
-              child: new Center(
-                child:
-                new Text(_item,
-                    style: new
-                    TextStyle(
-                        color:
-                        // _item.isSelected ?
-                        Colors.white,
-                            // : Colors.black,
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 18.0)),
-              ),
-              decoration: new BoxDecoration(
-                color:
-                    // _item.isSelected ?
-                    Colors.blueAccent
-                        // : Colors.transparent
-                  ,
-                border: new Border.all(
-                    width: 1.0,
-                    color:
-                    // _item.isSelected ?
-                    Colors.blueAccent
-                        // : Colors.grey
-                ),
-                borderRadius:
-                    const BorderRadius.all(const Radius.circular(2.0)),
-              ),
-            ),
-            // new Container(
-            //   margin: new EdgeInsets.only(left: 10.0),
-            //   child: new Text(_item),
-            // )
-          ],
-        ));
-  }
-
+//   radio(_item) {
+//     return Container(
+//         margin: new EdgeInsets.all(15.0),
+//         child: new Row(
+//           mainAxisSize: MainAxisSize.max,
+//           children: <Widget>[
+//             new Container(
+//               height: 50.0,
+//               width: 50.0,
+//               child: new Center(
+//                 child:
+//                 new Text(_item,
+//                     style: new
+//                     TextStyle(
+//                         color:
+//                         // _item.isSelected ?
+//                         Colors.white,
+//                             // : Colors.black,
+//                         //fontWeight: FontWeight.bold,
+//                         fontSize: 18.0)),
+//               ),
+//               decoration: new BoxDecoration(
+//                 color:
+//                     // _item.isSelected ?
+//                     Colors.blueAccent
+//                         // : Colors.transparent
+//                   ,
+//                 border: new Border.all(
+//                     width: 1.0,
+//                     color:
+//                     // _item.isSelected ?
+//                     Colors.blueAccent
+//                         // : Colors.grey
+//                 ),
+//                 borderRadius:
+//                     const BorderRadius.all(const Radius.circular(2.0)),
+//               ),
+//             ),
+//             // new Container(
+//             //   margin: new EdgeInsets.only(left: 10.0),
+//             //   child: new Text(_item),
+//             // )
+//           ],
+//         ));
+//   }
+//
 }
 class RadioModel {
+  int id;
   bool isSelected;
-  final String attribute;
-  final String count;
-  final String clorCode;
+  String attribute;
+  int count;
+  String clorCode;
 
-  RadioModel(this.isSelected, this.count, this.attribute,{this.clorCode});
+  RadioModel({this.id,this.isSelected, this.attribute,this.count,this.clorCode});
 }

@@ -220,15 +220,14 @@ class AddAddressScreenState extends State<AddAddressScreen> {
             // contraller: ,
             hint: 'Apartment / Flat number/ Tower Number/ Building Number',
             textInputType: TextInputType.multiline,
-            // save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
-            // validator:Provider.of<AuthenticationProvider>(context, listen: false).validateEmail,
+            save:Provider.of<AddressesProvider>(context, listen: false).saveDesc,
+            validator:(val)=>Provider.of<AddressesProvider>(context, listen: false).validateDesc(val),
           ),
         ),
       ],
     );
   }
 
-  int _groupValue = -1;
 
   buildAddressLableWidget() {
     return Column(
@@ -246,24 +245,25 @@ class AddAddressScreenState extends State<AddAddressScreen> {
           style: SliderTitle2Style,
         ).tr(),
         _myRadioButton(
-          title: 'home'.tr(),
-          value: 0,
-          // onChanged: (newValue) => setState(() => _groupValue = newValue),
+          title: 'Home'.tr(),
+          value: 'home',
+          onChanged: (newValue) => Provider.of<AddressesProvider>(context, listen: false).selectTitle(newValue),
         ),
         _myRadioButton(
           title: 'Work'.tr(),
-          value: 1,
-          // onChanged: (newValue) => setState(() => _groupValue = newValue),
+          value: 'work',
+          onChanged: (newValue) => Provider.of<AddressesProvider>(context, listen: false).selectTitle(newValue),
         )
       ],
     );
   }
 
-  Widget _myRadioButton({String title, int value, Function onChanged}) {
+  Widget _myRadioButton({String title, String value, Function onChanged}) {
     return RadioListTile(
       value: value,
-      groupValue: _groupValue,
+      groupValue:Provider.of<AddressesProvider>(context).homeWork,
       onChanged: onChanged,
+      activeColor: PrimaryColor,
       title: Text(
         title,
         style: TitlesInHome,
@@ -371,15 +371,18 @@ class AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   buildSaveAddressButton(BuildContext context) {
-    return Container(
+    return Provider.of<AddressesProvider>(context, listen: false)
+    .isLoading?
+        CircularProgressIndicator(color: PrimaryColor,)
+          :
+       Container(
       child: InkWell(
           onTap: () async {
             await Provider.of<AddressesProvider>(context, listen: false)
                 .createNewAddress(context);
             Provider.of<AddressesProvider>(context, listen: false)
                 .getCustomerAddresses();
-            // NavigationService.navigationService
-            //     .navigateToWidget(PaymentScreen());
+            Navigator.of(context).pop();
           },
           child: Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w),

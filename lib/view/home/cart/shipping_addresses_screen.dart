@@ -202,7 +202,7 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
                     height: 3.h,
                   ),
                   Text(
-                    address.address1[0],
+                    address.address1.toString(),
                     style: SliderTitle2Style,
                   ),
                   SizedBox(

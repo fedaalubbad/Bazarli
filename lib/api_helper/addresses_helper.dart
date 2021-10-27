@@ -75,7 +75,7 @@ class AddressesApi {
       String phone,
       String first_name,
       String last_name,
-
+      String title
       ) async {
     final formData = {
       'id': addressId,
@@ -83,10 +83,11 @@ class AddressesApi {
       'country': country,
       'state': state,
       'city': city,
-      'postcode': postcode,
+      'post_code': postcode,
       'phone': phone,
       'first_name': first_name,
       'last_name': last_name,
+      'title': title,
       'token': null,
     };
     print(formData);

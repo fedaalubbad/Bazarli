@@ -25,6 +25,7 @@ class AddressesProvider extends ChangeNotifier {
    String phone;
    String phone_code;
    String title;
+   String homeWork;
    String FName;
    String LName;
 
@@ -32,9 +33,10 @@ class AddressesProvider extends ChangeNotifier {
      selectedCity=val;
      notifyListeners();
 }
+  bool isLoading = false ;
 
-selectTitle(val){
-   title=val;
+  selectTitle(val){
+   homeWork=val;
    notifyListeners();
 }
 savePhone(val){
@@ -55,6 +57,10 @@ saveLName(val){
     LName=val;
     notifyListeners();
 }
+saveDesc(val){
+    title=val;
+    notifyListeners();
+}
 
 String validateFName(String val){
     if(val.length==0)
@@ -64,6 +70,11 @@ String validateFName(String val){
 String validateLName(String val){
     if(val.length==0)
       return  'enter last name';
+      return null;
+}
+String validateDesc(String val){
+    if(val.length==0)
+      return  'enter title';
       return null;
 }
 String validatePhone(String val){
@@ -91,19 +102,53 @@ String validatePhoneCode(String val){
     notifyListeners();
     return addressList;
   }
-
     Future<CreateAddress> createNewAddress(BuildContext context) async {
-      final updatedAddress = await AddressesApi.api.createAddress(context,jsonEncode(['address1']),'Kuwait',' state',selectedCity.text,'395004',
-          phone,phone_code,SPHelper.spHelper.getUSer().firstName,SPHelper.spHelper.getUSer().lastName,title);
+      isLoading = true;
+      notifyListeners();
+      if (!addressesFormStateKey.currentState.validate()) {
+        isLoading = false;
+        notifyListeners();
+      } else {
+        addressesFormStateKey.currentState.save();
+        if (selectedCity == null) {
+          isLoading = false;
+          notifyListeners();
+          _showToast(context, 'choose city');
+        } else {
 
-         _showToast(context,updatedAddress.message);
+          final updatedAddress = await AddressesApi.api.createAddress(
+              context,
+              jsonEncode([title]),
+              'Kuwait',
+              ' state',
+              selectedCity.text,
+              '395004',
+              phone,
+              phone_code,
+              SPHelper.spHelper
+                  .getUSer()
+                  .firstName,
+              SPHelper.spHelper
+                  .getUSer()
+                  .lastName,
+              homeWork);
+
+          _showToast(context, updatedAddress.message);
+          isLoading = false;
+          notifyListeners();
           return updatedAddress;
+        }
+      }
     }
 
-    Future<CreateAddress> updateAddress(productId,BuildContext context) async {
-      final address = await AddressesApi.api.updateAddress(context,productId,jsonEncode(['address1']),' country',' state',' city',' postcode',
-          'phone', 'first_name', 'last_name');
+    Future<CreateAddress> updateAddress(id,BuildContext context) async {
+      isLoading = true ;
+      notifyListeners();
+      final address = await AddressesApi.api.updateAddress(context,jsonEncode(['address1']),'Kuwait','state',selectedCity.text,'395004',
+          phone,phone_code,SPHelper.spHelper.getUSer().firstName,SPHelper.spHelper.getUSer().lastName,title);
          _showToast(context,address.message);
+      isLoading = false ;
+      notifyListeners();
           return address;
     }
 

@@ -7,12 +7,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/api_helper/addresses_helper.dart';
 import 'package:bazarli/models/address_model/createAddress_model.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddressesProvider extends ChangeNotifier {
   List<Datum> addressList = [];
   List<GetCitiesResponse> getCitiesResponseList;
+  GetCitiesResponse selectedCity;
 
   final GlobalKey<FormState> addressesFormStateKey = GlobalKey<FormState>();
 
@@ -23,12 +23,60 @@ class AddressesProvider extends ChangeNotifier {
    String city;
    String postcode;
    String phone;
+   String phone_code;
+   String title;
+   String FName;
+   String LName;
 
-  GetCitiesResponse selectedCity;
-    selectCity(value){
-     selectedCity=value;
-      notifyListeners();
+  void selectCity(val){
+     selectedCity=val;
+     notifyListeners();
 }
+
+selectTitle(val){
+   title=val;
+   notifyListeners();
+}
+savePhone(val){
+    phone=val;
+    notifyListeners();
+}
+savePhoneCode(val){
+    phone_code=val;
+    notifyListeners();
+}
+
+saveFName(val){
+    FName=val;
+    notifyListeners();
+}
+
+saveLName(val){
+    LName=val;
+    notifyListeners();
+}
+
+String validateFName(String val){
+    if(val.length==0)
+      return  'enter first name';
+      return null;
+}
+String validateLName(String val){
+    if(val.length==0)
+      return  'enter last name';
+      return null;
+}
+String validatePhone(String val){
+    if(val.length==0)
+      return  'enter phone no';
+      return null;
+}
+String validatePhoneCode(String val){
+    if(val.length==0)
+      return 'enter phone code';
+      return null;
+}
+
 
   Future< List<GetCitiesResponse>> getCKuwitCities() async {
     List<GetCitiesResponse> response = await AddressesApi.api.getKuwitCities();
@@ -45,8 +93,8 @@ class AddressesProvider extends ChangeNotifier {
   }
 
     Future<CreateAddress> createNewAddress(BuildContext context) async {
-      final updatedAddress = await AddressesApi.api.createAddress(context,jsonEncode(['address1']),' country',' state',' city',' postcode',
-          'phone',SPHelper.spHelper.getUSer().firstName,SPHelper.spHelper.getUSer().lastName);
+      final updatedAddress = await AddressesApi.api.createAddress(context,jsonEncode(['address1']),'Kuwait',' state',selectedCity.text,'395004',
+          phone,phone_code,SPHelper.spHelper.getUSer().firstName,SPHelper.spHelper.getUSer().lastName,title);
 
          _showToast(context,updatedAddress.message);
           return updatedAddress;

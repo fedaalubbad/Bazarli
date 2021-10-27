@@ -201,4 +201,16 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
     return searchListResponse;
   }
+
+  Future<ProductResponse> getSearchProductsByCategoryId({categoryResponse.CategoryResponse category}) async {
+    // isSearchLoading=true;
+    notifyListeners();
+    ProductResponse response = await ProductApi.api.getAllProducts(
+        category: category,
+        );
+    searchListResponse = response;
+    // isSearchLoading=false;
+    // notifyListeners();
+    return searchListResponse;
+  }
 }

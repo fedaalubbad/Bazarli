@@ -3,6 +3,7 @@ import 'package:bazarli/ViewModel/wishlist_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
+import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:bazarli/view/home/Home/component/star_rating.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,6 +19,8 @@ import 'component/product_grid_menue_item.dart';
 import 'component/product_listmenu_Item.dart';
 
 class SubCategoriesScreen extends StatefulWidget{
+  CategoryResponse categoryResponse;
+  SubCategoriesScreen({this.categoryResponse});
   @override
   State<StatefulWidget> createState() {
     return SubCategoriesScreenState();
@@ -26,6 +29,14 @@ class SubCategoriesScreen extends StatefulWidget{
 }
 class SubCategoriesScreenState extends State<SubCategoriesScreen>{
   bool isMenue=false;
+  @override
+  void initState() {
+   if(widget.categoryResponse!=null){
+     Provider.of<ProductProvider>(context, listen: false).getSearchProductsByCategoryId(category: widget.categoryResponse);
+
+   }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -116,9 +127,7 @@ getProductsGrid(BuildContext context){
       itemBuilder: (context,index){
         return
           ProductGridMenuItem(Provider.of<ProductProvider>(context,listen: false).searchListResponse.data[index],index);
-
       },
-
     ),
   );
 
@@ -133,7 +142,7 @@ return Container(
       itemCount: Provider.of<ProductProvider>(context,listen: false).searchListResponse.data.length,
         itemBuilder: (context,index){
          return
-        ProductListMenuItem(product:Provider.of<ProductProvider>(context,listen: false).searchListResponse.data[index],);
+        ProductListMenuItem(Provider.of<ProductProvider>(context,listen: false).searchListResponse.data[index],index);
 
         },
 

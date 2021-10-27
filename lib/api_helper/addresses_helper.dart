@@ -20,8 +20,10 @@ class AddressesApi {
       String city,
       String postcode,
       String phone,
+      String phoneCode,
       String first_name,
       String last_name,
+      String title,
 
       ) async {
     final formData = {
@@ -31,8 +33,10 @@ class AddressesApi {
       'city': city,
       'postcode': postcode,
       'phone': phone,
+      'phone_code': phoneCode,
       'first_name': first_name,
       'last_name': last_name,
+      'title': title,
       'token': null,
     };
     print(formData);

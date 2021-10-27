@@ -10,8 +10,14 @@ import 'package:provider/provider.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+class AddAddressScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return AddAddressScreenState();
+  }
 
-class AddAddressScreen extends StatelessWidget {
+}
+class AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +31,7 @@ class AddAddressScreen extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
             child: SingleChildScrollView(
               child: Form(
-                key: Provider.of<AddressesProvider>(context, listen: false)
-                    .addressesFormStateKey,
+                key: Provider.of<AddressesProvider>(context ).addressesFormStateKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -154,12 +159,13 @@ class AddAddressScreen extends StatelessWidget {
                               ////////////////////////
                             },
                           ).toList(),
-                          value: Provider.of<AddressesProvider>(context, listen: false)
-                              .selectedCity,
-                          onChanged: (value) {
-                            Provider.of<AddressesProvider>(context, listen: false).selectCity(value);
+                          value: Provider.of<AddressesProvider>(context,listen: false ).selectedCity,
+                          onChanged:(val) {
+                            Provider.of<AddressesProvider>(context, listen: false).selectCity(val);
 
-                          },
+                                }
+
+                          ,
                         ),
                       );
                     }
@@ -289,6 +295,8 @@ class AddAddressScreen extends StatelessWidget {
                 // hint: '20',
                 label: '+20',
                 textInputType: TextInputType.multiline,
+                save:Provider.of<AddressesProvider>(context, listen: false).savePhoneCode,
+                validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validatePhoneCode(val),
               ),
             ),
             SizedBox(
@@ -309,6 +317,8 @@ class AddAddressScreen extends StatelessWidget {
                   hint: 'MobileNumber'.tr(),
                   // label: '+20',
                   textInputType: TextInputType.multiline,
+                  save:Provider.of<AddressesProvider>(context, listen: false).savePhone,
+                  validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validatePhone(val),
                 ),
               ),
             ),
@@ -331,6 +341,8 @@ class AddAddressScreen extends StatelessWidget {
             hint: 'FirstName'.tr(),
             // label: '+20',
             textInputType: TextInputType.multiline,
+            save:Provider.of<AddressesProvider>(context, listen: false).saveFName,
+            validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validateFName(val),
           ),
         ),
         SizedBox(
@@ -350,6 +362,8 @@ class AddAddressScreen extends StatelessWidget {
             hint: 'LastName'.tr(),
             // label: '+20',
             textInputType: TextInputType.multiline,
+            save:Provider.of<AddressesProvider>(context, listen: false).saveLName,
+            validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validateLName(val),
           ),
         ),
       ],

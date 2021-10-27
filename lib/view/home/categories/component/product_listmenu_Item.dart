@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_response.dart' as productResponse;
@@ -6,10 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class ProductListMenuItem extends StatelessWidget{
   productResponse.Datum product;
-  ProductListMenuItem({this.product,});
+  int index;
+  ProductListMenuItem(this.product,this.index);
   @override
   Widget build(BuildContext context) {
    return Container(
@@ -54,8 +57,8 @@ class ProductListMenuItem extends StatelessWidget{
           children: [
             Container(width: 40.w,height: 40.h,
                 margin: EdgeInsets.only(left:2.w,),
-                child: Image.network(product.baseImage.smallImageUrl)),
-
+                child: Image.network( Provider.of<ProductProvider>(
+                  context,).getBrand(product,index),)),
 
             Container(
               margin: EdgeInsets.only(left:5.w,),

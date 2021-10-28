@@ -18,7 +18,7 @@ class ProductApi {
   //   headers: {"Accept": "application/json", "Authorization": "Bearer "},
   // );
 
-  Future<ProductResponse> getAllProducts({product_id,category,search,order,sort,price,brand,size,new_arrivals_in}) async {
+  Future<ProductResponse> getAllProducts({page,perPAge,product_id,category,search,order,sort,price,brand,size,new_arrivals_in}) async {
     final formData = {
       if(product_id!=null)
       'product_id': product_id,
@@ -40,7 +40,16 @@ class ProductApi {
       'new_arrivals_in': new_arrivals_in.arriveIn,
     };
     try{
-    Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL,data: formData);
+      int pageNo=1;
+      int limit=1;
+      if(page!=null) {
+        pageNo=page;
+      }
+
+      if(perPAge!=null) {
+        limit=perPAge;}
+
+       Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL+'?page=$pageNo&per_page=$limit',data: formData);
     if(response.statusCode==200) {
       ProductResponse productsList = ProductResponse.fromJson(response.data);
       return productsList;

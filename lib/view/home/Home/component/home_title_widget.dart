@@ -1,5 +1,7 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/Product/all_products_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,16 +25,21 @@ class BuildHomeTitle extends StatelessWidget{
            onTap: () {
              // NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
            },
-           child: Container(
-             alignment: Alignment.center,
-             width: 158.w,
-             height: 45.h,
-             decoration: BoxDecoration(
-                 color: PrimaryColor,
-                 borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
+           child:  InkWell(
+           onTap: (){
+             NavigationService.navigationService.navigateToWidget(AllProductsScreen());
+             },
+             child: Container(
+               alignment: Alignment.center,
+               width: 158.w,
+               height: 45.h,
+               decoration: BoxDecoration(
+                   color: PrimaryColor,
+                   borderRadius: BorderRadius.circular(ScreenUtil().radius(5))),
 
-             child: Text(buttonText, style:SliderNextStyle,
-             ).tr(),
+               child: Text(buttonText, style:SliderNextStyle,
+               ).tr(),
+             ),
            )
 
        ))

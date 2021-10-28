@@ -6,6 +6,7 @@ import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:bazarli/view/search/sizes_search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../api_helper/product_api.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -179,28 +180,48 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
     return productRespone;
   }
+  static const _pageSize = 5;
+
 
   ProductResponse searchListResponse;
+
   bool isSearchLoading=false;
-  Future<ProductResponse> getSearchProducts({int productId}) async {
-    isSearchLoading=true;
-    notifyListeners();
-    ProductResponse response = await ProductApi.api.getAllProducts(
-        product_id: productId,
-        category: selectedCategory,
-        search: search,
-        order: order,
-        sort: sort,
-        price: price,
-        brand: selectedBrand,
-        // color:selectedColorResponse.id;
-        size: selectedSizeResponse,
-        new_arrivals_in: selectedArrivals);
-    searchListResponse = response;
-    isSearchLoading=false;
-    notifyListeners();
-    return searchListResponse;
-  }
+  Future<ProductResponse> getSearchProducts({int productId,pageKey,PagingController<int, Datum>  pagingController}) async {
+    // isSearchLoading=true;
+    // notifyListeners();
+      try {
+       ProductResponse productsResponse= await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize);
+        final isLastPage = productsResponse.data.length < _pageSize;
+
+        if (isLastPage) {
+          pagingController.appendLastPage(productsResponse.data);
+        } else {
+          final nextPageKey = pageKey + productsResponse.data.length;
+          pagingController.appendPage(productsResponse.data, nextPageKey);
+        }
+      } catch (error) {
+        pagingController.error = error;
+        // isSearchLoading=false;
+        // notifyListeners();
+      }
+    }
+    //
+    // ProductResponse response = await ProductApi.api.getAllProducts(
+    //     product_id: productId,
+    //     category: selectedCategory,
+    //     search: search,
+    //     order: order,
+    //     sort: sort,
+    //     price: price,
+    //     brand: selectedBrand,
+    //     // color:selectedColorResponse.id;
+    //     size: selectedSizeResponse,
+    //     new_arrivals_in: selectedArrivals);
+    // searchListResponse = response;
+    // isSearchLoading=false;
+    // notifyListeners();
+    // return searchListResponse;
+  // }
 
   Future<ProductResponse> getSearchProductsByCategoryId({categoryResponse.CategoryResponse category}) async {
     // isSearchLoading=true;
@@ -213,4 +234,20 @@ class ProductProvider extends ChangeNotifier {
     // notifyListeners();
     return searchListResponse;
   }
+
+  // Future<void> _fetchPage(int pageKey) async {
+  //   try {
+  //     final newItems = await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize);
+  //     final isLastPage = newItems.data.length < _pageSize;
+  //
+  //     if (isLastPage) {
+  //       _pagingController.appendLastPage(newItems.data);
+  //     } else {
+  //       final nextPageKey = pageKey + newItems.data.length;
+  //       _pagingController.appendPage(newItems.data, nextPageKey);
+  //     }
+  //   } catch (error) {
+  //     _pagingController.error = error;
+  //   }
+  // }
 }

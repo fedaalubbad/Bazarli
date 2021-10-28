@@ -402,12 +402,12 @@ buildFilterWidget(String text){
     );
   }
   buildApplyButton(){
-    return !Provider.of<ProductProvider>(context).isSearchLoading
-        ?
-    Container(
+    // return !Provider.of<ProductProvider>(context).isSearchLoading
+    //     ?
+   return Container(
       child: InkWell(
           onTap: () async{
-           await Provider.of<ProductProvider>(context, listen: false).getSearchProducts();
+           // await Provider.of<ProductProvider>(context, listen: false).getSearchProducts();
            NavigationService.navigationService.navigateToWidget(SubCategoriesScreen());
 
           },
@@ -422,27 +422,30 @@ buildFilterWidget(String text){
               BorderRadius.circular(ScreenUtil().radius(5)),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Text('1864',
-                      style:SliderNextStyle,
-                    ),
-                    SizedBox(width: 5.w,),
-                    Text('Items',
-                      style:SliderNextStyle,
-                    ).tr(),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Text('1864',
+                //       style:SliderNextStyle,
+                //     ),
+                //     SizedBox(width: 5.w,),
+                //     Text('Items',
+                //       style:SliderNextStyle,
+                //     ).tr(),
+                //   ],
+                // ),
                 Text(
                   'Apply',
                   style:SliderNextStyle,
                 ).tr(),
               ],
             ),
-          )),
-    ):CircularProgressIndicator(color: PrimaryColor,);
+          )
+      ),
+    );
+    // :
+    // CircularProgressIndicator(color: PrimaryColor,);
   }
 
 }

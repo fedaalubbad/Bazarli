@@ -55,10 +55,11 @@ class ProductListMenuItem extends StatelessWidget{
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(width: 40.w,height: 40.h,
-            //     margin: EdgeInsets.only(left:2.w,),
-            //     child: Image.network( Provider.of<ProductProvider>(
-            //       context,).getBrand(product,index),)),
+            product.superAttributes.length<3?SizedBox():
+            Container(width: 40.w,height: 40.h,
+                margin: EdgeInsets.only(left:2.w,),
+                child: Image.network( Provider.of<ProductProvider>(
+                  context,).getBrand(product,0),)),
 
             Container(
               margin: EdgeInsets.only(left:5.w,),

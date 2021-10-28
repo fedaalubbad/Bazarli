@@ -72,7 +72,7 @@ class ProductGridMenuItem extends StatelessWidget{
                         width: 0.17.sw,
                         child: Image.network(
                           Provider.of<ProductProvider>(
-                            context,).getBrand(product,index),
+                            context,).getBrand(product,0),
                           fit: BoxFit.fill,)
                     ),
                     SizedBox(width: 5.w,),

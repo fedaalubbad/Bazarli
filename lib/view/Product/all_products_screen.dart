@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/api_helper/product_api.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class AllProductsScreen extends StatefulWidget{
   @override
@@ -17,40 +19,27 @@ class AllProductsScreen extends StatefulWidget{
 }
 
 class AllProductsState extends State<AllProductsScreen> {
-  static const _pageSize = 5;
 
-  final PagingController<int, Datum> _pagingController =
-  PagingController(firstPageKey: 0);
+  final PagingController<int, Datum> pagingController = PagingController(firstPageKey:0,);
 
   @override
   void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+   pagingController.addPageRequestListener((pageKey) {
+
+      Provider.of<ProductProvider>(context,listen: false).getSearchProducts(pageKey: pageKey,pagingController: pagingController);
     });
     super.initState();
   }
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final newItems = await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize);
-      final isLastPage = newItems.data.length < _pageSize;
 
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems.data);
-      } else {
-        final nextPageKey = pageKey + newItems.data.length;
-        _pagingController.appendPage(newItems.data, nextPageKey);
-      }
-    } catch (error) {
-      _pagingController.error = error;
-    }
-  }
   @override
   void dispose() {
-    _pagingController.dispose();
+   pagingController.dispose();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
+    // var loginprovider = Provider.of<ProductProvider>(context);
+    // var loading = Provider.of<ProductProvider>(context).isLoading;
     return Scaffold(
       body: Stack(
         children: [
@@ -58,9 +47,9 @@ class AllProductsState extends State<AllProductsScreen> {
             isHome: false,
           ),
           Container(
-            margin: EdgeInsets.only(top:  100.h,),
+            margin: EdgeInsets.only(top:  117.h,),
             child:  PagedListView<int,Datum>(
-                pagingController: _pagingController,
+                pagingController:pagingController,
                 builderDelegate: PagedChildBuilderDelegate<Datum>(
                   itemBuilder: (context, item, index) {
                    return ProductListMenuItem(item, index );

@@ -15,6 +15,7 @@ const String GET_CURRENCIES_URL = "currencies?token=true"; //ID
 
 //Home
 const String GET_CATEGORIES_URL = "categories";
+const String GET_CATEGORIESINFO_URL = "categories/information";
 const String GET_HOME_CATEGORIES_URL = "home-categories";
 const String GET_ATTRIBUTES_URL = "attributes/";
 const String GET_Sliders_URL = "sliders";

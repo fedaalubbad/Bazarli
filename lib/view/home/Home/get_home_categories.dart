@@ -2,6 +2,8 @@ import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/home/categories/sub_caategories_Screen.dart';
 import 'package:bazarli/view/home/utils/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
@@ -93,13 +95,13 @@ class GetHomeCategories extends StatefulWidget {
                   response.data.length, (int tabIndex) {
                 return Tab(
                   child: InkWell(
-                    // onTap: () {
-                    //   // NavigationService.navigationService.navigateToWidget(
-                    //   //   CategorySearchScreen(
-                    //   //     category: snapshot.data[tabIndex],
-                    //     ),
-                    //   );
-                    // },
+                    onTap: () {
+                      NavigationService.navigationService.navigateToWidget(
+                        SubCategoriesScreen(
+                         categoryResponse:response.data[tabIndex],
+                        ),
+                      );
+                    },
                     child: Center(
                       child: Shimmer.fromColors(
                         baseColor: BlueDarkColor,

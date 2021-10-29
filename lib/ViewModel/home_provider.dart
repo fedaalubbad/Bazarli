@@ -33,8 +33,8 @@ class HomeProvider extends ChangeNotifier {
   toBack(){
     scrollController.animateTo(
       0,
-      duration: Duration(milliseconds: 5000),
-      curve: Curves.fastOutSlowIn,
+      duration: Duration(milliseconds: 50000),
+      curve: Curves.easeIn,
     );
     notifyListeners();
   }
@@ -42,15 +42,15 @@ class HomeProvider extends ChangeNotifier {
   toNext(){
     scrollController.animateTo(
       scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 5000),
-      curve: Curves.fastOutSlowIn,
+      duration: Duration(milliseconds: 50000),
+      curve: Curves.easeIn,
     );
     notifyListeners();
   }
 
   Future<CategoryResponse> getAllCategories(context) async {
     CategoryResponse response= await HomeApi.api.getAllCategories(context);
-    this.categoriesList = response.data;
+    // this.categoriesList = response.data;
    categoriesResponse=response;
     notifyListeners();
     return categoriesResponse;

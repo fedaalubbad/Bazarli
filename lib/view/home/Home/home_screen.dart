@@ -3,6 +3,8 @@ import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/Product/all_products_screen.dart';
 import 'package:bazarli/view/home/Home/get_home_categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'component/dotted_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'component/home_title_widget.dart';
 import 'get_brands.dart';
 import 'get_selected_categories.dart';
@@ -142,7 +145,7 @@ class HomeScreenState extends State<HomeScreen>
       controller: _refreshController,
       onRefresh: _onRefresh,
       onLoading: _onLoading,
-      child: Container(
+      child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -170,6 +173,19 @@ class HomeScreenState extends State<HomeScreen>
                 height: 30.h,
               ),
               GetTopProducts(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: (){
+                      NavigationService.navigationService.navigateToWidget(AllProductsScreen());
+                    },
+                    child:Container(
+                      margin: EdgeInsets.only(left: 20.w,right: 20.w),
+                        child:Text('See All Products',style: PriceNowTextStyle,).tr()),
+                  )
+                ],
+              ),
               SizedBox(
                 height: 10.h,
               ),

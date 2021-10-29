@@ -1,6 +1,8 @@
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/home/categories/sub_caategories_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -85,7 +87,9 @@ class GetBrands extends StatelessWidget {
                     itemCount: response.brands.length,
                     itemBuilder: (context, index) => BrandItem(
                         icon:  response.brands[index].smallBrandLogo,
-                        press: () {}),
+                        press: () {
+                          NavigationService.navigationService.navigateToWidget(SubCategoriesScreen(brand:response.brands[index]));
+                        }),
                   ),
                 ),
                 InkWell(

@@ -4,6 +4,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart' as categoryRes;
+import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/view/home/Home/component/home_toolbar.dart';
@@ -19,8 +20,9 @@ import 'component/product_grid_menue_item.dart';
 import 'component/product_listmenu_Item.dart';
 
 class SubCategoriesScreen extends StatefulWidget{
-  categoryRes.CategoryResponse categoryResponse;
-  SubCategoriesScreen({this.categoryResponse});
+  dynamic categoryResponse;
+  Brand brand;
+  SubCategoriesScreen({this.categoryResponse,this.brand});
   @override
   State<StatefulWidget> createState() {
     return SubCategoriesScreenState();
@@ -34,8 +36,15 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
 
   @override
   void initState() {
-      if(widget.categoryResponse!=null){
-        Provider.of<ProductProvider>(context, listen: false).getSearchProductsByCategoryId(category: widget.categoryResponse);
+      if(widget.categoryResponse!=null||widget.brand!=null){
+        pagingControllerMenue.addPageRequestListener((pageKey) {
+          Provider.of<ProductProvider>(context, listen: false)
+              .getSearchProductsByCategoryIdBrandId(
+              category: widget.categoryResponse,
+              brand: widget.brand,
+              pageKey: pageKey,
+              pagingController: pagingControllerMenue);
+        });
       }else {
 
         pagingControllerMenue.addPageRequestListener((pageKey) {
@@ -61,6 +70,7 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
         .dispose();
     pagingControllerGrid
         .dispose();
+    Provider.of<ProductProvider>(context, listen: false).resetFilter();
     super.dispose();
   }
   @override
@@ -75,6 +85,7 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen>{
        //     width: double.infinity,
        //     height:double.infinity,
        //     child: SingleChildScrollView(
+
                  child:Stack(
                    children: [
                      HomeToolBar(isHome: false,),

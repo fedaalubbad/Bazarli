@@ -9,7 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 class BuildHomeTitle extends StatelessWidget{
   String titleText;
   String buttonText;
-  BuildHomeTitle({this.titleText, this.buttonText});
+  Function onpressed;
+  BuildHomeTitle({this.titleText, this.buttonText,this.onpressed});
   @override
   Widget build(BuildContext context) {
    return Container(
@@ -21,14 +22,9 @@ class BuildHomeTitle extends StatelessWidget{
 
     if(buttonText!=null)
      Container(
-       child: InkWell(
-           onTap: () {
-             // NavigationService.navigationService.navigateToWidget(HomeMainScreen())  ;
-           },
+
            child:  InkWell(
-           onTap: (){
-             NavigationService.navigationService.navigateToWidget(AllProductsScreen());
-             },
+           onTap:onpressed,
              child: Container(
                alignment: Alignment.center,
                width: 158.w,
@@ -42,7 +38,7 @@ class BuildHomeTitle extends StatelessWidget{
              ),
            )
 
-       ))
+       )
 
        ],
      ),

@@ -1,12 +1,15 @@
+import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/view/Authentication/widgets/textFormField_widget.dart';
+import 'package:bazarli/view/home/categories/sub_caategories_Screen.dart';
 import 'package:bazarli/view/search/categorySearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeToolBar extends StatelessWidget {
   bool isHome = false;
@@ -77,7 +80,8 @@ class HomeToolBar extends StatelessWidget {
                     isObscure: false,
                     isPassword: false,
                     linesNo: 1,
-                    // contraller: Provider.of<AuthenticationProvider>(context, listen: false).nameContraller,
+                    contraller: Provider.of<ProductProvider>(context, listen: false).searchContraller,
+
                     hint: 'Search'.tr(),
                     textInputType: TextInputType.text,
                     // save:Provider.of<AuthenticationProvider>(context, listen: false).saveName,
@@ -88,8 +92,13 @@ class HomeToolBar extends StatelessWidget {
                     width: 0.25.sw,
                     child: InkWell(
                         onTap: () {
-                          NavigationService.navigationService.navigateToWidget(CategorySearchScreen())  ;
-                        },
+                          if(isHome){
+                          NavigationService.navigationService.navigateToWidget(CategorySearchScreen());
+                        }else{
+                            if(Provider.of<ProductProvider>(context, listen: false).searchContraller.text!=null&&Provider.of<ProductProvider>(context, listen: false).searchContraller.text!='')
+                          NavigationService.navigationService.navigateToWidget(SubCategoriesScreen()) ;
+                         }
+                    },
                         child: Container(
                           alignment: Alignment.center,
                           width: 100.w,

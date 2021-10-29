@@ -166,9 +166,7 @@ class CategorySearchScreenState extends State<CategorySearchScreen> {
   }
 
 selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,int index){
-   return Form(
-     key: Provider.of<ProductProvider>(context,listen: false).priceFormStateKey,
-     child: Container(
+   return Container(
           // width: ScreenUtil.defaultSize.width,
           // height: 60.h,
           // child: Padding(
@@ -192,7 +190,7 @@ selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,
                 ],
               ),
             ),
-          ),
+
       // ),
    );
   }
@@ -268,7 +266,9 @@ selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,
     );
   }
   buildFromToWidget(BuildContext context){
-    return Container(
+    return  Form(
+        key: Provider.of<ProductProvider>(context,listen: false).priceFormStateKey,
+    child:Container(
       height: 100.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -313,6 +313,7 @@ selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,
           ),
           InkWell(
               onTap: () {
+
               },
               child: Container(
                 // margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -331,6 +332,7 @@ selectPriceExpandedListWidget(BuildContext context,String title,String subTitle,
               )),
         ],
       ),
+    ),
     );
   }
 

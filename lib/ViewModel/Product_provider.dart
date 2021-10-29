@@ -12,12 +12,13 @@ import '../api_helper/product_api.dart';
 class ProductProvider extends ChangeNotifier {
   // int categoryId;
   // String categoryName;
+  final searchContraller = TextEditingController();
   categoryResponse.Datum selectedCategory;
   Brand selectedBrand;
   ArrivalsResponse selectedArrivals;
 
 
-  String search;
+  // String search;
   String order;
   String sort;
   double rate = 1.0;
@@ -131,6 +132,7 @@ class ProductProvider extends ChangeNotifier {
     selectedArrivals=null;
     selectedBrand=null;
     selectedCategory=null;
+    searchContraller.clear();
     notifyListeners();
    }
   double getSlider(double value) {
@@ -186,11 +188,23 @@ class ProductProvider extends ChangeNotifier {
   ProductResponse searchListResponse;
 
   bool isSearchLoading=false;
-  Future<ProductResponse> getSearchProducts({int productId,pageKey,PagingController<int, Datum>  pagingController}) async {
+  Future<ProductResponse> getSearchProducts({int productId,pageKey,PagingController<int, Datum>  pagingController,}) async {
     // isSearchLoading=true;
     // notifyListeners();
       try {
-       ProductResponse productsResponse= await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize);
+       ProductResponse productsResponse= await ProductApi.api.getAllProducts(page:pageKey,
+           perPAge:_pageSize,
+           product_id: productId,
+               category: selectedCategory,
+               search: searchContraller.text,
+               order: order,
+               sort: sort,
+               price: price,
+               brand: selectedBrand,
+               // color:selectedColorResponse.id;
+               size: selectedSizeResponse,
+               new_arrivals_in: selectedArrivals);
+
         final isLastPage = productsResponse.data.length < _pageSize;
 
         if (isLastPage) {
@@ -223,17 +237,34 @@ class ProductProvider extends ChangeNotifier {
     // return searchListResponse;
   // }
 
-  Future<ProductResponse> getSearchProductsByCategoryId({categoryResponse.CategoryResponse category}) async {
-    // isSearchLoading=true;
-    notifyListeners();
-    ProductResponse response = await ProductApi.api.getAllProducts(
-        category: category,
-        );
-    searchListResponse = response;
-    // isSearchLoading=false;
-    // notifyListeners();
-    return searchListResponse;
+  Future<ProductResponse> getSearchProductsByCategoryIdBrandId({category,brand,pagingController,pageKey}) async {
+    try {
+      ProductResponse productsResponse= await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize,category: category,brand: brand);
+      final isLastPage = productsResponse.data.length < _pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(productsResponse.data);
+      } else {
+        final nextPageKey = pageKey + productsResponse.data.length;
+        pagingController.appendPage(productsResponse.data, nextPageKey);
+      }
+    } catch (error) {
+      pagingController.error = error;
+      // isSearchLoading=false;
+      // notifyListeners();
+    }
   }
+
+    // // isSearchLoading=true;
+    // notifyListeners();
+    // ProductResponse response = await ProductApi.api.getAllProducts(
+    //     category: category,
+    //     );
+    // searchListResponse = response;
+    // // isSearchLoading=false;
+    // // notifyListeners();
+    // return searchListResponse;
+  // }
 
   // Future<void> _fetchPage(int pageKey) async {
   //   try {

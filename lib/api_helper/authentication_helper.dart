@@ -124,32 +124,26 @@ class AuthenticationApi {
     }
   }
 
-  Future<Map<String, dynamic>> getProfile(int id)async{
+  Future<Map<String, dynamic>> getProfile(id)async{
 
-    Response response = await Settings.settings.dio.get(GET_CUSTOMER_PROFILE_URL);
+    Response response = await Settings.settings.dio.get(GET_CUSTOMER_PROFILE_URL+id);
 
-    Map<String, dynamic> responseBody;
     Map<String, dynamic> status = Map<String, dynamic>();
 
     try {
       if (response.statusCode == 200) {
-        responseBody = response.data;
-        status = {'response': responseBody['message'], 'status': true};
+        Map<String, dynamic> responseBody = response.data;
+        LoginResponse loginResponse = LoginResponse.fromJson(responseBody);
+        status = {'loginResponse':loginResponse, 'status': true};
         return status;
       } else {
-        // Map<String, List<String>> responseBody;
-        // responseBody = response.toString();
-        // Map<String,dynamic> errors=responseBody["errors"][];
         status = {
           'errorResponse': 'The email has already been taken',
           'status': false
         };
         return status;
       }
-      // }else{
-      //   status={'errorResponse':'register failed','status':false};
-      //   return status;
-      // }
+
     } catch (e) {
       final errorMessage = DioErrorType.response.toString();
       // print(errorMessage);
@@ -157,10 +151,29 @@ class AuthenticationApi {
       return status;
     }
   }
+  Future<bool> detectToken(String id)async{
+
+    Response response = await Settings.settings.dio.get(GET_CUSTOMER_PROFILE_URL+id);
+
+    try {
+      if (response.statusCode == 200) {
+        SPHelper.spHelper.setLoged(true);
+         return true;
+      } else {
+        SPHelper.spHelper.setLoged(false);
+        return false;
+
+      }
+
+    } catch (e) {
+      SPHelper.spHelper.setLoged(false);
+      return false;
+
+    }
+  }
   Future editProfile(BuildContext context,
       {firstName, lastName, gender, dateOfBirth, languageId})async{
     final formData = {
-
       'first_name': firstName==null||firstName==''?SPHelper.spHelper.getUSer().firstName:firstName,
       'last_name': firstName==null||lastName==''?SPHelper.spHelper.getUSer().lastName:lastName,
       'gender': 'Male',
@@ -171,7 +184,6 @@ class AuthenticationApi {
       var response = await Settings.settings.dio.post(UPDATE_CUSTOMER_PROFILE_URL,data:formData);
     print(response.statusCode);
     try {
-
     Map<String, dynamic> responseBody;
       if (response.statusCode == 200) {
         responseBody = response.data;

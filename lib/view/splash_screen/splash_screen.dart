@@ -39,6 +39,12 @@ class SplashState extends State<SplashScreen>{
       listen: false,
     ).getAllBrandss(context);
 
+     if(SPHelper.spHelper.getUSer()!=null)
+     Provider.of<AuthenticationProvider>(
+      context,
+      listen: false,
+    ).getProfile(SPHelper.spHelper.getUSer().id);
+
     await Future.delayed(Duration(seconds:4));
     if(SPHelper.spHelper.isLoged())
       // NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());

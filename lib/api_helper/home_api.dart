@@ -31,6 +31,26 @@ class HomeApi {
     }
   }
 
+  Future<CategoryResponse> getCategoriesInfo(context,{local}) async {
+    try {
+      if(local==null)
+      local='en';
+
+      Response response = await Settings.settings.dio.get(GET_CATEGORIESINFO_URL+'?token=true&locale=$local');
+      if (response.statusCode < 400) {
+        CategoryResponse getCategoriesResponse = CategoryResponse.fromJson(response.data);
+        return getCategoriesResponse;
+      } else {
+        print(response.data);
+        // _showToast(context,response.statusMessage);
+      }
+    } on Exception catch (e) {
+      // _showToast(context,'getAllCategoriesfailed'+e.toString());
+
+      return null;
+    }
+  }
+
   Future<HomeCategoriesResponse> getAllHomeCategories(context) async {
     try {
       Response response = await Settings.settings.dio.get(GET_HOME_CATEGORIES_URL);

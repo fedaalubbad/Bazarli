@@ -158,11 +158,11 @@ class CategoriesScreenState extends State<CategoriesScreen>
                     SizedBox(
                       height: 10.h,
                     ),
-                    BuildHomeTitle(titleText: 'T-shirt'),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    ProductShopItem(),
+                    // BuildHomeTitle(titleText: 'T-shirt'),
+                    // SizedBox(
+                    //   height: 10.h,
+                    // ),
+                    // ProductShopItem(),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -203,7 +203,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
         itemCount: Provider.of<HomeProvider>(
           context,
           listen: false,
-        ).categoriesList.length,
+        ).categoriesResponse.data.length,
         physics: ScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -216,7 +216,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
           category: Provider.of<HomeProvider>(
             context,
             listen: false,
-          ).categoriesList[index],
+          ).categoriesResponse.data[index],
         ),
       ),
     );

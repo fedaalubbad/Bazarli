@@ -310,9 +310,8 @@ class AuthenticationProvider extends ChangeNotifier {
 
       }
       profileFormStateKey.currentState.save();
-
-      await AuthenticationApi.api.editProfile(context,firstName:editFName,
-          lastName:editLName,languageId:languageId==0? 1:5);
+      await AuthenticationApi.api.editProfile(context,firstName:editFName, lastName:editLName,languageId:languageId==0? 1:5);
+      getProfile(SPHelper.spHelper.getUSer().id);
 
     }
 
@@ -321,6 +320,23 @@ class AuthenticationProvider extends ChangeNotifier {
         .logout(context);
 
   }
+   Future<bool> getProfile(id)async{
+
+      Map<String,dynamic> response = await AuthenticationApi.api.getProfile(id);
+      if (response['status'] == true) {
+        LoginResponse loginStatus = response['loginResponse'];
+        SPHelper.spHelper.setUSer(loginStatus.data.toJson());
+        SPHelper.spHelper.setLoged(true);
+        notifyListeners();
+      } else {
+        SPHelper.spHelper.setLoged(false);
+        notifyListeners();
+        // print(response['errorMessage']);
+      }
+
+    }
+
+
 
 // user defined function
   void showErrorDialog(BuildContext context, errorMsg) {

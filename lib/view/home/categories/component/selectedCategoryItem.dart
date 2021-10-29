@@ -14,7 +14,7 @@ class selectedCategoryItem extends StatelessWidget{
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        NavigationService.navigationService.navigateToWidget(SubCategoriesScreen());
+        NavigationService.navigationService.navigateToWidget(SubCategoriesScreen(categoryResponse: category,));
       },
       child: Container(
         // margin: EdgeInsets.all(10),

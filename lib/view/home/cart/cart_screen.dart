@@ -1,9 +1,11 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/Product/product_details_screen.dart';
+import 'package:bazarli/view/home/Home/component/build_product_item_placeholder.dart';
 import 'package:bazarli/view/home/cart/shipping_addresses_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,33 +102,45 @@ class CartScreenState extends State<CartScreen>
             child:SPHelper.spHelper.isLoged()?
                 Stack(
               children: [
-                Provider.of<OrdersProvider>(context, ).getCartResponse.data.items
-                    .length!=0?
-                    Container(
+                // Provider.of<OrdersProvider>(context, ).getCartResponse.data.items.length!=0?
+    Selector<OrdersProvider,GetCartResponse>(
+    builder: (context, response, widget) {
+    if (response == null) {
+      return Container(
+        margin: EdgeInsets.only(bottom: 80.h),
+        child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
+      ) ;
+    } else if (response.data.items.length == 0) {
+        return Container(
+    margin: EdgeInsets.only(bottom: 80.h),
+    child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
+    ) ;
+    } else {
+    return Container(
                       margin: EdgeInsets.only(bottom: 100),
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       // physics:NeverScrollableScrollPhysics(),
-                      itemCount:
-                      Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items
+                      itemCount:response.data.items
                           .length,
                       itemBuilder: (context, index) {
                         return ProductInCartListItem(
-                          item: Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index],
-                          onPressed:(){ NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product,));},
+                          item: response.data.items[index],
+                          onPressed:(){
+                            NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product,));},
                         );
                       },
                     ),
-                  ):
-                    Container(
-                      margin: EdgeInsets.only(bottom: 80.h),
-                      child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
-                    )
-                ,
+                  );
+                }
+                }, selector: (context, provider) {
+                  return provider.getCartResponse;
+                }),
                 checkOutBtnWidget()
               ],
-            ):Column(
+            )
+                :Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
@@ -137,14 +151,14 @@ class CartScreenState extends State<CartScreen>
                 Center(child: Container(child:Text('login first'))),
               ],
             ),
-          ),
+          )
 
     );
   }
 
   checkOutBtnWidget() {
     return Positioned(
-      bottom: 40.h,
+      bottom: 65.h,
       left: 20.w,
       right: 20.w,
       child: InkWell(

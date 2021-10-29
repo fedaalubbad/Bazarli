@@ -88,7 +88,7 @@ class BuildCarouselSlider extends StatelessWidget{
                          width: 0.17.sw,
                          child: Image.network(
                            Provider.of<ProductProvider>(
-                           context,).getBrand(product[index], index),
+                           context,).getBrand(product[index],0),
                              fit: BoxFit.fill,)
                          ),
                          SizedBox(width: 5.w,),

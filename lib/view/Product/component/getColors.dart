@@ -1,14 +1,14 @@
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
-import 'package:bazarli/models/product_model/product_by_id_response.dart';
+import 'package:bazarli/models/product_model/product_by_id_response.dart' as productResponse;
 import 'package:flutter/cupertino.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 class GetColors extends StatelessWidget {
-  Data product;
+  productResponse.Data product;
 
   GetColors({this.product});
 
@@ -32,12 +32,14 @@ class GetColors extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(ScreenUtil().radius(2)),
-                  color: HexColor.fromHex(Provider.of<ProductProvider>(
-                      context, listen: false
-                  ).getColors(product, Provider
-                      .of<ProductProvider>(
-                    context,listen: false)
-                      .selectedVarientIndex)),
+                  color: HexColor.fromHex(product.color.swatchValue
+                  //     Provider.of<ProductProvider>(
+                  //     context, listen: false
+                  // ).getColors(product, Provider
+                  //     .of<ProductProvider>(
+                  //   context,listen: false)
+                  //     .selectedVarientIndex)
+                  ),
                 border: Border.all(color: BlueDarkColor,width: 2.w)
                   ),
               margin: EdgeInsets.symmetric(horizontal: 10.w),

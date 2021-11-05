@@ -16,19 +16,19 @@ class BasicDetailsWidget extends StatelessWidget{
         children: [
           Row(
             children: [
-         product.superAttributes.length<3?
-             Container()
-              :Container(
-                  height: 70.h,
-                  width: 70.w,
-                  child: Image.network(
-                      Provider.of<ProductProvider>(
-                        context,).getBrand(product, Provider.of<ProductProvider>(
-                        context,
-                      ).selectedVarientIndex),
-                    // product.category[0].imageUrl,
-                    fit: BoxFit.fill,
-                  )),
+         // product.superAttributes.length<3?
+         //     Container()
+         //      :Container(
+         //          height: 70.h,
+         //          width: 70.w,
+         //          child: Image.network(
+         //              Provider.of<ProductProvider>(
+         //                context,).getBrand(product, Provider.of<ProductProvider>(
+         //                context,
+         //              ).selectedVarientIndex),
+         //            // product.category[0].imageUrl,
+         //            fit: BoxFit.fill,
+         //          )),
               Container(
                 margin: context.locale.toString() == 'en'
                     ? EdgeInsets.only(left: 20.w)
@@ -37,7 +37,9 @@ class BasicDetailsWidget extends StatelessWidget{
                 child: Text(
                   product.variants[Provider.of<ProductProvider>(
                     context,
-                  ).selectedVarientIndex].name==null?'':product.variants[Provider.of<ProductProvider>(
+                  ).selectedVarientIndex].name==null
+                      ?''
+                      :product.variants[Provider.of<ProductProvider>(
                     context,
                   ).selectedVarientIndex].name,
                   style: ProductTitleStyle,
@@ -51,10 +53,12 @@ class BasicDetailsWidget extends StatelessWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('modelNo', style: TextLabelStyle).tr(),
-                Text(product.variants[Provider.of<ProductProvider>(
+              Container(width:0.4.sw,
+              child:Text('modelNo', style: TextLabelStyle).tr(),),
+               Container(width:0.4.sw,
+                 child: Text(product.variants[Provider.of<ProductProvider>(
                   context,
-                ).selectedVarientIndex].productNumber, style: DescriptionStyle),
+                ).selectedVarientIndex].sku, style: DescriptionStyle),)
               ],
             ),
           ),

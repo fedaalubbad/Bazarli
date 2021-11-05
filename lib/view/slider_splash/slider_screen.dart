@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/constants/heights.dart';
@@ -7,6 +8,7 @@ import 'package:bazarli/view/slider_splash/widgets/slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 class SliderScreen extends StatefulWidget{
   @override
@@ -15,6 +17,7 @@ class SliderScreen extends StatefulWidget{
   }
 
 class _SliderScreenState extends State<SliderScreen> {
+
   int _currentPage = 0;
   PageController _controller = PageController();
 
@@ -37,6 +40,10 @@ class _SliderScreenState extends State<SliderScreen> {
     setState(() {
       _currentPage = index;
     });
+  }
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

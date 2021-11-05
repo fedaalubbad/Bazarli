@@ -23,6 +23,15 @@ class SPHelper {
     return isLog;
 
   }
+  setFirstLog(bool first){
+    sharedPreferences.setBool('isFirst', first);
+
+  }
+  bool isFirstLog(){
+    bool isFirst=sharedPreferences.getBool("isFirst") ?? false;
+    return isFirst;
+
+  }
   setUSer( Map<String,dynamic> user){
 
     sharedPreferences.setString('user', json.encode(user));

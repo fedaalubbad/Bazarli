@@ -139,47 +139,47 @@ class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerRevi
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text('Details',style: ProductTitleStyle,).tr(),
-          detailsRowWidget('ItemId','#'+widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].productNumber),
+          // detailsRowWidget('ItemId','#'+widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].productNumber),
           if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].type!=null)
             detailsRowWidget('Type',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].type),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].style!=null)
-          detailsRowWidget('Style',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].style),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].materiel!=null)
-          detailsRowWidget('Material',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].materiel),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].model!=null)
-            detailsRowWidget('Modle',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].model),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].bikeType!=null)
-            detailsRowWidget('BikeType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].bikeType),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelType!=null)
-          detailsRowWidget('HeelType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelType),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelLength!=null)
-          detailsRowWidget('HeelTLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelLength),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armType!=null)
-          detailsRowWidget('ArmType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armType),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armLenght!=null)
-          detailsRowWidget('ArmLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armLenght),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].legLength!=null)
-          detailsRowWidget('LegLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].legLength),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].body!=null)
-          detailsRowWidget('Body',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].body),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].boy!=null)
-            detailsRowWidget('Boy',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].boy),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].pattern!=null)
-            detailsRowWidget('Pattern',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].pattern),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].colour!=null)
-            detailsRowWidget('Color',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].colour),
-           if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].volume!=null)
-            detailsRowWidget('Volume',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].volume),
-           if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].appearance!=null)
-            detailsRowWidget('Appearance',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].appearance),
-           if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].nice!=null)
-            detailsRowWidget('Nice',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].nice),
-          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].weight!=null)
-          //   detailsRowWidget('Weight',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].weight),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].warrantyPeriod!=null)
-            detailsRowWidget('WarrantyPeriod',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].warrantyPeriod),
-          if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].collection!=null)
-            detailsRowWidget('Collection',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].collection),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].style!=null)
+          // detailsRowWidget('Style',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].style),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].materiel!=null)
+          // detailsRowWidget('Material',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].materiel),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].model!=null)
+          //   detailsRowWidget('Modle',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].model),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].bikeType!=null)
+          //   detailsRowWidget('BikeType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].bikeType),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelType!=null)
+          // detailsRowWidget('HeelType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelType),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelLength!=null)
+          // detailsRowWidget('HeelTLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].heelLength),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armType!=null)
+          // detailsRowWidget('ArmType',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armType),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armLenght!=null)
+          // detailsRowWidget('ArmLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].armLenght),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].legLength!=null)
+          // detailsRowWidget('LegLength',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].legLength),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].body!=null)
+          // detailsRowWidget('Body',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].body),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].boy!=null)
+          //   detailsRowWidget('Boy',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].boy),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].pattern!=null)
+          //   detailsRowWidget('Pattern',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].pattern),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].colour!=null)
+          //   detailsRowWidget('Color',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].colour),
+          //  if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].volume!=null)
+          //   detailsRowWidget('Volume',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].volume),
+          //  if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].appearance!=null)
+          //   detailsRowWidget('Appearance',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].appearance),
+          //  if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].nice!=null)
+          //   detailsRowWidget('Nice',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].nice),
+          // // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].weight!=null)
+          // //   detailsRowWidget('Weight',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].weight),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].warrantyPeriod!=null)
+          //   detailsRowWidget('WarrantyPeriod',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].warrantyPeriod),
+          // if(widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].collection!=null)
+          //   detailsRowWidget('Collection',widget.product.data.variants[Provider.of<ProductProvider>(context,).selectedVarientIndex].collection),
 
 
 

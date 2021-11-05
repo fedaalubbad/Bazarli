@@ -82,15 +82,15 @@ class BuildCarouselSlider extends StatelessWidget{
                      ,
                      child: Row(
                        children: [
-                         product[index].superAttributes.length<3?SizedBox():
-                         Container(
-                         height: 60.h,
-                         width: 0.17.sw,
-                         child: Image.network(
-                           Provider.of<ProductProvider>(
-                           context,).getBrand(product[index],0),
-                             fit: BoxFit.fill,)
-                         ),
+                         // product[index].superAttributes.length<3?SizedBox():
+                         // Container(
+                         // height: 60.h,
+                         // width: 0.17.sw,
+                         // child: Image.network(
+                         //   Provider.of<ProductProvider>(
+                         //   context,).getBrand(product[index],0),
+                         //     fit: BoxFit.fill,)
+                         // ),
                          SizedBox(width: 5.w,),
                          Container(
                            width: 0.5.sw,
@@ -100,7 +100,7 @@ class BuildCarouselSlider extends StatelessWidget{
                              children: [
                                 Text(product[index].name==null?'':product[index].name,style:TabsTextStyle,maxLines: 1,),
                                 SizedBox(width: 10.h,),
-                                Text(product[index].formatedPrice,style:PriceTextStyle,),
+                                Text(product[index].price,style:PriceTextStyle,),
                                 SizedBox(height: 6.h,),
                                 StarRating(rating: 4,size: ScreenUtil().radius(20),),
                              ],

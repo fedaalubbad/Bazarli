@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/authentication_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/view/home/profile/component/profile_toolbar.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 import 'Home/home_screen.dart';
 import 'Home/component/home_toolbar.dart';
 import 'cart/cart_screen.dart';
@@ -38,7 +40,10 @@ class HomeScreenState extends State<HomeMainScreen> {
       // isProfile==true:isProfile==false;
     });
   }
-
+@override
+  void initState() {
+    super.initState();
+  }
   // List<Map<String, Object>> _pages = [
   //   {'page': HomeScreen()},
   //   {'page': CategoriesScreen()},

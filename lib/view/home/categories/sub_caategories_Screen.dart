@@ -4,7 +4,7 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart' as categoryRes;
-import 'package:bazarli/models/brand_model/brand_model.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart' as brandResponse;
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/view/home/Home/component/home_toolbar.dart';
@@ -21,7 +21,7 @@ import 'component/product_listmenu_Item.dart';
 
 class SubCategoriesScreen extends StatefulWidget{
   dynamic categoryResponse;
-  Brand brand;
+  brandResponse.Brand brand;
   SubCategoriesScreen({this.categoryResponse,this.brand});
   @override
   State<StatefulWidget> createState() {

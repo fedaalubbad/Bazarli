@@ -43,13 +43,17 @@ class GetMeasurement extends StatelessWidget{
 
                     if(product.variants[Provider.of<ProductProvider>(
                       context,listen: false
-                    ).selectedVarientIndex].inventories!=null) {
+                    ).selectedVarientIndex].quantity!=null) {
                       Provider.of<ProductProvider>(
                           context, listen: false
-                      ).setQunty(product.variants[Provider
-                          .of<ProductProvider>(
-                        context,listen: false
-                      ).selectedVarientIndex].inventories[0].qty);
+                      ).setQunty(product.variants[Provider.of<ProductProvider>(
+                          context,listen: false
+                      ).selectedVarientIndex].quantity
+                        // (product.variants[Provider
+                      //     .of<ProductProvider>(
+                      //   context,listen: false
+                      // ).selectedVarientIndex].inventories[0].qty
+                      );
                     }else {
                       Provider.of<ProductProvider>(
                           context, listen: false
@@ -68,9 +72,13 @@ class GetMeasurement extends StatelessWidget{
                       height: 39.h,
                       width: 48.w,
                       // child: Text(product.variants[index].size.toString()));
-                      child: Text(Provider.of<ProductProvider>(
-                          context,listen: false
-                      ).getSize(product,index))),
+                      child: Text(
+                        product.variants[index].size.label
+                      //     Provider.of<ProductProvider>(
+                      //     context,listen: false
+                      // ).getSize(product,index),
+                      ),
+                  ),
                 );
               }),
         ),

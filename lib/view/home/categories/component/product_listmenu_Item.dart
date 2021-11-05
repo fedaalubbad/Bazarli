@@ -55,11 +55,11 @@ class ProductListMenuItem extends StatelessWidget{
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            product.superAttributes.length<3?SizedBox():
-            Container(width: 40.w,height: 40.h,
-                margin: EdgeInsets.only(left:2.w,),
-                child: Image.network( Provider.of<ProductProvider>(
-                  context,).getBrand(product,0),)),
+            // product.superAttributes.length<3?SizedBox():
+            // Container(width: 40.w,height: 40.h,
+            //     margin: EdgeInsets.only(left:2.w,),
+            //     child: Image.network( Provider.of<ProductProvider>(
+            //       context,).getBrand(product,0),)),
 
             Container(
               margin: EdgeInsets.only(left:5.w,),
@@ -70,7 +70,7 @@ class ProductListMenuItem extends StatelessWidget{
                    Container(width:200.w,
                        child: Text(product.shortDescription==null?'':product.shortDescription,style:TabsTextStyle,maxLines:2,)),
                    SizedBox(width: 10.h,),
-                   Text(product.formatedPrice,style:PriceTextStyle,),
+                   Text(product.price,style:PriceTextStyle,),
                    SizedBox(height: 6.h,),
 
                    Row(

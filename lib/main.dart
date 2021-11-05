@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
             );
           },
           navigatorKey: NavigationService.navigationService.navigatorKey,
-          home: MyHomePage(),
+          home: SplashScreen(),
           // home: ProductScreen(),
           // routes: { '/': (context) => MyHomePage(),
           //  },

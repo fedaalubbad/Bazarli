@@ -1,6 +1,6 @@
 import 'package:bazarli/models/Categories_model/category_response.dart' as categoryResponse;
 import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
-import 'package:bazarli/models/brand_model/brand_model.dart';
+import 'package:bazarli/models/brand_model/brand_model.dart' as brandResponse;
 import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
 import 'package:bazarli/view/search/sizes_search_screen.dart';
@@ -14,7 +14,7 @@ class ProductProvider extends ChangeNotifier {
   // String categoryName;
   final searchContraller = TextEditingController();
   categoryResponse.Datum selectedCategory;
-  Brand selectedBrand;
+  brandResponse.Brand selectedBrand;
   ArrivalsResponse selectedArrivals;
 
 
@@ -167,8 +167,8 @@ class ProductProvider extends ChangeNotifier {
     selectVarientIndex(0);
     quantity = 1;
     if (productById != null) {
-      if (productById.data.variants[0].inventories != null)
-        setQunty(productById.data.variants[0].inventories[0].qty);
+      if (productById.data.variants[0].quantity!= null)
+        setQunty(productById.data.variants[0].quantity);
     }
     return productById;
   }

@@ -6,21 +6,21 @@ import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:bazarli/view/home/home_main_screen.dart';
 import 'package:bazarli/view/slider_splash/slider_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SplashScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return SplashState();
   }
 }
-class SplashState extends State<SplashScreen>{
-  navigationTohome(BuildContext context) async{
 
-    Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
-    Provider.of<HomeProvider>(
+class SplashState extends State<SplashScreen> {
+  navigationTohome(BuildContext context) async {
+
+    await Provider.of<HomeProvider>(
       context,
       listen: false,
     ).getAllCategories(context);
@@ -30,61 +30,63 @@ class SplashState extends State<SplashScreen>{
       listen: false,
     ).getAllHomeCategories(context);
 
-   Provider.of<HomeProvider>(
+    Provider.of<HomeProvider>(
       context,
       listen: false,
     ).getSliders(context);
-     Provider.of<HomeProvider>(
+    Provider.of<HomeProvider>(
       context,
       listen: false,
     ).getAllBrandss(context);
 
-     if(SPHelper.spHelper.getUSer()!=null)
-     Provider.of<AuthenticationProvider>(
-      context,
-      listen: false,
-    ).getProfile(SPHelper.spHelper.getUSer().id);
-
-    await Future.delayed(Duration(seconds:4));
-    if(SPHelper.spHelper.isLoged())
-      // NavigationService.navigationService.navigateAndReplaceWidget(LoginPage());
-      NavigationService.navigationService.navigateAndReplaceWidget(HomeMainScreen(selectedPageIndex: 0,));
-    else
-      NavigationService.navigationService.navigateAndReplaceWidget(SliderScreen());
-
-
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) =>SignScreen()),
-    // );
+    await Future.delayed(Duration(seconds: 4)).then((value) {
+      Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
+      if (!SPHelper.spHelper.isFirstLog()) {
+        NavigationService.navigationService
+            .navigateAndReplaceWidget(SliderScreen());
+        SPHelper.spHelper.setFirstLog(true);
+        Provider.of<AuthenticationProvider>(
+          context,
+          listen: false,
+        ).getProfile(SPHelper.spHelper.getUSer().id);
+      } else {
+        NavigationService.navigationService
+            .navigateAndReplaceWidget(HomeMainScreen(
+          selectedPageIndex: 0,
+        ));
+      }
+    });
   }
+
   @override
   void initState() {
-    // Provider.of<HomeProvider>(context, listen: false). getAllCategories();
-
+    navigationTohome(context);
     super.initState();
   }
-  @override
-  void didChangeDependencies() {
-    navigationTohome(context);
-    super.didChangeDependencies();
-  }
+
+  // @override
+  // void didChangeDependencies() {
+  //   navigationTohome(context);
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-          color:HomeBackgroundColor,
-            child: Center(
-                child: Image.asset("assets/images/app_logo.png")
-            ),
+    ScreenUtil.init(
+      BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: MediaQuery.of(context).size.height,
       ),
-
+      designSize: Size(360, 690),
+      orientation: Orientation.portrait,
     );
-
+    return SafeArea(
+        child: Scaffold(
+            body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: HomeBackgroundColor,
+      child: Center(child: Image.asset("assets/images/app_logo.png")),
+    )));
   }
-
 }

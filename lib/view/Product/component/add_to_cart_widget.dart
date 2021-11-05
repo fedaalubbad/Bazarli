@@ -31,17 +31,17 @@ class AddToCartWidet extends StatelessWidget{
                 SizedBox(width: 5.w,),
               if(product.variants[Provider.of<ProductProvider>(
                   context,
-                ).selectedVarientIndex].inventories!=null)
+                ).selectedVarientIndex].quantity!=null)
                 Text(
                  product.variants[Provider.of<ProductProvider>(
                    context,
-                 ).selectedVarientIndex].inventories[0].qty.toString(),
+                 ).selectedVarientIndex].quantity.toString(),
                   style: BottomBarTextStyle,
                 ),
                 SizedBox(width: 5.w,),
                 if(product.variants[Provider.of<ProductProvider>(
                   context,
-                ).selectedVarientIndex].inventories!=null)
+                ).selectedVarientIndex].quantity!=null)
                 Text(
                  'Items',
                   style: BottomBarTextStyle,

@@ -32,7 +32,10 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
 @override
   void initState() {
-
+  Provider
+      .of<ProductProvider>(
+    context,listen: false
+  ).selectedVarientIndex=0;
   Provider.of<ProductProvider>(
         context,listen: false
       ).getProductById(productId: widget.product.id);
@@ -67,17 +70,16 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        GetMeasurement(product: provider.productById.data,),
+                        if(provider.productById.data.variants[Provider.of<ProductProvider>(
+                          context,
+                        ).selectedVarientIndex].size.label!=null)
+                          GetMeasurement(product: provider.productById.data,),
                         SizedBox(
                           height: 20.h,
                         ),
-                        if( Provider.of<ProductProvider>(
-                            context, listen: false
-                        ).getColors(provider.productById.data, Provider
-                            .of<ProductProvider>(
-                          context,
-                        ).selectedVarientIndex) != '')
+                        if(provider.productById.data.color.swatchValue!=null)
                        GetColors(product: provider.productById.data,),
+
                         SizedBox(
                           height: 20.h,
                         ),

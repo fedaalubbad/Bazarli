@@ -66,15 +66,15 @@ class ProductGridMenuItem extends StatelessWidget{
                 ,
                 child: Row(
                   children: [
-                    product.superAttributes.length<3?SizedBox():
-                    Container(
-                        height: 60.h,
-                        width: 0.17.sw,
-                        child: Image.network(
-                          Provider.of<ProductProvider>(
-                            context,).getBrand(product,0),
-                          fit: BoxFit.fill,)
-                    ),
+                    // product.superAttributes.length<3?SizedBox():
+                    // Container(
+                    //     height: 60.h,
+                    //     width: 0.17.sw,
+                        // child: Image.network(product.brand.label,
+                          // Provider.of<ProductProvider>(
+                          //   context,).getBrand(product,0),
+                          // fit: BoxFit.fill,)
+                    // ),
                     SizedBox(width: 5.w,),
                     Container(
                       width: 0.5.sw,
@@ -84,7 +84,7 @@ class ProductGridMenuItem extends StatelessWidget{
                         children: [
                           Text(product.name==null?'':product.name,style:TabsTextStyle,maxLines: 1,),
                           SizedBox(width: 10.h,),
-                          Text(product.formatedPrice,style:PriceTextStyle,),
+                          Text(product.price,style:PriceTextStyle,),
                           SizedBox(height: 6.h,),
                           StarRating(rating: 4,size: ScreenUtil().radius(20),),
                         ],

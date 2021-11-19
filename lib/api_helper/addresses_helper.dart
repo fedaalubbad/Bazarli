@@ -3,6 +3,7 @@ import 'package:bazarli/models/address_model/createAddress_model.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
 import 'package:bazarli/models/get_cities_respons/get_cities_respons.dart';
 import 'package:bazarli/models/message_response/message_response.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class AddressesApi {
       'first_name': first_name,
       'last_name': last_name,
       'title': title,
-      'token': null,
+      'token': true,
     };
     print(formData);
 
@@ -49,6 +50,7 @@ class AddressesApi {
       if(response.statusCode==200){
 
         Map<String,dynamic> responseBody=response.data;
+        print('addAddress'+ response.data.toString());
         CreateAddress createAddressResponse=CreateAddress.fromJson(responseBody);
         _showToast(context,responseBody['message']);
         return createAddressResponse;
@@ -153,7 +155,10 @@ class AddressesApi {
     // dio.options.headers["Content-Type"] = "application/json";
     // dio.options.headers["Accept"] = "application/json";
     try {
-      Response response = await Settings.settings.dio.get(GET_ADDRESSES_URL);
+      Response response = await Settings.settings.dio.get(GET_ADDRESSES_URL,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }));
 
       print('000'+response.statusMessage);
 

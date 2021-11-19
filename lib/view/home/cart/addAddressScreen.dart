@@ -18,6 +18,7 @@ class AddAddressScreen extends StatefulWidget{
 
 }
 class AddAddressScreenState extends State<AddAddressScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,7 @@ class AddAddressScreenState extends State<AddAddressScreen> {
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
             child: SingleChildScrollView(
               child: Form(
-                key: Provider.of<AddressesProvider>(context ).addressesFormStateKey,
+                key: Provider.of<AddressesProvider>(context ,listen: false).addressesFormStateKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -159,7 +160,7 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                               ////////////////////////
                             },
                           ).toList(),
-                          value: Provider.of<AddressesProvider>(context,listen: false ).selectedCity,
+                          value: Provider.of<AddressesProvider>(context).selectedCity,
                           onChanged:(val) {
                             Provider.of<AddressesProvider>(context, listen: false).selectCity(val);
 

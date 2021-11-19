@@ -73,6 +73,8 @@ class Data {
     this.shippingAddress,
     this.createdAt,
     this.updatedAt,
+    this.baseTaxes,
+    this.formatedBaseTaxes,
     this.formatedDiscountedSubTotal,
     this.formatedBaseDiscountedSubTotal,
   });
@@ -120,6 +122,8 @@ class Data {
   dynamic shippingAddress;
   DateTime createdAt;
   DateTime updatedAt;
+  String baseTaxes;
+  String formatedBaseTaxes;
   String formatedDiscountedSubTotal;
   String formatedBaseDiscountedSubTotal;
 
@@ -167,6 +171,8 @@ class Data {
     shippingAddress: json["shipping_address"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
+    baseTaxes: json["base_taxes"],
+    formatedBaseTaxes: json["formated_base_taxes"],
     formatedDiscountedSubTotal: json["formated_discounted_sub_total"],
     formatedBaseDiscountedSubTotal: json["formated_base_discounted_sub_total"],
   );
@@ -215,6 +221,8 @@ class Data {
     "shipping_address": shippingAddress,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
+    "base_taxes": baseTaxes,
+    "formated_base_taxes": formatedBaseTaxes,
     "formated_discounted_sub_total": formatedDiscountedSubTotal,
     "formated_base_discounted_sub_total": formatedBaseDiscountedSubTotal,
   };
@@ -376,7 +384,7 @@ class Additional {
   });
 
   String token;
-    int quantity;
+  int quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -399,26 +407,16 @@ class Product {
     this.type,
     this.name,
     this.urlKey,
+    this.parentId,
     this.price,
-    this.formatedPrice,
+    this.specialPrice,
+    this.savingPrice,
     this.shortDescription,
     this.description,
-    this.category,
-    this.images,
-    this.videos,
-    this.baseImage,
+    this.size,
     this.createdAt,
     this.updatedAt,
-    this.reviews,
-    this.inStock,
-    this.isSaved,
-    this.isWishlisted,
-    this.isItemInCart,
-    this.showQuantityChanger,
-    this.specialPrice,
-    this.formatedSpecialPrice,
-    this.regularPrice,
-    this.formatedRegularPrice,
+    this.quantity,
   });
 
   int id;
@@ -426,26 +424,16 @@ class Product {
   String type;
   String name;
   String urlKey;
+  int parentId;
   String price;
-  String formatedPrice;
+  String specialPrice;
+  String savingPrice;
   String shortDescription;
   String description;
-  List<dynamic> category;
-  List<dynamic> images;
-  List<dynamic> videos;
-  BaseImage baseImage;
+  Size size;
   DateTime createdAt;
   DateTime updatedAt;
-  Reviews reviews;
-  bool inStock;
-  bool isSaved;
-  bool isWishlisted;
-  bool isItemInCart;
-  bool showQuantityChanger;
-  String specialPrice;
-  String formatedSpecialPrice;
-  String regularPrice;
-  String formatedRegularPrice;
+  int quantity;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -453,26 +441,16 @@ class Product {
     type: json["type"],
     name: json["name"],
     urlKey: json["url_key"],
+    parentId: json["parent_id"],
     price: json["price"],
-    formatedPrice: json["formated_price"],
+    specialPrice: json["special_price"],
+    savingPrice: json["saving_price"],
     shortDescription: json["short_description"],
     description: json["description"],
-    category: List<dynamic>.from(json["category"].map((x) => x)),
-    images: List<dynamic>.from(json["images"].map((x) => x)),
-    videos: List<dynamic>.from(json["videos"].map((x) => x)),
-    baseImage: BaseImage.fromJson(json["base_image"]),
+    size: Size.fromJson(json["size"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    reviews: Reviews.fromJson(json["reviews"]),
-    inStock: json["in_stock"],
-    isSaved: json["is_saved"],
-    isWishlisted: json["is_wishlisted"],
-    isItemInCart: json["is_item_in_cart"],
-    showQuantityChanger: json["show_quantity_changer"],
-    specialPrice: json["special_price"],
-    formatedSpecialPrice: json["formated_special_price"],
-    regularPrice: json["regular_price"],
-    formatedRegularPrice: json["formated_regular_price"],
+    quantity: json["quantity"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -481,81 +459,35 @@ class Product {
     "type": type,
     "name": name,
     "url_key": urlKey,
+    "parent_id": parentId,
     "price": price,
-    "formated_price": formatedPrice,
+    "special_price": specialPrice,
+    "saving_price": savingPrice,
     "short_description": shortDescription,
     "description": description,
-    "category": List<dynamic>.from(category.map((x) => x)),
-    "images": List<dynamic>.from(images.map((x) => x)),
-    "videos": List<dynamic>.from(videos.map((x) => x)),
-    "base_image": baseImage.toJson(),
+    "size": size.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "reviews": reviews.toJson(),
-    "in_stock": inStock,
-    "is_saved": isSaved,
-    "is_wishlisted": isWishlisted,
-    "is_item_in_cart": isItemInCart,
-    "show_quantity_changer": showQuantityChanger,
-    "special_price": specialPrice,
-    "formated_special_price": formatedSpecialPrice,
-    "regular_price": regularPrice,
-    "formated_regular_price": formatedRegularPrice,
+    "quantity": quantity,
   };
 }
 
-class BaseImage {
-  BaseImage({
-    this.smallImageUrl,
-    this.mediumImageUrl,
-    this.largeImageUrl,
-    this.originalImageUrl,
+class Size {
+  Size({
+    this.id,
+    this.label,
   });
 
-  String smallImageUrl;
-  String mediumImageUrl;
-  String largeImageUrl;
-  String originalImageUrl;
+  int id;
+  String label;
 
-  factory BaseImage.fromJson(Map<String, dynamic> json) => BaseImage(
-    smallImageUrl: json["small_image_url"],
-    mediumImageUrl: json["medium_image_url"],
-    largeImageUrl: json["large_image_url"],
-    originalImageUrl: json["original_image_url"],
+  factory Size.fromJson(Map<String, dynamic> json) => Size(
+    id: json["id"],
+    label: json["label"] == null ? null : json["label"],
   );
 
   Map<String, dynamic> toJson() => {
-    "small_image_url": smallImageUrl,
-    "medium_image_url": mediumImageUrl,
-    "large_image_url": largeImageUrl,
-    "original_image_url": originalImageUrl,
-  };
-}
-
-class Reviews {
-  Reviews({
-    this.total,
-    this.totalRating,
-    this.averageRating,
-    this.percentage,
-  });
-
-  int total;
-  int totalRating;
-  int averageRating;
-  List<dynamic> percentage;
-
-  factory Reviews.fromJson(Map<String, dynamic> json) => Reviews(
-    total: json["total"],
-    totalRating: json["total_rating"],
-    averageRating: json["average_rating"],
-    percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "total": total,
-    "total_rating": totalRating,
-    "average_rating": averageRating,
-    "percentage": List<dynamic>.from(percentage.map((x) => x)),
+    "id": id,
+    "label": label == null ? null : label,
   };
 }

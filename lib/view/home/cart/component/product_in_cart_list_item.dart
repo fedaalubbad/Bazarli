@@ -1,5 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/view/home/Home/component/star_rating.dart';
@@ -53,7 +54,7 @@ class ProductInCartListItem extends StatelessWidget{
                                 // colorFilter: ColorFilter.mode(
                                 //     MyColors.blackColor.withOpacity(0.3), BlendMode.darken),
                                 fit: BoxFit.cover,
-                                image: NetworkImage(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.baseImage.largeImageUrl),
+                                image: NetworkImage(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.images.mediumImageUrl),
                               ),
                             ),
                           )
@@ -63,9 +64,9 @@ class ProductInCartListItem extends StatelessWidget{
                         // mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(width: 40.w,height: 40.h,
-                              margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
-                              child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.baseImage.mediumImageUrl)),
+                          // Container(width: 40.w,height: 40.h,
+                          //     margin: EdgeInsets.symmetric(horizontal: 2.w,vertical: 10.h),
+                          //     child: Image.network(wishList!=null?wishList.product.baseImage.mediumImageUrl:item.product.name)),
 
                           Container(
                             margin: context.locale.toString()=='en'?EdgeInsets.only(top:10.h,left:5.w,):EdgeInsets.only(top:10.h,right:5.w,),
@@ -85,7 +86,7 @@ class ProductInCartListItem extends StatelessWidget{
                                 Flexible(
                                   child: Container(
                                       width:0.55.sw,
-                                      child: Text(wishList!=null?wishList.product.formatedPrice:item.product.formatedPrice,
+                                      child: Text(wishList!=null?wishList.product.formatedPrice:item.price,
                                         style:PriceTextStyle,
                                         overflow: TextOverflow.ellipsis,
                                       )),

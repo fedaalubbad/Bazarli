@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final getCartResponse = getCartResponseFromJson(jsonString);
+//     final shippingMethods = shippingMethodsFromJson(jsonString);
 
 import 'dart:convert';
 
-GetCartResponse getCartResponseFromJson(String str) => GetCartResponse.fromJson(json.decode(str));
+ShippingMethods shippingMethodsFromJson(String str) => ShippingMethods.fromJson(json.decode(str));
 
-String getCartResponseToJson(GetCartResponse data) => json.encode(data.toJson());
+String shippingMethodsToJson(ShippingMethods data) => json.encode(data.toJson());
 
-class GetCartResponse {
-  GetCartResponse({
+class ShippingMethods {
+  ShippingMethods({
     this.data,
   });
 
   Data data;
 
-  factory GetCartResponse.fromJson(Map<String, dynamic> json) => GetCartResponse(
+  factory ShippingMethods.fromJson(Map<String, dynamic> json) => ShippingMethods(
     data: Data.fromJson(json["data"]),
   );
 
@@ -26,6 +26,26 @@ class GetCartResponse {
 
 class Data {
   Data({
+    this.methods,
+    this.cart,
+  });
+
+  List<Method> methods;
+  Cart cart;
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+    methods: List<Method>.from(json["methods"].map((x) => Method.fromJson(x))),
+    cart: Cart.fromJson(json["cart"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "methods": List<dynamic>.from(methods.map((x) => x.toJson())),
+    "cart": cart.toJson(),
+  };
+}
+
+class Cart {
+  Cart({
     this.id,
     this.customerEmail,
     this.customerFirstName,
@@ -79,7 +99,7 @@ class Data {
   String customerEmail;
   String customerFirstName;
   String customerLastName;
-  dynamic shippingMethod;
+  String shippingMethod;
   dynamic couponCode;
   int isGift;
   int itemsCount;
@@ -113,7 +133,7 @@ class Data {
   dynamic channel;
   List<Item> items;
   dynamic selectedShippingRate;
-  dynamic payment;
+  Payment payment;
   dynamic billingAddress;
   dynamic shippingAddress;
   DateTime createdAt;
@@ -123,7 +143,7 @@ class Data {
   String formatedDiscountedSubTotal;
   String formatedBaseDiscountedSubTotal;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Cart.fromJson(Map<String, dynamic> json) => Cart(
     id: json["id"],
     customerEmail: json["customer_email"],
     customerFirstName: json["customer_first_name"],
@@ -162,7 +182,7 @@ class Data {
     channel: json["channel"],
     items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
     selectedShippingRate: json["selected_shipping_rate"],
-    payment: json["payment"],
+    payment: json["payment"]==null?null:Payment.fromJson(json["payment"]),
     billingAddress: json["billing_address"],
     shippingAddress: json["shipping_address"],
     createdAt: DateTime.parse(json["created_at"]),
@@ -212,7 +232,7 @@ class Data {
     "channel": channel,
     "items": List<dynamic>.from(items.map((x) => x.toJson())),
     "selected_shipping_rate": selectedShippingRate,
-    "payment": payment,
+    "payment":payment==null?null: payment.toJson(),
     "billing_address": billingAddress,
     "shipping_address": shippingAddress,
     "created_at": createdAt.toIso8601String(),
@@ -236,7 +256,6 @@ class Item {
     this.totalWeight,
     this.baseTotalWeight,
     this.price,
-    this.images,
     this.formatedPrice,
     this.basePrice,
     this.formatedBasePrice,
@@ -273,7 +292,6 @@ class Item {
   String totalWeight;
   String baseTotalWeight;
   String price;
-  Images images;
   String formatedPrice;
   String basePrice;
   String formatedBasePrice;
@@ -310,7 +328,6 @@ class Item {
     totalWeight: json["total_weight"],
     baseTotalWeight: json["base_total_weight"],
     price: json["price"],
-    images: Images.fromJson(json["images"]),
     formatedPrice: json["formated_price"],
     basePrice: json["base_price"],
     formatedBasePrice: json["formated_base_price"],
@@ -348,7 +365,6 @@ class Item {
     "total_weight": totalWeight,
     "base_total_weight": baseTotalWeight,
     "price": price,
-    "images": images.toJson(),
     "formated_price": formatedPrice,
     "base_price": basePrice,
     "formated_base_price": formatedBasePrice,
@@ -384,7 +400,7 @@ class Additional {
   });
 
   String token;
-  String quantity;
+  dynamic quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -397,34 +413,6 @@ class Additional {
     "token": token,
     "quantity": quantity,
     "product_id": productId,
-  };
-}
-
-class Images {
-  Images({
-    this.smallImageUrl,
-    this.mediumImageUrl,
-    this.largeImageUrl,
-    this.originalImageUrl,
-  });
-
-  String smallImageUrl;
-  String mediumImageUrl;
-  String largeImageUrl;
-  String originalImageUrl;
-
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
-    smallImageUrl: json["small_image_url"],
-    mediumImageUrl: json["medium_image_url"],
-    largeImageUrl: json["large_image_url"],
-    originalImageUrl: json["original_image_url"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "small_image_url": smallImageUrl,
-    "medium_image_url": mediumImageUrl,
-    "large_image_url": largeImageUrl,
-    "original_image_url": originalImageUrl,
   };
 }
 
@@ -507,15 +495,75 @@ class Size {
   });
 
   int id;
-  dynamic label;
+  String label;
 
   factory Size.fromJson(Map<String, dynamic> json) => Size(
     id: json["id"],
-    label: json["label"],
+    label: json["label"] == null ? null : json["label"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "label": label,
+    "label": label == null ? null : label,
+  };
+}
+
+class Payment {
+  Payment({
+    this.id,
+    this.method,
+    this.methodTitle,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  String method;
+  String methodTitle;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Payment.fromJson(Map<String, dynamic> json) => Payment(
+    id: json["id"],
+    method: json["method"],
+    methodTitle: json["method_title"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "method": method,
+    "method_title": methodTitle,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
+class Method {
+  Method({
+    this.method,
+    this.methodTitle,
+    this.description,
+    this.sort,
+  });
+
+  String method;
+  String methodTitle;
+  String description;
+  dynamic sort;
+
+  factory Method.fromJson(Map<String, dynamic> json) => Method(
+    method: json["method"],
+    methodTitle: json["method_title"],
+    description: json["description"],
+    sort: json["sort"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "method": method,
+    "method_title": methodTitle,
+    "description": description,
+    "sort": sort,
   };
 }

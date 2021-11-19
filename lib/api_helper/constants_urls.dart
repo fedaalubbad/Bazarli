@@ -62,11 +62,11 @@ const String APPLY_COUPON_URL =
 const String DELETE_COUPON_URL =
     "checkout/cart/coupon"; // MOTHOD DELETE  TAKE CODE
 const String MOVE_TO_WISHLIST_URL = "checkout/cart/move-to-wishlist/"; //ID
-const String CHECKOUT_ADDRESS_URL = "checkout/save-address";
-const String SHIPPING_METHOD_URL = "checkout/save-shipping"; //SHIPPING [METHOD]
-const String PAYMENT_METHOD_URL = "checkout/save-payment"; //payment[method]
-const String SAVE_ORDER_URL = "checkout/save-order"; //cart
 const String UPDATE_CART_URL = "checkout/cart/update?_method=PUT";
+const String GET_ADDRESS_RATES_URL = "checkout/save-address?token=true";
+const String GET_SHIPPING_METHODS_URL = "checkout/save-shipping?token=true";
+const String GET_PAYMENT_METHODS_URL = "checkout/save-payment?token=true";
+const String SAVE_ORDER_URL = "checkout/save-order?token=true";
 
 //CUSTOMER WISHLIST
 const String GET_WISHLIST_URL = "wishlist?token=true"; //USED TO DELETE TAKE ID

@@ -35,12 +35,15 @@ class Data {
     this.lastName,
     this.companyName,
     this.address1,
+    this.address2,
     this.country,
     this.countryName,
     this.state,
     this.city,
     this.postcode,
     this.phone,
+    this.title,
+    this.phoneCode,
     this.createdAt,
     this.updatedAt,
   });
@@ -50,12 +53,15 @@ class Data {
   String lastName;
   dynamic companyName;
   List<String> address1;
+  String address2;
   String country;
   String countryName;
   String state;
   String city;
   String postcode;
   String phone;
+  String title;
+  String phoneCode;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -65,12 +71,15 @@ class Data {
     lastName: json["last_name"],
     companyName: json["company_name"],
     address1: List<String>.from(json["address1"].map((x) => x)),
+    address2: json["address2"],
     country: json["country"],
     countryName: json["country_name"],
     state: json["state"],
     city: json["city"],
     postcode: json["postcode"],
     phone: json["phone"],
+    title: json["title"],
+    phoneCode: json["phone_code"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -81,12 +90,15 @@ class Data {
     "last_name": lastName,
     "company_name": companyName,
     "address1": List<dynamic>.from(address1.map((x) => x)),
+    "address2": address2,
     "country": country,
     "country_name": countryName,
     "state": state,
     "city": city,
     "postcode": postcode,
     "phone": phone,
+    "title": title,
+    "phone_code": phoneCode,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

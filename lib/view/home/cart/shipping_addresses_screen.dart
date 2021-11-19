@@ -3,6 +3,7 @@ import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
 import 'package:bazarli/ViewModel/addresses_provider.dart';
+import 'package:bazarli/view/home/cart/PaymentScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ class ShippingAdressScreenState extends State<ShippingAdressScreen> {
   void initState() {
     Provider.of<AddressesProvider>(context, listen: false)
         .getCustomerAddresses();
+    Provider.of<AddressesProvider>(context, listen: false).selectedCity=null;
     Provider.of<AddressesProvider>(context, listen: false)
         .getCKuwitCities();
     super.initState();
@@ -151,6 +153,10 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
             height: 10.h,
           ),
           GestureDetector(
+            onTap: (){
+              Provider.of<AddressesProvider>(context, listen: false)
+              .selectAddress(address);
+            },
             onLongPress:(){
               Provider.of<AddressesProvider>(context, listen: false)
               .submitDeleteAddressDialog(context,'are you sure you want delete this address?',address.id);
@@ -169,12 +175,14 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
                     offset: Offset(0.0, 8),
                   ),
                 ],
-                color: WhiteColor,
+                color: Provider.of<AddressesProvider>(context)
+                    .selectedAddress==address?GrayLiteColor:WhiteColor,
                 borderRadius: BorderRadius.circular(
                   ScreenUtil().radius(5),
                 ),
                 border: Border.all(
-                  color: PrimaryColor,
+                  color: Provider.of<AddressesProvider>(context)
+                      .selectedAddress==address?PrimaryColor:GrayColor,
                 ),
               ),
               child: Column(
@@ -284,9 +292,16 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
     return Container(
       child: InkWell(
         onTap: () {
-          // NavigationService.navigationService.navigateToWidget(
-          //   AddAddressScreen(),
-          // );
+          if(  Provider.of<AddressesProvider>(context,listen: false)
+              .selectedAddress==null){
+            print('selectAddress');
+          }else {
+            NavigationService.navigationService.navigateToWidget(
+              PaymentScreen(Provider
+                  .of<AddressesProvider>(context,listen: false)
+                  .selectedAddress),
+            );
+          }
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: 20.w),

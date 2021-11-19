@@ -12,8 +12,13 @@ import 'package:flutter/material.dart';
 class AddressesProvider extends ChangeNotifier {
   List<Datum> addressList = [];
   List<GetCitiesResponse> getCitiesResponseList;
-  GetCitiesResponse selectedCity;
+  GetCitiesResponse selectedCity=null;
+  Datum selectedAddress=null;
 
+  selectAddress(val){
+    selectedAddress=val;
+    notifyListeners();
+  }
   final GlobalKey<FormState> addressesFormStateKey = GlobalKey<FormState>();
 
   String country;
@@ -120,9 +125,9 @@ String validatePhoneCode(String val){
               context,
               jsonEncode([title]),
               'Kuwait',
-              ' state',
+              'KA',
               selectedCity.text,
-              '395004',
+              '591118',
               phone,
               phone_code,
               SPHelper.spHelper

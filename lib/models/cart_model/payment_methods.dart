@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final addressRates = addressRatesFromJson(jsonString);
+//     final paymentMethods = paymentMethodsFromJson(jsonString);
 
 import 'dart:convert';
 
-AddressRates addressRatesFromJson(String str) => AddressRates.fromJson(json.decode(str));
+PaymentMethods paymentMethodsFromJson(String str) => PaymentMethods.fromJson(json.decode(str));
 
-String addressRatesToJson(AddressRates data) => json.encode(data.toJson());
+String paymentMethodsToJson(PaymentMethods data) => json.encode(data.toJson());
 
-class AddressRates {
-  AddressRates({
+class PaymentMethods {
+  PaymentMethods({
     this.data,
   });
 
   Data data;
 
-  factory AddressRates.fromJson(Map<String, dynamic> json) => AddressRates(
+  factory PaymentMethods.fromJson(Map<String, dynamic> json) => PaymentMethods(
     data: Data.fromJson(json["data"]),
   );
 
@@ -26,21 +26,21 @@ class AddressRates {
 
 class Data {
   Data({
-    this.rates,
     this.cart,
+    this.paymentMethods,
   });
 
-  List<DataRate> rates;
   Cart cart;
+  List<PaymentMethod> paymentMethods;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    rates: List<DataRate>.from(json["rates"].map((x) => DataRate.fromJson(x))),
     cart: Cart.fromJson(json["cart"]),
+    paymentMethods: List<PaymentMethod>.from(json["payment_methods"].map((x) => PaymentMethod.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
     "cart": cart.toJson(),
+    "payment_methods": List<dynamic>.from(paymentMethods.map((x) => x.toJson())),
   };
 }
 
@@ -107,8 +107,8 @@ class Cart {
   dynamic exchangeRate;
   String globalCurrencyCode;
   String baseCurrencyCode;
-  String channelCurrencyCode;
-  String cartCurrencyCode;
+  CartCurrencyCode channelCurrencyCode;
+  CartCurrencyCode cartCurrencyCode;
   String grandTotal;
   String formatedGrandTotal;
   String baseGrandTotal;
@@ -132,7 +132,7 @@ class Cart {
   dynamic customer;
   dynamic channel;
   List<Item> items;
-  SelectedShippingRateElement selectedShippingRate;
+  SelectedShippingRate selectedShippingRate;
   Payment payment;
   IngAddress billingAddress;
   IngAddress shippingAddress;
@@ -156,8 +156,8 @@ class Cart {
     exchangeRate: json["exchange_rate"],
     globalCurrencyCode: json["global_currency_code"],
     baseCurrencyCode: json["base_currency_code"],
-    channelCurrencyCode: json["channel_currency_code"],
-    cartCurrencyCode: json["cart_currency_code"],
+    channelCurrencyCode: cartCurrencyCodeValues.map[json["channel_currency_code"]],
+    cartCurrencyCode: cartCurrencyCodeValues.map[json["cart_currency_code"]],
     grandTotal: json["grand_total"],
     formatedGrandTotal: json["formated_grand_total"],
     baseGrandTotal: json["base_grand_total"],
@@ -181,8 +181,8 @@ class Cart {
     customer: json["customer"],
     channel: json["channel"],
     items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
-    selectedShippingRate: SelectedShippingRateElement.fromJson(json["selected_shipping_rate"]),
-    payment: json["payment"]==null?null:Payment.fromJson(json["payment"]),
+    selectedShippingRate: SelectedShippingRate.fromJson(json["selected_shipping_rate"]),
+    payment: Payment.fromJson(json["payment"]),
     billingAddress: IngAddress.fromJson(json["billing_address"]),
     shippingAddress: IngAddress.fromJson(json["shipping_address"]),
     createdAt: DateTime.parse(json["created_at"]),
@@ -206,8 +206,8 @@ class Cart {
     "exchange_rate": exchangeRate,
     "global_currency_code": globalCurrencyCode,
     "base_currency_code": baseCurrencyCode,
-    "channel_currency_code": channelCurrencyCode,
-    "cart_currency_code": cartCurrencyCode,
+    "channel_currency_code": cartCurrencyCodeValues.reverse[channelCurrencyCode],
+    "cart_currency_code": cartCurrencyCodeValues.reverse[cartCurrencyCode],
     "grand_total": grandTotal,
     "formated_grand_total": formatedGrandTotal,
     "base_grand_total": baseGrandTotal,
@@ -232,7 +232,7 @@ class Cart {
     "channel": channel,
     "items": List<dynamic>.from(items.map((x) => x.toJson())),
     "selected_shipping_rate": selectedShippingRate.toJson(),
-    "payment": payment==null?null:payment.toJson(),
+    "payment": payment.toJson(),
     "billing_address": billingAddress.toJson(),
     "shipping_address": shippingAddress.toJson(),
     "created_at": createdAt.toIso8601String(),
@@ -266,7 +266,7 @@ class IngAddress {
   String firstName;
   String lastName;
   String name;
-  dynamic email;
+  String email;
   List<String> address1;
   String country;
   String countryName;
@@ -312,6 +312,12 @@ class IngAddress {
   };
 }
 
+enum CartCurrencyCode { KWD }
+
+final cartCurrencyCodeValues = EnumValues({
+  "KWD": CartCurrencyCode.KWD
+});
+
 class Item {
   Item({
     this.id,
@@ -324,7 +330,6 @@ class Item {
     this.totalWeight,
     this.baseTotalWeight,
     this.price,
-    this.images,
     this.formatedPrice,
     this.basePrice,
     this.formatedBasePrice,
@@ -361,7 +366,6 @@ class Item {
   String totalWeight;
   String baseTotalWeight;
   String price;
-  Images images;
   String formatedPrice;
   String basePrice;
   String formatedBasePrice;
@@ -398,7 +402,6 @@ class Item {
     totalWeight: json["total_weight"],
     baseTotalWeight: json["base_total_weight"],
     price: json["price"],
-    images: Images.fromJson(json["images"]),
     formatedPrice: json["formated_price"],
     basePrice: json["base_price"],
     formatedBasePrice: json["formated_base_price"],
@@ -436,7 +439,6 @@ class Item {
     "total_weight": totalWeight,
     "base_total_weight": baseTotalWeight,
     "price": price,
-    "images": images.toJson(),
     "formated_price": formatedPrice,
     "base_price": basePrice,
     "formated_base_price": formatedBasePrice,
@@ -472,7 +474,7 @@ class Additional {
   });
 
   String token;
-  String quantity;
+  dynamic quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -485,34 +487,6 @@ class Additional {
     "token": token,
     "quantity": quantity,
     "product_id": productId,
-  };
-}
-
-class Images {
-  Images({
-    this.smallImageUrl,
-    this.mediumImageUrl,
-    this.largeImageUrl,
-    this.originalImageUrl,
-  });
-
-  String smallImageUrl;
-  String mediumImageUrl;
-  String largeImageUrl;
-  String originalImageUrl;
-
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
-    smallImageUrl: json["small_image_url"],
-    mediumImageUrl: json["medium_image_url"],
-    largeImageUrl: json["large_image_url"],
-    originalImageUrl: json["original_image_url"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "small_image_url": smallImageUrl,
-    "medium_image_url": mediumImageUrl,
-    "large_image_url": largeImageUrl,
-    "original_image_url": originalImageUrl,
   };
 }
 
@@ -640,8 +614,8 @@ class Payment {
   };
 }
 
-class SelectedShippingRateElement {
-  SelectedShippingRateElement({
+class SelectedShippingRate {
+  SelectedShippingRate({
     this.id,
     this.carrier,
     this.carrierTitle,
@@ -669,7 +643,7 @@ class SelectedShippingRateElement {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory SelectedShippingRateElement.fromJson(Map<String, dynamic> json) => SelectedShippingRateElement(
+  factory SelectedShippingRate.fromJson(Map<String, dynamic> json) => SelectedShippingRate(
     id: json["id"],
     carrier: json["carrier"],
     carrierTitle: json["carrier_title"],
@@ -700,22 +674,68 @@ class SelectedShippingRateElement {
   };
 }
 
-class DataRate {
-  DataRate({
-    this.carrierTitle,
-    this.rates,
+class PaymentMethod {
+  PaymentMethod({
+    this.paymentMethodId,
+    this.paymentMethodAr,
+    this.paymentMethodEn,
+    this.paymentMethodCode,
+    this.isDirectPayment,
+    this.serviceCharge,
+    this.totalAmount,
+    this.currencyIso,
+    this.imageUrl,
+    this.isEmbeddedSupported,
   });
 
-  String carrierTitle;
-  List<SelectedShippingRateElement> rates;
+  int paymentMethodId;
+  String paymentMethodAr;
+  String paymentMethodEn;
+  String paymentMethodCode;
+  bool isDirectPayment;
+  double serviceCharge;
+  double totalAmount;
+  CartCurrencyCode currencyIso;
+  String imageUrl;
+  bool isEmbeddedSupported;
 
-  factory DataRate.fromJson(Map<String, dynamic> json) => DataRate(
-    carrierTitle: json["carrier_title"],
-    rates: List<SelectedShippingRateElement>.from(json["rates"].map((x) => SelectedShippingRateElement.fromJson(x))),
+  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
+    paymentMethodId: json["PaymentMethodId"],
+    paymentMethodAr: json["PaymentMethodAr"],
+    paymentMethodEn: json["PaymentMethodEn"],
+    paymentMethodCode: json["PaymentMethodCode"],
+    isDirectPayment: json["IsDirectPayment"],
+    serviceCharge: json["ServiceCharge"].toDouble(),
+    totalAmount: json["TotalAmount"].toDouble(),
+    currencyIso: cartCurrencyCodeValues.map[json["CurrencyIso"]],
+    imageUrl: json["ImageUrl"],
+    isEmbeddedSupported: json["IsEmbeddedSupported"],
   );
 
   Map<String, dynamic> toJson() => {
-    "carrier_title": carrierTitle,
-    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
+    "PaymentMethodId": paymentMethodId,
+    "PaymentMethodAr": paymentMethodAr,
+    "PaymentMethodEn": paymentMethodEn,
+    "PaymentMethodCode": paymentMethodCode,
+    "IsDirectPayment": isDirectPayment,
+    "ServiceCharge": serviceCharge,
+    "TotalAmount": totalAmount,
+    "CurrencyIso": cartCurrencyCodeValues.reverse[currencyIso],
+    "ImageUrl": imageUrl,
+    "IsEmbeddedSupported": isEmbeddedSupported,
   };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

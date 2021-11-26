@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final shippingMethods = shippingMethodsFromJson(jsonString);
+//     final addressRates = addressRatesFromJson(jsonString);
 
 import 'dart:convert';
 
-ShippingMethods shippingMethodsFromJson(String str) => ShippingMethods.fromJson(json.decode(str));
+AddressRates addressRatesFromJson(String str) => AddressRates.fromJson(json.decode(str));
 
-String shippingMethodsToJson(ShippingMethods data) => json.encode(data.toJson());
+String addressRatesToJson(AddressRates data) => json.encode(data.toJson());
 
-class ShippingMethods {
-  ShippingMethods({
+class AddressRates {
+  AddressRates({
     this.data,
   });
 
   Data data;
 
-  factory ShippingMethods.fromJson(Map<String, dynamic> json) => ShippingMethods(
+  factory AddressRates.fromJson(Map<String, dynamic> json) => AddressRates(
     data: Data.fromJson(json["data"]),
   );
 
@@ -26,20 +26,20 @@ class ShippingMethods {
 
 class Data {
   Data({
-    this.methods,
+    this.rates,
     this.cart,
   });
 
-  List<Method> methods;
+  List<DataRate> rates;
   Cart cart;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    methods: List<Method>.from(json["methods"].map((x) => Method.fromJson(x))),
+    rates: List<DataRate>.from(json["rates"].map((x) => DataRate.fromJson(x))),
     cart: Cart.fromJson(json["cart"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "methods": List<dynamic>.from(methods.map((x) => x.toJson())),
+    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
     "cart": cart.toJson(),
   };
 }
@@ -132,10 +132,10 @@ class Cart {
   dynamic customer;
   dynamic channel;
   List<Item> items;
-  dynamic selectedShippingRate;
-  Payment payment;
-  dynamic billingAddress;
-  dynamic shippingAddress;
+  SelectedShippingRateElement selectedShippingRate;
+  dynamic payment;
+  IngAddress billingAddress;
+  IngAddress shippingAddress;
   DateTime createdAt;
   DateTime updatedAt;
   String baseTaxes;
@@ -181,10 +181,10 @@ class Cart {
     customer: json["customer"],
     channel: json["channel"],
     items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
-    selectedShippingRate: json["selected_shipping_rate"],
-    payment: json["payment"]==null?null:Payment.fromJson(json["payment"]),
-    billingAddress: json["billing_address"],
-    shippingAddress: json["shipping_address"],
+    selectedShippingRate: SelectedShippingRateElement.fromJson(json["selected_shipping_rate"]),
+    payment: json["payment"],
+    billingAddress: IngAddress.fromJson(json["billing_address"]),
+    shippingAddress: IngAddress.fromJson(json["shipping_address"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     baseTaxes: json["base_taxes"],
@@ -231,16 +231,84 @@ class Cart {
     "customer": customer,
     "channel": channel,
     "items": List<dynamic>.from(items.map((x) => x.toJson())),
-    "selected_shipping_rate": selectedShippingRate,
-    "payment":payment==null?null: payment.toJson(),
-    "billing_address": billingAddress,
-    "shipping_address": shippingAddress,
+    "selected_shipping_rate": selectedShippingRate.toJson(),
+    "payment": payment,
+    "billing_address": billingAddress.toJson(),
+    "shipping_address": shippingAddress.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "base_taxes": baseTaxes,
     "formated_base_taxes": formatedBaseTaxes,
     "formated_discounted_sub_total": formatedDiscountedSubTotal,
     "formated_base_discounted_sub_total": formatedBaseDiscountedSubTotal,
+  };
+}
+
+class IngAddress {
+  IngAddress({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.name,
+    this.email,
+    this.address1,
+    this.country,
+    this.countryName,
+    this.state,
+    this.city,
+    this.postcode,
+    this.phone,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  String firstName;
+  String lastName;
+  String name;
+  String email;
+  List<String> address1;
+  String country;
+  String countryName;
+  String state;
+  String city;
+  String postcode;
+  String phone;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory IngAddress.fromJson(Map<String, dynamic> json) => IngAddress(
+    id: json["id"],
+    firstName: json["first_name"],
+    lastName: json["last_name"],
+    name: json["name"],
+    email: json["email"],
+    address1: List<String>.from(json["address1"].map((x) => x)),
+    country: json["country"],
+    countryName: json["country_name"],
+    state: json["state"],
+    city: json["city"],
+    postcode: json["postcode"],
+    phone: json["phone"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "first_name": firstName,
+    "last_name": lastName,
+    "name": name,
+    "email": email,
+    "address1": List<dynamic>.from(address1.map((x) => x)),
+    "country": country,
+    "country_name": countryName,
+    "state": state,
+    "city": city,
+    "postcode": postcode,
+    "phone": phone,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
   };
 }
 
@@ -256,6 +324,7 @@ class Item {
     this.totalWeight,
     this.baseTotalWeight,
     this.price,
+    this.images,
     this.formatedPrice,
     this.basePrice,
     this.formatedBasePrice,
@@ -292,6 +361,7 @@ class Item {
   String totalWeight;
   String baseTotalWeight;
   String price;
+  Images images;
   String formatedPrice;
   String basePrice;
   String formatedBasePrice;
@@ -328,6 +398,7 @@ class Item {
     totalWeight: json["total_weight"],
     baseTotalWeight: json["base_total_weight"],
     price: json["price"],
+    images: Images.fromJson(json["images"]),
     formatedPrice: json["formated_price"],
     basePrice: json["base_price"],
     formatedBasePrice: json["formated_base_price"],
@@ -365,6 +436,7 @@ class Item {
     "total_weight": totalWeight,
     "base_total_weight": baseTotalWeight,
     "price": price,
+    "images": images.toJson(),
     "formated_price": formatedPrice,
     "base_price": basePrice,
     "formated_base_price": formatedBasePrice,
@@ -413,6 +485,34 @@ class Additional {
     "token": token,
     "quantity": quantity,
     "product_id": productId,
+  };
+}
+
+class Images {
+  Images({
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+    this.originalImageUrl,
+  });
+
+  String smallImageUrl;
+  String mediumImageUrl;
+  String largeImageUrl;
+  String originalImageUrl;
+
+  factory Images.fromJson(Map<String, dynamic> json) => Images(
+    smallImageUrl: json["small_image_url"],
+    mediumImageUrl: json["medium_image_url"],
+    largeImageUrl: json["large_image_url"],
+    originalImageUrl: json["original_image_url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "small_image_url": smallImageUrl,
+    "medium_image_url": mediumImageUrl,
+    "large_image_url": largeImageUrl,
+    "original_image_url": originalImageUrl,
   };
 }
 
@@ -499,71 +599,91 @@ class Size {
 
   factory Size.fromJson(Map<String, dynamic> json) => Size(
     id: json["id"],
-    label: json["label"] == null ? null : json["label"],
+    label: json["label"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "label": label == null ? null : label,
+    "label": label,
   };
 }
 
-class Payment {
-  Payment({
+class SelectedShippingRateElement {
+  SelectedShippingRateElement({
     this.id,
+    this.carrier,
+    this.carrierTitle,
     this.method,
     this.methodTitle,
+    this.methodDescription,
+    this.price,
+    this.formatedPrice,
+    this.basePrice,
+    this.formatedBasePrice,
     this.createdAt,
     this.updatedAt,
   });
 
   int id;
+  String carrier;
+  String carrierTitle;
   String method;
   String methodTitle;
+  String methodDescription;
+  double price;
+  String formatedPrice;
+  int basePrice;
+  String formatedBasePrice;
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory Payment.fromJson(Map<String, dynamic> json) => Payment(
+  factory SelectedShippingRateElement.fromJson(Map<String, dynamic> json) => SelectedShippingRateElement(
     id: json["id"],
+    carrier: json["carrier"],
+    carrierTitle: json["carrier_title"],
     method: json["method"],
     methodTitle: json["method_title"],
+    methodDescription: json["method_description"],
+    price: json["price"].toDouble(),
+    formatedPrice: json["formated_price"],
+    basePrice: json["base_price"],
+    formatedBasePrice: json["formated_base_price"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
+    "carrier": carrier,
+    "carrier_title": carrierTitle,
     "method": method,
     "method_title": methodTitle,
+    "method_description": methodDescription,
+    "price": price,
+    "formated_price": formatedPrice,
+    "base_price": basePrice,
+    "formated_base_price": formatedBasePrice,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
 }
 
-class Method {
-  Method({
-    this.method,
-    this.methodTitle,
-    this.description,
-    this.sort,
+class DataRate {
+  DataRate({
+    this.carrierTitle,
+    this.rates,
   });
 
-  String method;
-  String methodTitle;
-  String description;
-  dynamic sort;
+  String carrierTitle;
+  List<SelectedShippingRateElement> rates;
 
-  factory Method.fromJson(Map<String, dynamic> json) => Method(
-    method: json["method"],
-    methodTitle: json["method_title"],
-    description: json["description"],
-    sort: json["sort"],
+  factory DataRate.fromJson(Map<String, dynamic> json) => DataRate(
+    carrierTitle: json["carrier_title"],
+    rates: List<SelectedShippingRateElement>.from(json["rates"].map((x) => SelectedShippingRateElement.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "method": method,
-    "method_title": methodTitle,
-    "description": description,
-    "sort": sort,
+    "carrier_title": carrierTitle,
+    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
   };
 }

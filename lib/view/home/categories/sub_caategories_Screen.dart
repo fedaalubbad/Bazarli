@@ -1,12 +1,7 @@
-import 'package:bazarli/ViewModel/orders_provider.dart';
-import 'package:bazarli/ViewModel/wishlist_provider.dart';
-import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
-import 'package:bazarli/models/Categories_model/category_response.dart' as categoryRes;
 import 'package:bazarli/models/brand_model/brand_model.dart' as brandResponse;
 import 'package:bazarli/models/product_model/product_response.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:bazarli/view/home/Home/component/home_toolbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

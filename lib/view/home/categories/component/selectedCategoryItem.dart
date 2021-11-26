@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:bazarli/ViewModel/HomeCategoriesResponse.dart';
+import 'package:bazarli/models/cart_model/HomeCategoriesResponse.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';

@@ -39,8 +39,9 @@ class AuthenticationApi {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseBody = response.data;
         // var jsonDataObject = jsonDecode(response.data);
-        // print('000000000000000000000000');
         LoginResponse loginResponse = LoginResponse.fromJson(responseBody);
+        print('token${loginResponse.token}///${loginResponse.data.id}');
+
         status = {'loginResponse':loginResponse, 'status': true};
         return status;
       } else {

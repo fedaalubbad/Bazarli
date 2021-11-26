@@ -51,7 +51,7 @@ const String GET_ADDRESSES_URL = "addresses?token=true"; //USED FOR DELETE ALSO
 const String UPDATE_DELETE_ADDRESS_URL = "addresses/";
 
 //CUSTOMER ORDERS CHECKOUT
-const String GET_ORDERS_URL = "orders";
+const String GET_ORDERS_URL = "orders?token=true&locale=ar";
 const String ADD_PRODUCT_TO_CART_URL =
     "checkout/cart/add/"; //PRODUCTID, QUANTITY
 const String GET_CART_URL = "checkout/cart?token=true";

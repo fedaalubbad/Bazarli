@@ -1,35 +1,39 @@
 // To parse this JSON data, do
 //
-//     final saveOrderResponse = saveOrderResponseFromJson(jsonString);
+//     final getOrderResponse = getOrderResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-SaveOrderResponse saveOrderResponseFromJson(String str) => SaveOrderResponse.fromJson(json.decode(str));
+GetOrderResponse getOrderResponseFromJson(String str) => GetOrderResponse.fromJson(json.decode(str));
 
-String saveOrderResponseToJson(SaveOrderResponse data) => json.encode(data.toJson());
+String getOrderResponseToJson(GetOrderResponse data) => json.encode(data.toJson());
 
-class SaveOrderResponse {
-  SaveOrderResponse({
-    this.success,
-    this.order,
+class GetOrderResponse {
+  GetOrderResponse({
+    this.data,
+    this.links,
+    this.meta,
   });
 
-  bool success;
-  Order order;
+  List<Datum> data;
+  Links links;
+  Meta meta;
 
-  factory SaveOrderResponse.fromJson(Map<String, dynamic> json) => SaveOrderResponse(
-    success: json["success"],
-    order: Order.fromJson(json["order"]),
+  factory GetOrderResponse.fromJson(Map<String, dynamic> json) => GetOrderResponse(
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    links: Links.fromJson(json["links"]),
+    meta: Meta.fromJson(json["meta"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "order": order.toJson(),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "links": links.toJson(),
+    "meta": meta.toJson(),
   };
 }
 
-class Order {
-  Order({
+class Datum {
+  Datum({
     this.id,
     this.incrementId,
     this.status,
@@ -134,9 +138,9 @@ class Order {
   String paymentTitle;
   String shippingDescription;
   dynamic couponCode;
-  dynamic isGift;
+  int isGift;
   int totalItemCount;
-  String totalQtyOrdered;
+  int totalQtyOrdered;
   String baseCurrencyCode;
   String channelCurrencyCode;
   String orderCurrencyCode;
@@ -144,60 +148,60 @@ class Order {
   String formatedGrandTotal;
   String baseGrandTotal;
   String formatedBaseGrandTotal;
-  dynamic grandTotalInvoiced;
+  String grandTotalInvoiced;
   String formatedGrandTotalInvoiced;
-  dynamic baseGrandTotalInvoiced;
+  String baseGrandTotalInvoiced;
   String formatedBaseGrandTotalInvoiced;
-  dynamic grandTotalRefunded;
+  String grandTotalRefunded;
   String formatedGrandTotalRefunded;
-  dynamic baseGrandTotalRefunded;
+  String baseGrandTotalRefunded;
   String formatedBaseGrandTotalRefunded;
   String subTotal;
   String formatedSubTotal;
   String baseSubTotal;
   String formatedBaseSubTotal;
-  dynamic subTotalInvoiced;
+  String subTotalInvoiced;
   String formatedSubTotalInvoiced;
-  dynamic baseSubTotalInvoiced;
+  String baseSubTotalInvoiced;
   String formatedBaseSubTotalInvoiced;
-  dynamic subTotalRefunded;
+  String subTotalRefunded;
   String formatedSubTotalRefunded;
-  dynamic discountPercent;
+  String discountPercent;
   String discountAmount;
   String formatedDiscountAmount;
   String baseDiscountAmount;
   String formatedBaseDiscountAmount;
-  dynamic discountInvoiced;
+  String discountInvoiced;
   String formatedDiscountInvoiced;
-  dynamic baseDiscountInvoiced;
+  String baseDiscountInvoiced;
   String formatedBaseDiscountInvoiced;
-  dynamic discountRefunded;
+  String discountRefunded;
   String formatedDiscountRefunded;
-  dynamic baseDiscountRefunded;
+  String baseDiscountRefunded;
   String formatedBaseDiscountRefunded;
   String taxAmount;
   String formatedTaxAmount;
   String baseTaxAmount;
   String formatedBaseTaxAmount;
-  dynamic taxAmountInvoiced;
+  String taxAmountInvoiced;
   String formatedTaxAmountInvoiced;
-  dynamic baseTaxAmountInvoiced;
+  String baseTaxAmountInvoiced;
   String formatedBaseTaxAmountInvoiced;
-  dynamic taxAmountRefunded;
+  String taxAmountRefunded;
   String formatedTaxAmountRefunded;
-  dynamic baseTaxAmountRefunded;
+  String baseTaxAmountRefunded;
   String formatedBaseTaxAmountRefunded;
-  double shippingAmount;
+  String shippingAmount;
   String formatedShippingAmount;
-  int baseShippingAmount;
+  String baseShippingAmount;
   String formatedBaseShippingAmount;
-  dynamic shippingInvoiced;
+  String shippingInvoiced;
   String formatedShippingInvoiced;
-  dynamic baseShippingInvoiced;
+  String baseShippingInvoiced;
   String formatedBaseShippingInvoiced;
-  dynamic shippingRefunded;
+  String shippingRefunded;
   String formatedShippingRefunded;
-  dynamic baseShippingRefunded;
+  String baseShippingRefunded;
   String formatedBaseShippingRefunded;
   Customer customer;
   Channel channel;
@@ -209,7 +213,7 @@ class Order {
   DateTime updatedAt;
   DateTime createdAt;
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"],
     incrementId: json["increment_id"],
     status: json["status"],
@@ -277,7 +281,7 @@ class Order {
     formatedTaxAmountRefunded: json["formated_tax_amount_refunded"],
     baseTaxAmountRefunded: json["base_tax_amount_refunded"],
     formatedBaseTaxAmountRefunded: json["formated_base_tax_amount_refunded"],
-    shippingAmount: json["shipping_amount"].toDouble(),
+    shippingAmount: json["shipping_amount"],
     formatedShippingAmount: json["formated_shipping_amount"],
     baseShippingAmount: json["base_shipping_amount"],
     formatedBaseShippingAmount: json["formated_base_shipping_amount"],
@@ -480,12 +484,12 @@ class Channel {
 
   int id;
   String code;
-  String name;
-  String description;
+  dynamic name;
+  dynamic description;
   dynamic timezone;
   String theme;
-  String homePageContent;
-  String footerContent;
+  dynamic homePageContent;
+  dynamic footerContent;
   String hostname;
   dynamic logo;
   dynamic logoUrl;
@@ -599,10 +603,10 @@ class RootCategory {
   String name;
   String slug;
   String displayMode;
-  String description;
-  String metaTitle;
-  String metaDescription;
-  String metaKeywords;
+  dynamic description;
+  dynamic metaTitle;
+  dynamic metaDescription;
+  dynamic metaKeywords;
   int status;
   String imageUrl;
   dynamic additional;
@@ -1010,7 +1014,7 @@ class Additional {
 
   String token;
   String locale;
-  int quantity;
+  String quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -1111,11 +1115,79 @@ class Size {
 
   factory Size.fromJson(Map<String, dynamic> json) => Size(
     id: json["id"],
-    label: json["label"] == null ? null : json["label"],
+    label: json["label"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "label": label == null ? null : label,
+    "label": label,
+  };
+}
+
+class Links {
+  Links({
+    this.first,
+    this.last,
+    this.prev,
+    this.next,
+  });
+
+  String first;
+  String last;
+  dynamic prev;
+  dynamic next;
+
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
+    first: json["first"],
+    last: json["last"],
+    prev: json["prev"],
+    next: json["next"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "first": first,
+    "last": last,
+    "prev": prev,
+    "next": next,
+  };
+}
+
+class Meta {
+  Meta({
+    this.currentPage,
+    this.from,
+    this.lastPage,
+    this.path,
+    this.perPage,
+    this.to,
+    this.total,
+  });
+
+  int currentPage;
+  int from;
+  int lastPage;
+  String path;
+  int perPage;
+  int to;
+  int total;
+
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+    currentPage: json["current_page"],
+    from: json["from"],
+    lastPage: json["last_page"],
+    path: json["path"],
+    perPage: json["per_page"],
+    to: json["to"],
+    total: json["total"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_page": currentPage,
+    "from": from,
+    "last_page": lastPage,
+    "path": path,
+    "per_page": perPage,
+    "to": to,
+    "total": total,
   };
 }

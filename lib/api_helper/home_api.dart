@@ -1,4 +1,4 @@
-import 'package:bazarli/ViewModel/HomeCategoriesResponse.dart';
+import 'package:bazarli/models/cart_model/HomeCategoriesResponse.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart';
 import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart';

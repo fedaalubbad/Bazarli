@@ -1,13 +1,13 @@
-import 'package:bazarli/ViewModel/payment_methods.dart';
-import 'package:bazarli/ViewModel/save_order_response.dart';
-import 'package:bazarli/ViewModel/shipping_methods.dart';
+import 'package:bazarli/models/cart_model/get_orders_response.dart' as ordersResponse;
+import 'package:bazarli/models/cart_model/payment_methods.dart';
+import 'package:bazarli/models/cart_model/save_order_response.dart';
+import 'package:bazarli/models/cart_model/shipping_methods.dart';
 import 'package:bazarli/api_helper/orders_helper.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
 import 'package:bazarli/models/cart_model/add_to_cart_model.dart';
 import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'address_rates.dart';
+import '../models/cart_model/address_rates.dart';
 
 class OrdersProvider extends ChangeNotifier{
 
@@ -79,12 +79,22 @@ class OrdersProvider extends ChangeNotifier{
 
 
  SaveOrderResponse saveOrderResponse;
+ String redirectUrl='';
   Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, PaymentMethod method)async{
-   SaveOrderResponse response=  await  OrdersApi.api.saveOrder(context,cartId,method);
+   SaveOrderResponse response=  await  OrdersApi.api.saveOrder(context,cartId:cartId,method:method);
    saveOrderResponse=response;
+   if(method!=null){
+    redirectUrl=saveOrderResponse.redirectUrl;
+   }
+   notifyListeners();
+  }
+
+ ordersResponse.GetOrderResponse getOrderResponse;
+  Future<ordersResponse.GetOrderResponse> getOrders()async{
+   ordersResponse.GetOrderResponse response=  await  OrdersApi.api.getOrders();
+   getOrderResponse=response;
    notifyListeners();
 
   }
-
 
 }

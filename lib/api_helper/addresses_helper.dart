@@ -45,8 +45,12 @@ class AddressesApi {
 
     try{
       Response response = await Settings.settings.dio.post(CREATE_ADDRESSES_URL,
-          data: formData);
-
+          data: formData,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
       if(response.statusCode==200){
 
         Map<String,dynamic> responseBody=response.data;
@@ -99,7 +103,12 @@ class AddressesApi {
     // dio.options.headers["Accept"] = "application/json";
     try{
       Response response = await Settings.settings.dio.post(UPDATE_DELETE_ADDRESS_URL + addressId + '?_method=PUT',
-          data: formData);
+          data: formData,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
 
       if(response.statusCode==200){
 
@@ -125,7 +134,12 @@ class AddressesApi {
   Future<MessageResponse> deleteAddress(BuildContext context, String addressId,) async {
 
     try{
-      Response response = await Settings.settings.dio.delete(UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true');
+      Response response = await Settings.settings.dio.delete(UPDATE_DELETE_ADDRESS_URL + addressId + '?token=true',
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
 
 
       if(response.statusCode==200){

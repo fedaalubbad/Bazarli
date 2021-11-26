@@ -5,7 +5,7 @@ import 'package:bazarli/models/brand_model/brand_model.dart';
 import 'package:bazarli/models/slider_model/slider_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'HomeCategoriesResponse.dart';
+import '../models/cart_model/HomeCategoriesResponse.dart';
 
 
 class HomeProvider extends ChangeNotifier {

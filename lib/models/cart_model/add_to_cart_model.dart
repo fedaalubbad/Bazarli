@@ -384,7 +384,7 @@ class Additional {
   });
 
   String token;
-  int quantity;
+  dynamic quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(

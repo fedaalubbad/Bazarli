@@ -220,8 +220,7 @@ class AuthenticationProvider extends ChangeNotifier {
   }
     formStateKey.currentState.save();
     // vaidate=true;
-    Map<String,dynamic> response = await AuthenticationApi.api
-        .customerSign(authData['email'], authData['password']);
+    Map<String,dynamic> response = await AuthenticationApi.api.customerSign(authData['email'], authData['password']);
     if (response['status'] == true) {
     LoginResponse loginStatus = response['loginResponse'];
     SPHelper.spHelper.setUSer(loginStatus.data.toJson());

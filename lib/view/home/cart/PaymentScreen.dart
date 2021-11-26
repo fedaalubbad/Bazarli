@@ -1,8 +1,9 @@
-import 'package:bazarli/ViewModel/address_rates.dart';
+import 'package:bazarli/models/cart_model/address_rates.dart';
 import 'package:bazarli/ViewModel/addresses_provider.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
-import 'package:bazarli/ViewModel/payment_methods.dart';
-import 'package:bazarli/ViewModel/shipping_methods.dart';
+import 'package:bazarli/models/cart_model/payment_methods.dart';
+import 'package:bazarli/models/cart_model/save_order_response.dart';
+import 'package:bazarli/models/cart_model/shipping_methods.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
@@ -59,7 +60,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(
                     height:40.h,
                   ),
-                  if(Provider.of<OrdersProvider>(context).addressRates!=null)
+                  // if(Provider.of<OrdersProvider>(context).addressRates!=null)
+                  //   if(Provider.of<OrdersProvider>(context).shippingMethods.data.methods.length>0)
                     buildSelectAddressRateMethodWidget(),
                   SizedBox(
                     height:20.h,
@@ -76,6 +78,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(
                     height:20.h,
                   ),
+                    if(Provider.of<OrdersProvider>(context).shippingMethods!=null)
+                    if(Provider.of<OrdersProvider>(context).shippingMethods.data.methods.length>0)
                   buildTotalWidget(),
                   SizedBox(
                     height:30.h,
@@ -134,7 +138,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                 SizedBox(height: 15.h,),
                 Text('PhoneNumber',style: TextLabelStyle,).tr(),
                 SizedBox(height: 3.h,),
-                Text(widget.selectedAddress.phoneCode+' '+widget.selectedAddress.phone,style: SliderTitle2Style,),
+                Text(widget.selectedAddress.phoneCode.toString()+' '+widget.selectedAddress.phone.toString(),style: SliderTitle2Style,),
               ],
             )
 
@@ -328,18 +332,18 @@ class PaymentScreenState extends State<PaymentScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           Text('Subtotal',style: TitlesInHome,).tr(),
-          Text(Provider.of<OrdersProvider>(context).shippingMethods.data.cart.formatedSubTotal,style: TitlesInHome,).tr(),
+          Text(Provider.of<OrdersProvider>(context).paymentMethods.data.cart.formatedSubTotal,style: TitlesInHome,).tr(),
         ],
         ),
         SizedBox(height: 22.h,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-          Text('DeliveryChange',style: TitlesInHome,).tr(),
-          Text(Provider.of<OrdersProvider>(context).shippingMethods.data.cart.formatedBaseSubTotal,style: TitlesInHome,).tr(),
-        ],
-        ),
-        SizedBox(height: 22.h,),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //   // Text('DeliveryChange',style: TitlesInHome,).tr(),
+        //   // Text(Provider.of<OrdersProvider>(context).shippingMethods.data.cart.baseCurrencyCode,style: TitlesInHome,).tr(),
+        // ],
+        // ),
+        // SizedBox(height: 22.h,),
         // Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
         //   children: [
@@ -352,7 +356,7 @@ class PaymentScreenState extends State<PaymentScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           Text('GrandTotal',style: TitlesInHome,).tr(),
-          Text(Provider.of<OrdersProvider>(context).shippingMethods.data.cart.formatedGrandTotal,style: SignInTextStyle,),
+          Text(Provider.of<OrdersProvider>(context).paymentMethods.data.cart.formatedGrandTotal,style: SignInTextStyle,),
         ],
         ),
 
@@ -363,8 +367,9 @@ class PaymentScreenState extends State<PaymentScreen> {
   buildPayNowButton(BuildContext context){
     return Container(
       child: InkWell(
-          onTap: () {
-            // Provider.of<OrdersProvider>(context,listen: false).saveOrder(context, cartId, method)
+          onTap: () async{
+            if(Provider.of<OrdersProvider>(context,listen: false).catrId!=''&& Provider.of<OrdersProvider>(context,listen: false).selectedPaymentMethod!=null)
+              SaveOrderResponse response=  await Provider.of<OrdersProvider>(context,listen: false).saveOrder(context, Provider.of<OrdersProvider>(context,listen: false).catrId, Provider.of<OrdersProvider>(context,listen: false).selectedPaymentMethod);
             // showPlacedOrderDialog(context);
           },
           child: Container(

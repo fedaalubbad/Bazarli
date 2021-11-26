@@ -1,4 +1,4 @@
-import 'package:bazarli/ViewModel/HomeCategoriesResponse.dart';
+import 'package:bazarli/models/cart_model/HomeCategoriesResponse.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/view/home/categories/component/selectedCategoryItem.dart';

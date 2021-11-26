@@ -1,7 +1,8 @@
-import 'package:bazarli/ViewModel/address_rates.dart';
-import 'package:bazarli/ViewModel/payment_methods.dart';
-import 'package:bazarli/ViewModel/save_order_response.dart';
-import 'package:bazarli/ViewModel/shipping_methods.dart';
+import 'package:bazarli/models/cart_model/address_rates.dart';
+import 'package:bazarli/models/cart_model/get_orders_response.dart' as GetOrdersResponse;
+import 'package:bazarli/models/cart_model/payment_methods.dart';
+import 'package:bazarli/models/cart_model/save_order_response.dart';
+import 'package:bazarli/models/cart_model/shipping_methods.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
 import 'package:bazarli/models/cart_model/add_to_cart_model.dart';
 import 'package:bazarli/models/cart_model/get_cart_response.dart';
@@ -25,8 +26,13 @@ class OrdersApi{
       'product_id':productId,
     };
     try{
-      Response response = await Settings.settings.dio.post(ADD_PRODUCT_TO_CART_URL+productId+'?token=true',data: formData);
-    // Response response = await dio.post(baseUrl + ADD_PRODUCT_TO_CART_URL+productId+'?token=true',data: formData);
+      Response response = await Settings.settings.dio.post(ADD_PRODUCT_TO_CART_URL+productId+'?token=true',data: formData,
+          options: Options(headers: {
+          "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+      )
+    );
+      print('addCartJson${response.statusCode}$productId');
 
     if(response.statusCode==200){
       Map<String,dynamic> responseBody=response.data;
@@ -54,7 +60,9 @@ class OrdersApi{
      Response response = await Settings.settings.dio.get(GET_CART_URL,
          options: Options(headers: {
            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
-         }));
+         }
+         )
+     );
      print('cartListJsonstatuscode${response.statusCode}');
      print('cartListJson${response}');
 
@@ -90,7 +98,12 @@ class OrdersApi{
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
      try{
-       Response response = await Settings.settings.dio.get(REMOVE_ITEM_CART_URL+productId.toString()+'?token=true');
+       Response response = await Settings.settings.dio.get(REMOVE_ITEM_CART_URL+productId.toString()+'?token=true',
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
 
 
      if(response.statusCode==200){
@@ -120,7 +133,12 @@ class OrdersApi{
      });
      print('updateFormDate$formData ${SPHelper.spHelper.getToken()}');
      try{
-       Response response = await Settings.settings.dio.post(UPDATE_CART_URL,data: formData);
+       Response response = await Settings.settings.dio.post(UPDATE_CART_URL,data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
 
 
      if(response.statusCode==200){
@@ -148,40 +166,45 @@ class OrdersApi{
 
      final formData = FormData.fromMap( {
        'billing[address_id]':address.id,
-       'billing[customer_id]':SPHelper.spHelper.getUSer().id,
+       'billing[customer_id]':1,
        'billing[address1][0]': '["${address.address1[0]}"]',
        'billing[address2]':address.address2.toString(),
        'billing[country]':'IN',
        'billing[state]':'KA',
-       'billing[city]':address.city,
-       'billing[postcode]':address.postcode,
-       'billing[phone]':address.phone,
+       'billing[city]':address.city.toString(),
+       'billing[postcode]':address.postcode.toString(),
+       'billing[phone]':address.phone.toString(),
        "billing['phone_code']":address.phoneCode,
        "billing['title']":address.title,
        'billing[title]':address.title,
        'billing[first_name]':address.firstName,
        'billing[last_name]':address.lastName,
        'billing[email]':SPHelper.spHelper.getUSer().email,
-       // 'billing[save_as_address]':1,
+       'billing[save_as_address]':1,
        'shipping[address_id]':address.id,
        'shipping[customer_id]':SPHelper.spHelper.getUSer().id,
        'shipping[address1][0]':'["${address.address1[0]}"]',
        'shipping[address2]':address.address2.toString(),
-       'shipping[country]':'IN',
+       'shipping[country]':'Kuwait',
        'shipping[state]':'KA',
-       'shipping[city]':address.city,
+       'shipping[city]':address.city.toString(),
        'shipping[postcode]':address.postcode,
-       'shipping[phone]':address.phone,
-       "shipping['phone_code']":address.phoneCode,
-       "shipping['title']":address.title,
+       'shipping[phone]':address.phone.toString(),
+       "shipping['phone_code']":address.phoneCode.toString(),
+       "shipping['title']":address.title.toString(),
        'shipping[first_name]':address.firstName,
        'shipping[last_name]':address.lastName,
        'shipping[email]':SPHelper.spHelper.getUSer().email,
-       // 'shipping[save_as_address]':1,
+       'shipping[save_as_address]':1,
      });
      print('updateFormDate$formData ${SPHelper.spHelper.getToken()}');
      try{
-       Response response = await Settings.settings.dio.post(GET_ADDRESS_RATES_URL,data: formData);
+       Response response = await Settings.settings.dio.post(GET_ADDRESS_RATES_URL,data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
        print('addressrateResp$response');
 
 
@@ -214,7 +237,12 @@ class OrdersApi{
      });
      print('updateFormDate$formData ${SPHelper.spHelper.getToken()}');
      try{
-       Response response = await Settings.settings.dio.post(GET_SHIPPING_METHODS_URL,data: formData);
+       Response response = await Settings.settings.dio.post(GET_SHIPPING_METHODS_URL,data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
 
 
      if(response.statusCode==200){
@@ -247,7 +275,12 @@ class OrdersApi{
      });
      print('updateFormDate$formData ${SPHelper.spHelper.getToken()}');
      try{
-       Response response = await Settings.settings.dio.post(GET_PAYMENT_METHODS_URL,data: formData);
+       Response response = await Settings.settings.dio.post(GET_PAYMENT_METHODS_URL,data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
 
 
      if(response.statusCode==200){
@@ -271,18 +304,25 @@ class OrdersApi{
   }
 
 
-Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, PaymentMethod method) async {
+Future<SaveOrderResponse> saveOrder(
+    BuildContext context, {dynamic cartId, PaymentMethod method}) async {
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
 
      final formData = FormData.fromMap( {
        'cart':cartId,
+       if(method!=null)
        'myfatoorah_payment_id':method.paymentMethodId,
 
      });
      print('updateFormDate$formData ${SPHelper.spHelper.getToken()}');
      try{
-       Response response = await Settings.settings.dio.post(SAVE_ORDER_URL,data: formData);
+       Response response = await Settings.settings.dio.post(SAVE_ORDER_URL,data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
 
 
      if(response.statusCode==200){
@@ -304,7 +344,35 @@ Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, Payment
    }
 
   }
+  Future<GetOrdersResponse.GetOrderResponse> getOrders() async {
+    try{
+      Response response = await Settings.settings.dio.get(GET_ORDERS_URL,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
 
+
+      if(response.statusCode==200){
+        Map<String,dynamic> responseBody=response.data;
+        GetOrdersResponse.GetOrderResponse orders=GetOrdersResponse.GetOrderResponse.fromJson(responseBody);
+        print('ordersJson${responseBody}');
+
+        return orders;
+      }else{
+        Map<String,dynamic> responseBody=response.data;
+        print('paymentMethodsJson2${responseBody}');
+        // _showToast(context, responseBody['error']);
+        throw Exception();
+      }
+    }on DioError catch (e) {
+      // _showToast(context,'something went wrong');
+      print('errormsgUodateCart $e');
+      throw Exception();
+    }
+
+  }
 
 
   Future applyCoupon(BuildContext context,code)async{
@@ -314,7 +382,12 @@ Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, Payment
       'code': code,
     };
     try{
-      Response response = await Settings.settings.dio.post(APPLY_COUPON_URL+'?token=true',data: formData);
+      Response response = await Settings.settings.dio.post(APPLY_COUPON_URL+'?token=true',data: formData,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
 
 
       if(response.statusCode==200){
@@ -342,7 +415,12 @@ Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, Payment
       'code': code,
     };
     try{
-      Response response = await Settings.settings.dio.delete(DELETE_COUPON_URL+'?token=true',data: formData);
+      Response response = await Settings.settings.dio.delete(DELETE_COUPON_URL+'?token=true',data: formData,
+          options: Options(headers: {
+            "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+          }
+          )
+      );
 
 
       if(response.statusCode==200){

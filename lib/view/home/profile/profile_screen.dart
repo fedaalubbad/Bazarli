@@ -64,7 +64,7 @@ class ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCli
         index==1?
        NavigationService.navigationService.navigateToWidget(ProfileDetailsScreen())
             :index==2?
-        NavigationService.navigationService.navigateToWidget(OrdersScreen())
+        NavigationService.navigationService.navigateToWidget(OrderScreen())
             :index==3?
         NavigationService.navigationService.navigateToWidget(ShippingAdressScreen())
             :index==4?

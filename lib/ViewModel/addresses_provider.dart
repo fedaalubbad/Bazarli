@@ -108,6 +108,7 @@ String validatePhoneCode(String val){
     return addressList;
   }
     Future<CreateAddress> createNewAddress(BuildContext context) async {
+    try {
       isLoading = true;
       notifyListeners();
       if (!addressesFormStateKey.currentState.validate()) {
@@ -120,7 +121,6 @@ String validatePhoneCode(String val){
           notifyListeners();
           _showToast(context, 'choose city');
         } else {
-
           final updatedAddress = await AddressesApi.api.createAddress(
               context,
               jsonEncode([title]),
@@ -143,6 +143,10 @@ String validatePhoneCode(String val){
           notifyListeners();
           return updatedAddress;
         }
+      }
+    }catch (e){
+      isLoading = false;
+      notifyListeners();
       }
     }
 

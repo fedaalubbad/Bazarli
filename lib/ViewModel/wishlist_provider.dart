@@ -3,10 +3,10 @@ import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:flutter/material.dart';
 
 class WishListProvider extends ChangeNotifier{
-  List<WishData> wishList=[];
+  WishlistResponse wishList;
   bool isFav=false;
 
-  Future<List<WishData>> getCustomerWishList() async {
+  Future<WishlistResponse> getCustomerWishList() async {
     this.wishList= await WishListApi.api.getCustomerWishList();
     notifyListeners();
     return wishList;

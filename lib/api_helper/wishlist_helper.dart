@@ -10,14 +10,20 @@ class WishListApi {
   static WishListApi api = WishListApi._();
 
 
-  Future<List<WishData>> getCustomerWishList() async {
+  Future<WishlistResponse> getCustomerWishList() async {
 
-    Response response = await Settings.settings.dio.get(GET_WISHLIST_URL);
+    Response response = await Settings.settings.dio.get(GET_WISHLIST_URL,
+        options: Options(headers: {
+          "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+        }
+        )
+    );
     print('wishListJson${response.data}');
 
     Map<String, dynamic> responseBody = response.data;
-    List<dynamic> mapList = responseBody["data"];
-    List<WishData> wishList = mapList.map((e) => WishData.fromJson(e)).toList();
+    WishlistResponse wishList=WishlistResponse.fromJson(responseBody);
+    // List<dynamic> mapList = responseBody["data"];
+    // List<WishData> wishList = mapList.map((e) => WishData.fromJson(e)).toList();
     print('wishList${wishList}');
     return wishList;
   }
@@ -25,8 +31,12 @@ class WishListApi {
   Future<Map<String, dynamic>> addToWishList(String productId) async {
 
     // Map<String, dynamic> status = Map<String, dynamic>();
-    Response response = await Settings.settings.dio.get(ADD_TO_WISHLIST + '/$productId'+'?token=true');
-
+    Response response = await Settings.settings.dio.get(ADD_TO_WISHLIST + '$productId'+'?token=true',
+        options: Options(headers: {
+          "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+        }
+        )
+    );
     var statusCode = response.statusCode;
     // print(baseUrl + ADD_TO_WISHLIST + '/$productId' + '?token=true');
     print(SPHelper.spHelper.getToken());

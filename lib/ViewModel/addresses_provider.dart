@@ -64,6 +64,7 @@ saveLName(val){
 }
 saveDesc(val){
     title=val;
+    address2=val;
     notifyListeners();
 }
 
@@ -102,52 +103,53 @@ String validatePhoneCode(String val){
   }
 
   Future<List<Datum>> getCustomerAddresses() async {
+    selectedAddress=null;
     GetAddress address = await AddressesApi.api.getCustomerAddresses();
     this.addressList=address.data;
     notifyListeners();
-    return addressList;
+    if(addressList.length==1)
+      selectedAddress=addressList[0];
+      return addressList;
   }
     Future<CreateAddress> createNewAddress(BuildContext context) async {
-    try {
-      isLoading = true;
-      notifyListeners();
-      if (!addressesFormStateKey.currentState.validate()) {
+  if (!addressesFormStateKey.currentState.validate()) {
+        return null;
+      } else {
+    addressesFormStateKey.currentState.save();
+    if (selectedCity == null) {
+      // isLoading = false;
+      // notifyListeners();
+      _showToast(context, 'choose city');
+    } else {
+      try {
+        isLoading = true;
+        notifyListeners();
+        final updatedAddress = await AddressesApi.api.createAddress(
+            context,
+            jsonEncode([title]),
+            address2,
+            'Kuwait',
+            'KA',
+            selectedCity.text,
+            '591118',
+            phone,
+            phone_code,
+            FName,
+            LName,
+            homeWork);
+
+        _showToast(context, updatedAddress.message);
         isLoading = false;
         notifyListeners();
-      } else {
-        addressesFormStateKey.currentState.save();
-        if (selectedCity == null) {
-          isLoading = false;
-          notifyListeners();
-          _showToast(context, 'choose city');
-        } else {
-          final updatedAddress = await AddressesApi.api.createAddress(
-              context,
-              jsonEncode([title]),
-              'Kuwait',
-              'KA',
-              selectedCity.text,
-              '591118',
-              phone,
-              phone_code,
-              SPHelper.spHelper
-                  .getUSer()
-                  .firstName,
-              SPHelper.spHelper
-                  .getUSer()
-                  .lastName,
-              homeWork);
+        Navigator.of(context).pop();
 
-          _showToast(context, updatedAddress.message);
-          isLoading = false;
-          notifyListeners();
-          return updatedAddress;
-        }
+        return updatedAddress;
+      } catch (e) {
+        isLoading = false;
+        notifyListeners();
       }
-    }catch (e){
-      isLoading = false;
-      notifyListeners();
-      }
+    }
+  }
     }
 
     Future<CreateAddress> updateAddress(id,BuildContext context) async {

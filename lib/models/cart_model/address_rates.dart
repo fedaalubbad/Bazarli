@@ -99,7 +99,7 @@ class Cart {
   String customerEmail;
   String customerFirstName;
   String customerLastName;
-  String shippingMethod;
+  dynamic shippingMethod;
   dynamic couponCode;
   int isGift;
   int itemsCount;
@@ -132,7 +132,7 @@ class Cart {
   dynamic customer;
   dynamic channel;
   List<Item> items;
-  SelectedShippingRateElement selectedShippingRate;
+  dynamic selectedShippingRate;
   dynamic payment;
   IngAddress billingAddress;
   IngAddress shippingAddress;
@@ -181,7 +181,7 @@ class Cart {
     customer: json["customer"],
     channel: json["channel"],
     items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
-    selectedShippingRate: SelectedShippingRateElement.fromJson(json["selected_shipping_rate"]),
+    selectedShippingRate: json["selected_shipping_rate"],
     payment: json["payment"],
     billingAddress: IngAddress.fromJson(json["billing_address"]),
     shippingAddress: IngAddress.fromJson(json["shipping_address"]),
@@ -231,7 +231,7 @@ class Cart {
     "customer": customer,
     "channel": channel,
     "items": List<dynamic>.from(items.map((x) => x.toJson())),
-    "selected_shipping_rate": selectedShippingRate.toJson(),
+    "selected_shipping_rate": selectedShippingRate,
     "payment": payment,
     "billing_address": billingAddress.toJson(),
     "shipping_address": shippingAddress.toJson(),
@@ -472,7 +472,7 @@ class Additional {
   });
 
   String token;
-  dynamic quantity;
+  int quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -608,8 +608,28 @@ class Size {
   };
 }
 
-class SelectedShippingRateElement {
-  SelectedShippingRateElement({
+class DataRate {
+  DataRate({
+    this.carrierTitle,
+    this.rates,
+  });
+
+  String carrierTitle;
+  List<RateRate> rates;
+
+  factory DataRate.fromJson(Map<String, dynamic> json) => DataRate(
+    carrierTitle: json["carrier_title"],
+    rates: List<RateRate>.from(json["rates"].map((x) => RateRate.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "carrier_title": carrierTitle,
+    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
+  };
+}
+
+class RateRate {
+  RateRate({
     this.id,
     this.carrier,
     this.carrierTitle,
@@ -637,7 +657,7 @@ class SelectedShippingRateElement {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory SelectedShippingRateElement.fromJson(Map<String, dynamic> json) => SelectedShippingRateElement(
+  factory RateRate.fromJson(Map<String, dynamic> json) => RateRate(
     id: json["id"],
     carrier: json["carrier"],
     carrierTitle: json["carrier_title"],
@@ -665,25 +685,5 @@ class SelectedShippingRateElement {
     "formated_base_price": formatedBasePrice,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-  };
-}
-
-class DataRate {
-  DataRate({
-    this.carrierTitle,
-    this.rates,
-  });
-
-  String carrierTitle;
-  List<SelectedShippingRateElement> rates;
-
-  factory DataRate.fromJson(Map<String, dynamic> json) => DataRate(
-    carrierTitle: json["carrier_title"],
-    rates: List<SelectedShippingRateElement>.from(json["rates"].map((x) => SelectedShippingRateElement.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "carrier_title": carrierTitle,
-    "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
   };
 }

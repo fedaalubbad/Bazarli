@@ -16,6 +16,7 @@ class AddressesApi {
 
   Future<CreateAddress> createAddress(BuildContext context,
       var address1,
+      String address2,
       String country,
       String state,
       String city,
@@ -30,6 +31,7 @@ class AddressesApi {
 
     final formData = {
       'address1': address1,
+      'address2': address2,
       'country': country,
       'state': state,
       'city': city,
@@ -87,7 +89,8 @@ class AddressesApi {
     final formData = {
       'id': addressId,
       'address1': address1,
-      'country': country,
+      // 'address2': address2,
+      'country': 'KW',
       'state': state,
       'city': city,
       'post_code': postcode,

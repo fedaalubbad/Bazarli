@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 import '../tool_bar_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'addAddressScreen.dart';
@@ -23,6 +24,7 @@ class ShippingAdressScreenState extends State<ShippingAdressScreen> {
 
   @override
   void initState() {
+
     Provider.of<AddressesProvider>(context, listen: false)
         .getCustomerAddresses();
     Provider.of<AddressesProvider>(context, listen: false).selectedCity=null;
@@ -292,9 +294,10 @@ Widget  buildAddressWidget(BuildContext context,text,Datum address) {
     return Container(
       child: InkWell(
         onTap: () {
-          if(  Provider.of<AddressesProvider>(context,listen: false)
+          if(Provider.of<AddressesProvider>(context,listen: false)
               .selectedAddress==null){
             print('selectAddress');
+            Toast.show('selectAddress', context);
           }else {
             NavigationService.navigationService.navigateToWidget(
               PaymentScreen(Provider

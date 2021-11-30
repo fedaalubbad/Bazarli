@@ -25,13 +25,13 @@ class CartScreen extends StatefulWidget {
 
 class CartScreenState extends State<CartScreen>
     with AutomaticKeepAliveClientMixin {
-@override
+  @override
   void initState() {
-  if(SPHelper.spHelper.isLoged())
-    Provider.of<OrdersProvider>(context, listen: false)
-      .getCart(context);
+    if (SPHelper.spHelper.isLoged())
+      Provider.of<OrdersProvider>(context, listen: false).getCart(context);
     super.initState();
   }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -40,15 +40,15 @@ class CartScreenState extends State<CartScreen>
       RefreshController(initialRefresh: false);
   GlobalKey _contentKey = GlobalKey();
   GlobalKey _refresherKey = GlobalKey();
+
   void _onRefresh() async {
     // Navigator.pushReplacement(
     //     context,
     //     MaterialPageRoute(
     //         builder: (BuildContext context) => HomeMainScreen(selectedPageIndex:3)));
     // monitor network fetch
-    if(SPHelper.spHelper.isLoged())
-      Provider.of<OrdersProvider>(context, listen: false)
-        .getCart(context);
+    if (SPHelper.spHelper.isLoged())
+      Provider.of<OrdersProvider>(context, listen: false).getCart(context);
     await Future.delayed(Duration(milliseconds: 1000));
 
     // if failed,use refreshFailed()
@@ -65,10 +65,12 @@ class CartScreenState extends State<CartScreen>
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
-      key: _refresherKey,
+        key: _refresherKey,
         enablePullDown: true,
         enablePullUp: true,
-        header: WaterDropHeader(waterDropColor: PrimaryColor,),
+        header: WaterDropHeader(
+          waterDropColor: PrimaryColor,
+        ),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus mode) {
             Widget body;
@@ -85,7 +87,6 @@ class CartScreenState extends State<CartScreen>
             }
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-
               child: Container(
                 height: 55.h,
                 child: Center(child: body),
@@ -96,64 +97,80 @@ class CartScreenState extends State<CartScreen>
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,
-          child: Container(
-            height: ScreenUtil.defaultSize.height.h-(ScreenUtil.defaultSize.height.h / 3.2.h),
-            key: _contentKey,
-            child:SPHelper.spHelper.isLoged()?
-                Stack(
-              children: [
-                // Provider.of<OrdersProvider>(context, ).getCartResponse.data.items.length!=0?
-    Selector<OrdersProvider,GetCartResponse>(
-    builder: (context, response, widget) {
-    if (response == null) {
-      return Container(
-        margin: EdgeInsets.only(bottom: 80.h),
-        child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
-      ) ;
-    } else if (response.data.items.length == 0) {
-        return Container(
-    margin: EdgeInsets.only(bottom: 80.h),
-    child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
-    ) ;
-    } else {
-    return Container(
-                      margin: EdgeInsets.only(bottom: 100),
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      // physics:NeverScrollableScrollPhysics(),
-                      itemCount:response.data.items
-                          .length,
-                      itemBuilder: (context, index) {
-                        return ProductInCartListItem(
-                          item: response.data.items[index],
-                          onPressed:(){
-                            NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product:Provider.of<OrdersProvider>(context, listen: false).getCartResponse.data.items[index].product,));},
+        child: Container(
+          height: ScreenUtil.defaultSize.height.h -
+              (ScreenUtil.defaultSize.height.h / 3.2.h),
+          key: _contentKey,
+          child: SPHelper.spHelper.isLoged()
+              ? Stack(
+                  children: [
+                    // Provider.of<OrdersProvider>(context, ).getCartResponse.data.items.length!=0?
+                    Selector<OrdersProvider, GetCartResponse>(
+                        builder: (context, response, widget) {
+                      if (response == null) {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 80.h),
+                          child: Center(
+                              child: SvgPicture.asset(
+                                  'assets/svg/girl_shopping_with_cart.svg')),
                         );
-                      },
+                      } else if (response.data.items.length == 0) {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 80.h),
+                          child: Center(
+                              child: SvgPicture.asset(
+                                  'assets/svg/girl_shopping_with_cart.svg')),
+                        );
+                      } else {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 100),
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            // physics:NeverScrollableScrollPhysics(),
+                            itemCount: response.data.items.length,
+                            itemBuilder: (context, index) {
+                              return ProductInCartListItem(
+                                item: response.data.items[index],
+                                onPressed: () {
+                                  NavigationService.navigationService
+                                      .navigateToWidget(ProductDetailsScreen(
+                                    product: Provider.of<OrdersProvider>(
+                                            context,
+                                            listen: false)
+                                        .getCartResponse
+                                        .data
+                                        .items[index]
+                                        .product,
+                                  ));
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }, selector: (context, provider) {
+                      return provider.getCartResponse;
+                    }),
+                    checkOutBtnWidget()
+                  ],
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      // margin: EdgeInsets.only(bottom: 80.h),
+                      child: Center(
+                          child: SvgPicture.asset(
+                              'assets/svg/girl_shopping_with_cart.svg')),
                     ),
-                  );
-                }
-                }, selector: (context, provider) {
-                  return provider.getCartResponse;
-                }),
-                checkOutBtnWidget()
-              ],
-            )
-                :Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  // margin: EdgeInsets.only(bottom: 80.h),
-                  child: Center(child: SvgPicture.asset('assets/svg/girl_shopping_with_cart.svg')),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Center(child: Container(child: Text('login first'))),
+                  ],
                 ),
-                SizedBox(height: 40.h,),
-                Center(child: Container(child:Text('login first'))),
-              ],
-            ),
-          )
-
-    );
+        ));
   }
 
   checkOutBtnWidget() {

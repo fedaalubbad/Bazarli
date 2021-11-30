@@ -12,23 +12,23 @@ class SaveOrderResponse {
   SaveOrderResponse({
     this.success,
     this.redirectUrl,
-    this.order,
+    // this.order,
   });
 
   bool success;
   String redirectUrl;
-  Order order;
+  // Order order;
 
   factory SaveOrderResponse.fromJson(Map<String, dynamic> json) => SaveOrderResponse(
     success: json["success"],
-    order: Order.fromJson(json["order"]),
+    // order: Order.fromJson(json["order"]),
     redirectUrl: json["redirect_url"],
 
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
-    "order": order.toJson(),
+    // "order": order.toJson(),
     "redirect_url": redirectUrl,
   };
 }

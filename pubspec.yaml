@@ -39,6 +39,12 @@ dependencies:
   flutter_html: ^2.1.2
   infinite_scroll_pagination: ^3.1.0
   http_auth: ^1.0.1
+  myfatoorah_flutter: ^2.1.0
+  toast: ^0.1.5
+#  flutter_webview_plugin: ^0.4.0
+  webview_flutter: ^2.0.13
+  url_launcher: ^6.0.10
+
   #  flutter_colorpicker: ^0.5.0
 #  html_editor_enhanced: ^2.2.0+1-dev.1
 

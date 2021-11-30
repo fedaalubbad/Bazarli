@@ -10,12 +10,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../tool_bar_widget.dart';
+class WishListScreen extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return WishListScreenState();
+  }
 
-class WishListScreen extends StatelessWidget{
+}
+class WishListScreenState extends State<WishListScreen>{
+
+  @override
+  void initState() {
+    Provider.of<WishListProvider>(context, listen: false).getCustomerWishList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<WishListProvider>(context, listen: false).getCustomerWishList();
     return Scaffold(
       backgroundColor: HomeBackgroundColor,
       body:SafeArea(
@@ -35,61 +46,103 @@ class WishListScreen extends StatelessWidget{
       ));
 
   }
-  getWishList(BuildContext context){
-    return FutureBuilder<List<WishData>>(
-        future: Provider.of<WishListProvider>(context, listen: false).getCustomerWishList(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              child: Container(
-                padding: EdgeInsets.only(top:117.h,bottom:60.h),
-                child: ListView.builder(
-                  // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
-                  shrinkWrap: true,
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context,index){
-                    return
-                      ProductInCartListItem(wishList:snapshot.data[index],);
-                  },
 
-                ),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Container(
-              child: Container(
-                padding: EdgeInsets.only(top:117.h,bottom:60.h),
-                child: ListView.builder(
-                  // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (context,index){
-                    return _buildCardPlaceholder();
-                  },
+  getWishList(context){
+    return Selector<WishListProvider,WishlistResponse>(
+        builder: (context, response, widget) {
+      if (response == null) {
+        return Container(
+          child: Container(
+            padding: EdgeInsets.only(top:117.h,bottom:60.h),
+            child: ListView.builder(
+              // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+              shrinkWrap: true,
+              itemCount: 5,
+              itemBuilder: (context,index){
+                return _buildCardPlaceholder();
+              },
 
-                ),
-              ),
-            );
-          }
-
-          // By default, show a loading spinner. placeholder view
-          return Container(
-            child: Container(
-              padding: EdgeInsets.only(top:117.h,bottom:60.h),
-              child: ListView.builder(
-                // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context,index){
-                  return _buildCardPlaceholder();
-                },
-
-              ),
             ),
-          );
-        },
-    );
+          ),
+        );
+      }else if(response.data.length==0){
+        return Container();
+      }else{
+        return Container(
+          child: Container(
+            padding: EdgeInsets.only(top:117.h,bottom:60.h),
+            child: ListView.builder(
+              // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+              shrinkWrap: true,
+              itemCount: response.data.length,
+              itemBuilder: (context,index){
+                return
+                  ProductInCartListItem(wishList:response.data[index],);
+              },
+
+            ),
+          ),
+        );
+      }
+        }, selector: (context, provider) {
+      return provider.wishList;
+    });
   }
+  // getWishList(BuildContext context){
+  //   return FutureBuilder<List<WishData>>(
+  //       future: Provider.of<WishListProvider>(context, listen: false).getCustomerWishList(),
+  //       builder: (context, snapshot) {
+  //         if (snapshot.hasData) {
+  //           return Container(
+  //             child: Container(
+  //               padding: EdgeInsets.only(top:117.h,bottom:60.h),
+  //               child: ListView.builder(
+  //                 // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+  //                 shrinkWrap: true,
+  //                 itemCount: snapshot.data.length,
+  //                 itemBuilder: (context,index){
+  //                   return
+  //                     ProductInCartListItem(wishList:snapshot.data[index],);
+  //                 },
+  //
+  //               ),
+  //             ),
+  //           );
+  //         } else if (snapshot.hasError) {
+  //           return Container(
+  //             child: Container(
+  //               padding: EdgeInsets.only(top:117.h,bottom:60.h),
+  //               child: ListView.builder(
+  //                 // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+  //                 shrinkWrap: true,
+  //                 itemCount: 5,
+  //                 itemBuilder: (context,index){
+  //                   return _buildCardPlaceholder();
+  //                 },
+  //
+  //               ),
+  //             ),
+  //           );
+  //         }
+  //
+  //         // By default, show a loading spinner. placeholder view
+  //         return Container(
+  //           child: Container(
+  //             padding: EdgeInsets.only(top:117.h,bottom:60.h),
+  //             child: ListView.builder(
+  //               // physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+  //               shrinkWrap: true,
+  //               itemCount: 5,
+  //               itemBuilder: (context,index){
+  //                 return _buildCardPlaceholder();
+  //               },
+  //
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //   );
+  // }
   checkOutBtnWidget(BuildContext context){
     return Positioned(
       bottom:10.h,

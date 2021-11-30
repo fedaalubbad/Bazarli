@@ -20,7 +20,7 @@ class SplashScreen extends StatefulWidget {
 class SplashState extends State<SplashScreen> {
   navigationTohome(BuildContext context) async {
 
-    await Provider.of<HomeProvider>(
+    Provider.of<HomeProvider>(
       context,
       listen: false,
     ).getAllCategories(context);
@@ -39,7 +39,7 @@ class SplashState extends State<SplashScreen> {
       listen: false,
     ).getAllBrandss(context);
 
-    await Future.delayed(Duration(seconds: 4)).then((value) {
+    await Future.delayed(Duration(seconds:5)).then((value) {
       Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
       if (!SPHelper.spHelper.isFirstLog()) {
         NavigationService.navigationService

@@ -414,14 +414,14 @@ class IngAddress {
   });
 
   int id;
-  String email;
-  String firstName;
-  String lastName;
-  List<String> address1;
-  String country;
-  String countryName;
-  String state;
-  String city;
+  Email email;
+  FirstName firstName;
+  LastName lastName;
+  List<Address1> address1;
+  Country country;
+  CountryName countryName;
+  State state;
+  City city;
   String postcode;
   String phone;
   DateTime createdAt;
@@ -429,14 +429,14 @@ class IngAddress {
 
   factory IngAddress.fromJson(Map<String, dynamic> json) => IngAddress(
     id: json["id"],
-    email: json["email"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    address1: List<String>.from(json["address1"].map((x) => x)),
-    country: json["country"],
-    countryName: json["country_name"],
-    state: json["state"],
-    city: json["city"],
+    email: emailValues.map[json["email"]],
+    firstName: firstNameValues.map[json["first_name"]],
+    lastName: lastNameValues.map[json["last_name"]],
+    address1: List<Address1>.from(json["address1"].map((x) => address1Values.map[x])),
+    country: countryValues.map[json["country"]],
+    countryName: countryNameValues.map[json["country_name"]],
+    state: stateValues.map[json["state"]],
+    city: cityValues.map[json["city"]],
     postcode: json["postcode"],
     phone: json["phone"],
     createdAt: DateTime.parse(json["created_at"]),
@@ -445,20 +445,76 @@ class IngAddress {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "email": email,
-    "first_name": firstName,
-    "last_name": lastName,
-    "address1": List<dynamic>.from(address1.map((x) => x)),
-    "country": country,
-    "country_name": countryName,
-    "state": state,
-    "city": city,
+    "email": emailValues.reverse[email],
+    "first_name": firstNameValues.reverse[firstName],
+    "last_name": lastNameValues.reverse[lastName],
+    "address1": List<dynamic>.from(address1.map((x) => address1Values.reverse[x])),
+    "country": countryValues.reverse[country],
+    "country_name": countryNameValues.reverse[countryName],
+    "state": stateValues.reverse[state],
+    "city": cityValues.reverse[city],
     "postcode": postcode,
     "phone": phone,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
 }
+
+enum Address1 { SHUWAIKH_INDUSTRY_13007, BSS_APART_BANGLUR }
+
+final address1Values = EnumValues({
+  "[\"Bss Apart banglur\"]": Address1.BSS_APART_BANGLUR,
+  "Shuwaikh Industry 13007": Address1.SHUWAIKH_INDUSTRY_13007
+});
+
+enum City { SALAM, KARNATAKA }
+
+final cityValues = EnumValues({
+  "Karnataka": City.KARNATAKA,
+  "Salam": City.SALAM
+});
+
+enum Country { KW, IN }
+
+final countryValues = EnumValues({
+  "IN": Country.IN,
+  "KW": Country.KW
+});
+
+enum CountryName { EMPTY, COUNTRY_NAME }
+
+final countryNameValues = EnumValues({
+  "الهند": CountryName.COUNTRY_NAME,
+  "الكويت": CountryName.EMPTY
+});
+
+enum Email { AHMAD_BAZARI_COM, HIREN1189_GMAIL_COM }
+
+final emailValues = EnumValues({
+  "ahmad@bazari.com": Email.AHMAD_BAZARI_COM,
+  "hiren1189@gmail.com": Email.HIREN1189_GMAIL_COM
+});
+
+enum FirstName { AHMAD, HIREN }
+
+final firstNameValues = EnumValues({
+  "Ahmad": FirstName.AHMAD,
+  "Hiren": FirstName.HIREN
+});
+
+enum LastName { RAM, PRAJAPATI }
+
+final lastNameValues = EnumValues({
+  "Prajapati": LastName.PRAJAPATI,
+  "Ram": LastName.RAM
+});
+
+enum State { EMPTY, KA }
+
+final stateValues = EnumValues({
+  "": State.EMPTY,
+  "KA": State.KA
+});
 
 class Channel {
   Channel({
@@ -497,7 +553,7 @@ class Channel {
   dynamic faviconUrl;
   DefaultLocale defaultLocale;
   int rootCategoryId;
-  RootCategory rootCategory;
+  Category rootCategory;
   dynamic createdAt;
   DateTime updatedAt;
 
@@ -517,7 +573,7 @@ class Channel {
     faviconUrl: json["favicon_url"],
     defaultLocale: DefaultLocale.fromJson(json["default_locale"]),
     rootCategoryId: json["root_category_id"],
-    rootCategory: RootCategory.fromJson(json["root_category"]),
+    rootCategory: Category.fromJson(json["root_category"]),
     createdAt: json["created_at"],
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -580,8 +636,8 @@ class DefaultLocale {
   };
 }
 
-class RootCategory {
-  RootCategory({
+class Category {
+  Category({
     this.id,
     this.code,
     this.name,
@@ -602,27 +658,27 @@ class RootCategory {
   dynamic code;
   String name;
   String slug;
-  String displayMode;
-  dynamic description;
-  dynamic metaTitle;
+  DisplayMode displayMode;
+  String description;
+  String metaTitle;
   dynamic metaDescription;
-  dynamic metaKeywords;
+  String metaKeywords;
   int status;
   String imageUrl;
   dynamic additional;
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory RootCategory.fromJson(Map<String, dynamic> json) => RootCategory(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     code: json["code"],
     name: json["name"],
     slug: json["slug"],
-    displayMode: json["display_mode"],
-    description: json["description"],
-    metaTitle: json["meta_title"],
+    displayMode: displayModeValues.map[json["display_mode"]],
+    description: json["description"] == null ? null : json["description"],
+    metaTitle: json["meta_title"] == null ? null : json["meta_title"],
     metaDescription: json["meta_description"],
-    metaKeywords: json["meta_keywords"],
+    metaKeywords: json["meta_keywords"] == null ? null : json["meta_keywords"],
     status: json["status"],
     imageUrl: json["image_url"],
     additional: json["additional"],
@@ -635,11 +691,11 @@ class RootCategory {
     "code": code,
     "name": name,
     "slug": slug,
-    "display_mode": displayMode,
-    "description": description,
-    "meta_title": metaTitle,
+    "display_mode": displayModeValues.reverse[displayMode],
+    "description": description == null ? null : description,
+    "meta_title": metaTitle == null ? null : metaTitle,
     "meta_description": metaDescription,
-    "meta_keywords": metaKeywords,
+    "meta_keywords": metaKeywords == null ? null : metaKeywords,
     "status": status,
     "image_url": imageUrl,
     "additional": additional,
@@ -647,6 +703,12 @@ class RootCategory {
     "updated_at": updatedAt.toIso8601String(),
   };
 }
+
+enum DisplayMode { PRODUCTS_AND_DESCRIPTION }
+
+final displayModeValues = EnumValues({
+  "products_and_description": DisplayMode.PRODUCTS_AND_DESCRIPTION
+});
 
 class Customer {
   Customer({
@@ -1039,15 +1101,26 @@ class Product {
     this.type,
     this.name,
     this.urlKey,
-    this.parentId,
     this.price,
     this.specialPrice,
     this.savingPrice,
     this.shortDescription,
     this.description,
-    this.size,
+    this.category,
+    this.images,
+    this.baseImage,
+    this.brand,
+    this.color,
     this.createdAt,
     this.updatedAt,
+    this.reviews,
+    this.inStock,
+    this.isSaved,
+    this.isWishlisted,
+    this.isItemInCart,
+    this.showQuantityChanger,
+    this.parentId,
+    this.size,
     this.quantity,
   });
 
@@ -1056,15 +1129,26 @@ class Product {
   String type;
   String name;
   String urlKey;
-  int parentId;
   String price;
   String specialPrice;
   String savingPrice;
   String shortDescription;
   String description;
-  Size size;
+  List<Category> category;
+  List<Image> images;
+  BaseImage baseImage;
+  Brand brand;
+  Brand color;
   DateTime createdAt;
   DateTime updatedAt;
+  Reviews reviews;
+  bool inStock;
+  bool isSaved;
+  bool isWishlisted;
+  bool isItemInCart;
+  bool showQuantityChanger;
+  int parentId;
+  Size size;
   int quantity;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -1073,16 +1157,27 @@ class Product {
     type: json["type"],
     name: json["name"],
     urlKey: json["url_key"],
-    parentId: json["parent_id"],
     price: json["price"],
     specialPrice: json["special_price"],
     savingPrice: json["saving_price"],
     shortDescription: json["short_description"],
     description: json["description"],
-    size: Size.fromJson(json["size"]),
+    category: json["category"] == null ? null : List<Category>.from(json["category"].map((x) => Category.fromJson(x))),
+    images: json["images"] == null ? null : List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+    baseImage: json["base_image"] == null ? null : BaseImage.fromJson(json["base_image"]),
+    brand: json["brand"] == null ? null : Brand.fromJson(json["brand"]),
+    color: json["color"] == null ? null : Brand.fromJson(json["color"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    quantity: json["quantity"],
+    reviews: json["reviews"] == null ? null : Reviews.fromJson(json["reviews"]),
+    inStock: json["in_stock"] == null ? null : json["in_stock"],
+    isSaved: json["is_saved"] == null ? null : json["is_saved"],
+    isWishlisted: json["is_wishlisted"] == null ? null : json["is_wishlisted"],
+    isItemInCart: json["is_item_in_cart"] == null ? null : json["is_item_in_cart"],
+    showQuantityChanger: json["show_quantity_changer"] == null ? null : json["show_quantity_changer"],
+    parentId: json["parent_id"] == null ? null : json["parent_id"],
+    size: json["size"] == null ? null : Size.fromJson(json["size"]),
+    quantity: json["quantity"] == null ? null : json["quantity"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -1091,16 +1186,155 @@ class Product {
     "type": type,
     "name": name,
     "url_key": urlKey,
-    "parent_id": parentId,
     "price": price,
     "special_price": specialPrice,
     "saving_price": savingPrice,
     "short_description": shortDescription,
     "description": description,
-    "size": size.toJson(),
+    "category": category == null ? null : List<dynamic>.from(category.map((x) => x.toJson())),
+    "images": images == null ? null : List<dynamic>.from(images.map((x) => x.toJson())),
+    "base_image": baseImage == null ? null : baseImage.toJson(),
+    "brand": brand == null ? null : brand.toJson(),
+    "color": color == null ? null : color.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "quantity": quantity,
+    "reviews": reviews == null ? null : reviews.toJson(),
+    "in_stock": inStock == null ? null : inStock,
+    "is_saved": isSaved == null ? null : isSaved,
+    "is_wishlisted": isWishlisted == null ? null : isWishlisted,
+    "is_item_in_cart": isItemInCart == null ? null : isItemInCart,
+    "show_quantity_changer": showQuantityChanger == null ? null : showQuantityChanger,
+    "parent_id": parentId == null ? null : parentId,
+    "size": size == null ? null : size.toJson(),
+    "quantity": quantity == null ? null : quantity,
+  };
+}
+
+class BaseImage {
+  BaseImage({
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+    this.originalImageUrl,
+  });
+
+  String smallImageUrl;
+  String mediumImageUrl;
+  String largeImageUrl;
+  String originalImageUrl;
+
+  factory BaseImage.fromJson(Map<String, dynamic> json) => BaseImage(
+    smallImageUrl: json["small_image_url"],
+    mediumImageUrl: json["medium_image_url"],
+    largeImageUrl: json["large_image_url"],
+    originalImageUrl: json["original_image_url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "small_image_url": smallImageUrl,
+    "medium_image_url": mediumImageUrl,
+    "large_image_url": largeImageUrl,
+    "original_image_url": originalImageUrl,
+  };
+}
+
+class Brand {
+  Brand({
+    this.id,
+    this.label,
+    this.swatchValue,
+  });
+
+  int id;
+  Label label;
+  String swatchValue;
+
+  factory Brand.fromJson(Map<String, dynamic> json) => Brand(
+    id: json["id"] == null ? null : json["id"],
+    label: json["label"] == null ? null : labelValues.map[json["label"]],
+    swatchValue: json["swatch_value"] == null ? null : json["swatch_value"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id == null ? null : id,
+    "label": label == null ? null : labelValues.reverse[label],
+    "swatch_value": swatchValue == null ? null : swatchValue,
+  };
+}
+
+enum Label { HERBAL_SCIENCE, PROCSIN, NO_COLOR }
+
+final labelValues = EnumValues({
+  "Herbal Science": Label.HERBAL_SCIENCE,
+  "No Color": Label.NO_COLOR,
+  "Procsin": Label.PROCSIN
+});
+
+class Image {
+  Image({
+    this.id,
+    this.path,
+    this.url,
+    this.originalImageUrl,
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+  });
+
+  int id;
+  String path;
+  String url;
+  String originalImageUrl;
+  String smallImageUrl;
+  String mediumImageUrl;
+  String largeImageUrl;
+
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
+    id: json["id"],
+    path: json["path"],
+    url: json["url"],
+    originalImageUrl: json["original_image_url"],
+    smallImageUrl: json["small_image_url"],
+    mediumImageUrl: json["medium_image_url"],
+    largeImageUrl: json["large_image_url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "path": path,
+    "url": url,
+    "original_image_url": originalImageUrl,
+    "small_image_url": smallImageUrl,
+    "medium_image_url": mediumImageUrl,
+    "large_image_url": largeImageUrl,
+  };
+}
+
+class Reviews {
+  Reviews({
+    this.total,
+    this.totalRating,
+    this.averageRating,
+    this.percentage,
+  });
+
+  int total;
+  int totalRating;
+  int averageRating;
+  List<dynamic> percentage;
+
+  factory Reviews.fromJson(Map<String, dynamic> json) => Reviews(
+    total: json["total"],
+    totalRating: json["total_rating"],
+    averageRating: json["average_rating"],
+    percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "total": total,
+    "total_rating": totalRating,
+    "average_rating": averageRating,
+    "percentage": List<dynamic>.from(percentage.map((x) => x)),
   };
 }
 
@@ -1190,4 +1424,18 @@ class Meta {
     "to": to,
     "total": total,
   };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

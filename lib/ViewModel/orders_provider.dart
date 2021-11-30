@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import '../models/cart_model/address_rates.dart';
 
 class OrdersProvider extends ChangeNotifier{
+bool isLoading=false;
 
    // List<getCartResponse.Data> careList = [];
  GetCartResponse getCartResponse;
@@ -41,8 +42,19 @@ class OrdersProvider extends ChangeNotifier{
    }
   AddressRates addressRates;
   Future<AddressRates> getAddressRates(BuildContext context,Datum address)async{
-  AddressRates response=  await  OrdersApi.api.getAddressRates(context,address);
-  addressRates=response;
+   isLoading=true;
+   notifyListeners();
+   try{
+   AddressRates response=  await  OrdersApi.api.getAddressRates(context,address);
+   addressRates=response;
+   isLoading=false;
+   notifyListeners();
+  } catch (e) {
+  isLoading=false;
+  notifyListeners();
+   throw Exception();
+
+}
    }
  DataRate selectedDataRate=null;
  selectAddressRate(context,DataRate val){
@@ -52,9 +64,20 @@ class OrdersProvider extends ChangeNotifier{
  }
   ShippingMethods shippingMethods;
   Future<ShippingMethods> getShippingMethods(BuildContext context,DataRate addressRate)async{
+   isLoading=true;
+   notifyListeners();
+   try{
   ShippingMethods response=  await  OrdersApi.api.getShippingMethods(context,addressRate);
   shippingMethods=response;
   notifyListeners();
+  isLoading=false;
+  notifyListeners();
+   } catch (e) {
+    isLoading=false;
+    notifyListeners();
+    throw Exception();
+
+   }
    }
  Method selectedShippingMethod=null;
  selectShippingMethod(context,Method val){
@@ -66,10 +89,21 @@ class OrdersProvider extends ChangeNotifier{
   PaymentMethods paymentMethods;
   dynamic catrId=null;
   Future<PaymentMethods> getPaymentMethods(BuildContext context,Method shippingMethods)async{
+   isLoading=true;
+   notifyListeners();
+   try{
    PaymentMethods response=  await  OrdersApi.api.getPaymentMethods(context,shippingMethods);
    catrId=response.data.cart.id;
    paymentMethods=response;
    notifyListeners();
+   isLoading=false;
+   notifyListeners();
+  } catch (e) {
+isLoading=false;
+notifyListeners();
+throw Exception();
+
+}
   }
  PaymentMethod selectedPaymentMethod=null;
  selectPaymentMethod(context,PaymentMethod val){

@@ -70,7 +70,7 @@ const String SAVE_ORDER_URL = "checkout/save-order?token=true";
 
 //CUSTOMER WISHLIST
 const String GET_WISHLIST_URL = "wishlist?token=true"; //USED TO DELETE TAKE ID
-const String ADD_TO_WISHLIST = "wishlist/add"; //ID
+const String ADD_TO_WISHLIST = "wishlist/add/"; //ID
 const String MOVE_TO_CART = "move-to-cart"; //ID
 
 //CUSTOMER INVOICES

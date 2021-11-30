@@ -18,7 +18,11 @@ class AddAddressScreen extends StatefulWidget{
 
 }
 class AddAddressScreenState extends State<AddAddressScreen> {
-
+@override
+  void initState() {
+  Provider.of<AddressesProvider>(context, listen: false).isLoading=false;
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +35,7 @@ class AddAddressScreenState extends State<AddAddressScreen> {
           Container(
             padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
             child: SingleChildScrollView(
-              child: Form(
-                key: Provider.of<AddressesProvider>(context ,listen: false).addressesFormStateKey,
-                child: Column(
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
@@ -50,14 +52,14 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    addDescriptionWidget(),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    buildAddressLableWidget(),
-                    SizedBox(
-                      height: 20.h,
-                    ),
+                    // addDescriptionWidget(),
+                    // SizedBox(
+                    //   height: 20.h,
+                    // ),
+                    // buildAddressLableWidget(),
+                    // SizedBox(
+                    //   height: 20.h,
+                    // ),
                     buildPersonalInfoWidget(),
                     SizedBox(
                       height: 20.h,
@@ -70,7 +72,7 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                 ),
               ),
             ),
-          ),
+
         ],
       ),
     );
@@ -273,9 +275,68 @@ class AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   buildPersonalInfoWidget() {
-    return Column(
+    return Form(
+    key: Provider.of<AddressesProvider>(context,listen: false).addressesFormStateKey,
+    child:Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          children: [
+            Text(
+              'AddDescription',
+              style: TitlesInHome,
+            ).tr(),
+            SizedBox(
+              width: 5.w,
+            ),
+            Text(
+              'Optional',
+              style: SliderTitle2Style,
+            ).tr(),
+          ],
+        ),
+        SizedBox(
+          height: 5.w,
+        ),
+        Container(
+          // height: 50.h,
+          width: ScreenUtil.defaultSize.width,
+          decoration: BoxDecoration(
+            color: TextFormFieldColor,
+            borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
+          ),
+          child: CustomTextfieldWidget(
+            isObscure: false,
+            isPassword: false,
+            linesNo: 1,
+            // contraller: ,
+            hint: 'Apartment / Flat number/ Tower Number/ Building Number',
+            textInputType: TextInputType.text,
+            save:Provider.of<AddressesProvider>(context, listen: false).saveDesc,
+            validator:(val)=>Provider.of<AddressesProvider>(context, listen: false).validateDesc(val),
+          ),
+        ),
+        Text(
+          'AddressLabel',
+          style: TitlesInHome,
+        ).tr(),
+        SizedBox(
+          width: 5.w,
+        ),
+        Text(
+          'Optional',
+          style: SliderTitle2Style,
+        ).tr(),
+        _myRadioButton(
+          title: 'Home'.tr(),
+          value: 'home',
+          onChanged: (newValue) => Provider.of<AddressesProvider>(context, listen: false).selectTitle(newValue),
+        ),
+        _myRadioButton(
+          title: 'Work'.tr(),
+          value: 'work',
+          onChanged: (newValue) => Provider.of<AddressesProvider>(context, listen: false).selectTitle(newValue),
+        ),
         Text(
           'PersonalInformation',
           style: TitlesInHome,
@@ -293,9 +354,8 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                 isObscure: false,
                 isPassword: false,
                 linesNo: 1,
-                // hint: '20',
+                textInputType: TextInputType.phone,
                 label: '+20',
-                textInputType: TextInputType.number,
                 save:Provider.of<AddressesProvider>(context, listen: false).savePhoneCode,
                 validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validatePhoneCode(val),
               ),
@@ -315,9 +375,8 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                   isObscure: false,
                   isPassword: false,
                   linesNo: 1,
+                  textInputType: TextInputType.phone,
                   hint: 'MobileNumber'.tr(),
-                  // label: '+20',
-                  textInputType: TextInputType.number,
                   save:Provider.of<AddressesProvider>(context, listen: false).savePhone,
                   validator: (val)=>Provider.of<AddressesProvider>(context, listen: false).validatePhone(val),
                 ),
@@ -368,6 +427,7 @@ class AddAddressScreenState extends State<AddAddressScreen> {
           ),
         ),
       ],
+    ),
     );
   }
 
@@ -383,7 +443,6 @@ class AddAddressScreenState extends State<AddAddressScreen> {
                 .createNewAddress(context);
             Provider.of<AddressesProvider>(context, listen: false)
                 .getCustomerAddresses();
-            Navigator.of(context).pop();
           },
           child: Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w),

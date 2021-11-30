@@ -1,5 +1,4 @@
 import 'package:bazarli/models/cart_model/address_rates.dart';
-import 'package:bazarli/ViewModel/addresses_provider.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/models/cart_model/payment_methods.dart';
 import 'package:bazarli/models/cart_model/save_order_response.dart';
@@ -7,6 +6,8 @@ import 'package:bazarli/models/cart_model/shipping_methods.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/address_model/getAddress.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/home/cart/webview_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../tool_bar_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:toast/toast.dart';
 
 class  PaymentScreen extends StatefulWidget{
 Datum selectedAddress;
@@ -31,86 +32,128 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   @override
   void initState() {
-    Provider.of<OrdersProvider>(context, listen: false).getAddressRates(context,widget.selectedAddress);
+    Provider.of<OrdersProvider>(context, listen: false).getAddressRates(
+        context, widget.selectedAddress);
+    Provider.of<OrdersProvider>(context, listen: false).selectedDataRate=null;
+    Provider.of<OrdersProvider>(context, listen: false).addressRates=null;
+    Provider.of<OrdersProvider>(context, listen: false).selectedShippingMethod=null;
+    Provider.of<OrdersProvider>(context, listen: false).shippingMethods=null;
+    Provider.of<OrdersProvider>(context, listen: false).selectedPaymentMethod=null;
+    Provider.of<OrdersProvider>(context, listen: false).paymentMethods=null;
+    Provider.of<OrdersProvider>(context, listen: false).redirectUrl='';
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:SafeArea(
-        child: Stack(
-        children: [
-          ToolBar(
-            name: 'Payment',
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Text('Checkout',style: TitlesInHome,).tr(),
-                  SizedBox(
-                    height:40.h,
-                  ),
-                  buildAddressWidget('PrimaryAddress'),
-                  SizedBox(
-                    height:40.h,
-                  ),
-                  // if(Provider.of<OrdersProvider>(context).addressRates!=null)
-                  //   if(Provider.of<OrdersProvider>(context).shippingMethods.data.methods.length>0)
-                    buildSelectAddressRateMethodWidget(),
-                  SizedBox(
-                    height:20.h,
-                  ),
-                  if(Provider.of<OrdersProvider>(context).shippingMethods!=null)
-                    if(Provider.of<OrdersProvider>(context).shippingMethods.data.methods.length>0)
-                    buildSelectShippingMethodWidget(),
-                  SizedBox(
-                    height:20.h,
-                  ),
-                  if(Provider.of<OrdersProvider>(context).paymentMethods!=null)
-                    if(Provider.of<OrdersProvider>(context).paymentMethods.data.paymentMethods.length>0)
-                  buildSelectPaymentMethodWidget(),
-                  SizedBox(
-                    height:20.h,
-                  ),
-                    if(Provider.of<OrdersProvider>(context).shippingMethods!=null)
-                    if(Provider.of<OrdersProvider>(context).shippingMethods.data.methods.length>0)
-                  buildTotalWidget(),
-                  SizedBox(
-                    height:30.h,
-                  ),
-                  buildPayNowButton(context),
-                  SizedBox(
-                    height:10.h,
-                  ),
-                  buildBackButton(context),
-
-                  SizedBox(
-                    height:40.h,
-                  ),
-                ],
+        body: SafeArea(
+          child: Stack(
+            children: [
+              ToolBar(
+                name: 'Payment',
               ),
-            ),
+              Container(
+                margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 117.h),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                      Text('Checkout', style: TitlesInHome,).tr(),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      buildAddressWidget('PrimaryAddress'),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      if(Provider
+                          .of<OrdersProvider>(context)
+                          .addressRates != null)
+                        if(Provider
+                            .of<OrdersProvider>(context)
+                            .addressRates
+                            .data
+                            .rates
+                            .length > 0)
+                          buildSelectAddressRateMethodWidget(),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      if(Provider
+                          .of<OrdersProvider>(context)
+                          .shippingMethods != null)
+                        if(Provider
+                            .of<OrdersProvider>(context)
+                            .shippingMethods
+                            .data
+                            .methods
+                            .length > 0)
+                          buildSelectShippingMethodWidget(),
+
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      if(Provider
+                          .of<OrdersProvider>(context)
+                          .paymentMethods != null)
+                        if(Provider
+                            .of<OrdersProvider>(context)
+                            .paymentMethods
+                            .data
+                            .paymentMethods
+                            .length > 0)
+                          buildSelectPaymentMethodWidget(),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      if(Provider
+                          .of<OrdersProvider>(context)
+                          .paymentMethods != null)
+                        if(Provider
+                            .of<OrdersProvider>(context)
+                            .paymentMethods
+                            .data
+                            .paymentMethods
+                            .length > 0)
+                          buildTotalWidget(),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      buildPayNowButton(context),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      buildBackButton(context),
+
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if( Provider.of<OrdersProvider>(context).isLoading)
+                Center(
+                child:CircularProgressIndicator()
+                )
+            ],
           ),
-        ],
-      ),
-    )
+        )
     );
   }
 
-  buildAddressWidget(String text){
+  buildAddressWidget(String text) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text,style: TitlesInHome,).tr(),
-        SizedBox(height:10.h ,),
+        Text(text, style: TitlesInHome,).tr(),
+        SizedBox(height: 10.h,),
         Container(
-            // height:220.h,
+          // height:220.h,
             width: ScreenUtil.defaultSize.width,
             padding: EdgeInsets.all(ScreenUtil().radius(15)),
             decoration: BoxDecoration(
@@ -122,23 +165,27 @@ class PaymentScreenState extends State<PaymentScreen> {
                       offset: Offset(0.0, 8)
                   ),
                 ],
-                color:WhiteColor ,
+                color: WhiteColor,
                 borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
-                border: Border.all(color:PrimaryColor)),
-            child:Column(
+                border: Border.all(color: PrimaryColor)),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Name',style: TextLabelStyle,).tr(),
+                Text('Name', style: TextLabelStyle,).tr(),
                 SizedBox(height: 3.h,),
-                Text(widget.selectedAddress.firstName+' '+widget.selectedAddress.lastName,style: SliderTitle2Style,),
+                Text(widget.selectedAddress.firstName + ' ' +
+                    widget.selectedAddress.lastName, style: SliderTitle2Style,),
                 SizedBox(height: 15.h,),
-                Text('Address',style: TextLabelStyle,).tr(),
+                Text('Address', style: TextLabelStyle,).tr(),
                 SizedBox(height: 3.h,),
-                Text(widget.selectedAddress.address1.first,style: SliderTitle2Style,),
+                Text(widget.selectedAddress.address1.first,
+                  style: SliderTitle2Style,),
                 SizedBox(height: 15.h,),
-                Text('PhoneNumber',style: TextLabelStyle,).tr(),
+                Text('PhoneNumber', style: TextLabelStyle,).tr(),
                 SizedBox(height: 3.h,),
-                Text(widget.selectedAddress.phoneCode.toString()+' '+widget.selectedAddress.phone.toString(),style: SliderTitle2Style,),
+                Text(widget.selectedAddress.phoneCode.toString() + ' ' +
+                    widget.selectedAddress.phone.toString(),
+                  style: SliderTitle2Style,),
               ],
             )
 
@@ -146,6 +193,7 @@ class PaymentScreenState extends State<PaymentScreen> {
       ],
     );
   }
+
   int _groupValue = -1;
 
   buildSelectAddressRateMethodWidget() {
@@ -159,25 +207,28 @@ class PaymentScreenState extends State<PaymentScreen> {
         SizedBox(
           width: 5.w,
         ),
-        Selector<OrdersProvider,AddressRates>(
+        Selector<OrdersProvider, AddressRates>(
           builder: (context, response, z) {
             if (response == null) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return  Container(
+              return Container(
                 margin: EdgeInsets.all(ScreenUtil().radius(4)),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[200])),
-                child:  ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount:response.data.rates.length ,
-                    itemBuilder: (context,index){
-                      DataRate addressRate=response.data.rates[index];
+                    itemCount: response.data.rates.length,
+                    itemBuilder: (context, index) {
+                      DataRate addressRate = response.data.rates[index];
                       return _addressRadioButton(
-                            title:addressRate.carrierTitle,
-                            value:addressRate,
-                            onChanged: (newValue) =>  Provider.of<OrdersProvider>(context, listen: false).selectAddressRate(context,newValue));
+                          title: addressRate.carrierTitle,
+                          value: addressRate,
+                          onChanged: (newValue) =>
+                              Provider.of<OrdersProvider>(
+                                  context, listen: false).selectAddressRate(
+                                  context, newValue));
                     }),
               );
             }
@@ -201,25 +252,28 @@ class PaymentScreenState extends State<PaymentScreen> {
         SizedBox(
           width: 5.w,
         ),
-        Selector<OrdersProvider,ShippingMethods>(
+        Selector<OrdersProvider, ShippingMethods>(
           builder: (context, response, z) {
             if (response == null) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return  Container(
+              return Container(
                 margin: EdgeInsets.all(ScreenUtil().radius(4)),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[200])),
-                child:  ListView.builder(
+                child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount:response.data.methods.length ,
-                    itemBuilder: (context,index){
-                      Method shippingMethod=response.data.methods[index];
+                    itemCount: response.data.methods.length,
+                    itemBuilder: (context, index) {
+                      Method shippingMethod = response.data.methods[index];
                       return _shippingRadioButton(
-                          title:shippingMethod.methodTitle,
-                          value:shippingMethod,
-                          onChanged: (newValue) =>  Provider.of<OrdersProvider>(context, listen: false).selectShippingMethod(context,newValue));
+                          title: shippingMethod.methodTitle,
+                          value: shippingMethod,
+                          onChanged: (newValue) =>
+                              Provider.of<OrdersProvider>(
+                                  context, listen: false).selectShippingMethod(
+                                  context, newValue));
                     }),
               );
             }
@@ -231,27 +285,35 @@ class PaymentScreenState extends State<PaymentScreen> {
       ],
     );
   }
-  Widget _addressRadioButton({String title, DataRate value, Function onChanged}) {
+
+  Widget _addressRadioButton(
+      {String title, DataRate value, Function onChanged}) {
     return RadioListTile(
       value: value,
       activeColor: PrimaryColor,
-      groupValue:Provider.of<OrdersProvider>(context).selectedDataRate,
+      groupValue: Provider
+          .of<OrdersProvider>(context)
+          .selectedDataRate,
       onChanged: onChanged,
       title: Text(
         title,
-        style:SliderTitle2Style,
+        style: SliderTitle2Style,
       ),
     );
   }
-  Widget _shippingRadioButton({String title, Method value, Function onChanged}) {
+
+  Widget _shippingRadioButton(
+      {String title, Method value, Function onChanged}) {
     return RadioListTile(
       value: value,
       activeColor: PrimaryColor,
-      groupValue:Provider.of<OrdersProvider>(context).selectedShippingMethod,
+      groupValue: Provider
+          .of<OrdersProvider>(context)
+          .selectedShippingMethod,
       onChanged: onChanged,
       title: Text(
         title,
-        style:SliderTitle2Style,
+        style: SliderTitle2Style,
       ),
     );
   }
@@ -272,24 +334,28 @@ class PaymentScreenState extends State<PaymentScreen> {
         SizedBox(
           width: 5.w,
         ),
-        Selector<OrdersProvider,PaymentMethods>(
+        Selector<OrdersProvider, PaymentMethods>(
           builder: (context, response, z) {
             if (response == null) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return  Container(
+              return Container(
                 margin: EdgeInsets.all(ScreenUtil().radius(4)),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[200])),
-                child:  ListView.builder(
+                child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount:response.data.paymentMethods.length ,
-                    itemBuilder: (context,index){
-                      PaymentMethod paymentMethod=response.data.paymentMethods[index];
+                    itemCount: response.data.paymentMethods.length,
+                    itemBuilder: (context, index) {
+                      PaymentMethod paymentMethod = response.data
+                          .paymentMethods[index];
                       return _paymentRadioButton(
-                          value:paymentMethod,
-                          onChanged: (newValue) =>  Provider.of<OrdersProvider>(context, listen: false).selectPaymentMethod(context,newValue));
+                          value: paymentMethod,
+                          onChanged: (newValue) =>
+                              Provider.of<OrdersProvider>(
+                                  context, listen: false).selectPaymentMethod(
+                                  context, newValue));
                     }),
               );
             }
@@ -302,38 +368,46 @@ class PaymentScreenState extends State<PaymentScreen> {
       ],
     );
   }
+
   Widget _paymentRadioButton({ PaymentMethod value, Function onChanged}) {
     return Container(
       height: 50.h,
       width: ScreenUtil.defaultSize.width,
       child: Row(
         children: [
-          Image.network(value.imageUrl,height: 20.h,width: 40.w,),
+          Image.network(value.imageUrl, height: 20.h, width: 40.w,),
           SizedBox(width: 5.w,),
           Radio(
             activeColor: PrimaryColor,
             value: value,
-            groupValue:Provider.of<OrdersProvider>(context).selectedPaymentMethod,
+            groupValue: Provider
+                .of<OrdersProvider>(context)
+                .selectedPaymentMethod,
             onChanged: onChanged,
           ),
           Text(
             value.paymentMethodEn,
-            style:SliderTitle2Style,
+            style: SliderTitle2Style,
           ),
         ],
       ),
     );
   }
 
-  buildTotalWidget(){
+  buildTotalWidget() {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-          Text('Subtotal',style: TitlesInHome,).tr(),
-          Text(Provider.of<OrdersProvider>(context).paymentMethods.data.cart.formatedSubTotal,style: TitlesInHome,).tr(),
-        ],
+            Text('Subtotal', style: TitlesInHome,).tr(),
+            Text(Provider
+                .of<OrdersProvider>(context)
+                .paymentMethods
+                .data
+                .cart
+                .formatedSubTotal, style: TitlesInHome,).tr(),
+          ],
         ),
         SizedBox(height: 22.h,),
         // Row(
@@ -355,21 +429,42 @@ class PaymentScreenState extends State<PaymentScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-          Text('GrandTotal',style: TitlesInHome,).tr(),
-          Text(Provider.of<OrdersProvider>(context).paymentMethods.data.cart.formatedGrandTotal,style: SignInTextStyle,),
-        ],
+            Text('GrandTotal', style: TitlesInHome,).tr(),
+            Text(Provider
+                .of<OrdersProvider>(context)
+                .paymentMethods
+                .data
+                .cart
+                .formatedGrandTotal, style: SignInTextStyle,),
+          ],
         ),
 
       ],
     );
   }
 
-  buildPayNowButton(BuildContext context){
+  buildPayNowButton(BuildContext context) {
     return Container(
       child: InkWell(
-          onTap: () async{
-            if(Provider.of<OrdersProvider>(context,listen: false).catrId!=''&& Provider.of<OrdersProvider>(context,listen: false).selectedPaymentMethod!=null)
-              SaveOrderResponse response=  await Provider.of<OrdersProvider>(context,listen: false).saveOrder(context, Provider.of<OrdersProvider>(context,listen: false).catrId, Provider.of<OrdersProvider>(context,listen: false).selectedPaymentMethod);
+          onTap: () async {
+            if (Provider
+                .of<OrdersProvider>(context, listen: false)
+                .catrId != '' && Provider
+                .of<OrdersProvider>(context, listen: false)
+                .selectedPaymentMethod != null) {
+              SaveOrderResponse saveOrderResponse = await Provider.of<
+                  OrdersProvider>(context, listen: false).saveOrder(
+                  context, Provider
+                  .of<OrdersProvider>(context, listen: false)
+                  .catrId, Provider
+                  .of<OrdersProvider>(context, listen: false)
+                  .selectedPaymentMethod);
+              NavigationService.navigationService.navigateToWidget(
+                WebViewPayment(),
+              );
+            }else{
+              Toast.show('selectpaymentmethod', context);
+            }
             // showPlacedOrderDialog(context);
           },
           child: Container(
@@ -384,13 +479,13 @@ class PaymentScreenState extends State<PaymentScreen> {
             ),
             child: Text(
               'PayNow',
-              style:WhiteButtonStyle,
+              style: WhiteButtonStyle,
             ).tr(),
           )),
     );
   }
 
-  buildBackButton(BuildContext context){
+  buildBackButton(BuildContext context) {
     return Container(
       child: InkWell(
           onTap: () {
@@ -402,18 +497,19 @@ class PaymentScreenState extends State<PaymentScreen> {
             height: 50.h,
             width: ScreenUtil.defaultSize.width,
             decoration: BoxDecoration(
-              color: WhiteColor,
-              borderRadius:
-              BorderRadius.circular(ScreenUtil().radius(5)),
-                border: Border.all(color:PrimaryColor)
+                color: WhiteColor,
+                borderRadius:
+                BorderRadius.circular(ScreenUtil().radius(5)),
+                border: Border.all(color: PrimaryColor)
             ),
             child: Text(
               'Back',
-              style:SignInTextStyle,
+              style: SignInTextStyle,
             ).tr(),
           )),
     );
   }
+
   void showPlacedOrderDialog(BuildContext context) {
     showGeneralDialog(
       barrierLabel: "Barrier",
@@ -430,10 +526,10 @@ class PaymentScreenState extends State<PaymentScreen> {
               padding: EdgeInsets.all(ScreenUtil().radius(25)),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color:WhiteColor,
+                  color: WhiteColor,
                   borderRadius: BorderRadius.circular(ScreenUtil().radius(25)),
                   boxShadow: [
-                    BoxShadow(color: Colors.black,offset: Offset(0,10),
+                    BoxShadow(color: Colors.black, offset: Offset(0, 10),
                         blurRadius: 10
                     ),
                   ]
@@ -445,18 +541,18 @@ class PaymentScreenState extends State<PaymentScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                   Text(
-                        'OrderPlaced',
-                        style: TitlesInHome,
-                      ).tr(),
+                    Text(
+                      'OrderPlaced',
+                      style: TitlesInHome,
+                    ).tr(),
 
                     SizedBox(
                       height: 5,
                     ),
                     Text(
-                        'OrderPlacedSuccessfully',
-                        style: DescriptionStyle,
-                      ).tr(),
+                      'OrderPlacedSuccessfully',
+                      style: DescriptionStyle,
+                    ).tr(),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -464,26 +560,27 @@ class PaymentScreenState extends State<PaymentScreen> {
                     Center(
                         child: SvgPicture.asset('assets/svg/jumping.svg')),
                     SizedBox(
-                      height:20.h,
+                      height: 20.h,
                     ),
                     Center(
                       child: GestureDetector(
-                        onTap: (){
-                          showCustomerReceiptDialog(context);
-                        },
-                        child: Container(
-                              alignment: Alignment.center,
-                              height: 50.h,
-                              width: 280.w,
-                              decoration: BoxDecoration(
-                                color: PrimaryColor,
-                                borderRadius: BorderRadius.circular(ScreenUtil().radius(5)),
-                              ),
-                              child: Text(
-                                'Done',
-                                style: WhiteButtonStyle,
-                              ).tr(),
-                            )
+                          onTap: () {
+                            showCustomerReceiptDialog(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 280.w,
+                            decoration: BoxDecoration(
+                              color: PrimaryColor,
+                              borderRadius: BorderRadius.circular(
+                                  ScreenUtil().radius(5)),
+                            ),
+                            child: Text(
+                              'Done',
+                              style: WhiteButtonStyle,
+                            ).tr(),
+                          )
                       ),
                     )
                   ],
@@ -519,10 +616,10 @@ class PaymentScreenState extends State<PaymentScreen> {
               padding: EdgeInsets.all(ScreenUtil().radius(25)),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color:WhiteColor,
+                  color: WhiteColor,
                   borderRadius: BorderRadius.circular(ScreenUtil().radius(25)),
                   boxShadow: [
-                    BoxShadow(color: Colors.black,offset: Offset(0,10),
+                    BoxShadow(color: Colors.black, offset: Offset(0, 10),
                         blurRadius: 10
                     ),
                   ]
@@ -539,23 +636,24 @@ class PaymentScreenState extends State<PaymentScreen> {
                         children: [
                           Text(
                             'CustomerReceipt',
-                            style:DialogTitle1Style,
+                            style: DialogTitle1Style,
                           ).tr(),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                       SvgPicture.asset('assets/svg/printer.svg'),
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                       GestureDetector(
-                         onTap: (){
-                           Navigator.of(context).pop();
-                         },
-                           child: SvgPicture.asset('assets/svg/cross.svg')),
-                          ],),
-                        )
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SvgPicture.asset('assets/svg/printer.svg'),
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: SvgPicture.asset(
+                                        'assets/svg/cross.svg')),
+                              ],),
+                          )
                         ],
                       ),
                       SizedBox(
@@ -563,172 +661,172 @@ class PaymentScreenState extends State<PaymentScreen> {
                       ),
                       Text(
                         'Name',
-                        style:DescriptionStyle,
+                        style: DescriptionStyle,
                       ).tr(),
                       SizedBox(
                         height: 3.h,
                       ),
                       Text(
                         'Mohammed alhajri',
-                        style:TitlesInHome,
+                        style: TitlesInHome,
                       ).tr(),
 
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
                       Text(
                         'Address',
-                        style:DescriptionStyle,
+                        style: DescriptionStyle,
                       ).tr(),
                       SizedBox(
                         height: 3.h,
                       ),
                       Text(
                         'at230,44000kuwait,kw',
-                        style:TitlesInHome,
+                        style: TitlesInHome,
                       ).tr(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
                       Divider(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
 ///////////////////////////////////////////////////////////////////////////////////////
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'OrderID',
-                              style:DescriptionStyle,
-                            ).tr(),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Text(
-                              '16 NOV 2021',
-                              style:TitlesInHome,
-                            ).tr(),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'OrderID',
+                                style: DescriptionStyle,
+                              ).tr(),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Text(
+                                '16 NOV 2021',
+                                style: TitlesInHome,
+                              ).tr(),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                          children: [
-                            Text(
-                              'TransactionNumber',
-                              style:DescriptionStyle,
-                            ).tr(),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Text(
-                              '26 NOV 2021',
-                              style:TitlesInHome,
-                            ).tr(),
-                          ],
-                        ),
+                            children: [
+                              Text(
+                                'TransactionNumber',
+                                style: DescriptionStyle,
+                              ).tr(),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Text(
+                                '26 NOV 2021',
+                                style: TitlesInHome,
+                              ).tr(),
+                            ],
+                          ),
 
-                      ],),
-                       SizedBox(height:10.h,),
+                        ],),
+                      SizedBox(height: 10.h,),
                       Text(
                         'TransactionStatus',
-                        style:DescriptionStyle,
+                        style: DescriptionStyle,
                       ).tr(),
                       SizedBox(
                         height: 3.h,
                       ),
                       Text(
                         '26 NOV 2021',
-                        style:TitlesInHome,
+                        style: TitlesInHome,
                       ).tr(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
                       Divider(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
 //////////////////////////////////////////////////////////////////////////////////////
                       Row(
-                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'SubTotal',
-                              style:DescriptionStyle,
-                            ).tr(),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Text(
-                              'EGP 129,99',
-                              style:TitlesInHome,
-                            ).tr(),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'DeliveryChange',
-                              style:DescriptionStyle,
-                            ).tr(),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            Text(
-                              'EGP 299,99',
-                              style:TitlesInHome,
-                            ).tr(),
-                          ],
-                        ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'SubTotal',
+                                style: DescriptionStyle,
+                              ).tr(),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Text(
+                                'EGP 129,99',
+                                style: TitlesInHome,
+                              ).tr(),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'DeliveryChange',
+                                style: DescriptionStyle,
+                              ).tr(),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Text(
+                                'EGP 299,99',
+                                style: TitlesInHome,
+                              ).tr(),
+                            ],
+                          ),
 
-                      ],),
+                        ],),
                       SizedBox(
                         height: 10.h,
                       ),
                       Text(
                         'Tax',
-                        style:DescriptionStyle,
+                        style: DescriptionStyle,
                       ).tr(),
                       SizedBox(
                         height: 3.h,
                       ),
                       Text(
                         'EGP 0,00',
-                        style:TitlesInHome,
+                        style: TitlesInHome,
                       ).tr(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
                       Divider(),
                       SizedBox(
-                        height:10.h,
+                        height: 10.h,
                       ),
 ///////////////////////////////////////////////////////////////////////////////////
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                            Text(
-                              'GrandTotal',
-                              style:DialogTitle1Style,
-                            ).tr(),
-                            SizedBox(
-                              width: 3.h,
-                            ),
-                            Text(
-                              'EGP 3000.00',
-                              style:GrandTotalStyle,
-                            ).tr(),
+                          Text(
+                            'GrandTotal',
+                            style: DialogTitle1Style,
+                          ).tr(),
+                          SizedBox(
+                            width: 3.h,
+                          ),
+                          Text(
+                            'EGP 3000.00',
+                            style: GrandTotalStyle,
+                          ).tr(),
 
 
-                      ],),
+                        ],),
                     ],
                   ),
                 ),
@@ -745,4 +843,6 @@ class PaymentScreenState extends State<PaymentScreen> {
       },
     );
   }
+
+
 }

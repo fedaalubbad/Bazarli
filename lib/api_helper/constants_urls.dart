@@ -23,6 +23,10 @@ const String GET_ARRIVALS_URL = "arrivals";
 const String GET_PRODUCT_ATTRIBUTES_URL = "families/";
 const String GET_ATTRIBUTES_FILTER_URL = "attribute?attribute=";   //attribute
 
+
+//categories
+const String GET_CATEGORIES_WITH_BRANDS_URL = "get-categories-with-brands?token=true";
+
 // //SUPPLIER AUTH
 // const String SUPPLIER_LOGIN_URL = "suppliers/login";
 // const String SUPPLIER_REGISTER_URL = "suppliers/register";
@@ -51,7 +55,7 @@ const String GET_ADDRESSES_URL = "addresses?token=true"; //USED FOR DELETE ALSO
 const String UPDATE_DELETE_ADDRESS_URL = "addresses/";
 
 //CUSTOMER ORDERS CHECKOUT
-const String GET_ORDERS_URL = "orders?token=true&locale=ar";
+const String GET_ORDERS_URL = "orders?token=true";
 const String ADD_PRODUCT_TO_CART_URL =
     "checkout/cart/add/"; //PRODUCTID, QUANTITY
 const String GET_CART_URL = "checkout/cart?token=true";

@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'ViewModel/categories_with_brands_provider.dart';
 import 'api_helper/dio_settings.dart';
 import 'navigation_service/navigation_service.dart';
 
@@ -68,6 +69,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AttributeFilterProvider>(
           create: (context) => AttributeFilterProvider(),
+        ),
+        ChangeNotifierProvider<CategoriesWithBrandsProvider>(
+          create: (context) => CategoriesWithBrandsProvider(),
         ),
         // ChangeNotifierProvider<TestProvider>(
         //   create: (context) => TestProvider(),

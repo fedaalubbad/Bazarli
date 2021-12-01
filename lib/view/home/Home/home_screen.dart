@@ -85,7 +85,7 @@ class HomeScreenState extends State<HomeScreen>
     Provider.of<HomeProvider>(
       context,
       listen: false,
-    ).getAllHomeCategories(context);
+    ).getAllHomeCategories(context,context.locale.toString());
 
     Provider.of<HomeProvider>(
       context,

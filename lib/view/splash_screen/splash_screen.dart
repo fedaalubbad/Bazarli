@@ -1,3 +1,4 @@
+import 'package:bazarli/ViewModel/categories_with_brands_provider.dart';
 import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/navigation_service/navigation_service.dart';
@@ -19,7 +20,6 @@ class SplashScreen extends StatefulWidget {
 
 class SplashState extends State<SplashScreen> {
   navigationTohome(BuildContext context) async {
-
     Provider.of<HomeProvider>(
       context,
       listen: false,
@@ -28,7 +28,11 @@ class SplashState extends State<SplashScreen> {
     Provider.of<HomeProvider>(
       context,
       listen: false,
-    ).getAllHomeCategories(context);
+    ).getAllHomeCategories(context,'en');
+
+    Provider.of<CategoriesWithBrandsProvider>(
+        context, listen: false)
+        .getCategoriesWithBrands(lang: 'en');
 
     Provider.of<HomeProvider>(
       context,
@@ -39,8 +43,9 @@ class SplashState extends State<SplashScreen> {
       listen: false,
     ).getAllBrandss(context);
 
-    await Future.delayed(Duration(seconds:5)).then((value) {
-      Provider.of<AuthenticationProvider>(context, listen: false).setLanguage(context.locale.toString());
+    await Future.delayed(Duration(seconds: 5)).then((value) {
+      Provider.of<AuthenticationProvider>(context, listen: false)
+          .setLanguage(context.locale.toString());
       if (!SPHelper.spHelper.isFirstLog()) {
         NavigationService.navigationService
             .navigateAndReplaceWidget(SliderScreen());

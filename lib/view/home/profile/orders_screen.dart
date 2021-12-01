@@ -24,7 +24,7 @@ class OrderScreen extends StatefulWidget {
 class OrdersScreenState extends State<OrderScreen> {
   @override
   void initState() {
-    Provider.of<OrdersProvider>(context, listen: false).getOrders();
+    Provider.of<OrdersProvider>(context, listen: false).getOrders(context.locale.toString());
     super.initState();
   }
 

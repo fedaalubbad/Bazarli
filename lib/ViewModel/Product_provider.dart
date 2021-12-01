@@ -1,3 +1,5 @@
+import 'package:bazarli/api_helper/categories_with_brands_helper.dart';
+import 'package:bazarli/models/Categories_model/categories_with_brands_response.dart';
 import 'package:bazarli/models/Categories_model/category_response.dart' as categoryResponse;
 import 'package:bazarli/models/arrivals_response/arrivals_response.dart';
 import 'package:bazarli/models/brand_model/brand_model.dart' as brandResponse;
@@ -238,6 +240,7 @@ class ProductProvider extends ChangeNotifier {
   // }
 
   Future<ProductResponse> getSearchProductsByCategoryIdBrandId({category,brand,pagingController,pageKey}) async {
+
     try {
       ProductResponse productsResponse= await ProductApi.api.getAllProducts(page:pageKey,perPAge:_pageSize,category: category,brand: brand);
       final isLastPage = productsResponse.data.length < _pageSize;
@@ -254,7 +257,17 @@ class ProductProvider extends ChangeNotifier {
       // notifyListeners();
     }
   }
+  CategoriesWithBrandsResponse categoriesWithBrandsResponse;
 
+  Future<CategoriesWithBrandsResponse> getCategoriesWithBrands(
+      {lang, id}) async {
+    CategoriesWithBrandsResponse response =
+    await CategoriesWithBrandsApi.api.getCategoriesWithBrands(lang:lang,id:id);
+      categoriesWithBrandsResponse = response;
+      notifyListeners();
+
+    return categoriesWithBrandsResponse;
+  }
     // // isSearchLoading=true;
     // notifyListeners();
     // ProductResponse response = await ProductApi.api.getAllProducts(

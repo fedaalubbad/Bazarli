@@ -1,5 +1,6 @@
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
+import 'package:bazarli/models/cart_model/get_cart_response.dart';
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/ViewModel/orders_provider.dart';
 import 'package:bazarli/view/home/Home/component/star_rating.dart';
@@ -9,10 +10,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
-// import 'package:bazarli/models/cart_model/get_orders_response.dart' as orderResponse;
 class ProductInCartListItem extends StatelessWidget{
 
-  dynamic item;
+  Item item;
   Datum wishList;
   Function onPressed;
   ProductInCartListItem({this.item,this.wishList,this.onPressed});

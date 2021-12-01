@@ -329,9 +329,9 @@ Future<SaveOrderResponse> saveOrder(
    }
 
   }
-  Future<GetOrdersResponse.GetOrderResponse> getOrders() async {
+  Future<GetOrdersResponse.GetOrderResponse> getOrders(lang) async {
     try{
-      Response response = await Settings.settings.dio.get(GET_ORDERS_URL,
+      Response response = await Settings.settings.dio.get(GET_ORDERS_URL+'&locale=$lang',
           options: Options(headers: {
             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
           }

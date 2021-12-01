@@ -55,8 +55,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
     return categoriesResponse;
   }
-  Future<HomeCategoriesResponse> getAllHomeCategories(context) async {
-    HomeCategoriesResponse response= await HomeApi.api.getAllHomeCategories(context);
+  Future<HomeCategoriesResponse> getAllHomeCategories(context,lang) async {
+    HomeCategoriesResponse response= await HomeApi.api.getAllHomeCategories(context,lang);
     // this.homeCategoriesList = response.data;
    homeCategoriesResponse=response;
     notifyListeners();

@@ -50,8 +50,7 @@ class GetHomeCategories extends StatefulWidget {
                 .of<HomeProvider>(
               context,
               listen: false,
-            )
-                .tabController = new TabController(
+            ).tabController = new TabController(
               length: response.data.length,
               vsync: this,
               initialIndex: Provider.of<HomeProvider>(
@@ -70,8 +69,7 @@ class GetHomeCategories extends StatefulWidget {
                       .of<HomeProvider>(
                     context,
                     listen: false,
-                  )
-                      .tabController
+                  ).tabController
                       .index,
                 );
               });

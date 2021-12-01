@@ -51,9 +51,9 @@ class HomeApi {
     }
   }
 
-  Future<HomeCategoriesResponse> getAllHomeCategories(context) async {
+  Future<HomeCategoriesResponse> getAllHomeCategories(context,lang) async {
     try {
-      Response response = await Settings.settings.dio.get(GET_HOME_CATEGORIES_URL);
+      Response response = await Settings.settings.dio.get(GET_HOME_CATEGORIES_URL+'?locale=$lang');
       if (response.statusCode < 400) {
         HomeCategoriesResponse getCategoriesResponse =
         HomeCategoriesResponse.fromJson(response.data);

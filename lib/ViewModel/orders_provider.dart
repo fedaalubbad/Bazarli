@@ -124,8 +124,8 @@ throw Exception();
   }
 
  ordersResponse.GetOrderResponse getOrderResponse;
-  Future<ordersResponse.GetOrderResponse> getOrders()async{
-   ordersResponse.GetOrderResponse response=  await  OrdersApi.api.getOrders();
+  Future<ordersResponse.GetOrderResponse> getOrders(lang)async{
+   ordersResponse.GetOrderResponse response=  await  OrdersApi.api.getOrders(lang);
    getOrderResponse=response;
    notifyListeners();
 

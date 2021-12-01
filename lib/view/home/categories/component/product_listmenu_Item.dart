@@ -24,7 +24,7 @@ class ProductListMenuItem extends StatelessWidget {
         onTap: () {
           NavigationService.navigationService
               .navigateToWidget(ProductDetailsScreen(
-            product: product,
+            id: product.id,
           ));
         },
         child: Container(
@@ -104,10 +104,8 @@ class ProductListMenuItem extends StatelessWidget {
                               // crossAxisAlignment: CrossAxisAlignment.stretch,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                StarRating(
-                                  rating: 3.5,
-                                  size: ScreenUtil().radius(15),
-                                ),
+                                StarRating(rating: double.parse(product.reviews.averageRating.toString()),size: ScreenUtil().radius(25),),
+
                                 Container(
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,

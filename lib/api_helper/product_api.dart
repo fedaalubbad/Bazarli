@@ -1,5 +1,6 @@
 import 'package:bazarli/models/product_model/product_by_id_response.dart';
 import 'package:bazarli/models/product_model/product_response.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'constants_urls.dart';
@@ -49,7 +50,13 @@ class ProductApi {
       if(perPAge!=null) {
         limit=perPAge;}
 
-       Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL+'?page=$pageNo&per_page=$limit',data: formData);
+       Response response = await Settings.settings.dio.post(GET_PRODUCTS_URL+'?page=$pageNo&per_page=$limit',data: formData,
+           options: Options(headers: {
+             "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+           }
+           )
+       );
+      var statusCode = response.statusCode;
     if(response.statusCode==200) {
       ProductResponse productsList = ProductResponse.fromJson(response.data);
       return productsList;
@@ -61,7 +68,13 @@ class ProductApi {
   }
   Future<GetProductById> getProductById({int product_id}) async {
     try{
-    Response response = await Settings.settings.dio.get(GET_PRODUCT_BY_ID_URL+'/$product_id?token=true');
+    Response response = await Settings.settings.dio.get(GET_PRODUCT_BY_ID_URL+'/$product_id?token=true',
+        options: Options(headers: {
+          "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+        }
+        )
+    );
+    var statusCode = response.statusCode;
     if(response.statusCode==200) {
       GetProductById product = GetProductById.fromJson(response.data);
       return product;

@@ -96,7 +96,8 @@ class ProductInCartListItem extends StatelessWidget{
                                   // crossAxisAlignment: CrossAxisAlignment.stretch,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    StarRating(rating: 3.5,size: ScreenUtil().radius(15),),
+                                    if(wishList!=null)
+                                    StarRating(rating: double.parse(wishList.product.reviews.averageRating.toString()),size: ScreenUtil().radius(15),),
                                       Container(
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,

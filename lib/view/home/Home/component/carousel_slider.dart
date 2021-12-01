@@ -24,7 +24,7 @@ class BuildCarouselSlider extends StatelessWidget{
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product: product[currentIndex],));
+        NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(id: product[currentIndex].id,));
       },
       child: CarouselSlider.builder(
         itemCount: 5,
@@ -102,7 +102,7 @@ class BuildCarouselSlider extends StatelessWidget{
                                 SizedBox(width: 10.h,),
                                 Text(product[index].price,style:PriceTextStyle,),
                                 SizedBox(height: 6.h,),
-                                StarRating(rating: 4,size: ScreenUtil().radius(20),),
+                               StarRating(rating: double.parse(product[index].reviews.averageRating.toString()),size: ScreenUtil().radius(25),),
                              ],
                            ),
                          ),
@@ -122,10 +122,12 @@ class BuildCarouselSlider extends StatelessWidget{
 
                           children: [
                             InkWell(
-                              onTap:(){
-                                Provider.of<WishListProvider>(context, listen: false).addToWishList(context,product[index].id);
+                              onTap:()async{
+                               await Provider.of<WishListProvider>(context, listen: false).addToWishList(context,product[index].id);
+                              Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+
                                },
-                                child: SvgPicture.asset('assets/svg/fav.svg')),
+                                child: product[index].isWishlisted?SvgPicture.asset('assets/svg/fav.svg',color: Colors.red,):SvgPicture.asset('assets/svg/fav.svg')),
 
                             SizedBox(width: 20.w,),
 

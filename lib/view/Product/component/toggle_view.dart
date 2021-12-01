@@ -1,7 +1,11 @@
 import 'package:bazarli/ViewModel/Product_provider.dart';
+import 'package:bazarli/ViewModel/reviews_provider.dart';
 import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/product_model/product_by_id_response.dart';
+import 'package:bazarli/shared_preference/sp_helper.dart';
+import 'package:bazarli/view/home/Home/component/star_rating.dart';
+import 'package:rating_widget/rating_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +24,21 @@ class OverViewAndCustomerReviewToggleView extends StatefulWidget{
 }
 class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerReviewToggleView >{
   List<bool> isSelected;
+  final formkeyDialog = GlobalKey<FormState>();
+  TextEditingController commentController = TextEditingController();
+  String commentText = '';
+  dynamic ratingVal = 1;
+
+
+  _rateAd(comment, rating) async{
+   await Provider.of<ReviewsProvider>(context, listen: false).giveReview(
+        widget.product.data.id,
+        rating,
+        widget.product.data.name,
+        comment);
+   Provider.of<ProductProvider>(context, listen: false).getProductById(productId: widget.product.data.id);
+
+  }
   @override
   void initState() {
     isSelected = [true, false];
@@ -29,17 +48,21 @@ class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerRevi
   @override
   Widget build(BuildContext context) {
     return Container(
-    child: Column(
-    children:[
-      overViewToggleButtonWidget(context),
-       SizedBox(height: 20.h,),
-         isSelected[1]?
-         CustomerReviewWidget()
-         :
-         OverviewWidget()
-        ],
+      child:Column(children: [
+        StarRating(rating: double.parse(widget.product.data.reviews.averageRating.toString()),size: ScreenUtil().radius(25),),
+        SizedBox(height: 20.h,),
+        buildReviewBtn(context)
+      ],)
+    // child: Column(
+    // children:[
+    //   overViewToggleButtonWidget(context),
+    //    SizedBox(height: 20.h,),
+    //      isSelected[1]?
+    //      CustomerReviewWidget()
+    //      :
+    //      OverviewWidget()
+    //     ],
 
-    ),
     );
   }
 
@@ -101,7 +124,12 @@ class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerRevi
             // NavigationService.navigationService
             //     .navigateToWidget(HomeMainScreen());
           },
-          child: Container(
+          child: InkWell(
+    onTap:(){
+      if (SPHelper.spHelper.isLoged())
+        rateDialog(context);
+    },
+    child:Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w),
             alignment: Alignment.center,
             height: 50.h,
@@ -114,7 +142,8 @@ class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerRevi
               'WriteAReview',
               style: SliderNextStyle,
             ).tr(),
-          )),
+          ),),
+      ),
     );
   }
 
@@ -207,6 +236,155 @@ class OverViewAndCustomerReviewToggleState extends State<OverViewAndCustomerRevi
           ],
         ),
       ],
+    );
+  }
+
+
+  void rateDialog(BuildContext context) {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Container(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.all(ScreenUtil().radius(25)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: WhiteColor,
+                  borderRadius: BorderRadius.circular(ScreenUtil().radius(25)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0, 10),
+                        blurRadius: 10),
+                  ]),
+              child: Material(
+                color: WhiteColor,
+                child: Form(
+                  key: formkeyDialog,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          'Rate product',
+                          style: ProductTitleStyle,
+                        ).tr(),
+                      ),
+
+                      SizedBox(
+                        height: 5,
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.grey[200]))),
+                        child: TextFormField(
+                          controller: commentController,
+                          onChanged: (value) {
+                            commentText = value;
+                          },
+                          validator: (value) => value.isEmpty
+                              ? 'comment required'
+                              : null,
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.chat),
+                              hintText: "AddYourComment".tr(),
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Rating(
+                        rating: 5,
+                        onRatingSelected: (value) {
+                          setState(() {
+                            ratingVal = value;
+                          });
+                        },
+                        // horizontal: false,
+                        selectedColor: Colors.amber,
+                        unSelectedColor: PrimaryColor,
+                        selectedIcon: Icons.star,
+                        unSelectedIcon: Icons.star_border,
+                      ),
+
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (formkeyDialog.currentState.validate()) {
+                            _rateAd(commentController.text, ratingVal);
+                            commentController.clear();
+
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 80.w),
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          height: 60.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 1.w),
+                            color: PrimaryColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 22,
+                                offset: Offset(0, 22),
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Submit',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: WhiteColor,
+                                fontSize: 18.sp,
+                                fontFamily: 'Nisebuschgardens',
+                              ),
+                            ).tr(),
+                          ),
+                        ),
+                      ),
+
+                      // FlatButton(onPressed: (){
+                      //
+                      // }, child: Text('Submit').tr()),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:bazarli/constants/MyColors.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/models/wish_list_model/wishlist.dart';
 import 'package:bazarli/ViewModel/wishlist_provider.dart';
+import 'package:bazarli/navigation_service/navigation_service.dart';
+import 'package:bazarli/view/Product/product_details_screen.dart';
 import 'package:bazarli/view/home/cart/component/product_in_cart_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +79,13 @@ class WishListScreenState extends State<WishListScreen>{
               itemCount: response.data.length,
               itemBuilder: (context,index){
                 return
-                  ProductInCartListItem(wishList:response.data[index],);
+                  ProductInCartListItem(wishList:response.data[index],
+                    onPressed: () {
+                      NavigationService.navigationService
+                          .navigateToWidget(ProductDetailsScreen(
+                        id:response.data[index].product.id
+                      ));
+                    },);
               },
 
             ),

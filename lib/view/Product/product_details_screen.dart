@@ -19,9 +19,9 @@ import 'component/product_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 class ProductDetailsScreen extends StatefulWidget{
   // productResponse.Datum product;
- dynamic product;
+  dynamic id;
 
-  ProductDetailsScreen({this.product});
+  ProductDetailsScreen({this.id});
   @override
   State<StatefulWidget> createState() {
    return ProductDetailsScreenState();
@@ -32,13 +32,11 @@ class ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
 @override
   void initState() {
-  Provider
-      .of<ProductProvider>(
-    context,listen: false
-  ).selectedVarientIndex=0;
+  Provider.of<ProductProvider>(
+    context,listen: false).selectedVarientIndex=0;
   Provider.of<ProductProvider>(
         context,listen: false
-      ).getProductById(productId: widget.product.id);
+      ).getProductById(productId: widget.id);
   super.initState();
   }
   @override

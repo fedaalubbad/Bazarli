@@ -333,26 +333,26 @@ class Reviews {
     this.total,
     this.totalRating,
     this.averageRating,
-    this.percentage,
+    // this.percentage,
   });
 
-  int total;
-  int totalRating;
-  int averageRating;
-  List<dynamic> percentage;
+  dynamic total;
+  dynamic totalRating;
+  dynamic averageRating;
+  // List<dynamic> percentage;
 
   factory Reviews.fromJson(Map<String, dynamic> json) => Reviews(
     total: json["total"],
     totalRating: json["total_rating"],
     averageRating: json["average_rating"],
-    percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
+    // percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "total": total,
     "total_rating": totalRating,
     "average_rating": averageRating,
-    "percentage": List<dynamic>.from(percentage.map((x) => x)),
+    // "percentage": List<dynamic>.from(percentage.map((x) => x)),
   };
 }
 

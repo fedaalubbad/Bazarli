@@ -14,8 +14,8 @@ class ReviewsProvider extends ChangeNotifier{
     return reviewList;
   }
 
-  Future<GiveReviewsResponse> giveReview(String productId,String rating,String title,String comment,String name)async{
-     GiveReviewsResponse giveReviewsResponse=await ReviewsApi.api.giveReview(productId,rating,title,comment,name);
+  Future<GiveReviewsResponse> giveReview( productId,rating,title,comment)async{
+     GiveReviewsResponse giveReviewsResponse=await ReviewsApi.api.giveReview(productId,rating,title,comment);
       return giveReviewsResponse;
   }
 

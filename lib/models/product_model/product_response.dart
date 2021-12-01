@@ -67,14 +67,14 @@ class Datum {
   String urlKey;
   String price;
   String specialPrice;
-  String savingPrice;
+  SavingPrice savingPrice;
   String shortDescription;
   String description;
   List<Category> category;
   List<Image> images;
   BaseImage baseImage;
   Brand brand;
-  Color color;
+  Brand color;
   DateTime createdAt;
   DateTime updatedAt;
   Reviews reviews;
@@ -93,14 +93,14 @@ class Datum {
     urlKey: json["url_key"],
     price: json["price"],
     specialPrice: json["special_price"],
-    savingPrice: json["saving_price"],
+    savingPrice: savingPriceValues.map[json["saving_price"]],
     shortDescription: json["short_description"],
     description: json["description"],
     category: List<Category>.from(json["category"].map((x) => Category.fromJson(x))),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
     baseImage: BaseImage.fromJson(json["base_image"]),
     brand: Brand.fromJson(json["brand"]),
-    color: Color.fromJson(json["color"]),
+    color: Brand.fromJson(json["color"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     reviews: Reviews.fromJson(json["reviews"]),
@@ -118,9 +118,9 @@ class Datum {
     "type": type,
     "name": name,
     "url_key": urlKey,
-    "price": price,
+    "price":price,
     "special_price": specialPrice,
-    "saving_price": savingPrice,
+    "saving_price": savingPriceValues.reverse[savingPrice],
     "short_description": shortDescription,
     "description": description,
     "category": List<dynamic>.from(category.map((x) => x.toJson())),
@@ -172,19 +172,23 @@ class Brand {
   Brand({
     this.id,
     this.label,
+    this.swatchValue,
   });
 
   int id;
   String label;
+  String swatchValue;
 
   factory Brand.fromJson(Map<String, dynamic> json) => Brand(
-    id: json["id"],
+    id: json["id"] == null ? null : json["id"],
     label: json["label"] == null ? null : json["label"],
+    swatchValue: json["swatch_value"] == null ? null : json["swatch_value"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "id": id == null ? null : id,
     "label": label == null ? null : label,
+    "swatch_value": swatchValue == null ? null : swatchValue,
   };
 }
 
@@ -256,30 +260,6 @@ class Category {
   };
 }
 
-class Color {
-  Color({
-    this.id,
-    this.label,
-    this.swatchValue,
-  });
-
-  int id;
-  String label;
-  String swatchValue;
-
-  factory Color.fromJson(Map<String, dynamic> json) => Color(
-    id: json["id"] == null ? null : json["id"],
-    label: json["label"] == null ? null : json["label"],
-    swatchValue: json["swatch_value"] == null ? null : json["swatch_value"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "label": label == null ? null : label,
-    "swatch_value": swatchValue == null ? null : swatchValue,
-  };
-}
-
 class Image {
   Image({
     this.id,
@@ -320,6 +300,15 @@ class Image {
   };
 }
 
+// enum Price { KWD_9298, KWD_1550, KWD_1610, KWD_14466 }
+//
+// final priceValues = EnumValues({
+//   "KWD 14.466": Price.KWD_14466,
+//   "KWD 1.550": Price.KWD_1550,
+//   "KWD 1.610": Price.KWD_1610,
+//   "KWD 9.298": Price.KWD_9298
+// });
+
 class Reviews {
   Reviews({
     this.total,
@@ -329,24 +318,33 @@ class Reviews {
   });
 
   int total;
-  int totalRating;
-  int averageRating;
-  List<dynamic> percentage;
+  dynamic totalRating;
+  dynamic averageRating;
+  dynamic percentage;
 
   factory Reviews.fromJson(Map<String, dynamic> json) => Reviews(
     total: json["total"],
     totalRating: json["total_rating"],
     averageRating: json["average_rating"],
-    percentage: List<dynamic>.from(json["percentage"].map((x) => x)),
+    percentage: json["percentage"],
   );
 
   Map<String, dynamic> toJson() => {
     "total": total,
     "total_rating": totalRating,
     "average_rating": averageRating,
-    "percentage": List<dynamic>.from(percentage.map((x) => x)),
+    "percentage": percentage,
   };
 }
+
+enum SavingPrice { KWD_00000_OFF, KWD_114774_OFF, KWD_060837_OFF, KWD_893354_OFF }
+
+final savingPriceValues = EnumValues({
+  "KWD 0.000 0% OFF": SavingPrice.KWD_00000_OFF,
+  "KWD 0.608 37% OFF": SavingPrice.KWD_060837_OFF,
+  "KWD 1.147 74% OFF": SavingPrice.KWD_114774_OFF,
+  "KWD 8.933 54% OFF": SavingPrice.KWD_893354_OFF
+});
 
 class Variant {
   Variant({
@@ -373,12 +371,12 @@ class Variant {
   String name;
   String urlKey;
   int parentId;
-  String price;
+  dynamic price;
   String specialPrice;
-  String savingPrice;
+  SavingPrice savingPrice;
   String shortDescription;
   String description;
-  Brand size;
+  Size size;
   DateTime createdAt;
   DateTime updatedAt;
   int quantity;
@@ -392,10 +390,10 @@ class Variant {
     parentId: json["parent_id"],
     price: json["price"],
     specialPrice: json["special_price"],
-    savingPrice: json["saving_price"],
+    savingPrice: savingPriceValues.map[json["saving_price"]],
     shortDescription: json["short_description"],
     description: json["description"],
-    size: Brand.fromJson(json["size"]),
+    size: Size.fromJson(json["size"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     quantity: json["quantity"],
@@ -408,15 +406,35 @@ class Variant {
     "name": name,
     "url_key": urlKey,
     "parent_id": parentId,
-    "price": price,
+    "price":price,
     "special_price": specialPrice,
-    "saving_price": savingPrice,
+    "saving_price": savingPriceValues.reverse[savingPrice],
     "short_description": shortDescription,
     "description": description,
     "size": size.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "quantity": quantity,
+  };
+}
+
+class Size {
+  Size({
+    this.id,
+    this.label,
+  });
+
+  int id;
+  String label;
+
+  factory Size.fromJson(Map<String, dynamic> json) => Size(
+    id: json["id"],
+    label: json["label"] == null ? null : json["label"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "label": label == null ? null : label,
   };
 }
 

@@ -161,6 +161,7 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<GetProductById> getProductById({int productId}) async {
+    print('proook$productId');
     GetProductById response = await ProductApi.api.getProductById(
       product_id: productId,
     );

@@ -135,13 +135,10 @@ class CartScreenState extends State<CartScreen>
                                 onPressed: () {
                                   NavigationService.navigationService
                                       .navigateToWidget(ProductDetailsScreen(
-                                    product: Provider.of<OrdersProvider>(
-                                            context,
-                                            listen: false)
-                                        .getCartResponse
+                                    id:response
                                         .data
                                         .items[index]
-                                        .product,
+                                        .product.parentId,
                                   ));
                                 },
                               );

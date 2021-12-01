@@ -24,7 +24,7 @@ class OrderScreen extends StatefulWidget {
 class OrdersScreenState extends State<OrderScreen> {
   @override
   void initState() {
-    Provider.of<OrdersProvider>(context, listen: false).getOrders(context.locale.toString());
+    Provider.of<OrdersProvider>(context, listen: false).getOrders('en');
     super.initState();
   }
 
@@ -71,7 +71,7 @@ class OrdersScreenState extends State<OrderScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  continueShoppingBtnWidget()
+                  // continueShoppingBtnWidget()
                 ]);
           } else if (response.data.length == 0) {
             return Column(
@@ -104,7 +104,7 @@ class OrdersScreenState extends State<OrderScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  continueShoppingBtnWidget()
+                  // continueShoppingBtnWidget()
                 ]);
           } else {
             return Container(

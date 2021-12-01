@@ -57,7 +57,7 @@ class selectedCategoryItem extends StatelessWidget{
                     Container(width:0.5.sw,
                         child: Text(category.title==null?'':category.title,style:TitlesInHome,maxLines: 2,)),
                     Container(width:0.5.sw,
-                        child: Text(category.description,style:SliderTitle2Style,)),
+                        child: Text(category.description.toString(),style:SliderTitle2Style,)),
                   ],
                 ),
               ),

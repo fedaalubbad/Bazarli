@@ -17,7 +17,7 @@ class BuildCustomerReviewCarouselSlider extends StatelessWidget{
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product: product[currentIndex],));
+        // NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product: product[currentIndex],));
       },
       child: CarouselSlider.builder(
         itemCount:3,

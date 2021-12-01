@@ -53,8 +53,8 @@ class CategoriesScreenState extends State<CategoriesScreen>
       Duration(milliseconds: 1000),
     );
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    Provider.of<CategoriesWithBrandsProvider>(context, listen: false)
-        .getCategoriesWithBrands(lang:context.locale.toString());
+    // Provider.of<CategoriesWithBrandsProvider>(context, listen: false)
+    //     .getCategoriesWithBrands(lang:context.locale.toString());
     // Provider.of<HomeProvider>(context, listen: false).getAllBrandss(context);
     // items.add((items.length+1).toString());
     // if(mounted)

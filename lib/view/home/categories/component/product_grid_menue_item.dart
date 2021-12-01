@@ -25,7 +25,7 @@ class ProductGridMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(product: product,));
+          NavigationService.navigationService.navigateToWidget(ProductDetailsScreen(id: product.id,));
         },
         child: Container(
           child: Container(
@@ -101,10 +101,8 @@ class ProductGridMenuItem extends StatelessWidget {
                           SizedBox(
                             height: 6.h,
                           ),
-                          StarRating(
-                            rating: 4,
-                            size: ScreenUtil().radius(20),
-                          ),
+                          StarRating(rating: double.parse(product.reviews.averageRating.toString()),size: ScreenUtil().radius(25),),
+
                         ],
                       ),
                     ),
@@ -119,11 +117,12 @@ class ProductGridMenuItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
-                        onTap: () {
-                          Provider.of<WishListProvider>(context, listen: false)
+                        onTap: () async{
+                          await Provider.of<WishListProvider>(context, listen: false)
                               .addToWishList(context, product.id);
+                          Provider.of<ProductProvider>(context, listen: false).getAllProducts();
                         },
-                        child: SvgPicture.asset('assets/svg/fav.svg')),
+                        child: product.isWishlisted?SvgPicture.asset('assets/svg/fav.svg',color: Colors.red,):SvgPicture.asset('assets/svg/fav.svg')),
                     SizedBox(
                       width: 20.w,
                     ),

@@ -182,7 +182,11 @@ class AuthenticationApi {
       'language_id': languageId==null||languageId==''?SPHelper.spHelper.getUSer().languageId:languageId,
     };
     print(formData.toString());
-      var response = await Settings.settings.dio.post(UPDATE_CUSTOMER_PROFILE_URL,data:formData);
+      var response = await Settings.settings.dio.post(UPDATE_CUSTOMER_PROFILE_URL,data:formData, options: Options(headers: {
+        "Authorization": 'Bearer ${SPHelper.spHelper.getToken()}'
+      }
+      )
+      );
     print(response.statusCode);
     try {
     Map<String, dynamic> responseBody;

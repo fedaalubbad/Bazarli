@@ -1,4 +1,5 @@
 import 'package:bazarli/ViewModel/categories_with_brands_provider.dart';
+import 'package:bazarli/ViewModel/home_provider.dart';
 import 'package:bazarli/constants/MyStyles.dart';
 import 'package:bazarli/ViewModel/Product_provider.dart';
 import 'package:bazarli/models/Categories_model/categories_with_brands_response.dart';
@@ -42,7 +43,7 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen> {
   @override
   void initState() {
     if (widget.categoryResponse != null) {
-      Provider.of<CategoriesWithBrandsProvider>(context, listen: false)
+      Provider.of<ProductProvider>(context, listen: false)
           .getCategoriesWithBrands(lang: 'en', id: widget.categoryResponse.id);
     }
     if (widget.categoryResponse != null || widget.brand != null) {
@@ -175,14 +176,11 @@ class SubCategoriesScreenState extends State<SubCategoriesScreen> {
               itemCount: response.categories.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                    onTap: () {
+                    onTap: ()async {
                       print('lsdkjbfskdjb');
-                      pagingControllerMenue.dispose();
-                      pagingControllerMenue = PagingController(
-                        firstPageKey: 1,
-                      );
-                     pagingControllerMenue.addPageRequestListener((pageKey) {
-                        Provider.of<ProductProvider>(context, listen: false)
+                   pagingControllerMenue.refresh();
+                    pagingControllerMenue.addPageRequestListener((pageKey)async {
+                      await   Provider.of<ProductProvider>(context, listen: false)
                             .getSearchProductsByCategoryIdBrandId(
                             category: response.categories[index],
                             // brand: widget.brand,

@@ -70,56 +70,57 @@ class PaymentScreenState extends State<PaymentScreen> {
                       SizedBox(
                         height: 40.h,
                       ),
-                      if(Provider
-                          .of<OrdersProvider>(context)
-                          .addressRates != null)
-                        if(Provider
-                            .of<OrdersProvider>(context)
-                            .addressRates
-                            .data
-                            .rates
-                            .length > 0)
-                          buildSelectAddressRateMethodWidget(),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      if(Provider
-                          .of<OrdersProvider>(context)
-                          .shippingMethods != null)
-                        if(Provider
-                            .of<OrdersProvider>(context)
-                            .shippingMethods
-                            .data
-                            .methods
-                            .length > 0)
-                          buildSelectShippingMethodWidget(),
+                      // if(Provider
+                      //     .of<OrdersProvider>(context)
+                      //     .addressRates != null)
+                      //   if(Provider
+                      //       .of<OrdersProvider>(context)
+                      //       .addressRates
+                      //       .data
+                      //       .rates
+                      //       .length > 0)
+                      //     buildSelectAddressRateMethodWidget(),
+                      // SizedBox(
+                      //   height: 20.h,
+                      // ),
+                      // if(Provider
+                      //     .of<OrdersProvider>(context)
+                      //     .shippingMethods != null)
+                      //   if(Provider
+                      //       .of<OrdersProvider>(context)
+                      //       .shippingMethods
+                      //       .data
+                      //       .methods
+                      //       .length > 0)
+                      //     buildSelectShippingMethodWidget(),
 
+                      // SizedBox(
+                      //   height: 20.h,
+                      // ),
+                      if(Provider
+                          .of<OrdersProvider>(context)
+                          .paymentMethods != null)
+                        buildSelectPaymentMethodWidget(),
+
+                      // if(Provider
+                        //     .of<OrdersProvider>(context)
+                        //     .paymentMethods
+                        //     .data
+                        //     .paymentMethods
+                        //     .length > 0)
                       SizedBox(
                         height: 20.h,
                       ),
                       if(Provider
                           .of<OrdersProvider>(context)
                           .paymentMethods != null)
-                        if(Provider
-                            .of<OrdersProvider>(context)
-                            .paymentMethods
-                            .data
-                            .paymentMethods
-                            .length > 0)
-                          buildSelectPaymentMethodWidget(),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      if(Provider
-                          .of<OrdersProvider>(context)
-                          .paymentMethods != null)
-                        if(Provider
-                            .of<OrdersProvider>(context)
-                            .paymentMethods
-                            .data
-                            .paymentMethods
-                            .length > 0)
-                          buildTotalWidget(),
+                        buildTotalWidget(),
+                      // if(Provider
+                        //     .of<OrdersProvider>(context)
+                        //     .paymentMethods
+                        //     .data
+                        //     .paymentMethods
+                        //     .length > 0)
                       SizedBox(
                         height: 30.h,
                       ),
@@ -334,7 +335,7 @@ class PaymentScreenState extends State<PaymentScreen> {
         SizedBox(
           width: 5.w,
         ),
-        Selector<OrdersProvider, PaymentMethods>(
+        Selector<OrdersProvider, PaymentMethod>(
           builder: (context, response, z) {
             if (response == null) {
               return Center(child: CircularProgressIndicator());
@@ -346,10 +347,10 @@ class PaymentScreenState extends State<PaymentScreen> {
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: response.data.paymentMethods.length,
+                    // itemCount: response.data.paymentMethods.length,
+                    itemCount: 1,
                     itemBuilder: (context, index) {
-                      PaymentMethod paymentMethod = response.data
-                          .paymentMethods[index];
+                      PaymentMethods paymentMethod = response.data.paymentMethods;
                       return _paymentRadioButton(
                           value: paymentMethod,
                           onChanged: (newValue) =>
@@ -369,7 +370,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _paymentRadioButton({ PaymentMethod value, Function onChanged}) {
+  Widget _paymentRadioButton({ PaymentMethods value, Function onChanged}) {
     return Container(
       height: 50.h,
       width: ScreenUtil.defaultSize.width,

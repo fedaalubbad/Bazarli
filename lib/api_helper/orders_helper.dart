@@ -250,7 +250,7 @@ class OrdersApi{
 
   }
 
-  Future<PaymentMethods> getPaymentMethods(BuildContext context,Method shippingMethods) async {
+  Future<PaymentMethod> getPaymentMethods(BuildContext context,Method shippingMethods) async {
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
 
@@ -270,7 +270,7 @@ class OrdersApi{
 
      if(response.statusCode==200){
        Map<String,dynamic> responseBody=response.data;
-       PaymentMethods paymentMethods=PaymentMethods.fromJson(responseBody);
+       PaymentMethod paymentMethods=PaymentMethod.fromJson(responseBody);
        print('paymentMethodsJson${responseBody}');
 
        return paymentMethods;
@@ -290,7 +290,7 @@ class OrdersApi{
 
 
 Future<SaveOrderResponse> saveOrder(
-    BuildContext context, {dynamic cartId, PaymentMethod method}) async {
+    BuildContext context, {dynamic cartId, PaymentMethods method}) async {
      // dio.options.headers["authorization"] =
      // "Bearer ${SPHelper.spHelper.getToken()}";
 

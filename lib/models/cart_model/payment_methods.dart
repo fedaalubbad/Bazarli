@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final paymentMethods = paymentMethodsFromJson(jsonString);
+//     final paymentMethod = paymentMethodFromJson(jsonString);
 
 import 'dart:convert';
 
-PaymentMethods paymentMethodsFromJson(String str) => PaymentMethods.fromJson(json.decode(str));
+PaymentMethod paymentMethodFromJson(String str) => PaymentMethod.fromJson(json.decode(str));
 
-String paymentMethodsToJson(PaymentMethods data) => json.encode(data.toJson());
+String paymentMethodToJson(PaymentMethod data) => json.encode(data.toJson());
 
-class PaymentMethods {
-  PaymentMethods({
+class PaymentMethod {
+  PaymentMethod({
     this.data,
   });
 
   Data data;
 
-  factory PaymentMethods.fromJson(Map<String, dynamic> json) => PaymentMethods(
+  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
     data: Data.fromJson(json["data"]),
   );
 
@@ -31,16 +31,16 @@ class Data {
   });
 
   Cart cart;
-  List<PaymentMethod> paymentMethods;
+  PaymentMethods paymentMethods;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     cart: Cart.fromJson(json["cart"]),
-    paymentMethods: List<PaymentMethod>.from(json["payment_methods"].map((x) => PaymentMethod.fromJson(x))),
+    paymentMethods: PaymentMethods.fromJson(json["payment_methods"]),
   );
 
   Map<String, dynamic> toJson() => {
     "cart": cart.toJson(),
-    "payment_methods": List<dynamic>.from(paymentMethods.map((x) => x.toJson())),
+    "payment_methods": paymentMethods.toJson(),
   };
 }
 
@@ -89,8 +89,6 @@ class Cart {
     this.shippingAddress,
     this.createdAt,
     this.updatedAt,
-    this.baseTaxes,
-    this.formatedBaseTaxes,
     this.formatedDiscountedSubTotal,
     this.formatedBaseDiscountedSubTotal,
   });
@@ -107,8 +105,8 @@ class Cart {
   dynamic exchangeRate;
   String globalCurrencyCode;
   String baseCurrencyCode;
-  CartCurrencyCode channelCurrencyCode;
-  CartCurrencyCode cartCurrencyCode;
+  String channelCurrencyCode;
+  String cartCurrencyCode;
   String grandTotal;
   String formatedGrandTotal;
   String baseGrandTotal;
@@ -138,8 +136,6 @@ class Cart {
   IngAddress shippingAddress;
   DateTime createdAt;
   DateTime updatedAt;
-  String baseTaxes;
-  String formatedBaseTaxes;
   String formatedDiscountedSubTotal;
   String formatedBaseDiscountedSubTotal;
 
@@ -156,8 +152,8 @@ class Cart {
     exchangeRate: json["exchange_rate"],
     globalCurrencyCode: json["global_currency_code"],
     baseCurrencyCode: json["base_currency_code"],
-    channelCurrencyCode: cartCurrencyCodeValues.map[json["channel_currency_code"]],
-    cartCurrencyCode: cartCurrencyCodeValues.map[json["cart_currency_code"]],
+    channelCurrencyCode: json["channel_currency_code"],
+    cartCurrencyCode: json["cart_currency_code"],
     grandTotal: json["grand_total"],
     formatedGrandTotal: json["formated_grand_total"],
     baseGrandTotal: json["base_grand_total"],
@@ -187,8 +183,6 @@ class Cart {
     shippingAddress: IngAddress.fromJson(json["shipping_address"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    baseTaxes: json["base_taxes"],
-    formatedBaseTaxes: json["formated_base_taxes"],
     formatedDiscountedSubTotal: json["formated_discounted_sub_total"],
     formatedBaseDiscountedSubTotal: json["formated_base_discounted_sub_total"],
   );
@@ -206,8 +200,8 @@ class Cart {
     "exchange_rate": exchangeRate,
     "global_currency_code": globalCurrencyCode,
     "base_currency_code": baseCurrencyCode,
-    "channel_currency_code": cartCurrencyCodeValues.reverse[channelCurrencyCode],
-    "cart_currency_code": cartCurrencyCodeValues.reverse[cartCurrencyCode],
+    "channel_currency_code": channelCurrencyCode,
+    "cart_currency_code": cartCurrencyCode,
     "grand_total": grandTotal,
     "formated_grand_total": formatedGrandTotal,
     "base_grand_total": baseGrandTotal,
@@ -237,8 +231,6 @@ class Cart {
     "shipping_address": shippingAddress.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "base_taxes": baseTaxes,
-    "formated_base_taxes": formatedBaseTaxes,
     "formated_discounted_sub_total": formatedDiscountedSubTotal,
     "formated_base_discounted_sub_total": formatedBaseDiscountedSubTotal,
   };
@@ -312,12 +304,6 @@ class IngAddress {
   };
 }
 
-enum CartCurrencyCode { KWD }
-
-final cartCurrencyCodeValues = EnumValues({
-  "KWD": CartCurrencyCode.KWD
-});
-
 class Item {
   Item({
     this.id,
@@ -330,6 +316,7 @@ class Item {
     this.totalWeight,
     this.baseTotalWeight,
     this.price,
+    this.images,
     this.formatedPrice,
     this.basePrice,
     this.formatedBasePrice,
@@ -366,6 +353,7 @@ class Item {
   String totalWeight;
   String baseTotalWeight;
   String price;
+  Images images;
   String formatedPrice;
   String basePrice;
   String formatedBasePrice;
@@ -402,6 +390,7 @@ class Item {
     totalWeight: json["total_weight"],
     baseTotalWeight: json["base_total_weight"],
     price: json["price"],
+    images: Images.fromJson(json["images"]),
     formatedPrice: json["formated_price"],
     basePrice: json["base_price"],
     formatedBasePrice: json["formated_base_price"],
@@ -439,6 +428,7 @@ class Item {
     "total_weight": totalWeight,
     "base_total_weight": baseTotalWeight,
     "price": price,
+    "images": images.toJson(),
     "formated_price": formatedPrice,
     "base_price": basePrice,
     "formated_base_price": formatedBasePrice,
@@ -474,7 +464,7 @@ class Additional {
   });
 
   String token;
-  dynamic quantity;
+  int quantity;
   String productId;
 
   factory Additional.fromJson(Map<String, dynamic> json) => Additional(
@@ -487,6 +477,34 @@ class Additional {
     "token": token,
     "quantity": quantity,
     "product_id": productId,
+  };
+}
+
+class Images {
+  Images({
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+    this.originalImageUrl,
+  });
+
+  String smallImageUrl;
+  String mediumImageUrl;
+  String largeImageUrl;
+  String originalImageUrl;
+
+  factory Images.fromJson(Map<String, dynamic> json) => Images(
+    smallImageUrl: json["small_image_url"],
+    mediumImageUrl: json["medium_image_url"],
+    largeImageUrl: json["large_image_url"],
+    originalImageUrl: json["original_image_url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "small_image_url": smallImageUrl,
+    "medium_image_url": mediumImageUrl,
+    "large_image_url": largeImageUrl,
+    "original_image_url": originalImageUrl,
   };
 }
 
@@ -569,16 +587,16 @@ class Size {
   });
 
   int id;
-  dynamic label;
+  String label;
 
   factory Size.fromJson(Map<String, dynamic> json) => Size(
     id: json["id"],
-    label: json["label"],
+    label: json["label"] == null ? null : json["label"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "label": label,
+    "label": label == null ? null : label,
   };
 }
 
@@ -624,8 +642,6 @@ class SelectedShippingRate {
     this.methodDescription,
     this.price,
     this.formatedPrice,
-    this.basePrice,
-    this.formatedBasePrice,
     this.createdAt,
     this.updatedAt,
   });
@@ -636,10 +652,8 @@ class SelectedShippingRate {
   String method;
   String methodTitle;
   String methodDescription;
-  double price;
+  int price;
   String formatedPrice;
-  int basePrice;
-  String formatedBasePrice;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -650,10 +664,8 @@ class SelectedShippingRate {
     method: json["method"],
     methodTitle: json["method_title"],
     methodDescription: json["method_description"],
-    price: json["price"].toDouble(),
+    price: json["price"],
     formatedPrice: json["formated_price"],
-    basePrice: json["base_price"],
-    formatedBasePrice: json["formated_base_price"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -667,15 +679,13 @@ class SelectedShippingRate {
     "method_description": methodDescription,
     "price": price,
     "formated_price": formatedPrice,
-    "base_price": basePrice,
-    "formated_base_price": formatedBasePrice,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
 }
 
-class PaymentMethod {
-  PaymentMethod({
+class PaymentMethods {
+  PaymentMethods({
     this.paymentMethodId,
     this.paymentMethodAr,
     this.paymentMethodEn,
@@ -686,6 +696,7 @@ class PaymentMethod {
     this.currencyIso,
     this.imageUrl,
     this.isEmbeddedSupported,
+    this.paymentCurrencyIso,
   });
 
   int paymentMethodId;
@@ -695,11 +706,12 @@ class PaymentMethod {
   bool isDirectPayment;
   double serviceCharge;
   double totalAmount;
-  CartCurrencyCode currencyIso;
+  String currencyIso;
   String imageUrl;
   bool isEmbeddedSupported;
+  String paymentCurrencyIso;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
+  factory PaymentMethods.fromJson(Map<String, dynamic> json) => PaymentMethods(
     paymentMethodId: json["PaymentMethodId"],
     paymentMethodAr: json["PaymentMethodAr"],
     paymentMethodEn: json["PaymentMethodEn"],
@@ -707,9 +719,10 @@ class PaymentMethod {
     isDirectPayment: json["IsDirectPayment"],
     serviceCharge: json["ServiceCharge"].toDouble(),
     totalAmount: json["TotalAmount"].toDouble(),
-    currencyIso: cartCurrencyCodeValues.map[json["CurrencyIso"]],
+    currencyIso: json["CurrencyIso"],
     imageUrl: json["ImageUrl"],
     isEmbeddedSupported: json["IsEmbeddedSupported"],
+    paymentCurrencyIso: json["PaymentCurrencyIso"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -720,22 +733,9 @@ class PaymentMethod {
     "IsDirectPayment": isDirectPayment,
     "ServiceCharge": serviceCharge,
     "TotalAmount": totalAmount,
-    "CurrencyIso": cartCurrencyCodeValues.reverse[currencyIso],
+    "CurrencyIso": currencyIso,
     "ImageUrl": imageUrl,
     "IsEmbeddedSupported": isEmbeddedSupported,
+    "PaymentCurrencyIso": paymentCurrencyIso,
   };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }

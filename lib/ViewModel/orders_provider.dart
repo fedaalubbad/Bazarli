@@ -47,8 +47,9 @@ bool isLoading=false;
    try{
    AddressRates response=  await  OrdersApi.api.getAddressRates(context,address);
    addressRates=response;
-   isLoading=false;
-   notifyListeners();
+   getShippingMethods( context,addressRates.data.rates[1]);
+   // isLoading=false;
+   // notifyListeners();
   } catch (e) {
   isLoading=false;
   notifyListeners();
@@ -64,14 +65,15 @@ bool isLoading=false;
  }
   ShippingMethods shippingMethods;
   Future<ShippingMethods> getShippingMethods(BuildContext context,DataRate addressRate)async{
-   isLoading=true;
-   notifyListeners();
+   // isLoading=true;
+   // notifyListeners();
    try{
   ShippingMethods response=  await  OrdersApi.api.getShippingMethods(context,addressRate);
   shippingMethods=response;
+  getPaymentMethods(context, shippingMethods.data.methods[0]);
   notifyListeners();
-  isLoading=false;
-  notifyListeners();
+  // isLoading=false;
+  // notifyListeners();
    } catch (e) {
     isLoading=false;
     notifyListeners();
@@ -86,13 +88,13 @@ bool isLoading=false;
   notifyListeners();
  }
 
-  PaymentMethods paymentMethods;
+  PaymentMethod paymentMethods;
   dynamic catrId=null;
-  Future<PaymentMethods> getPaymentMethods(BuildContext context,Method shippingMethods)async{
-   isLoading=true;
-   notifyListeners();
+  Future<PaymentMethod> getPaymentMethods(BuildContext context,Method shippingMethods)async{
+   // isLoading=true;
+   // notifyListeners();
    try{
-   PaymentMethods response=  await  OrdersApi.api.getPaymentMethods(context,shippingMethods);
+   PaymentMethod response=  await  OrdersApi.api.getPaymentMethods(context,shippingMethods);
    catrId=response.data.cart.id;
    paymentMethods=response;
    notifyListeners();
@@ -105,8 +107,8 @@ throw Exception();
 
 }
   }
- PaymentMethod selectedPaymentMethod=null;
- selectPaymentMethod(context,PaymentMethod val){
+ PaymentMethods selectedPaymentMethod=null;
+ selectPaymentMethod(context,PaymentMethods val){
   selectedPaymentMethod=val;
   notifyListeners();
  }
@@ -114,7 +116,7 @@ throw Exception();
 
  SaveOrderResponse saveOrderResponse;
  String redirectUrl='';
-  Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, PaymentMethod method)async{
+  Future<SaveOrderResponse> saveOrder(BuildContext context,dynamic cartId, PaymentMethods method)async{
    SaveOrderResponse response=  await  OrdersApi.api.saveOrder(context,cartId:cartId,method:method);
    saveOrderResponse=response;
    if(method!=null){

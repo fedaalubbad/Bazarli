@@ -94,7 +94,6 @@ class AddToCartWidet extends StatelessWidget{
                               height: 20.h,
                             ),
                             InkWell(
-
                                   child: Center(child: SvgPicture.asset('assets/svg/arrow_down.svg',fit: BoxFit.fill,)),
                               onTap: () {
                                 Provider.of<ProductProvider>(

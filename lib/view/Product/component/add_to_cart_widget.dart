@@ -84,8 +84,8 @@ class AddToCartWidet extends StatelessWidget{
                           children: [
                             InkWell(
                                     child: Center(child: SvgPicture.asset('assets/svg/arrow_up.svg',fit: BoxFit.fill,)),
-                              onTap: () {
-                                Provider.of<ProductProvider>(
+                              onTap:  () async{
+                                await Provider.of<ProductProvider>(
                                     context,listen: false
                                 ).increaseQuantity();
                               },
@@ -95,8 +95,8 @@ class AddToCartWidet extends StatelessWidget{
                             ),
                             InkWell(
                                   child: Center(child: SvgPicture.asset('assets/svg/arrow_down.svg',fit: BoxFit.fill,)),
-                              onTap: () {
-                                Provider.of<ProductProvider>(
+                              onTap: () async{
+                               await Provider.of<ProductProvider>(
                                     context,listen: false
                                 ).decreaseQuantity();
                               },
@@ -108,9 +108,9 @@ class AddToCartWidet extends StatelessWidget{
                 ),
 
                 Container(
-                  child: InkWell(
-                      onTap: () {
-                        Provider.of<OrdersProvider>(
+                  child:  InkWell(
+                      onTap: () async{
+                        await  Provider.of<OrdersProvider>(
                             context,listen: false
                         ).addProductToCart(context, product.variants[Provider.of<ProductProvider>(
                             context,listen: false).selectedVarientIndex].id.toString(), Provider.of<ProductProvider>(
